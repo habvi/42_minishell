@@ -2,6 +2,6 @@
 
 int	main(void)
 {
-	printf("minishell~\n");
+	printf("minishell-\n");
 	return (0);
 }
