@@ -1,5 +1,10 @@
 *
 !**/
-!.gitignore
 
+# ignore
 .idea/
+
+# include
+!.gitignore
+!*.c
+!*.h
