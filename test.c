@@ -1,7 +1,10 @@
 #include <stdio.h>
 
-int	main(void)
+int	main(int argc, char **argv)
 {
-	printf("minishell-\n");
+	if (argc == 1)
+		return (1);
+
+	printf("%s\n", argv[1]);
 	return (0);
 }
