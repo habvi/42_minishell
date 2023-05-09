@@ -8,5 +8,6 @@
 # define FORK_ERROR	-1
 # define WAIT_ERROR	-1
 # define PIPE_ERROR	-1
+# define EXECVE_ERROR  -1
 
 #endif

@@ -15,4 +15,8 @@ PHONY += pipe
 pipe:
 	$(CC) $(CFLAGS) pipe.c && ./$(NAME)
 
+PHONY += execve
+execve:
+	$(CC) $(CFLAGS) execve.c && ./$(NAME)
+
 .PHONY: $(PHONY)
