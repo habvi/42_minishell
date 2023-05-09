@@ -8,3 +8,4 @@
 !.gitignore
 !*.c
 !*.h
+!.github/**
