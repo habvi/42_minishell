@@ -8,15 +8,12 @@
 
 extern char	**environ;
 
-static void	child_proc(void)
+static void	child_proc(char *argv[])
 {
-	char	*argv[3];
+	const char	*path = argv[1];
 
 	printf("=== child process start [PID: %d]===\n", getpid());
-	argv[0] = "/bin/ls";
-	argv[1] = "-l";
-	argv[2] = NULL;
-	if (execve(argv[0], argv, environ) == EXECVE_ERROR)
+	if (execve(path, argv + 1, environ) == EXECVE_ERROR)
 	{
 		perror("execve");
 		exit(EXIT_FAILURE);
@@ -41,10 +38,12 @@ static void	parents_proc(pid_t pid)
 	printf("=== parents process end ===\n\n");
 }
 
-int	main(void)
+int	main(int argc, char *argv[])
 {
 	pid_t	pid;
 
+	if (argc == 1)
+		return (EXIT_SUCCESS);
 	pid = fork();
 	if (pid == FORK_ERROR)
 	{
@@ -52,7 +51,7 @@ int	main(void)
 		return (EXIT_FAILURE);
 	}
 	if (pid == CHILD_PID)
-		child_proc();
+		child_proc(argv);
 	else
 		parents_proc(pid);
 	return (EXIT_SUCCESS);
