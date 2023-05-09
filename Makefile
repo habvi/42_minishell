@@ -11,4 +11,8 @@ PHONY += wait
 wait:
 	$(CC) $(CFLAGS) wait.c && ./$(NAME)
 
+PHONY += pipe
+pipe:
+	$(CC) $(CFLAGS) pipe.c && ./$(NAME)
+
 .PHONY: $(PHONY)
