@@ -6,5 +6,6 @@
 
 # include
 !.gitignore
+!Makefile
 !*.c
 !*.h
