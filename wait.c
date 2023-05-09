@@ -22,7 +22,7 @@ static void	parents_proc(pid_t pid)
 	wait_pid = wait(&status);
 	if (wait_pid == WAIT_ERROR)
 	{
-		perror("wait error");
+		perror("wait");
 		exit(EXIT_FAILURE);
 	}
 	printf("wait pid: %d, status: %d\n", wait_pid, status);

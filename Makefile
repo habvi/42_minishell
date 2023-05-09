@@ -7,7 +7,7 @@ PHONY := fork
 fork:
 	$(CC) $(CFLAGS) fork.c && ./$(NAME)
 
-PHONY := wait
+PHONY += wait
 wait:
 	$(CC) $(CFLAGS) wait.c && ./$(NAME)
 
