@@ -16,8 +16,8 @@ int	main(void)
 		return (EXIT_FAILURE);
 	}
 	if (pid == CHILD_PID)
-		printf("child!!!\n");
+		printf("child!\n");
 	else
-		printf("parent!!!\n");
+		printf("parent!\n");
 	return (EXIT_SUCCESS);
 }
