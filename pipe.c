@@ -38,9 +38,9 @@ static void	child_proc(int pipefd[2], pid_t pid)
 
 static void	parent_proc(int pipefd[2], pid_t pid)
 {
-	char	*s = "abcde\n";
-	int		status;
-	pid_t	wait_pid;
+	const char	*s = "abcde";
+	int			status;
+	pid_t		wait_pid;
 
 	printf("=== parents process start [PID: %d] ===\n", pid);
 	close(pipefd[0]);
@@ -61,6 +61,7 @@ static void	parent_proc(int pipefd[2], pid_t pid)
 		perror("wait");
 		exit(EXIT_FAILURE);
 	}
+	printf("wait pid: %d, status: %d\n", wait_pid, status);
 	printf("=== parents process end ===\n\n");
 }
 
