@@ -21,8 +21,6 @@ static void	child_proc(void)
 		perror("execve");
 		exit(EXIT_FAILURE);
 	}
-	printf("\n=== child process end ===\n\n");
-	exit(2);
 }
 
 static void	parents_proc(pid_t pid)
