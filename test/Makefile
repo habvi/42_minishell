@@ -19,4 +19,8 @@ PHONY += execve
 execve:
 	$(CC) $(CFLAGS) execve.c && ./$(NAME)
 
+PHONY += dup
+dup:
+	$(CC) $(CFLAGS) dup.c && ./$(NAME) Makefile
+
 .PHONY: $(PHONY)
