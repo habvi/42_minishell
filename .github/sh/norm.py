@@ -36,13 +36,13 @@ def run_cmd(cmd):
 
 # ----------------------------------------------------------
 # put
-def put_lines(lines):
+def debug_lines(lines):
     for line in lines:
         print(line, end="")
     print("-----------------------")
 
-def put_result(result):
-    if result:
+def put_result(passed):
+    if passed:
         print_color_str(GREEN, "[OK]")
         exit(0)
     else:
@@ -50,25 +50,30 @@ def put_result(result):
         exit(1)
 
 # ----------------------------------------------------------
+def check_each_file(lines):
+    if len(lines) >= 2:
+        debug_lines(lines)
+        return False
+    return True
+
 def norm_check_exclude_header():
-    LINE_OK = "OK"
+    LINE_OK = "OK!"
     LINE_ERR = "Error!"
     LINE_HEADER = "INVALID_HEADER"
-    result = True
+    passed = True
     with open(OUT_FILE) as f:
         try:
             lines = []
             for line in f:
                 if LINE_ERR in line:
-                    if len(lines) >= 2:
-                        put_lines(lines)
-                        result = False
+                    passed &= check_each_file(lines)
                     lines = [line]
                 else:
-                    if LINE_HEADER in line:
+                    if LINE_HEADER in line or LINE_OK in line:
                         continue
                     lines.append(line)
-            return result
+            passed &= check_each_file(lines)
+            return passed
         except FileNotFoundError as err:
             print(err)
             exit(1)
@@ -80,8 +85,8 @@ def run_norm(check_path):
     cmd = "norminette " + check_path +  " > " + OUT_FILE
     run_cmd(cmd)
 
-    result = norm_check_exclude_header()
-    return result
+    passed = norm_check_exclude_header()
+    return passed
 
 def main():
     argc = len(sys.argv)
@@ -92,8 +97,8 @@ def main():
     else:
         print("<python3 norm.py> or <python3 norm.py local>")
         exit(1)
-    result = run_norm(path)
-    put_result(result)
+    passed = run_norm(path)
+    put_result(passed)
 
 if __name__ == '__main__':
     main()
