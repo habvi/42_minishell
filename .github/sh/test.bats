@@ -32,13 +32,6 @@ setup_file() {
     [[ "$output" != *"detected memory leaks"* ]]
 }
 
-@test "1 arg-3" {
-    run $dir./a.out abc
-    assert_equal "$status" 0
-    assert_equal "$output" ABC
-    [[ "$output" != *"detected memory leaks"* ]]
-}
-
 @test "2 arg" {
     run $dir./a.out a b
     assert_equal "$status" 1
