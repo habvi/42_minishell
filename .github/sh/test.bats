@@ -48,8 +48,7 @@ setup_file() {
 
 
 @test "mkfile" {
-    run echo hello
-    run echo -e hello > out
+    echo -e hello > out
     run cat out
     assert_equal "$output" "hello"
 }
