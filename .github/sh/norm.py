@@ -24,7 +24,7 @@ def run_cmd(cmd):
 # ----------------------------------------------------------
 out_filepath = "norm_out.txt"
 # norm_check_dir_path = "../../test/"
-norm_check_dir_path = "test"
+norm_check_dir_path = "includes srcs"
 
 cmd = "touch " + out_filepath
 run_cmd(cmd)
