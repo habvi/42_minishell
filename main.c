@@ -1,7 +1,7 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
-#include <libc.h>
+#include <stdlib.h>
 
 // expected a -> A
 // actual   a -> `

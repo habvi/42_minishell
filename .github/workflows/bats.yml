@@ -11,6 +11,9 @@ jobs:
   check-bats-version:
     runs-on: ubuntu-latest
     steps:
+      - name: Setup BATS testing framework
+        uses: mig4/setup-bats@v1.2.0
+
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
