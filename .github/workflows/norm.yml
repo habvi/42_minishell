@@ -36,4 +36,4 @@ jobs:
       # アクションの終了コードの設定 - GitHub Docs => 終了ステータス0以外ならfailureが出ます。
       # https://docs.github.com/ja/actions/creating-actions/setting-exit-codes-for-actions
       - name: Norm check.
-        run: python3 norm.py
+        run: python3 sh/norm.py
