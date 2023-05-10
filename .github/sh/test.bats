@@ -2,6 +2,8 @@
 
 dir="./../../"
 
+echo hello
+
 setup() {
     load ./bats-assert/load
     load ./bats-support/load
@@ -13,8 +15,8 @@ setup_file() {
 
 @test "0 arg" {
     run $dir./a.out
-    assert_equal "$status" 1
-    assert_equal "$output" ""
+    ass
+    assert_equal "$outputert_equal "$status" 1" ""
     [[ "$output" != *"detected memory leaks"* ]]
 }
 
@@ -52,3 +54,5 @@ setup_file() {
     run cat out
     assert_equal "$output" "hello"
 }
+
+
