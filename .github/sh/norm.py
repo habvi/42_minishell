@@ -11,7 +11,8 @@ import sys
 # ----------------------------------------------------------
 OUT_FILE = "norm_out.txt"
 NORM_CHECK_PATH_ACTIONS = "includes srcs"
-NORM_CHECK_PATH_LOCAL = "../../playground/"
+# NORM_CHECK_PATH_LOCAL = "../../playground/"
+NORM_CHECK_PATH_LOCAL = "includes"
 
 # ----------------------------------------------------------
 # color
@@ -92,11 +93,18 @@ def main():
     argc = len(sys.argv)
     if argc == 1:
         path = NORM_CHECK_PATH_ACTIONS
-    elif argc == 2 and sys.argv[1] == "local":
-        path = NORM_CHECK_PATH_LOCAL
     else:
-        print("<python3 norm.py> or <python3 norm.py local>")
+        print("<python3 norm.py>")
         exit(1)
+
+    # if argc == 1:
+    #     path = NORM_CHECK_PATH_ACTIONS
+    # elif argc == 2 and sys.argv[1] == "local":
+    #     path = NORM_CHECK_PATH_LOCAL
+    # else:
+    #     print("<python3 norm.py> or <python3 norm.py local>")
+    #     exit(1)
+
     passed = run_norm(path)
     put_result(passed)
 
