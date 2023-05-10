@@ -49,9 +49,7 @@ setup_file() {
 
 @test "mkfile" {
     run echo hello
-    run echo hello > out
+    run echo -e hello > out
     run cat out
-    echo $"output"
-    run echo $PWD
-    echo $"output"
+    assert_equal "$output" "hello"
 }
