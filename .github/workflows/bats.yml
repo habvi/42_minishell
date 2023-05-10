@@ -1,9 +1,9 @@
 name: bats
 on:
   push:
-    branches: [ "dev", "9-github-ajjjjjctions-test" ]
+    branches: [ "dev", "playground/act-test-1" ]
   pull_request:
-    branches: [ "dev", "9-github-actions-test" ]
+    branches: [ "dev", "playground/act-test-1" ]
 
   workflow_dispatch:
 
