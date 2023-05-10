@@ -1,7 +1,7 @@
 name: bats
 on:
   push:
-    branches: [ "dev", "9-github-actions-test" ]
+    branches: [ "dev", "9-github-actions-" ]
   pull_request:
     branches: [ "dev", "9-github-actions-test" ]
 
