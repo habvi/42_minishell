@@ -1,60 +1,54 @@
 #!/usr/bin/env bats
 
+dir="../../"
+
 setup() {
-    dir="../../"
+    load ./bats-assert/load
+    load ./bats-support/load
+}
+
+setup_file() {
     make re -C $dir
 }
 
-@test "test1" {
-    result="$( $dir./a.out test )"
-    expected="TEST"
-
-    [ "$result" == "$expected" ]
-    [ $? -eq 0 ]
+@test "0 arg" {
+    run $dir./a.out
+    assert_equal "$status" 1
+    assert_equal "$output" ""
+    [[ "$output" != *"detected memory leaks"* ]]
 }
 
-@test "test2" {
-    result="$( $dir./a.out 42Tokyo )"
-    expected="42TOKYO"
-
-    [ "$result" == "$expected" ]
-    [ $? -eq 0 ]
+@test "1 arg-1" {
+    run $dir./a.out b
+    assert_equal "$status" 0
+    assert_equal "$output" "B"
+    [[ "$output" != *"detected memory leaks"* ]]
 }
 
-@test "test3" {
-    result="$( $dir./a.out abc )"
-    expected="ABC"
-
-    [ "$result" == "$expected" ]
-    [ $? -eq 0 ]
+@test "1 arg-2" {
+    run $dir./a.out ""
+    assert_equal "$status" 0
+    assert_equal "$output" ""
+    [[ "$output" != *"detected memory leaks"* ]]
 }
 
-@test "test4" {
-    result="$( $dir./a.out 123 )"
-    expected="123"
-
-    [ "$result" == "$expected" ]
-    [ $? -eq 0 ]
+@test "1 arg-3" {
+    run $dir./a.out abc
+    assert_equal "$status" 0
+    assert_equal "$output" ABC
+    [[ "$output" != *"detected memory leaks"* ]]
 }
 
-@test "test5" {
-    result="$( $dir./a.out 123 qwe)"
-    expected="123 QWE"
-
-    [ "$result" == "$expected" ]
-    [ $? -eq 0 ]
+@test "2 arg" {
+    run $dir./a.out a b
+    assert_equal "$status" 1
+    assert_equal "$output" ""
+    [[ "$output" != *"detected memory leaks"* ]]
 }
 
-@test "test6" {
-    result="$( $dir./a.out "")"
-    expected=""
-
-    [ "$result" == "$expected" ]
-    [ $? -eq 0 ]
-}
-
-@test "test7" {
-    result="$( $dir./a.out )"
-    [ -z "$result" ]
-    [ $? -eq 1 ]
+@test "3 arg" {
+    run $dir./a.out a b c
+    assert_equal "$status" 1
+    assert_equal "$output" ""
+    [[ "$output" != *"detected memory leaks"* ]]
 }
