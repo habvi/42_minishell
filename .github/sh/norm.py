@@ -22,14 +22,14 @@ def run_cmd(cmd):
     subprocess.run(cmd, shell=True)
 
 # ----------------------------------------------------------
-out_filepath = "norm_out.txt"
-# norm_check_dir_path = "../../test/"
-norm_check_dir_path = "includes srcs"
+OUT_FILE = "norm_out.txt"
+NORM_CHECK_PATH = "../../playground/"
+# NORM_CHECK_PATH = "includes srcs"
 
-cmd = "touch " + out_filepath
+cmd = "touch " + OUT_FILE
 run_cmd(cmd)
 
-cmd = "norminette " + norm_check_dir_path +  " > " + out_filepath
+cmd = "norminette " + NORM_CHECK_PATH +  " > " + OUT_FILE
 run_cmd(cmd)
 
 def put_lines(lines):
@@ -37,20 +37,20 @@ def put_lines(lines):
         print(line, end="")
     print("-----------------------")
 
-line_ok = "OK"
-line_err = "Error!"
-line_header = "INVALID_HEADER"
+LINE_OK = "OK"
+LINE_ERR = "Error!"
+LINE_HEADER = "INVALID_HEADER"
 result = True
-with open(out_filepath) as f:
+with open(OUT_FILE) as f:
     lines = []
     for line in f:
-        if line_err in line:
+        if LINE_ERR in line:
             if len(lines) >= 2:
                 put_lines(lines)
                 result = False
             lines = [line]
         else:
-            if line_header in line:
+            if LINE_HEADER in line:
                 continue
             lines.append(line)
 
