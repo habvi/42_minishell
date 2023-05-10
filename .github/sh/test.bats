@@ -7,10 +7,6 @@ setup() {
     load ./bats-support/load
 }
 
-setup_file() {
-    make re -C $dir
-}
-
 @test "0 arg" {
     run $dir./a.out
     assert_equal "$status" 1
