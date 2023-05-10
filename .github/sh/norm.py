@@ -36,6 +36,7 @@ ignore2 = "Error!"
 ignore3 = "Missing or invalid 42 header"
 with open(out_filepath) as f:
     for line in f:
+        print(line)
         if ignore1 in line or ignore2 in line or ignore3 in line:
             continue
         print_color_str(RED, "[NG] ")
