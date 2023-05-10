@@ -1,6 +1,6 @@
 #!/usr/bin/env bats
 
-dir="./"
+dir="./../../"
 
 setup() {
     load ./bats-assert/load
