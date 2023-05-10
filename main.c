@@ -23,7 +23,7 @@ char	*str_toupper(char *str)
 	return (ret);
 }
 
-// if argc > 2, memory leak occurred
+// if argc > 3, memory leak occurred
 int	main(int argc, char **argv)
 {
 	char	*print_str;
