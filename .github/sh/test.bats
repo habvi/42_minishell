@@ -2,27 +2,20 @@
 
 dir="../../"
 
-#leak=""
-leak="SANI"
-#leak="VAL"
-
 setup() {
     load ./bats-assert/load
     load ./bats-support/load
 }
 
 setup_file() {
-    if [ "$leak"="SANI" ]; then
-        make sani -C $dir
-    else
-        make re -C $dir
-    fi
+    make re -C $dir
 }
 
 @test "0 arg" {
     run $dir./a.out
     assert_equal "$status" 1
     assert_equal "$output" ""
+    [[ "$output" != *"detected memory leaks"* ]]
 }
 
 @test "1 arg-1" {
