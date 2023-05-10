@@ -77,7 +77,6 @@ int	main(void)
 		exit(EXIT_FAILURE);
 	}
 	printf("fd[0] : %d, fd[1]: %d\n", pipefd[0], pipefd[1]);
-
 	pid = fork();
 	if (pid == FORK_ERROR)
 	{
