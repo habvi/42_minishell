@@ -3,8 +3,8 @@
 dir="./"
 
 setup() {
-    load .github/sh/bats-assert/load
-    load .github/sh/bats-support/load
+    load ./.github/sh/bats-assert/load
+    load ./.github/sh/bats-support/load
 }
 
 setup_file() {
