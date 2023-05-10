@@ -45,3 +45,13 @@ setup_file() {
     assert_equal "$output" ""
     [[ "$output" != *"detected memory leaks"* ]]
 }
+
+
+@test "mkfile" {
+    run echo hello
+    run echo hello > out
+    run cat out
+    echo $"output"
+    run echo $PWD
+    echo $"output"
+}
