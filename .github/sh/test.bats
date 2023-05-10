@@ -15,8 +15,8 @@ setup_file() {
 
 @test "0 arg" {
     run $dir./a.out
-    ass
-    assert_equal "$outputert_equal "$status" 1" ""
+    assert_equal "$output" ""
+    assert_equal "$status" "1"
     [[ "$output" != *"detected memory leaks"* ]]
 }
 
