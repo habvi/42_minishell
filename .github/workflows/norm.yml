@@ -1,0 +1,21 @@
+name: Norm
+on:
+  push:
+    branches: [ "dev", "playground/act-test-1" ]
+  pull_request:
+    branches: [ "dev", "playground/act-test-1" ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Norminette.
+        run: |
+          python3 -m pip install --upgrade pip setuptools
+          python3 -m pip install norminette
+      - name: Norm check.
+        run: python3 .github/sh/norm.py
