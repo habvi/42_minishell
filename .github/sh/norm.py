@@ -42,3 +42,4 @@ with open(out_filepath) as f:
         exit(1)
 
 print_color_str(GREEN, "[OK] ")
+exit(0)
