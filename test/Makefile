@@ -23,4 +23,8 @@ PHONY += dup
 dup:
 	$(CC) $(CFLAGS) dup.c && ./$(NAME) Makefile
 
+PHONY += dup2
+dup2:
+	$(CC) $(CFLAGS) dup2.c && ./$(NAME)
+
 .PHONY: $(PHONY)
