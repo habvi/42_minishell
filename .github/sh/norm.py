@@ -39,7 +39,7 @@ def put_lines(lines):
 
 line_ok = "OK"
 line_err = "Error!"
-line_header = "Missing or invalid 42 header"
+line_header = "INVALID_HEADER"
 result = True
 with open(out_filepath) as f:
     lines = []
