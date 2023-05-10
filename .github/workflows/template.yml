@@ -35,4 +35,4 @@ jobs:
           echo Add other actions to build,
           echo test, and deploy your project.
       - name: Run a multi-line script
-        run: .github/sh/test.bats
+        run: ./.github/sh/test.bats
