@@ -10,4 +10,4 @@
 !*.c
 !*.h
 !.github/**
-!.github/**/**/
+!test_
