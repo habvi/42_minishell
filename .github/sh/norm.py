@@ -2,16 +2,9 @@ import subprocess
 import sys
 
 # ----------------------------------------------------------
-# actions
-# python3 norm.py
-
-# local
-# python3 norm.py local
-
-# ----------------------------------------------------------
 OUT_FILE = "norm_out.txt"
 NORM_CHECK_PATH_ACTIONS = "includes srcs"
-NORM_CHECK_PATH_LOCAL = "../../playground/"
+NORM_CHECK_PATH_LOCAL = "playground"
 
 # ----------------------------------------------------------
 # color
@@ -80,6 +73,7 @@ def norm_check_exclude_header():
 
 def run_norm(check_path):
     cmd = "norminette " + check_path +  " > " + OUT_FILE
+    print(cmd)
     run_cmd(cmd)
 
     passed = norm_check_exclude_header()
