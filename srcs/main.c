@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <unistd.h>
 #include "ft_string.h"
 
 static void	minishell(void)
@@ -23,7 +24,7 @@ static void	minishell(void)
 			break ;
 		// tokenize
 		// parse
-		// exec
+		execve(commands[0], commands, NULL);
 	}
 }
 
