@@ -13,4 +13,7 @@
 
 # define CHILD_PID		0
 
+void	*free_all(char **split_strs);
+int		exec(char **commands);
+
 #endif

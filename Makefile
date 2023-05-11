@@ -6,7 +6,10 @@ RL_FLAGS	:=	-lreadline
 MKDIR		:=	mkdir -p
 
 SRCS_DIR	:=	srcs
-SRCS	:=	$(SRCS_DIR)/main.c
+SRCS		:=	main.c
+
+EXEC_DIR	:=	exec
+SRCS		+=	$(EXEC_DIR)/exec.c
 
 OBJ_DIR	:=	obj
 OBJS	:=	$(SRCS:%.c=$(OBJ_DIR)/%.o)
@@ -28,7 +31,7 @@ all		: $(NAME)
 $(NAME)	: $(OBJS) $(LIBFT)
 	$(CC) $(CFLAGS) -o $@ $(OBJS) $(LIBFT) $(RL_FLAGS)
 
-$(OBJ_DIR)/%.o: %.c
+$(OBJ_DIR)/%.o: $(SRCS_DIR)/%.c
 	@$(MKDIR) $(dir $@)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
