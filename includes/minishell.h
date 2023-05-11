@@ -6,6 +6,11 @@
 # include <stdbool.h>
 # include <unistd.h>
 
-# define EXECVE_ERROR -1
+# define EXECVE_ERROR	-1
+# define FORK_ERROR		-1
+# define WAIT_ERROR		-1
+# define PROCESS_ERROR	-1
+
+# define CHILD_PID		0
 
 #endif
