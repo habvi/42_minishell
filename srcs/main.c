@@ -15,6 +15,8 @@ int	minishell(void)
 		// tokenize
 		commands = ft_split(line, ' ');
 		free(line);
+		if (!commands)
+			return (EXIT_FAILURE);
 		// parse
 		process_status = exec(commands);
 		free_all(commands);

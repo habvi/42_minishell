@@ -12,6 +12,7 @@
 # define PROCESS_ERROR	-1
 
 # define CHILD_PID		0
+# define PROMPT_NAME    "minishell "
 
 // exec
 int		exec(char **commands);
