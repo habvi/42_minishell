@@ -1,15 +1,13 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-#include <unistd.h>
+#include "minishell.h"
 #include "ft_string.h"
 
 static void	minishell(void)
 {
-	char	*line;
-	char	**commands;
+	char		*line;
+	char		**commands;
+	extern char	**environ;
 
 	while (true)
 	{
@@ -24,7 +22,11 @@ static void	minishell(void)
 			break ;
 		// tokenize
 		// parse
-		execve(commands[0], commands, NULL);
+		if (execve(commands[0], commands, environ) == EXECVE_ERROR)
+		{
+			perror("execve");
+			exit(EXIT_FAILURE);
+		}
 	}
 }
 
