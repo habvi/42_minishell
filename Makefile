@@ -27,12 +27,12 @@ fclean	: clean
 PHONY += re
 re		: fclean all
 
-PHONY += test
-test	: re
-
 PHONY += sani
 sani	:
 	make re SANI=1
 
+PHONY += norm
+norm	:
+	python3 .github/sh/norm.py
 
 .PHONY: $(PHONY)
