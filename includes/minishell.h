@@ -17,6 +17,6 @@
 int		exec(char **commands);
 
 // input
-char    *input_line();
+char	*input_line(void);
 
 #endif

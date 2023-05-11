@@ -3,7 +3,7 @@
 #include "minishell.h"
 #include "ft_string.h"
 
-char	*input_line()
+char	*input_line(void)
 {
 	char	*line;
 
