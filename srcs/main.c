@@ -1,33 +1,21 @@
-#include "minishell.h"
-#include "ft_string.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
 
-int	minishell(void)
+static void	minishell(void)
 {
-	char	*line;
-	char	**commands;
-	int		process_status;
-
 	while (true)
 	{
-		line = input_line();
-		if (!line)
-			break ;
+		// readline
 		// tokenize
-		commands = ft_split(line, ' ');
-		free(line);
 		// parse
-		process_status = exec(commands);
-		free_all(commands);
-		if (process_status == PROCESS_ERROR)
-			return (EXIT_FAILURE);
+		// exec
+		printf("aaa\n");
 	}
-	return (EXIT_SUCCESS);
 }
 
 int	main(void)
 {
-	int	process_status;
-
-	process_status = minishell();
-	return (process_status);
+	minishell();
+	return (EXIT_SUCCESS);
 }
