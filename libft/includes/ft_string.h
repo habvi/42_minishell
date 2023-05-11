@@ -4,6 +4,7 @@
 # include <stdbool.h>
 # include <stddef.h>
 
+void	*free_all(char **split_strs);
 char	**ft_split(char const *s, char c);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strdup(const char *s1);

@@ -54,20 +54,6 @@ static bool	set_split_str(char const *head, char c, char **split_strs)
 	return (true);
 }
 
-static void	*free_all(char **split_strs)
-{
-	size_t	i;
-
-	i = 0;
-	while (split_strs[i] != NULL)
-	{
-		free(split_strs[i]);
-		i++;
-	}
-	free(split_strs);
-	return (NULL);
-}
-
 char	**ft_split(char const *s, char c)
 {
 	size_t	len;

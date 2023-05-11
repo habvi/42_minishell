@@ -1,5 +1,6 @@
 #include <sys/wait.h> // wait
 #include "minishell.h"
+#include "ft_string.h"
 
 void	child_process(char **commands, char **environ)
 {
