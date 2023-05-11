@@ -1,25 +1,20 @@
-#include <readline/readline.h>
-#include <readline/history.h>
 #include "minishell.h"
 #include "ft_string.h"
 
 int	minishell(void)
 {
-	char		*line;
-	char		**commands;
-	int			process_status;
+	char	*line;
+	char	**commands;
+	int		process_status;
 
 	while (true)
 	{
-		line = readline("minishell ");
+		line = input_line();
 		if (!line)
 			break ;
-		add_history(line);
+		// tokenize
 		commands = ft_split(line, ' ');
 		free(line);
-		if (!commands)
-			break ;
-		// tokenize
 		// parse
 		process_status = exec(commands);
 		free_all(commands);

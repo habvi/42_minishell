@@ -11,6 +11,9 @@ SRCS		:=	main.c
 EXEC_DIR	:=	exec
 SRCS		+=	$(EXEC_DIR)/exec.c
 
+INPUT_DIR	:=	input
+SRCS		+=	$(INPUT_DIR)/input.c
+
 OBJ_DIR	:=	obj
 OBJS	:=	$(SRCS:%.c=$(OBJ_DIR)/%.o)
 

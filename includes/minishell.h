@@ -13,6 +13,10 @@
 
 # define CHILD_PID		0
 
+// exec
 int		exec(char **commands);
+
+// input
+char    *input_line();
 
 #endif
