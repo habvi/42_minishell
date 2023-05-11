@@ -1,24 +1,36 @@
-NAME	:=	a.out
+NAME	:=	minishell
 
 CC		:=	clang
-CFLAGS	:=	-Wall -Wextra -Werror
+CFLAGS	:=	-Wall -Wextra -Werror -MMD -MP
+MKDIR	:=	mkdir -p
+
+SRCS_DIR	:=	srcs
+SRCS	:=	$(SRCS_DIR)/main.c
+
+OBJ_DIR	:=	obj
+OBJS	:=	$(SRCS:%.c=$(OBJ_DIR)/%.o)
 
 ifdef SANI
 	CFLAGS += -g -fsanitize=address
 endif
 
+INCLUDE_DIR	:=	includes
+INCLUDES	:=	-I./$(INCLUDE_DIR)/
+DEPS		:=	$(OBJS:.o=.d)
+
 PHONY	:= all
 all		: $(NAME)
 
-$(NAME)	: main.o
-	$(CC) $(CFLAGS) -o $@ main.o
+$(NAME)	: $(OBJS)
+	$(CC) $(CFLAGS) -o $@ $(OBJS)
 
-main.o	: main.c
-	$(CC) $(CFLAGS) -o $@ -c main.c
+$(OBJ_DIR)/%.o: %.c
+	@$(MKDIR) $(dir $@)
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 PHONY += clean
 clean	:
-	$(RM) main.o
+	$(RM) -r $(OBJ_DIR)
 
 PHONY += fclean
 fclean	: clean
@@ -26,6 +38,11 @@ fclean	: clean
 
 PHONY += re
 re		: fclean all
+
+#--------------------------------------------
+PHONY += run
+run		: re
+	./$(NAME)
 
 PHONY += sani
 sani	:
@@ -36,3 +53,4 @@ norm	:
 	python3 .github/sh/norm.py
 
 .PHONY: $(PHONY)
+-include $(DEPS)

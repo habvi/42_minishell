@@ -10,6 +10,7 @@ static void	minishell(void)
 		// tokenize
 		// parse
 		// exec
+		printf("aaa\n");
 	}
 }
 
