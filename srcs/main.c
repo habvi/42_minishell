@@ -1,16 +1,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <readline/readline.h>
 
 static void	minishell(void)
 {
+	char	*line;
+
 	while (true)
 	{
-		// readline
+		line = readline("minishell ");
+		if (!line)
+			break ;
+		printf("%s\n", line);
+		free(line);
 		// tokenize
 		// parse
 		// exec
-		printf("aaa\n");
 	}
 }
 

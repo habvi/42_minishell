@@ -1,8 +1,9 @@
 NAME	:=	minishell
 
-CC		:=	clang
-CFLAGS	:=	-Wall -Wextra -Werror -MMD -MP
-MKDIR	:=	mkdir -p
+CC			:=	clang
+CFLAGS		:=	-Wall -Wextra -Werror -MMD -MP
+RL_FLAGS	:=	-lreadline
+MKDIR		:=	mkdir -p
 
 SRCS_DIR	:=	srcs
 SRCS	:=	$(SRCS_DIR)/main.c
@@ -22,7 +23,7 @@ PHONY	:= all
 all		: $(NAME)
 
 $(NAME)	: $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $(OBJS)
+	$(CC) $(CFLAGS) -o $@ $(OBJS) $(RL_FLAGS)
 
 $(OBJ_DIR)/%.o: %.c
 	@$(MKDIR) $(dir $@)
