@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <readline/readline.h>
+#include <readline/history.h>
 
 static void	minishell(void)
 {
@@ -13,6 +14,7 @@ static void	minishell(void)
 		if (!line)
 			break ;
 		printf("%s\n", line);
+		add_history(line);
 		free(line);
 		// tokenize
 		// parse
