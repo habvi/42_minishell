@@ -1,32 +1,45 @@
 NAME	:=	minishell
 
-CC		:=	clang
-CFLAGS	:=	-Wall -Wextra -Werror -MMD -MP
-MKDIR	:=	mkdir -p
+CC			:=	clang
+CFLAGS		:=	-Wall -Wextra -Werror -MMD -MP
+RL_FLAGS	:=	-lreadline
+MKDIR		:=	mkdir -p
 
 SRCS_DIR	:=	srcs
-SRCS	:=	$(SRCS_DIR)/main.c
+SRCS		:=	main.c
+
+EXEC_DIR	:=	exec
+SRCS		+=	$(EXEC_DIR)/exec.c
+
+INPUT_DIR	:=	input
+SRCS		+=	$(INPUT_DIR)/input.c
 
 OBJ_DIR	:=	obj
 OBJS	:=	$(SRCS:%.c=$(OBJ_DIR)/%.o)
+
+LIBFT_DIR	:=	libft
+LIBFT		:=	$(LIBFT_DIR)/libft.a
 
 ifdef SANI
 	CFLAGS += -g -fsanitize=address
 endif
 
 INCLUDE_DIR	:=	includes
-INCLUDES	:=	-I./$(INCLUDE_DIR)/
+INCLUDES	:=	-I./$(INCLUDE_DIR)/ -I$(LIBFT_DIR)/$(INCLUDE_DIR)/
 DEPS		:=	$(OBJS:.o=.d)
 
 PHONY	:= all
 all		: $(NAME)
 
-$(NAME)	: $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $(OBJS)
+$(NAME)	: $(OBJS) $(LIBFT)
+	$(CC) $(CFLAGS) -o $@ $(OBJS) $(LIBFT) $(RL_FLAGS)
 
-$(OBJ_DIR)/%.o: %.c
+$(OBJ_DIR)/%.o: $(SRCS_DIR)/%.c
 	@$(MKDIR) $(dir $@)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+$(LIBFT): FORCE
+	$(MAKE) -C $(LIBFT_DIR)
 
 PHONY += clean
 clean	:
@@ -38,6 +51,9 @@ fclean	: clean
 
 PHONY += re
 re		: fclean all
+
+PHONY += FORCE
+FORCE	:
 
 #--------------------------------------------
 PHONY += run
