@@ -3,11 +3,21 @@
 #include "minishell.h"
 #include "ft_string.h"
 
+void	exec(char **commands)
+{
+	extern char	**environ;
+
+	if (execve(commands[0], commands, environ) == EXECVE_ERROR)
+	{
+		perror("execve");
+		exit(EXIT_FAILURE);
+	}
+}
+
 static void	minishell(void)
 {
 	char		*line;
 	char		**commands;
-	extern char	**environ;
 
 	while (true)
 	{
@@ -22,11 +32,7 @@ static void	minishell(void)
 			break ;
 		// tokenize
 		// parse
-		if (execve(commands[0], commands, environ) == EXECVE_ERROR)
-		{
-			perror("execve");
-			exit(EXIT_FAILURE);
-		}
+		exec(commands);
 	}
 }
 
