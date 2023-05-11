@@ -79,9 +79,6 @@ def norm_check_exclude_header():
             exit(1)
 
 def run_norm(check_path):
-    cmd = "touch " + OUT_FILE
-    run_cmd(cmd)
-
     cmd = "norminette " + check_path +  " > " + OUT_FILE
     run_cmd(cmd)
 
