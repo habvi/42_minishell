@@ -3,10 +3,12 @@
 #include <stdbool.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include "ft_string.h"
 
 static void	minishell(void)
 {
 	char	*line;
+	char	**commands;
 
 	while (true)
 	{
@@ -15,7 +17,10 @@ static void	minishell(void)
 			break ;
 		printf("%s\n", line);
 		add_history(line);
+		commands = ft_split(line, ' ');
 		free(line);
+		if (!commands)
+			break ;
 		// tokenize
 		// parse
 		// exec
