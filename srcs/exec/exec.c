@@ -5,6 +5,8 @@
 // ft_putstr_fd -> ft_dprintf, use PROMPT_NAME
 void	child_process(char **commands, char **environ)
 {
+	if (!commands[0])
+		exit(EXIT_SUCCESS);
 	if (execve(commands[0], commands, environ) == EXECVE_ERROR)
 	{
 		ft_putstr_fd("minishell: ", STDERR_FILENO);
