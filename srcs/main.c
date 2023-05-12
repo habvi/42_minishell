@@ -7,6 +7,7 @@ int	minishell(void)
 	char	**commands;
 	int		process_status;
 
+	process_status = EXIT_SUCCESS;
 	while (true)
 	{
 		line = input_line();
