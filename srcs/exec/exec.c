@@ -1,8 +1,8 @@
 #include <sys/wait.h> // wait
 #include "minishell.h"
-#include "ft_string.h"
-#include "ft_put.h"		// ft_putendl_fd -> ft_dprintf
+#include "libft.h"
 
+// ft_putstr_fd -> ft_dprintf, use PROMPT_NAME
 void	child_process(char **commands, char **environ)
 {
 	if (execve(commands[0], commands, environ) == EXECVE_ERROR)
@@ -10,7 +10,7 @@ void	child_process(char **commands, char **environ)
 		ft_putstr_fd("minishell: ", STDERR_FILENO);
 		ft_putstr_fd(commands[0], STDERR_FILENO);
 		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
-		free_all(commands);
+		free_2d_array(&commands);
 		exit(EXIT_CODE_NO_SUCH_FILE);
 	}
 }

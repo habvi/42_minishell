@@ -1,5 +1,5 @@
 #include "minishell.h"
-#include "ft_string.h"
+#include "libft.h"
 
 int	minishell(void)
 {
@@ -20,7 +20,7 @@ int	minishell(void)
 			return (EXIT_FAILURE);
 		// parse
 		process_status = exec(commands);
-		free_all(commands);
+		free_2d_array(&commands);
 		if (process_status == PROCESS_ERROR)
 			return (EXIT_FAILURE);
 	}
