@@ -7,9 +7,9 @@ void	child_process(char **commands, char **environ)
 {
 	if (execve(commands[0], commands, environ) == EXECVE_ERROR)
 	{
-		ft_putstr_fd( "minishell: ", STDERR_FILENO);
-		ft_putstr_fd( commands[0], STDERR_FILENO);
-		ft_putstr_fd( ": No such file or directory\n", STDERR_FILENO);
+		ft_putstr_fd("minishell: ", STDERR_FILENO);
+		ft_putstr_fd(commands[0], STDERR_FILENO);
+		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
 		free_all(commands);
 		exit(EXIT_CODE_NO_SUCH_FILE);
 	}
