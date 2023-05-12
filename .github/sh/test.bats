@@ -24,6 +24,9 @@ setup() {
 
 @test "/bin/ls" {
     cmd="/bin/ls"
+    status_bash=0
+    status_minishell=0
+
     bash -c "$cmd"         > >(grep -v "out_b" | grep -v "out_m" | grep -v "err_b" | grep -v "err_m" >out_b)   2> >(sed 's/bash: line 1: //' >err_b) || status_bash=$?
     ./minishell <<< "$cmd" > >(grep -v "out_b" | grep -v "out_m" | grep -v "err_b" | grep -v "err_m" >out_m)   2> >(sed 's/minishell : //' >err_m)   || status_minishell=$?
 
@@ -37,6 +40,8 @@ setup() {
 
 @test "/bin/ls -l" {
     cmd="/bin/ls -l"
+    status_bash=0
+    status_minishell=0
     bash -c "$cmd"         > >(grep -v "out_b" | grep -v "out_m" | grep -v "err_b" | grep -v "err_m" >out_b)   2> >(sed 's/bash: line 1: //' >err_b) || status_bash=$?
     ./minishell <<< "$cmd" > >(grep -v "out_b" | grep -v "out_m" | grep -v "err_b" | grep -v "err_m" >out_m)   2> >(sed 's/minishell : //' >err_m)   || status_minishell=$?
 
@@ -54,9 +59,11 @@ setup() {
 #######################################################################
 
 @test "[exec failure] /bin/echoo hello" {
-    cmd="/bin/echoo hello"
-    bash -c "$cmd"         >out_b   2> >(sed 's/bash: line 1: //' >err_b) || status_bash=$?
-    ./minishell <<< "$cmd" >out_m   2> >(sed 's/minishell : //' >err_m)   || status_minishell=$?
+    cmd="/bin/echooo hello"
+    status_bash=0
+    status_minishell=0
+    bash -c "$cmd"         > >(grep -v "out_b" | grep -v "out_m" | grep -v "err_b" | grep -v "err_m" >out_b)   2> >(sed 's/bash: line 1: //' >err_b) || status_bash=$?
+    ./minishell <<< "$cmd" > >(grep -v "out_b" | grep -v "out_m" | grep -v "err_b" | grep -v "err_m" >out_m)   2> >(sed 's/minishell: //' >err_m)   || status_minishell=$?
 
     diff_result_stdout="$(diff out_m out_b | wc -l | tr -d ' ')"
     diff_result_stderr="$(diff err_m err_b | wc -l | tr -d ' ')"
