@@ -3,6 +3,7 @@
 
 # ignore
 .idea/
+cmake-build-debug/
 
 # include
 !.gitignore
