@@ -7,6 +7,7 @@ int	minishell(void)
 	char	**commands;
 	int		process_status;
 
+	process_status = EXIT_SUCCESS;
 	while (true)
 	{
 		line = input_line();
@@ -23,7 +24,7 @@ int	minishell(void)
 		if (process_status == PROCESS_ERROR)
 			return (EXIT_FAILURE);
 	}
-	return (EXIT_SUCCESS);
+	return (process_status);
 }
 
 int	main(void)

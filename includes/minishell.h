@@ -6,13 +6,15 @@
 # include <stdbool.h>
 # include <unistd.h>
 
-# define EXECVE_ERROR	-1
-# define FORK_ERROR		-1
-# define WAIT_ERROR		-1
-# define PROCESS_ERROR	-1
+# define EXECVE_ERROR	(-1)
+# define FORK_ERROR		(-1)
+# define WAIT_ERROR		(-1)
+# define PROCESS_ERROR	(-1)
 
 # define CHILD_PID		0
 # define PROMPT_NAME    "minishell "
+
+# define EXIT_CODE_NO_SUCH_FILE	127
 
 // exec
 int		exec(char **commands);

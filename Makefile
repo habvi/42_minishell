@@ -68,5 +68,13 @@ PHONY += norm
 norm	:
 	python3 .github/sh/norm.py
 
+
+#--------------------------------------------
+# test.bats
+PHONY += t
+t		: re
+	./.github/sh/test.bats
+
+
 .PHONY: $(PHONY)
 -include $(DEPS)
