@@ -23,7 +23,7 @@ int	minishell(void)
 		if (process_status == PROCESS_ERROR)
 			return (EXIT_FAILURE);
 	}
-	return (EXIT_SUCCESS);
+	return (process_status);
 }
 
 int	main(void)

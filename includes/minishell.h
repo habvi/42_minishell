@@ -14,6 +14,8 @@
 # define CHILD_PID		0
 # define PROMPT_NAME    "minishell "
 
+# define EXIT_CODE_NO_SUCH_FILE	127
+
 // exec
 int		exec(char **commands);
 
