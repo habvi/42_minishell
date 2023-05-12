@@ -1,58 +1,67 @@
 #!/usr/bin/env bats
 
-dir="./../../"
-
-echo hello
-
 setup() {
-    load ./bats-assert/load
-    load ./bats-support/load
+# path based test.bats ?
+    load bats-assert/load
+    load bats-support/load
 }
 
-setup_file() {
-    make re -C $dir
-}
+# path based makefile ?
 
-@test "0 arg" {
-    run $dir./a.out
-    assert_equal "$output" ""
-    assert_equal "$status" "1"
-    [[ "$output" != *"detected memory leaks"* ]]
-}
-
-@test "1 arg-1" {
-    run $dir./a.out b
-    assert_equal "$status" 0
-    assert_equal "$output" "B"
-    [[ "$output" != *"detected memory leaks"* ]]
-}
-
-@test "1 arg-2" {
-    run $dir./a.out ""
-    assert_equal "$status" 0
-    assert_equal "$output" ""
-    [[ "$output" != *"detected memory leaks"* ]]
-}
-
-@test "2 arg" {
-    run $dir./a.out a b
-    assert_equal "$status" 1
-    assert_equal "$output" ""
-    [[ "$output" != *"detected memory leaks"* ]]
-}
-
-@test "3 arg" {
-    run $dir./a.out a b c
-    assert_equal "$status" 1
-    assert_equal "$output" ""
-    [[ "$output" != *"detected memory leaks"* ]]
-}
-
-
-@test "mkfile" {
-    echo -e hello > out
-    run cat out
+#######################################################################
+##                             echo                                  ##
+#######################################################################
+@test "/bin/echo hello" {
+    run ./minishell <<< "/bin/echo hello"
     assert_equal "$output" "hello"
+    assert_equal "$status" "0"
+}
+
+#######################################################################
+##                              ls                                   ##
+#######################################################################
+# outfiles must be excluded in ls test
+
+@test "/bin/ls" {
+    cmd="/bin/ls"
+    bash -c "$cmd"         > >(grep -v "out_b" | grep -v "out_m" | grep -v "err_b" | grep -v "err_m" >out_b)   2> >(sed 's/bash: line 1: //' >err_b) || status_bash=$?
+    ./minishell <<< "$cmd" > >(grep -v "out_b" | grep -v "out_m" | grep -v "err_b" | grep -v "err_m" >out_m)   2> >(sed 's/minishell : //' >err_m)   || status_minishell=$?
+
+    diff_result_stdout="$(diff out_m out_b | wc -l | tr -d ' ')"
+    diff_result_stderr="$(diff err_m err_b | wc -l | tr -d ' ')"
+
+    assert_equal "$diff_result_stdout" "0"
+    assert_equal "$diff_result_stderr" "0"
+    assert_equal "$status_bash" "$status_minishell"
+}
+
+@test "/bin/ls -l" {
+    cmd="/bin/ls -l"
+    bash -c "$cmd"         > >(grep -v "out_b" | grep -v "out_m" | grep -v "err_b" | grep -v "err_m" >out_b)   2> >(sed 's/bash: line 1: //' >err_b) || status_bash=$?
+    ./minishell <<< "$cmd" > >(grep -v "out_b" | grep -v "out_m" | grep -v "err_b" | grep -v "err_m" >out_m)   2> >(sed 's/minishell : //' >err_m)   || status_minishell=$?
+
+    diff_result_stdout="$(diff out_m out_b | wc -l | tr -d ' ')"
+    diff_result_stderr="$(diff err_m err_b | wc -l | tr -d ' ')"
+
+    assert_equal "$diff_result_stdout" "0"
+    assert_equal "$diff_result_stderr" "0"
+    assert_equal "$status_bash" "$status_minishell"
 }
 
 
+#######################################################################
+##                           error                                   ##
+#######################################################################
+
+@test "[exec failure] /bin/echoo hello" {
+    cmd="/bin/echoo hello"
+    bash -c "$cmd"         >out_b   2> >(sed 's/bash: line 1: //' >err_b) || status_bash=$?
+    ./minishell <<< "$cmd" >out_m   2> >(sed 's/minishell : //' >err_m)   || status_minishell=$?
+
+    diff_result_stdout="$(diff out_m out_b | wc -l | tr -d ' ')"
+    diff_result_stderr="$(diff err_m err_b | wc -l | tr -d ' ')"
+
+    assert_equal "$diff_result_stdout" "0"
+    assert_equal "$diff_result_stderr" "0"
+    assert_equal "$status_bash" "$status_minishell"
+}
