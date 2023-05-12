@@ -1,16 +1,20 @@
 #include <stdlib.h>
 #include "ft_string.h"
 
-void	*free_all(char **split_strs)
+void	*free_2d_array(char ***ptr)
 {
 	size_t	i;
 
+	if (!*ptr)
+		return (NULL);
 	i = 0;
-	while (split_strs[i] != NULL)
+	while ((*ptr)[i])
 	{
-		free(split_strs[i]);
+		free((*ptr)[i]);
+		(*ptr)[i] = NULL;
 		i++;
 	}
-	free(split_strs);
+	free(*ptr);
+	*ptr = NULL;
 	return (NULL);
 }
