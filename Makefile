@@ -2,7 +2,6 @@ NAME	:=	minishell
 
 CC			:=	clang
 CFLAGS		:=	-Wall -Wextra -Werror -MMD -MP
-RL_FLAGS	:=	-lreadline
 MKDIR		:=	mkdir -p
 
 SRCS_DIR	:=	srcs
@@ -27,6 +26,10 @@ endif
 INCLUDE_DIR	:=	includes
 INCLUDES	:=	-I./$(INCLUDE_DIR)/ -I$(LIBFT_DIR)/$(INCLUDE_DIR)/
 DEPS		:=	$(OBJS:.o=.d)
+
+RL_DIR		:= $(shell brew --prefix readline)/lib
+RL_FLAGS	:=	-L$(RL_DIR) -lreadline -lhistory
+
 
 PHONY	:= all
 all		: $(NAME)
