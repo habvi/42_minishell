@@ -35,7 +35,7 @@ setup() {
 
     assert_equal "$diff_result_stdout" "0"
     assert_equal "$diff_result_stderr" "0"
-    assert_equal "$status_bash" "$status_minishell"
+    assert_equal "$status_minishell" "$status_bash"
 }
 
 @test "/bin/ls -l" {
@@ -50,7 +50,7 @@ setup() {
 
     assert_equal "$diff_result_stdout" "0"
     assert_equal "$diff_result_stderr" "0"
-    assert_equal "$status_bash" "$status_minishell"
+    assert_equal "$status_minishell" "$status_bash"
 }
 
 
@@ -58,11 +58,11 @@ setup() {
 ##                           error                                   ##
 #######################################################################
 
-@test "[exec failure] /bin/echoo hello" {
+@test "[exec failure] /bin/echooo hello" {
     cmd="/bin/echooo hello"
     status_bash=0
     status_minishell=0
-    bash -c "$cmd"         > >(grep -v "out_b" | grep -v "out_m" | grep -v "err_b" | grep -v "err_m" >out_b)   2> >(sed 's/bash: line 1: //' >err_b) || status_bash=$?
+    bash -c "$cmd"         > >(grep -v "out_b" | grep -v "out_m" | grep -v "err_b" | grep -v "err_m" >out_b)   2> >(sed 's/bash: line 1: //' >err_b)|| status_bash=$?
     ./minishell <<< "$cmd" > >(grep -v "out_b" | grep -v "out_m" | grep -v "err_b" | grep -v "err_m" >out_m)   2> >(sed 's/minishell: //' >err_m)   || status_minishell=$?
 
     diff_result_stdout="$(diff out_m out_b | wc -l | tr -d ' ')"
@@ -70,5 +70,5 @@ setup() {
 
     assert_equal "$diff_result_stdout" "0"
     assert_equal "$diff_result_stderr" "0"
-    assert_equal "$status_bash" "$status_minishell"
+    assert_equal "$status_minishell" "$status_bash"
 }
