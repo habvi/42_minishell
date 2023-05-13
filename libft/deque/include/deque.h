@@ -20,7 +20,7 @@ typedef struct s_deque {
 }	t_deque;
 
 // dq_add_back.c
-// void	deque_add_back(t_deque *deque, t_deque *new_node);
+void			deque_add_back(t_deque *deque, t_deque_node *new_node);
 
 // dq_add_front.c
 // void	deque_add_front(t_deque *deque, t_deque *new_node);
@@ -48,7 +48,7 @@ void			deque_print(t_deque *deque);
 void			debug_deque_print(t_deque *deque, const char *func_name);
 
 // dq_set_value.c
-// void	deque_set_next(t_deque *deque, t_deque *next);
-// void	deque_set_prev(t_deque *deque, t_deque *prev);
+void			deque_set_next(t_deque_node *deque, t_deque_node *next);
+void			deque_set_prev(t_deque_node *deque, t_deque_node *prev);
 
 #endif

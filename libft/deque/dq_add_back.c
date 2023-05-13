@@ -1,11 +1,21 @@
 #include "deque.h"
 
-void	deque_add_back(t_deque *deque, t_deque *new_node)
+void	deque_add_back(t_deque *deque, t_deque_node *new_node)
 {
-	t_deque	*tail;
+	t_deque_node	*tail;
 
-	tail = deque->prev;
+	if (!new_node)
+		return ;
+	if (deque_is_empty(deque))
+	{
+		deque->node = new_node;
+		deque_set_prev(deque->node, new_node);
+		deque->size += 1;
+		return ;
+	}
+	tail = deque->node->prev;
 	deque_set_next(tail, new_node);
 	deque_set_prev(new_node, tail);
-	deque_set_prev(deque, new_node);
+	deque_set_prev(deque->node, new_node);
+	deque->size += 1;
 }

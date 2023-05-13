@@ -1,11 +1,11 @@
 #include "deque.h"
 
-void	deque_set_next(t_deque *deque, t_deque *next)
+void	deque_set_next(t_deque_node *node, t_deque_node *new_node)
 {
-	deque->next = next;
+	node->next = new_node;
 }
 
-void	deque_set_prev(t_deque *deque, t_deque *prev)
+void	deque_set_prev(t_deque_node *node, t_deque_node *new_node)
 {
-	deque->prev = prev;
+	node->prev = new_node;
 }
