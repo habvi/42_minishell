@@ -26,8 +26,11 @@ void			deque_add_back(t_deque *deque, t_deque_node *new_node);
 void			deque_add_first_node(t_deque *deque, t_deque_node *new_node);
 void			deque_add_front(t_deque *deque, t_deque_node *new_node);
 
-// dq_clear.c
-void			deque_clear(t_deque **deque);
+// dq_clear_all.c
+void			deque_clear_all(t_deque **deque);
+
+// dq_clear_node.c
+void			deque_clear_node(t_deque_node **node);
 
 // dq_is_empty.c
 bool			deque_is_empty(t_deque *deque);

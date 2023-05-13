@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include "deque.h"
 
-void	deque_clear(t_deque **deque)
+void	deque_clear_all(t_deque **deque)
 {
 	t_deque_node	*node;
 	t_deque_node	*tmp;
