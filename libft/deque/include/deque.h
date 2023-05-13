@@ -39,9 +39,10 @@ t_deque			*deque_new(void);
 t_deque_node	*deque_node_new(void *content);
 
 // dq_pop_back.c
-// t_deque	*deque_pop_back(t_deque *deque);
+t_deque_node	*deque_pop_back(t_deque *deque);
 
 // dq_pop_front.c
+t_deque_node	*deque_pop_last_node(t_deque *deque);
 // t_deque	*deque_pop_front(t_deque *deque);
 
 // dq_print.c
