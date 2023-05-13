@@ -48,7 +48,7 @@ t_deque_node	*deque_pop_front(t_deque *deque);
 void			deque_print(t_deque *deque);
 void			debug_deque_print(t_deque *deque, const char *func_name);
 
-// dq_set_value.c
+// dq_set_node.c
 void			deque_set_next(t_deque_node *deque, t_deque_node *next);
 void			deque_set_prev(t_deque_node *deque, t_deque_node *prev);
 

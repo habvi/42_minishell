@@ -1,4 +1,20 @@
 #--------------------------------------------
+# deque
+#--------------------------------------------
+DEQUE_DIR	:=	deque
+DEQUE_SRC	:=	$(DEQUE_DIR)/dq_add_back.c \
+				$(DEQUE_DIR)/dq_add_front.c \
+				$(DEQUE_DIR)/dq_clear_all.c \
+				$(DEQUE_DIR)/dq_clear_node.c \
+				$(DEQUE_DIR)/dq_is_empty.c \
+				$(DEQUE_DIR)/dq_new.c \
+				$(DEQUE_DIR)/dq_node_new.c \
+				$(DEQUE_DIR)/dq_pop_back.c \
+				$(DEQUE_DIR)/dq_pop_front.c \
+				$(DEQUE_DIR)/dq_print.c \
+				$(DEQUE_DIR)/dq_set_node.c
+
+#--------------------------------------------
 # ft_ascii
 #--------------------------------------------
 ASCII_DIR	:=	ft_ascii
@@ -105,7 +121,8 @@ NAME		:=	libft.a
 
 SRC_DIR		:=	src
 OBJ_DIR		:=	obj
-OBJS		:=	$(ASCII_SRC:%.c=$(OBJ_DIR)/%.o) \
+OBJS		:=	$(DEQUE_SRC:%.c=$(OBJ_DIR)/%.o) \
+				$(ASCII_SRC:%.c=$(OBJ_DIR)/%.o) \
 				$(LIB_SRC:%.c=$(OBJ_DIR)/%.o) \
 				$(LIST_SRC:%.c=$(OBJ_DIR)/%.o) \
 				$(MATH_SRC:%.c=$(OBJ_DIR)/%.o) \
