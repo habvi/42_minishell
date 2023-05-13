@@ -46,7 +46,7 @@ t_deque_node	*deque_pop_back(t_deque *deque);
 
 // dq_pop_front.c
 t_deque_node	*deque_pop_last_node(t_deque *deque);
-// t_deque	*deque_pop_front(t_deque *deque);
+t_deque_node	*deque_pop_front(t_deque *deque);
 
 // dq_print.c
 void			deque_print(t_deque *deque);
