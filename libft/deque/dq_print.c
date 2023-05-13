@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "deque.h"
 
 void	deque_print(t_deque *deque)

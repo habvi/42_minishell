@@ -4,10 +4,6 @@
 # include <stddef.h>
 # include <stdbool.h>
 
-# include <stdio.h> // to do: erase
-
-typedef enum e_error	t_error;
-
 typedef struct s_deque_node {
 	void				*content;
 	struct s_deque_node	*next;
