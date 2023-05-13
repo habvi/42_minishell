@@ -2,7 +2,7 @@
 
 void	deque_print(t_deque *deque)
 {
-	t_deque	*node;
+	t_deque_node	*node;
 
 	if (deque_is_empty(deque))
 	{
@@ -10,11 +10,13 @@ void	deque_print(t_deque *deque)
 		printf("---------------------\n");
 		return ;
 	}
-	node = deque->next;
+	printf("cotent: ");
+	node = deque->node;
 	while (node)
 	{
-		printf("[%p] num: %d\n", node, node->num);
+		printf("[%s]", node->content);
 		node = node->next;
 	}
+	printf("\nsize  : %zu\n", deque->size);
 	printf("---------------------\n");
 }
