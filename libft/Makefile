@@ -86,6 +86,21 @@ STRING_SRC	:=	$(STRING_DIR)/ft_free.c \
 				$(STRING_DIR)/ft_substr.c
 
 #--------------------------------------------
+# ft_dprintf
+#--------------------------------------------
+FT_DPRINTF_DIR	:=	ft_dprintf
+STRING_SRC		+=	$(FT_DPRINTF_DIR)/convert_to_str.c \
+					$(FT_DPRINTF_DIR)/convert_to_str2.c \
+					$(FT_DPRINTF_DIR)/ft_dprintf.c \
+					$(FT_DPRINTF_DIR)/handle_info.c \
+					$(FT_DPRINTF_DIR)/itoa_utoa_for_printf.c\
+					$(FT_DPRINTF_DIR)/parse_format.c \
+					$(FT_DPRINTF_DIR)/ptoa_xtoa_for_printf.c \
+					$(FT_DPRINTF_DIR)/set_field.c \
+					$(FT_DPRINTF_DIR)/set_output.c \
+					$(FT_DPRINTF_DIR)/strdup_for_printf.c
+
+#--------------------------------------------
 NAME		:=	libft.a
 
 SRC_DIR		:=	src

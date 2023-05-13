@@ -1,17 +1,19 @@
 #include <sys/wait.h> // wait
 #include "minishell.h"
+#include "ft_dprintf.h"
 #include "libft.h"
 
-// ft_putstr_fd -> ft_dprintf, use PROMPT_NAME
+// use PROMPT_NAME
 void	child_process(char **commands, char **environ)
 {
-	if (!commands[0])
-		exit(EXIT_SUCCESS);
+	printf("chi : %p\n", commands);
+	// if (!commands[0])
+	// 	exit(EXIT_SUCCESS);
 	if (execve(commands[0], commands, environ) == EXECVE_ERROR)
 	{
-		ft_putstr_fd("minishell: ", STDERR_FILENO);
-		ft_putstr_fd(commands[0], STDERR_FILENO);
-		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
+		// write or malloc error
+		ft_dprintf(STDERR_FILENO, "minishell: %s: %s\n", \
+											commands[0], EXIT_MSG_NO_SUCH_FILE);
 		free_2d_array(&commands);
 		exit(EXIT_CODE_NO_SUCH_FILE);
 	}
