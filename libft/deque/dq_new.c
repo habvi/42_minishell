@@ -1,5 +1,5 @@
+#include <stdlib.h>
 #include "deque.h"
-#include <stdlib.h> // malloc
 
 t_deque	*deque_new(void)
 {
