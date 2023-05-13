@@ -45,6 +45,7 @@ t_deque_node	*deque_node_new(void);
 
 // dq_print.c
 void			deque_print(t_deque *deque);
+void			debug_deque_print(t_deque *deque, const char *func_name);
 
 // dq_set_value.c
 // void	deque_set_next(t_deque *deque, t_deque *next);
