@@ -7,6 +7,12 @@ static t_deque	*init_test()
 	t_deque	*deque;
 
 	deque = deque_new();
+	if (deque == NULL)
+	{
+		printf("Error: malloc\n");
+		exit(EXIT_FAILURE);
+	}
+	printf("deque_new success\n");
 	debug_deque_print(deque, __func__);
 	return (deque);
 }
@@ -86,7 +92,6 @@ char *get_s(char c)
 int	main(void)
 {
 	t_deque	*deque = init_test();
-	debug_deque_print(deque, __func__);
 
 	add_front_test(deque, get_s('a'));
 	add_back_test(deque);
