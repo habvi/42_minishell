@@ -8,9 +8,7 @@ void	deque_add_back(t_deque *deque, t_deque_node *new_node)
 		return ;
 	if (deque_is_empty(deque))
 	{
-		deque->node = new_node;
-		deque_set_prev(deque->node, new_node);
-		deque->size += 1;
+		deque_add_first_node(deque, new_node);
 		return ;
 	}
 	tail = deque->node->prev;
