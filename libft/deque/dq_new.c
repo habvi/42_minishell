@@ -1,19 +1,14 @@
 #include "deque.h"
-#include "error.h"
 #include <stdlib.h> // malloc
 
-t_deque	*deque_new(int num, t_error *error)
+t_deque	*deque_new(void)
 {
-	t_deque	*node;
+	t_deque	*deque;
 
-	node = (t_deque *)malloc(sizeof(t_deque));
-	if (node == NULL)
-	{
-		*error = ERROR_MALLOC;
+	deque = (t_deque *)malloc(sizeof(t_deque));
+	if (!deque)
 		return (NULL);
-	}
-	node->num = num;
-	node->next = NULL;
-	node->prev = NULL;
-	return (node);
+	deque->node = NULL;
+	deque->size = 0;
+	return (deque);
 }
