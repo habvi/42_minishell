@@ -35,7 +35,7 @@ bool			deque_is_empty(t_deque *deque);
 t_deque			*deque_new(void);
 
 // dq_node_new.c
-t_deque_node    *deque_node_new(void);
+t_deque_node	*deque_node_new(void);
 
 // dq_pop_back.c
 // t_deque	*deque_pop_back(t_deque *deque);
