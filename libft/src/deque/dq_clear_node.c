@@ -5,6 +5,8 @@ void	deque_clear_node(t_deque_node **node)
 {
 	char	*content;
 
+	if (!*node)
+		return ;
 	content = (*node)->content;
 	free(content);
 	content = NULL;
