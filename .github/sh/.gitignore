@@ -1,5 +1,9 @@
+*
+
 # test.bats
-out
+!bats-assert/
+!bats-support/
+!test.bats
 
 # norm.py
-norm_out.txt
+!norm.py
