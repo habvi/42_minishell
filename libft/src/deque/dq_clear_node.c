@@ -3,13 +3,10 @@
 
 void	deque_clear_node(t_deque_node **node)
 {
-	char	*content;
-
 	if (!*node)
 		return ;
-	content = (*node)->content;
-	free(content);
-	content = NULL;
+	free((*node)->content);
+	(*node)->content = NULL;
 	(*node)->next = NULL;
 	(*node)->prev = NULL;
 	free(*node);
