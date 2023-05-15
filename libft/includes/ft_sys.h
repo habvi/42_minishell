@@ -35,8 +35,8 @@ pid_t			x_waitpid(pid_t pid, int *stat_loc, int options);
 int				x_execve(const char *path, \
 						char *const argv[], \
 						char *const envp[]);
-int				x_dup(int fd);
-int				x_dup2(int fd, int fd2);
+int				x_dup(int oldfd);
+int				x_dup2(int oldfd, int newfd);
 int				x_pipe(int fd[2]);
 
 /* file */
