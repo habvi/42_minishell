@@ -17,7 +17,7 @@ setup() {
 
   echo "[TEST]" >&3
 #  echo "input file" >&3
-  cat -e .github/sh/input1 >&3
+#  cat -e .github/sh/input1 >&3
 #  echo "" >&3
 #  echo "-----------------------" >&3
 
