@@ -37,7 +37,7 @@ int				x_execve(const char *path, \
 						char *const envp[]);
 int				x_dup(int oldfd);
 int				x_dup2(int oldfd, int newfd);
-int				x_pipe(int fd[2]);
+int				x_pipe(int pipe_fd[2]);
 
 /* file */
 // todo : open(const char *path, int oflag, ...);
