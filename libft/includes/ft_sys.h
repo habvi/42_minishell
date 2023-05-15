@@ -30,8 +30,8 @@ int				x_kill(pid_t pid, int sig);
 
 /* pipe, fork, exec */
 pid_t			x_fork(void);
-pid_t			x_wait(int *stat_loc);
-pid_t			x_waitpid(pid_t pid, int *stat_loc, int options);
+pid_t			x_wait(int *wstatus);
+pid_t			x_waitpid(pid_t pid, int *wstatus, int options);
 int				x_execve(const char *path, \
 						char *const argv[], \
 						char *const envp[]);
