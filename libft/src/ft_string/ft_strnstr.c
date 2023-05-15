@@ -9,8 +9,8 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 	len_needle = ft_strlen(needle);
 	if (!len_needle)
 		return ((char *)haystack);
-	// if (haystack == NULL && len == 0)
-	// 	return (NULL);
+	if (haystack == NULL && len == 0)
+		return (NULL);
 	len = ft_min(len, ft_strlen(haystack));
 	i = 0;
 	while (i + len_needle <= len)
