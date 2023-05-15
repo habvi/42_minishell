@@ -7,9 +7,6 @@ void	*x_malloc(size_t size)
 	errno = 0;
 	ret = malloc(size);
 	if (!ret)
-	{
 		perror("malloc");
-		return (NULL);
-	}
 	return (ret);
 }
