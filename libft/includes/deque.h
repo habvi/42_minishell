@@ -31,10 +31,10 @@ void			deque_clear_node(t_deque_node **node);
 // dq_is_empty.c
 bool			deque_is_empty(t_deque *deque);
 
-// dq_new.c
+// if malloc error, return NULL
 t_deque			*deque_new(void);
 
-// dq_node_new.c
+// if malloc error, return NULL
 t_deque_node	*deque_node_new(void *content);
 
 // dq_pop_back.c
