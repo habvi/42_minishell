@@ -41,7 +41,7 @@ int				x_pipe(int fd[2]);
 
 /* file */
 // todo : open(const char *path, int oflag, ...);
-int				x_open(int fd, const char *path, int oflag);
+int				x_open(const char *path, int oflag);
 int				x_close(int fd);
 ssize_t			x_read(int fd, void *buf, size_t nbyte);
 
