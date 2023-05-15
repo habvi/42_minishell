@@ -16,6 +16,8 @@
 
 # define EXIT_CODE_NO_SUCH_FILE	127
 
+# define EXIT_MSG_NO_SUCH_FILE  "No such file or directory"
+
 // exec
 int		exec(char **commands);
 

@@ -66,7 +66,7 @@ char	**ft_split(char const *s, char c)
 	if (split_strs == NULL)
 		return (NULL);
 	if (!set_split_str(s, c, split_strs))
-		return (free_all(split_strs));
+		return (free_2d_array(&split_strs));
 	split_strs[len] = NULL;
 	return (split_strs);
 }

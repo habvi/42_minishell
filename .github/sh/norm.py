@@ -3,7 +3,7 @@ import sys
 
 # ----------------------------------------------------------
 OUT_FILE = "norm_out.txt"
-NORM_CHECK_PATH_ACTIONS = "includes srcs"
+NORM_CHECK_PATH_ACTIONS = "includes srcs libft"
 NORM_CHECK_PATH_LOCAL = "playground"
 
 # ----------------------------------------------------------
