@@ -5,7 +5,7 @@ int	x_close(int fd)
 	int	ret;
 
 	errno = 0;
-	ret = x_close(fd);
+	ret = close(fd);
 	if (ret == SYS_ERROR)
 		perror("close");
 	return (ret);

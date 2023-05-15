@@ -7,6 +7,6 @@ int	x_dup(int fd)
 	errno = 0;
 	ret = dup(fd);
 	if (ret == SYS_ERROR)
-		perrro("dup");
+		perror("dup");
 	return (ret);
 }

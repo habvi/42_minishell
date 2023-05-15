@@ -1,3 +1,4 @@
+#include <fcntl.h>
 #include "ft_sys.h"
 
 int	x_open(int fd, const char *path, int oflag)

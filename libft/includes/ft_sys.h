@@ -1,8 +1,10 @@
 #ifndef FT_SYS_H
 # define FT_SYS_H
 
+# include <sys/errno.h>
 # include <dirent.h>
 # include <stdlib.h>
+# include <stdio.h>
 # include <unistd.h>
 # include <termios.h>
 
