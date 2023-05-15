@@ -1,3 +1,4 @@
-/bin/echooo hello
+/bin/echo hello
 /bin/echo world
-/bin/hogehoge
+/bin/ls
+/no_such_file

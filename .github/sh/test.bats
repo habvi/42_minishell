@@ -1,12 +1,14 @@
 #!/usr/bin/env bats
 
 setup() {
-# path based test.bats ?
-    load bats-assert/load
-    load bats-support/load
+  # helper
+  load 'bats-assert/load'
+  load 'bats-support/load'
 
-    # todo: set-up outfile, dir path
+  # todo: set-up outfile, dir path
 }
+
+
 
 #######################################################################
 ##                             echo                                  ##
@@ -14,28 +16,23 @@ setup() {
 @test "/bin/echo hello" {
   # BW02: Using flags on `run` requires at least BATS_VERSION=1.5.0.
 #  bats_require_minimum_version 1.5.0
+  cmd="/bin/echo hello$'\n'/bin/echo world"
 
   echo "[TEST]" >&3
-#  echo "input file" >&3
+#  echo -e "$cmd"
+#  echo input file" >&3
 #  cat -e .github/sh/input1 >&3
 #  echo "" >&3
 #  echo "-----------------------" >&3
 
-  # Run minishell and copy output array and status
+  # Run minishell
 #  run ! --separate-stderr bash -c "<.github/sh/input1 ./minishell"
-  run ! --separate-stderr bash -c "/bin/echo hello | ./minishell"
-
-#  echo "original status, arrays" >&3
-#  echo " status  : [$status]" >&3
-#  echo " stdout(${#output[@]}): [${output[*]}]" >&3 # size=1, delim=\n
-#  echo " stderr(${#stderr[@]}): [${stderr[*]}]" >&3
-#  echo "-----------------------" >&3
+#  run --separate-stderr bash -c "echo -e -n /bin/echo hello$'\n'/bin/echoo world | ./minishell"
+  run --separate-stderr bash -c "echo -e -n $cmd | ./minishell"
 
   status_m=$status
-  # delim by IFS
   IFS=$'\n'
   out_m=($output)
-
   err_arr=($stderr)
   err_m=()
 
@@ -62,8 +59,11 @@ setup() {
   echo " size :${#err_m[@]}" >&3
   echo -e "\n-----------------------" >&3
 
+
+  # Run bash
 #  run ! --separate-stderr bash -c "<.github/sh/input1 bash"
-  run ! --separate-stderr bash -c "/bin/echo hello | bash"
+#  run ! --separate-stderr bash -c "echo -e -n /bin/echo hello$'\n'/bin/echoo world | bash"
+  run --separate-stderr bash -c "echo -e -n $cmd | bash"
 
   status_b=$status
   out_b=($output)
@@ -80,7 +80,6 @@ setup() {
   done
 
   echo "====== bash ======" >&3
-
   echo "status:$status_b" >&3
   echo "" >&3
   echo "out_b" >&3
@@ -92,10 +91,7 @@ setup() {
   echo " size :${#err_b[@]}" >&3
   echo -e "\n-----------------------" >&3
 
-  # Run minishell and copy output array and status
-
-
-#  run bash -c echo -n -e "$cmd | ./minishell"
+  # assert 'have' 'want'
   assert_equal "$status_m" "$status_b"
   assert_equal "$out_m" "$out_b"
   assert_equal "$err_m" "$err_b"
