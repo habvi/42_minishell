@@ -13,12 +13,10 @@
 
 // temporarily here ...
 /* debug */
-// put.c
-void			debug_func(const char *func_name, const int line_num);
-void			debug_2d_array(char **array);
+void	debug_func(const char *func_name, const int line_num);
+void	debug_2d_array(char **array);
 
 /* input */
-// input.c
-char			*input_line(void);
+char	*input_line(void);
 
 #endif //MINISHELL_H
