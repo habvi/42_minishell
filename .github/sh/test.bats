@@ -6,21 +6,14 @@ setup() {
     load bats-support/load
 
     # todo: set-up outfile, dir path
-
 }
-
-#todo: tears outfile
-
-
-
-# path based makefile ?
 
 #######################################################################
 ##                             echo                                  ##
 #######################################################################
 @test "/bin/echo hello" {
   # BW02: Using flags on `run` requires at least BATS_VERSION=1.5.0.
-  bats_require_minimum_version 1.5.0
+#  bats_require_minimum_version 1.5.0
 
   echo "[TEST]" >&3
   echo "input file" >&3
