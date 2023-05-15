@@ -16,13 +16,14 @@ setup() {
 #  bats_require_minimum_version 1.5.0
 
   echo "[TEST]" >&3
-  echo "input file" >&3
+#  echo "input file" >&3
   cat -e .github/sh/input1 >&3
-  echo "" >&3
-  echo "-----------------------" >&3
+#  echo "" >&3
+#  echo "-----------------------" >&3
 
   # Run minishell and copy output array and status
-  run ! --separate-stderr bash -c "<.github/sh/input1 ./minishell"
+#  run ! --separate-stderr bash -c "<.github/sh/input1 ./minishell"
+  run ! --separate-stderr bash -c "/bin/echo hello | ./minishell"
 
 #  echo "original status, arrays" >&3
 #  echo " status  : [$status]" >&3
@@ -61,7 +62,9 @@ setup() {
   echo " size :${#err_m[@]}" >&3
   echo -e "\n-----------------------" >&3
 
-  run ! --separate-stderr bash -c "<.github/sh/input1 bash"
+#  run ! --separate-stderr bash -c "<.github/sh/input1 bash"
+  run ! --separate-stderr bash -c "/bin/echo hello | bash"
+
   status_b=$status
   out_b=($output)
   err_arr=($stderr)
