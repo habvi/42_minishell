@@ -4,6 +4,7 @@
 !bats-assert/
 !bats-support/
 !test.bats
+!input1
 
 # norm.py
 !norm.py
