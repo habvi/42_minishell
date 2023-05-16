@@ -27,4 +27,8 @@ PHONY += dup2
 dup2:
 	$(CC) $(CFLAGS) dup2.c && ./$(NAME)
 
+PHONY += multi
+multi:
+	$(CC) $(CFLAGS) multistage_pipe.c && ./$(NAME)
+
 .PHONY: $(PHONY)
