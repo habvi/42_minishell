@@ -7,37 +7,35 @@
 #include <string.h>
 #include "test.h"
 
-static void	child_proc(int pipefd[2], pid_t pid)
-{
-	const char	*s = "abcde";
+extern char	**environ;
 
+static void	child_proc(int pipefd[2], pid_t pid, char *argv[])
+{
 	printf("=== child process start [PID: %d] ===\n", pid);
 	close(pipefd[0]);
-	write(pipefd[1], s, strlen(s));
+	close(STDOUT_FILENO);
+	dup2(pipefd[1], STDOUT_FILENO);
 	close(pipefd[1]);
+	if (execve(argv[1], argv + 1, environ) == EXECVE_ERROR)
+	{
+		perror("execve");
+		exit(EXIT_FAILURE);
+	}
 	printf("=== child process end ===\n");
 }
 
-static void	read_from_new_pipe(int fd)
+static void	read_from_pipe_and_exec(int fd)
 {
 	const size_t	BUF_SIZE = 10;
 	char			buf[BUF_SIZE];
 	ssize_t			rsize;
-	while (true)
+
+	printf("=== parent process read ===\n");
+	const char *commands[] = {"/bin/cat", NULL};
+	if (execve(commands[0], commands, environ) == EXECVE_ERROR)
 	{
-		rsize = read(fd, buf, BUF_SIZE);
-		if (rsize == READ_ERROR)
-		{
-			perror("read");
-			exit(EXIT_FAILURE);
-		}
-		if (rsize <= 0)
-			break ;
-		printf("[rsize: %zd]\n", rsize);
-		buf[rsize] = '\0';
-		write(STDOUT_FILENO, "|", 1);
-		write(STDOUT_FILENO, buf, rsize);
-		write(STDOUT_FILENO, "|", 1);
+		perror("execve");
+		exit(EXIT_FAILURE);
 	}
 }
 
@@ -48,15 +46,18 @@ static void	parent_proc(int pipefd[2], pid_t pid)
 
 	printf("=== parents process start [PID: %d] ===\n", pid);
 	close(pipefd[1]);
+	close(STDIN_FILENO);
+	dup2(pipefd[0], STDIN_FILENO);
+	close(pipefd[0]);
 	wait_pid = wait(&status);
 	if (wait_pid == WAIT_ERROR)
 	{
 		perror("wait");
 		exit(EXIT_FAILURE);
 	}
-	read_from_new_pipe(pipefd[0]);
-	close(pipefd[0]);
-	printf("\nwait pid: %d, status: %d\n", wait_pid, status);
+	read_from_pipe_and_exec(STDIN_FILENO);
+	if (WIFEXITED(status))
+		printf("\nwait pid: %d, status: %d\n", wait_pid, WEXITSTATUS(status));
 	printf("=== parents process end ===\n");
 }
 
@@ -67,7 +68,6 @@ int	main(int argc, char *argv[])
 	pid_t	pid;
 
 	(void)argc;
-	(void)argv;
 	if (pipe(pipefd) == PIPE_ERROR)
 	{
 		perror("pipe");
@@ -81,7 +81,7 @@ int	main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 	if (pid == CHILD_PID)
-		child_proc(pipefd, pid);
+		child_proc(pipefd, pid, argv);
 	else
 		parent_proc(pipefd, pid);
 	return (EXIT_SUCCESS);
