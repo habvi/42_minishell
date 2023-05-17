@@ -54,6 +54,19 @@ static void	parent_proc(int pipefd[2], pid_t pid, char *cmd[], char *next_cmd[])
 	// printf("=== parents process end ===\n");
 }
 
+// move next_cmd after "|"
+static char	**move_next_command(char **next_cmd)
+{
+	while (*next_cmd && strcmp(*next_cmd, "|") != 0)
+		next_cmd++;
+	if (*next_cmd != NULL)
+	{
+		*next_cmd = NULL;
+		next_cmd++;
+	}
+	return (next_cmd);
+}
+
 // fd[0]:read, pipefd[1]:write
 int	main(int argc, char *argv[])
 {
@@ -68,14 +81,7 @@ int	main(int argc, char *argv[])
 	next_cmd = cmd;
 	while (true)
 	{
-		// move next_cmd after "|"
-		while (*next_cmd && strcmp(*next_cmd, "|") != 0)
-			next_cmd++;
-		if (*next_cmd != NULL)
-		{
-			*next_cmd = NULL;
-			next_cmd++;
-		}
+		next_cmd = move_next_command(next_cmd);
 		// pipe
 		if (pipe(pipefd) == PIPE_ERROR)
 		{
