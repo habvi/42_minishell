@@ -6,13 +6,15 @@
 #include <stdbool.h>
 #include <string.h>
 #include "libft.h"
+#include "ft_dprintf.h"
 #include "test.h"
 
 extern char	**environ;
 
 static void	child_proc(int pipefd[2], pid_t pid, char *cmd[])
 {
-	printf("===  child process start [PID: %d] ===\n", pid);
+	(void)pid;
+	// ft_dprintf(STDERR_FILENO, "===  child process start [PID: %d] ===\n", pid);
 	if (x_close(pipefd[0]) == SYS_ERROR)
 		exit(EXIT_FAILURE);
 	if (x_close(STDOUT_FILENO) == SYS_ERROR)
@@ -23,17 +25,36 @@ static void	child_proc(int pipefd[2], pid_t pid, char *cmd[])
 		exit(EXIT_FAILURE);
 	if (execvp(cmd[0], cmd) == EXECVE_ERROR) // forbidden func
 	{
-		perror("execve");
+		perror("execvp");
 		exit(EXIT_FAILURE);
 	}
 }
 
-static void	parent_proc(int pipefd[2], pid_t pid, char *cmd[], char *next_cmd[])
+static void	read_and_print(int fd)
+{
+	const size_t	BUF_SIZE = 50;
+	char			buf[BUF_SIZE + 1];
+	ssize_t			rsize;
+
+	while (true)
+	{
+		rsize = x_read(fd, buf, 50);
+		if (rsize == READ_ERROR)
+			return ;
+		if (rsize == 0)
+			break ;
+		buf[rsize] = '\0';
+		printf("%s", buf);
+	}
+}
+
+static void	parent_proc(int pipefd[2], pid_t pid, char *next_cmd[])
 {
 	int		status;
 	pid_t	wait_pid;
 
-	printf("=== parent process start [PID: %d] ===\n", pid);
+	(void)pid;
+	// ft_dprintf(STDERR_FILENO, "=== parent process start [PID: %d] ===\n", pid);
 	if (x_close(pipefd[1]) == SYS_ERROR)
 		exit(EXIT_FAILURE);
 	if (x_close(STDIN_FILENO) == SYS_ERROR)
@@ -42,22 +63,30 @@ static void	parent_proc(int pipefd[2], pid_t pid, char *cmd[], char *next_cmd[])
 		exit(EXIT_FAILURE);
 	if (x_close(pipefd[0]) == SYS_ERROR)
 		exit(EXIT_FAILURE);
-	wait_pid = x_wait(&status);
-	if (wait_pid == WAIT_ERROR)
-		exit(EXIT_FAILURE);
 	// last command
 	if (*next_cmd == NULL)
 	{
-		printf("=== parent process last ===\n");
-		if (execvp(cmd[0], cmd) == EXECVE_ERROR) // forbidden func
+		wait_pid = NOT_END_CHILD_PROC;
+		while (wait_pid == NOT_END_CHILD_PROC)
 		{
-			perror("execve");
-			exit(EXIT_FAILURE);
+			wait_pid = x_waitpid(P_ALL, &status, WNOHANG);
+			if (wait_pid == WAIT_ERROR)
+				exit(EXIT_FAILURE);
+			if (wait_pid == NOT_END_CHILD_PROC)
+				continue ;
+			if (WIFEXITED(status))
+			{
+				ft_dprintf(STDERR_FILENO, "\nchild exit success! pid: %d, status: %d\n", wait_pid, WEXITSTATUS(status));
+				read_and_print(STDIN_FILENO);
+				exit(WEXITSTATUS(status));
+			}
+			else
+			{
+				ft_dprintf(STDERR_FILENO, "\nchild exit failure! pid: %d, status: %d\n", wait_pid, WEXITSTATUS(status));
+				exit(WEXITSTATUS(status));
+			}
 		}
 	}
-	// if (WIFEXITED(status))
-	// 	printf("\nwait pid: %d, status: %d\n", wait_pid, WEXITSTATUS(status));
-	// printf("=== parents process end ===\n");
 }
 
 // move next_cmd after "|"
@@ -96,7 +125,7 @@ int	main(int argc, char *argv[])
 		if (pid == CHILD_PID)
 			child_proc(pipefd, pid, cmd);
 		else
-			parent_proc(pipefd, pid, cmd, next_cmd);
+			parent_proc(pipefd, pid, next_cmd);
 		cmd = next_cmd;
 	}
 	return (EXIT_SUCCESS);

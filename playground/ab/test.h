@@ -12,4 +12,6 @@
 # define EXECVE_ERROR	(-1)
 # define DUP2_ERROR		(-1)
 
+# define NOT_END_CHILD_PROC 0
+
 #endif
