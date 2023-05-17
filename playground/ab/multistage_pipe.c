@@ -16,7 +16,7 @@ static void	child_proc(int pipefd[2], pid_t pid, char *cmd[])
 	close(STDOUT_FILENO);
 	dup2(pipefd[1], STDOUT_FILENO);
 	close(pipefd[1]);
-	if (execve(cmd[0], cmd, environ) == EXECVE_ERROR)
+if (execvp(cmd[0], cmd) == EXECVE_ERROR) // forbidden func
 	{
 		perror("execve");
 		exit(EXIT_FAILURE);
@@ -43,7 +43,7 @@ static void	parent_proc(int pipefd[2], pid_t pid, char *cmd[], char *next_cmd[])
 	if (*next_cmd == NULL)
 	{
 		printf("=== parent process last ===\n");
-		if (execve(cmd[0], cmd, environ) == EXECVE_ERROR)
+		if (execvp(cmd[0], cmd) == EXECVE_ERROR) // forbidden func
 		{
 			perror("execve");
 			exit(EXIT_FAILURE);
