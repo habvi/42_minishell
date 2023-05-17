@@ -9,42 +9,26 @@
 
 extern char	**environ;
 
-static void	child_proc(int pipefd[2], pid_t pid, char *argv[])
+static void	child_proc(int pipefd[2], pid_t pid, char *cmd[])
 {
-	printf("=== child process start [PID: %d] ===\n", pid);
+	printf("===  child process start [PID: %d] ===\n", pid);
 	close(pipefd[0]);
 	close(STDOUT_FILENO);
 	dup2(pipefd[1], STDOUT_FILENO);
 	close(pipefd[1]);
-	if (execve(argv[1], argv + 1, environ) == EXECVE_ERROR)
-	{
-		perror("execve");
-		exit(EXIT_FAILURE);
-	}
-	printf("=== child process end ===\n");
-}
-
-static void	read_from_pipe_and_exec(int fd)
-{
-	const size_t	BUF_SIZE = 10;
-	char			buf[BUF_SIZE];
-	ssize_t			rsize;
-
-	printf("=== parent process read ===\n");
-	const char *commands[] = {"/bin/cat", NULL};
-	if (execve(commands[0], commands, environ) == EXECVE_ERROR)
+	if (execve(cmd[0], cmd, environ) == EXECVE_ERROR)
 	{
 		perror("execve");
 		exit(EXIT_FAILURE);
 	}
 }
 
-static void	parent_proc(int pipefd[2], pid_t pid)
+static void	parent_proc(int pipefd[2], pid_t pid, char *cmd[], char *next_cmd[])
 {
 	int		status;
 	pid_t	wait_pid;
 
-	printf("=== parents process start [PID: %d] ===\n", pid);
+	printf("=== parent process start [PID: %d] ===\n", pid);
 	close(pipefd[1]);
 	close(STDIN_FILENO);
 	dup2(pipefd[0], STDIN_FILENO);
@@ -55,10 +39,19 @@ static void	parent_proc(int pipefd[2], pid_t pid)
 		perror("wait");
 		exit(EXIT_FAILURE);
 	}
-	read_from_pipe_and_exec(STDIN_FILENO);
-	if (WIFEXITED(status))
-		printf("\nwait pid: %d, status: %d\n", wait_pid, WEXITSTATUS(status));
-	printf("=== parents process end ===\n");
+	// last command
+	if (*next_cmd == NULL)
+	{
+		printf("=== parent process last ===\n");
+		if (execve(cmd[0], cmd, environ) == EXECVE_ERROR)
+		{
+			perror("execve");
+			exit(EXIT_FAILURE);
+		}
+	}
+	// if (WIFEXITED(status))
+	// 	printf("\nwait pid: %d, status: %d\n", wait_pid, WEXITSTATUS(status));
+	// printf("=== parents process end ===\n");
 }
 
 // fd[0]:read, pipefd[1]:write
@@ -66,23 +59,43 @@ int	main(int argc, char *argv[])
 {
 	int		pipefd[2];
 	pid_t	pid;
+	char	**cmd;
+	char	**next_cmd;
 
-	(void)argc;
-	if (pipe(pipefd) == PIPE_ERROR)
+	if (argc == 1)
+		return (EXIT_SUCCESS);
+	cmd = argv + 1;
+	next_cmd = cmd;
+	while (true)
 	{
-		perror("pipe");
-		exit(EXIT_FAILURE);
+		// move next_cmd after "|"
+		while (*next_cmd && strcmp(*next_cmd, "|") != 0)
+			next_cmd++;
+		if (*next_cmd != NULL)
+		{
+			*next_cmd = NULL;
+			next_cmd++;
+		}
+		// pipe
+		if (pipe(pipefd) == PIPE_ERROR)
+		{
+			perror("pipe");
+			exit(EXIT_FAILURE);
+		}
+		// fork, exec
+		pid = fork();
+		if (pid == FORK_ERROR)
+		{
+			perror("fork");
+			exit(EXIT_FAILURE);
+		}
+		if (pid == CHILD_PID)
+			child_proc(pipefd, pid, cmd);
+		else
+			parent_proc(pipefd, pid, cmd, next_cmd);
+		cmd = next_cmd;
 	}
-	printf("fd[0] : %d, fd[1]: %d\n", pipefd[0], pipefd[1]);
-	pid = fork();
-	if (pid == FORK_ERROR)
-	{
-		perror("fork");
-		exit(EXIT_FAILURE);
-	}
-	if (pid == CHILD_PID)
-		child_proc(pipefd, pid, argv);
-	else
-		parent_proc(pipefd, pid);
 	return (EXIT_SUCCESS);
 }
+
+// ./a.out "/bin/echo" "-e" "aaa\naacc\nbbb\nbbcc\nccc\naabb\nabc" "|" "/bin/grep" "a" "|" "/bin/grep" "c"
