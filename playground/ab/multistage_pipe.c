@@ -5,6 +5,7 @@
 #include <errno.h>
 #include <stdbool.h>
 #include <string.h>
+#include "libft.h"
 #include "test.h"
 
 extern char	**environ;
@@ -12,11 +13,15 @@ extern char	**environ;
 static void	child_proc(int pipefd[2], pid_t pid, char *cmd[])
 {
 	printf("===  child process start [PID: %d] ===\n", pid);
-	close(pipefd[0]);
-	close(STDOUT_FILENO);
-	dup2(pipefd[1], STDOUT_FILENO);
-	close(pipefd[1]);
-if (execvp(cmd[0], cmd) == EXECVE_ERROR) // forbidden func
+	if (x_close(pipefd[0]) == SYS_ERROR)
+		exit(EXIT_FAILURE);
+	if (x_close(STDOUT_FILENO) == SYS_ERROR)
+		exit(EXIT_FAILURE);
+	if (x_dup2(pipefd[1], STDOUT_FILENO) == SYS_ERROR)
+		exit(EXIT_FAILURE);
+	if (x_close(pipefd[1]) == SYS_ERROR)
+		exit(EXIT_FAILURE);
+	if (execvp(cmd[0], cmd) == EXECVE_ERROR) // forbidden func
 	{
 		perror("execve");
 		exit(EXIT_FAILURE);
@@ -29,16 +34,17 @@ static void	parent_proc(int pipefd[2], pid_t pid, char *cmd[], char *next_cmd[])
 	pid_t	wait_pid;
 
 	printf("=== parent process start [PID: %d] ===\n", pid);
-	close(pipefd[1]);
-	close(STDIN_FILENO);
-	dup2(pipefd[0], STDIN_FILENO);
-	close(pipefd[0]);
-	wait_pid = wait(&status);
-	if (wait_pid == WAIT_ERROR)
-	{
-		perror("wait");
+	if (x_close(pipefd[1]) == SYS_ERROR)
 		exit(EXIT_FAILURE);
-	}
+	if (x_close(STDIN_FILENO) == SYS_ERROR)
+		exit(EXIT_FAILURE);
+	if (x_dup2(pipefd[0], STDIN_FILENO) == DUP2_ERROR)
+		exit(EXIT_FAILURE);
+	if (x_close(pipefd[0]) == SYS_ERROR)
+		exit(EXIT_FAILURE);
+	wait_pid = x_wait(&status);
+	if (wait_pid == WAIT_ERROR)
+		exit(EXIT_FAILURE);
 	// last command
 	if (*next_cmd == NULL)
 	{
@@ -82,19 +88,11 @@ int	main(int argc, char *argv[])
 	while (true)
 	{
 		next_cmd = move_next_command(next_cmd);
-		// pipe
-		if (pipe(pipefd) == PIPE_ERROR)
-		{
-			perror("pipe");
+		if (x_pipe(pipefd) == PIPE_ERROR)
 			exit(EXIT_FAILURE);
-		}
-		// fork, exec
-		pid = fork();
+		pid = x_fork();
 		if (pid == FORK_ERROR)
-		{
-			perror("fork");
 			exit(EXIT_FAILURE);
-		}
 		if (pid == CHILD_PID)
 			child_proc(pipefd, pid, cmd);
 		else
@@ -104,4 +102,4 @@ int	main(int argc, char *argv[])
 	return (EXIT_SUCCESS);
 }
 
-// ./a.out "/bin/echo" "-e" "aaa\naacc\nbbb\nbbcc\nccc\naabb\nabc" "|" "/bin/grep" "a" "|" "/bin/grep" "c"
+// ./a.out "echo" "-e" "aaa\naacc\nbbb\nbbcc\nccc\naabb\nabc" "|" "grep" "a" "|" "grep" "c"
