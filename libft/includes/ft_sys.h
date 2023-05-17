@@ -7,6 +7,7 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <termios.h>
+# include <signal.h>
 
 # define SYS_ERROR	(-1)
 # define TTY_ERROR	0
