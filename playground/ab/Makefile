@@ -4,6 +4,8 @@ CC		:=	clang
 CFLAGS	:=	-Wall -Wextra -Werror
 INCLUDES	:=	-I. -I../../libft/includes/
 
+LIBFT	:=	../../libft/libft.a
+
 PHONY := fork
 fork:
 	$(CC) $(CFLAGS) fork.c && ./$(NAME)
@@ -30,7 +32,7 @@ dup2:
 
 PHONY += multi
 multi:
-	$(CC) $(CFLAGS) multistage_pipe.c
+	$(CC) $(CFLAGS) $(INCLUDES) multistage_pipe.c $(LIBFT)
 	@echo '<usage: ./a.out "cmd" "arg1" "arg2" "|" "cmd" "arg" "|" "cmd" "arg1" "arg2" "arg3" ...>'
 
 .PHONY: $(PHONY)
