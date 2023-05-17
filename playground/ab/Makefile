@@ -2,6 +2,7 @@ NAME	:=	a.out
 
 CC		:=	clang
 CFLAGS	:=	-Wall -Wextra -Werror
+INCLUDES	:=	-I. -I../../libft/includes/
 
 PHONY := fork
 fork:
