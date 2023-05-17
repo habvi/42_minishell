@@ -11,17 +11,24 @@
 
 extern char	**environ;
 
+static int	connect_pipe(int unnecessary_fd, int old_fd, int new_fd)
+{
+	if (x_close(unnecessary_fd) == SYS_ERROR)
+		return (EXIT_FAILURE);
+	if (x_close(new_fd) == SYS_ERROR)
+		return (EXIT_FAILURE);
+	if (x_dup2(old_fd, new_fd) == SYS_ERROR)
+		return (EXIT_FAILURE);
+	if (x_close(old_fd) == SYS_ERROR)
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
+}
+
 static void	child_proc(int pipefd[2], pid_t pid, char *cmd[])
 {
 	(void)pid;
 	// ft_dprintf(STDERR_FILENO, "===  child process start [PID: %d] ===\n", pid);
-	if (x_close(pipefd[0]) == SYS_ERROR)
-		exit(EXIT_FAILURE);
-	if (x_close(STDOUT_FILENO) == SYS_ERROR)
-		exit(EXIT_FAILURE);
-	if (x_dup2(pipefd[1], STDOUT_FILENO) == SYS_ERROR)
-		exit(EXIT_FAILURE);
-	if (x_close(pipefd[1]) == SYS_ERROR)
+	if (connect_pipe(pipefd[0], pipefd[1], STDOUT_FILENO) == SYS_ERROR)
 		exit(EXIT_FAILURE);
 	if (execvp(cmd[0], cmd) == EXECVE_ERROR) // forbidden func
 	{
@@ -55,13 +62,7 @@ static void	parent_proc(int pipefd[2], pid_t pid, char *next_cmd[])
 
 	(void)pid;
 	// ft_dprintf(STDERR_FILENO, "=== parent process start [PID: %d] ===\n", pid);
-	if (x_close(pipefd[1]) == SYS_ERROR)
-		exit(EXIT_FAILURE);
-	if (x_close(STDIN_FILENO) == SYS_ERROR)
-		exit(EXIT_FAILURE);
-	if (x_dup2(pipefd[0], STDIN_FILENO) == DUP2_ERROR)
-		exit(EXIT_FAILURE);
-	if (x_close(pipefd[0]) == SYS_ERROR)
+	if (connect_pipe(pipefd[1], pipefd[0], STDIN_FILENO) == SYS_ERROR)
 		exit(EXIT_FAILURE);
 	// last command
 	if (*next_cmd == NULL)
