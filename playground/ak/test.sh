@@ -7,9 +7,9 @@ test() {
     actual=`./a.out "$input"`
 
     if [ "$actual" = "$expected" ]; then
-        echo -e "\033[32m[OK] input : $input \\n => actual   = $actual\033[00m\\n"
+        echo -e "\033[32m[OK] input : $input \\n  => actual   = $actual\033[00m\\n"
     else
-        echo -e "\033[31m[NG] input : $input \\n => actual   = $actual\\n    expected = $expected\033[00m\\n"
+        echo -e "\033[31m[NG] input : $input \\n  => expected = $expected\\n     actual   = $actual\033[00m\\n"
     fi
 }
 
