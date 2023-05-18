@@ -12,5 +12,9 @@ all	:	$(NAME)
 $(NAME)	: parse_arithmetic_operation.c
 	$(CC) $(CFLAGS) $< -o $(NAME)
 
+re	:
+	@$(RM) $(NAME)
+	@make all
+
 run	: all
 	./$(NAME)
