@@ -33,6 +33,6 @@ dup2:
 PHONY += multi
 multi:
 	$(CC) $(CFLAGS) $(INCLUDES) multistage_pipe.c $(LIBFT)
-	@echo '<usage: ./a.out "cmd" "arg1" "arg2" "|" "cmd" "arg" "|" "cmd" "arg1" "arg2" "arg3" ...>'
+#	@echo '<usage: ./a.out "cmd" "arg1" "arg2" "|" "cmd" "arg" "|" "cmd" "arg1" "arg2" "arg3" ...>'
 
 .PHONY: $(PHONY)
