@@ -105,7 +105,7 @@ STRING_SRC	:=	$(STRING_DIR)/ft_free.c \
 # ft_dprintf
 #--------------------------------------------
 FT_DPRINTF_DIR	:=	ft_dprintf
-STRING_SRC		+=	$(FT_DPRINTF_DIR)/convert_to_str.c \
+FT_DPRINTF_SRC	:=	$(FT_DPRINTF_DIR)/convert_to_str.c \
 					$(FT_DPRINTF_DIR)/convert_to_str2.c \
 					$(FT_DPRINTF_DIR)/ft_dprintf.c \
 					$(FT_DPRINTF_DIR)/handle_info.c \
@@ -120,32 +120,32 @@ STRING_SRC		+=	$(FT_DPRINTF_DIR)/convert_to_str.c \
 # ft_sys
 #--------------------------------------------
 SYS_DIR	:=	ft_sys
-STRING_SRC	:=	$(SYS_DIR)/x_access.c \
-				$(SYS_DIR)/x_chdir.c \
-				$(SYS_DIR)/x_close.c \
-				$(SYS_DIR)/x_closedir.c \
-				$(SYS_DIR)/x_dup.c \
-				$(SYS_DIR)/x_dup2.c \
-				$(SYS_DIR)/x_execve.c \
-				$(SYS_DIR)/x_fork.c \
-				$(SYS_DIR)/x_getcwd.c \
-				$(SYS_DIR)/x_isatty.c \
-				$(SYS_DIR)/x_kill.c \
-				$(SYS_DIR)/x_malloc.c \
-				$(SYS_DIR)/x_open.c \
-				$(SYS_DIR)/x_opendir.c \
-				$(SYS_DIR)/x_pipe.c \
-				$(SYS_DIR)/x_read.c \
-				$(SYS_DIR)/x_readdir.c \
-				$(SYS_DIR)/x_sigaction.c \
-				$(SYS_DIR)/x_signal.c \
-				$(SYS_DIR)/x_tcgetattr.c \
-				$(SYS_DIR)/x_tcsetattr.c \
-				$(SYS_DIR)/x_ttyname.c \
-				$(SYS_DIR)/x_unlink.c \
-				$(SYS_DIR)/x_wait.c \
-				$(SYS_DIR)/x_waitpid.c \
-				$(SYS_DIR)/x_write.c
+SYS_SRC	:=	$(SYS_DIR)/x_access.c \
+			$(SYS_DIR)/x_chdir.c \
+			$(SYS_DIR)/x_close.c \
+			$(SYS_DIR)/x_closedir.c \
+			$(SYS_DIR)/x_dup.c \
+			$(SYS_DIR)/x_dup2.c \
+			$(SYS_DIR)/x_execve.c \
+			$(SYS_DIR)/x_fork.c \
+			$(SYS_DIR)/x_getcwd.c \
+			$(SYS_DIR)/x_isatty.c \
+			$(SYS_DIR)/x_kill.c \
+			$(SYS_DIR)/x_malloc.c \
+			$(SYS_DIR)/x_open.c \
+			$(SYS_DIR)/x_opendir.c \
+			$(SYS_DIR)/x_pipe.c \
+			$(SYS_DIR)/x_read.c \
+			$(SYS_DIR)/x_readdir.c \
+			$(SYS_DIR)/x_sigaction.c \
+			$(SYS_DIR)/x_signal.c \
+			$(SYS_DIR)/x_tcgetattr.c \
+			$(SYS_DIR)/x_tcsetattr.c \
+			$(SYS_DIR)/x_ttyname.c \
+			$(SYS_DIR)/x_unlink.c \
+			$(SYS_DIR)/x_wait.c \
+			$(SYS_DIR)/x_waitpid.c \
+			$(SYS_DIR)/x_write.c
 
 #--------------------------------------------
 NAME		:=	libft.a
@@ -159,7 +159,9 @@ OBJS		:=	$(DEQUE_SRC:%.c=$(OBJ_DIR)/%.o) \
 				$(MATH_SRC:%.c=$(OBJ_DIR)/%.o) \
 				$(MEM_SRC:%.c=$(OBJ_DIR)/%.o) \
 				$(PUT_SRC:%.c=$(OBJ_DIR)/%.o) \
-				$(STRING_SRC:%.c=$(OBJ_DIR)/%.o)
+				$(STRING_SRC:%.c=$(OBJ_DIR)/%.o) \
+				$(FT_DPRINTF_SRC:%.c=$(OBJ_DIR)/%.o) \
+				$(SYS_SRC:%.c=$(OBJ_DIR)/%.o)
 
 #--------------------------------------------
 INCLUDE_DIR	:=	includes
