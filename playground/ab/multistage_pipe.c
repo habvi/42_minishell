@@ -24,12 +24,15 @@ static int	connect_pipe(int unnecessary_fd, int old_fd, int new_fd)
 	return (EXIT_SUCCESS);
 }
 
-static void	child_proc(int pipefd[2], pid_t pid, char *cmd[])
+static void	child_proc(int pipefd[2], pid_t pid, char *cmd[], char *next_cmd[])
 {
 	(void)pid;
 	// ft_dprintf(STDERR_FILENO, "===  child process start [PID: %d] ===\n", pid);
-	if (connect_pipe(pipefd[0], pipefd[1], STDOUT_FILENO) == SYS_ERROR)
-		exit(EXIT_FAILURE);
+	if (*next_cmd)
+	{
+		if (connect_pipe(pipefd[0], pipefd[1], STDOUT_FILENO) == SYS_ERROR)
+			exit(EXIT_FAILURE);
+	}
 	if (execvp(cmd[0], cmd) == EXECVE_ERROR) // forbidden func
 	{
 		perror("execvp");
@@ -37,33 +40,25 @@ static void	child_proc(int pipefd[2], pid_t pid, char *cmd[])
 	}
 }
 
-static void	read_and_print(int fd)
-{
-	const size_t	BUF_SIZE = 50;
-	char			buf[BUF_SIZE + 1];
-	ssize_t			rsize;
-
-	while (true)
-	{
-		rsize = x_read(fd, buf, 50);
-		if (rsize == READ_ERROR)
-			return ;
-		if (rsize == 0)
-			break ;
-		buf[rsize] = '\0';
-		printf("%s", buf);
-	}
-}
-
 static void	parent_proc(int pipefd[2], pid_t pid, char *next_cmd[])
 {
 	int		status;
 	pid_t	wait_pid;
+	int		last_exit_status;
 
-	(void)pid;
 	// ft_dprintf(STDERR_FILENO, "=== parent process start [PID: %d] ===\n", pid);
-	if (connect_pipe(pipefd[1], pipefd[0], STDIN_FILENO) == SYS_ERROR)
-		exit(EXIT_FAILURE);
+	// last command
+	if (*next_cmd == NULL)
+	{
+		wait_pid = waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
+			last_exit_status = WEXITSTATUS(status);
+	}
+	else
+	{
+		if (connect_pipe(pipefd[1], pipefd[0], STDIN_FILENO) == SYS_ERROR)
+			exit(EXIT_FAILURE);
+	}
 	// last command
 	if (*next_cmd == NULL)
 	{
@@ -78,7 +73,6 @@ static void	parent_proc(int pipefd[2], pid_t pid, char *next_cmd[])
 			if (WIFEXITED(status))
 			{
 				ft_dprintf(STDERR_FILENO, "\nchild exit success! pid: %d, status: %d\n", wait_pid, WEXITSTATUS(status));
-				read_and_print(STDIN_FILENO);
 				exit(WEXITSTATUS(status));
 			}
 			else
@@ -103,7 +97,7 @@ static char	**move_next_command(char **next_cmd)
 	return (next_cmd);
 }
 
-// fd[0]:read, pipefd[1]:write
+// pipefd[0]:read, pipefd[1]:write
 int	main(int argc, char *argv[])
 {
 	int		pipefd[2];
@@ -124,7 +118,7 @@ int	main(int argc, char *argv[])
 		if (pid == FORK_ERROR)
 			exit(EXIT_FAILURE);
 		if (pid == CHILD_PID)
-			child_proc(pipefd, pid, cmd);
+			child_proc(pipefd, pid, cmd, next_cmd);
 		else
 			parent_proc(pipefd, pid, next_cmd);
 		cmd = next_cmd;
