@@ -43,11 +43,11 @@ $(LIBFT): FORCE
 
 PHONY += clean
 clean	:
-	$(RM) -r $(OBJ_DIR)
+	$(RM) -r $(OBJ_DIR) $(LIBFT_DIR)/$(OBJ_DIR)
 
 PHONY += fclean
 fclean	: clean
-	$(RM) $(NAME)
+	$(RM) $(NAME) $(LIBFT)
 
 PHONY += re
 re		: fclean all
