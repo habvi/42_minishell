@@ -42,20 +42,24 @@ static bool	is_last_command(char *next_cmd)
 	return (!next_cmd);
 }
 
-static void	child_proc(int pipefd[2], char **cmd, char **next_cmd, int prev_fd)
+static void	child_proc(int pipefd[2], char **cmd, char **next_cmd, int prev_fd, size_t i)
 {
-	if (!is_last_command(*next_cmd))
-	{
-		// handle SYS_ERROR >>>
+	if (i != 0)
+ 	{
+		// SYS_ERROR >>>
 		close(STDIN_FILENO);
 		dup2(prev_fd, STDIN_FILENO);
 		close(prev_fd);
-
+		// <<< SYS_ERROR
+	}
+	if (!is_last_command(*next_cmd))
+	{
+		// SYS_ERROR >>>
 		close(pipefd[READ]);
 		close(STDOUT_FILENO);
 		dup2(pipefd[WRITE], STDOUT_FILENO);
 		close(pipefd[WRITE]);
-		// <<< handle SYS_ERROR
+		// <<< SYS_ERROR
 	}
 	if (execvp(cmd[0], cmd) == EXECVE_ERROR) // forbidden func
 	{
@@ -64,21 +68,24 @@ static void	child_proc(int pipefd[2], char **cmd, char **next_cmd, int prev_fd)
 	}
 }
 
-static void	parent_proc(int pipefd[2], pid_t pid, char **next_cmd, int *prev_fd)
+static void	parent_proc(int pipefd[2], pid_t pid, char **cmd, char **next_cmd, int *prev_fd, size_t i)
 {
 	int		status;
 	pid_t	wait_pid;
 	int		last_cmd_status;
 
-	ft_dprintf(STDERR_FILENO, "=== parent process [child pid: %d] ===\n", pid);
+	(void)cmd;
+	// ft_dprintf(STDERR_FILENO, "=== parent process [cmd: %s, child pid: %d] ===\n", cmd[0], pid);
+	if (i != 0)
+	{
+		// SYS_ERROR
+		close(*prev_fd);
+	}
 	if (!is_last_command(*next_cmd))
 	{
-		// handle SYS_ERROR >>>
+		*prev_fd = pipefd[READ];
+		// SYS_ERROR
 		close(pipefd[WRITE]);
-		close(*prev_fd);
-		*prev_fd = dup(pipefd[READ]);
-		close(pipefd[READ]);
-		// <<< handle SYS_ERROR
 		return ;
 	}
 	wait_pid = waitpid(pid, &status, 0);
@@ -90,8 +97,6 @@ static void	parent_proc(int pipefd[2], pid_t pid, char **next_cmd, int *prev_fd)
 	while (true)
 	{
 		wait_pid = wait(NULL);
-		// ft_dprintf(STDERR_FILENO, "wait_pid: %d\n", wait_pid);
-		// wait_pid = waitpid(P_ALL, &status, WNOHANG);
 		if (wait_pid == WAIT_ERROR)
 		{
 			if (errno == ECHILD && WIFEXITED(status))
@@ -123,24 +128,31 @@ int	main(int argc, char *argv[])
 	char	**cmd;
 	char	**next_cmd;
 	int		prev_fd;
+	size_t	i;
 
 	if (argc == 1)
 		return (EXIT_SUCCESS);
 	cmd = argv + 1;
 	next_cmd = cmd;
 	prev_fd = STDIN_FILENO;
+	i = 0;
 	while (true)
 	{
 		next_cmd = move_next_command(next_cmd);
-		if (x_pipe(pipefd) == PIPE_ERROR)
-			exit(EXIT_FAILURE);
+		// usleep(10000);
+		if (!is_last_command(*next_cmd))
+		{
+			if (x_pipe(pipefd) == PIPE_ERROR)
+				exit(EXIT_FAILURE);
+		}
 		pid = x_fork();
 		if (pid == FORK_ERROR)
 			exit(EXIT_FAILURE);
 		if (pid == CHILD_PID)
-			child_proc(pipefd, cmd, next_cmd, prev_fd);
+			child_proc(pipefd, cmd, next_cmd, prev_fd, i);
 		else
-			parent_proc(pipefd, pid, next_cmd, &prev_fd);
+			parent_proc(pipefd, pid, cmd, next_cmd, &prev_fd, i);
+		i++;
 		cmd = next_cmd;
 	}
 	return (EXIT_SUCCESS);
