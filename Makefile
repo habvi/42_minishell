@@ -28,7 +28,7 @@ INCLUDE_DIR	:=	includes
 INCLUDES	:=	-I./$(INCLUDE_DIR)/ -I$(LIBFT_DIR)/$(INCLUDE_DIR)/
 DEPS		:=	$(OBJS:.o=.d)
 
-PHONY	:= all
+.PHONY	: all
 all		: $(NAME)
 
 $(NAME)	: $(OBJS) $(LIBFT)
@@ -41,40 +41,38 @@ $(OBJ_DIR)/%.o: $(SRCS_DIR)/%.c
 $(LIBFT): FORCE
 	$(MAKE) -C $(LIBFT_DIR)
 
-PHONY += clean
+.PHONY	: clean
 clean	:
-	$(RM) -r $(OBJ_DIR)
+	$(RM) -r $(OBJ_DIR) $(LIBFT_DIR)/$(OBJ_DIR)
 
-PHONY += fclean
+.PHONY	: fclean
 fclean	: clean
-	$(RM) $(NAME)
+	$(RM) $(NAME) $(LIBFT)
 
-PHONY += re
+.PHONY	: re
 re		: fclean all
 
-PHONY += FORCE
+.PHONY	: FORCE
 FORCE	:
 
 #--------------------------------------------
-PHONY += run
+.PHONY	: run
 run		: re
 	./$(NAME)
 
-PHONY += sani
+.PHONY	: sani
 sani	:
 	make re SANI=1
 
-PHONY += norm
+.PHONY	: norm
 norm	:
 	python3 .github/sh/norm.py
 
 
 #--------------------------------------------
 # test.bats
-PHONY += t
+.PHONY	: t
 t		: re
 	./.github/sh/test.bats
 
-
-.PHONY: $(PHONY)
 -include $(DEPS)
