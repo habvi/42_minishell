@@ -7,10 +7,14 @@ ifdef SANI
 	CFLAGS	+= -g -fsanitized=address
 endif
 
+LIBFT_DIR	= ../../libft
+LIBFT		= $(LIBFT_DIR)/libft.a
+
 all	:	$(NAME)
 
 $(NAME)	: parse_arithmetic_operation.c
-	$(CC) $(CFLAGS) $< -o $(NAME)
+	@make -C $(LIBFT_DIR)
+	$(CC) $(CFLAGS) $< -o $(NAME) $(LIBFT)
 
 re	:
 	@$(RM) $(NAME)
