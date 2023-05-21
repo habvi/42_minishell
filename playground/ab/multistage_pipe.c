@@ -91,7 +91,7 @@ static int	parent_proc(int pipefd[2], pid_t pid, char **cmd, char **next_cmd, in
 		*prev_fd = pipefd[READ];
 		// SYS_ERROR
 		close(pipefd[WRITE]);
-		return (EXIT_SUCCESS);
+		return (-2);
 	}
 	wait_pid = waitpid(pid, &status, 0);
 	// ft_dprintf(STDERR_FILENO, "last wait_pid: %d\n", wait_pid);
@@ -168,6 +168,8 @@ int	main(int argc, char *argv[])
 			last_cmd_status = parent_proc(pipefd, pid, cmd, next_cmd, &prev_fd);
 		if (last_cmd_status == PROCESS_ERROR)
 			return (EXIT_FAILURE);
+		if (last_cmd_status != -2)
+			break ;
 		cmd = next_cmd;
 	}
 	return (last_cmd_status);
