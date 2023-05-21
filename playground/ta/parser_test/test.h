@@ -7,10 +7,10 @@
 # include <string.h>
 # include <libc.h>
 
-# include "../../libft/includes/libft.h"
+# include "../../../libft/includes/libft.h"
 
 typedef enum	e_node_kind	t_node_kind;
-typedef struct	s_node		t_node;
+typedef struct	s_tree		t_tree;
 typedef struct	s_token		t_token;
 
 enum e_node_kind
@@ -24,11 +24,11 @@ enum e_node_kind
 	nd_right_paren,
 };
 
-struct s_node
+struct s_tree
 {
 	t_node_kind	kind;
-	t_node		*lhs;
-	t_node		*rhs;
+	t_tree		*lhs;
+	t_tree		*rhs;
 	int			val;
 };
 
@@ -39,5 +39,13 @@ struct s_token
 	char		operator;
 	t_token		*next;
 };
+
+void	print_token(t_token *token_head);
+void	free_token(t_token *token);
+t_token	*tokenize(char **split);
+
+t_tree	*new_node(t_node_kind kind, t_tree *lhs, t_tree *rhs);
+t_tree	*new_node_num(int val);
+
 
 #endif //TEST_H
