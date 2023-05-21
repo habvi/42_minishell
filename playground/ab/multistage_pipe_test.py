@@ -23,10 +23,10 @@ def print_color_str_no_lf(color=WHITE, text=""):
 # ----------------------------------------------------------
 # run
 def run_cmd(stdin=None, cmd=None):
-    return subprocess.run(cmd, input=stdin, capture_output=True, text=True, shell=True)
+    return subprocess.run(cmd, input=stdin, capture_output=True, text=True, shell=True, timeout=1)
 
 def run_cmd_shell_false(stdin=None, cmd=None):
-    return subprocess.run(cmd, input=stdin, capture_output=True, text=True, shell=False)
+    return subprocess.run(cmd, input=stdin, capture_output=True, text=True, shell=False, timeout=1)
 
 def run_minishell(stdin, cmd):
     res_minishell = run_cmd(stdin, cmd)
@@ -34,14 +34,14 @@ def run_minishell(stdin, cmd):
     print(cmd)
     print(f'[{res_minishell.stdout}]')
     # print(res_minishell.stderr)
-    return res_minishell.stdout
+    return res_minishell
 
 def run_bash(stdin, cmd):
     res_bash = run_cmd(stdin, cmd)
     print("===== bash =====")
     print(cmd)
     print(f'[{res_bash.stdout}]')
-    return res_bash.stdout
+    return res_bash
 
 # def run_both(stdin, cmd):
 #     m_cmd = [PATH] + cmd.split()
@@ -61,7 +61,7 @@ def run_bash(stdin, cmd):
 # ----------------------------------------------------------
 # put
 def put_result(m_res, b_res, ok, ko):
-    if m_res == b_res:
+    if (m_res.stdout == b_res.stdout) and (m_res.returncode == b_res.returncode):
         print_color_str(GREEN, "[OK]")
         ok += 1
     else:
@@ -104,6 +104,11 @@ def main():
     m_res = run_minishell(None, f'{PATH} "echo" "a" "|" "echo" "bb" "|" "echo" "ccc"')
     b_res = run_bash(None, "echo a | echo bb | echo ccc")
     ok, ko = put_result(m_res, b_res, ok, ko)
+
+    # stdin = "abcde"
+    # m_res = run_minishell(None, f'{PATH} "cat" "|" "cat" "|" "cat" "|" "ls"')
+    # b_res = run_bash(None, "cat | cat | cat | ls")
+    # ok, ko = put_result(m_res, b_res, ok, ko)
 
     put_total_result(ok, ko)
 
