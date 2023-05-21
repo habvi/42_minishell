@@ -37,14 +37,19 @@ static void	exit_failure(char *err)
 	exit(EXIT_FAILURE);
 }
 
+static bool	is_first_command(int prev_fd)
+{
+	return (prev_fd == STDIN_FILENO);
+}
+
 static bool	is_last_command(char *next_cmd)
 {
 	return (!next_cmd);
 }
 
-static void	child_proc(int pipefd[2], char **cmd, char **next_cmd, int prev_fd, size_t i)
+static void	child_proc(int pipefd[2], char **cmd, char **next_cmd, int prev_fd)
 {
-	if (i != 0)
+	if (!is_first_command(prev_fd))
  	{
 		// SYS_ERROR >>>
 		close(STDIN_FILENO);
@@ -68,7 +73,7 @@ static void	child_proc(int pipefd[2], char **cmd, char **next_cmd, int prev_fd, 
 	}
 }
 
-static void	parent_proc(int pipefd[2], pid_t pid, char **cmd, char **next_cmd, int *prev_fd, size_t i)
+static void	parent_proc(int pipefd[2], pid_t pid, char **cmd, char **next_cmd, int *prev_fd)
 {
 	int		status;
 	pid_t	wait_pid;
@@ -76,7 +81,7 @@ static void	parent_proc(int pipefd[2], pid_t pid, char **cmd, char **next_cmd, i
 
 	(void)cmd;
 	// ft_dprintf(STDERR_FILENO, "=== parent process [cmd: %s, child pid: %d] ===\n", cmd[0], pid);
-	if (i != 0)
+	if (!is_first_command(*prev_fd))
 	{
 		// SYS_ERROR
 		close(*prev_fd);
@@ -128,14 +133,12 @@ int	main(int argc, char *argv[])
 	char	**cmd;
 	char	**next_cmd;
 	int		prev_fd;
-	size_t	i;
 
 	if (argc == 1)
 		return (EXIT_SUCCESS);
 	cmd = argv + 1;
 	next_cmd = cmd;
 	prev_fd = STDIN_FILENO;
-	i = 0;
 	while (true)
 	{
 		next_cmd = move_next_command(next_cmd);
@@ -149,10 +152,9 @@ int	main(int argc, char *argv[])
 		if (pid == FORK_ERROR)
 			exit(EXIT_FAILURE);
 		if (pid == CHILD_PID)
-			child_proc(pipefd, cmd, next_cmd, prev_fd, i);
+			child_proc(pipefd, cmd, next_cmd, prev_fd);
 		else
-			parent_proc(pipefd, pid, cmd, next_cmd, &prev_fd, i);
-		i++;
+			parent_proc(pipefd, pid, cmd, next_cmd, &prev_fd);
 		cmd = next_cmd;
 	}
 	return (EXIT_SUCCESS);
