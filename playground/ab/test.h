@@ -11,6 +11,7 @@
 # define PIPE_ERROR		(-1)
 # define EXECVE_ERROR	(-1)
 # define DUP2_ERROR		(-1)
+# define PROCESS_ERROR	(-1)
 
 # define READ           0
 # define WRITE          1
