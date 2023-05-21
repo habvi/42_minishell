@@ -23,25 +23,45 @@ def print_color_str_no_lf(color=WHITE, text=""):
 # ----------------------------------------------------------
 # run
 def run_cmd(stdin=None, cmd=None):
-    return subprocess.run(cmd, input=stdin, capture_output=True, text=True, shell=True, timeout=1)
+    try:
+        res = subprocess.run(cmd, input=stdin, capture_output=True, text=True, shell=True, timeout=1)
+        return res
+    except subprocess.TimeoutExpired as e:
+        print(e.cmd)
+        # print(e.returncode)
+        # print(e.output)
+        # print(e.stdout)
+        # print(e.stderr)
 
 def run_cmd_shell_false(stdin=None, cmd=None):
-    return subprocess.run(cmd, input=stdin, capture_output=True, text=True, shell=False, timeout=1)
+    try:
+        res = subprocess.run(cmd, input=stdin, capture_output=True, text=True, shell=False, timeout=1)
+        return res
+    except subprocess.TimeoutExpired as e:
+        print(e.cmd)
+        # print(e.returncode)
+        # print(e.output)
+        # print(e.stdout)
+        # print(e.stderr)
 
 def run_minishell(stdin, cmd):
     res_minishell = run_cmd(stdin, cmd)
-    print("=== minishell ===")
-    print(cmd)
-    print(f'[{res_minishell.stdout}]')
-    # print(res_minishell.stderr)
-    return res_minishell
+    if res_minishell:
+        print("=== minishell ===")
+        print(cmd)
+        print(f'[{res_minishell.stdout}]')
+        # print(res_minishell.stderr)
+        return res_minishell
+    return None
 
 def run_bash(stdin, cmd):
     res_bash = run_cmd(stdin, cmd)
-    print("===== bash =====")
-    print(cmd)
-    print(f'[{res_bash.stdout}]')
-    return res_bash
+    if res_bash:
+        print("===== bash =====")
+        print(cmd)
+        print(f'[{res_bash.stdout}]')
+        return res_bash
+    return None
 
 # def run_both(stdin, cmd):
 #     m_cmd = [PATH] + cmd.split()
@@ -60,14 +80,17 @@ def run_bash(stdin, cmd):
 
 # ----------------------------------------------------------
 # put
-def put_result(m_res, b_res, ok, ko):
-    if (m_res.stdout == b_res.stdout) and (m_res.returncode == b_res.returncode):
-        print_color_str(GREEN, "[OK]")
+def put_result(test_num, m_res, b_res, ok, ko):
+    if m_res is None or b_res is None:
+        print_color_str(RED, f'[{test_num}. timeout]')
+        ko += 1
+    elif (m_res.stdout == b_res.stdout) and (m_res.returncode == b_res.returncode):
+        print_color_str(GREEN, f'[{test_num}. OK]')
         ok += 1
     else:
-        print_color_str(RED, "[KO]")
+        print_color_str(RED, f'[{test_num}. KO]')
         ko += 1
-    return ok, ko
+    return test_num + 1, ok, ko
 
 def put_total_result(ok, ko):
     print()
@@ -79,6 +102,8 @@ def put_total_result(ok, ko):
 
 # ----------------------------------------------------------
 def main():
+    test_num = 1
+
     cmd = "make multi"
     run_cmd(None, cmd)
 
@@ -90,25 +115,25 @@ def main():
 
     m_res = run_minishell(None, f'{PATH} "echo" "-e" "aaa\\naacc\\nbbb\\nbbcc\\nccc\\naabb\\nabc" "|" "grep" "a" "|" "grep" "c"')
     b_res = run_bash(None, 'echo -e "aaa\\naacc\\nbbb\\nbbcc\\nccc\\naabb\\nabc" | grep a | grep c')
-    ok, ko = put_result(m_res, b_res, ok, ko)
+    test_num, ok, ko = put_result(test_num, m_res, b_res, ok, ko)
 
     m_res = run_minishell(None, f'{PATH} "echo" "a"')
     b_res = run_bash(None, "echo a")
-    ok, ko = put_result(m_res, b_res, ok, ko)
+    test_num, ok, ko = put_result(test_num, m_res, b_res, ok, ko)
 
     stdin = "abcde"
     m_res = run_minishell(stdin, f'{PATH} "cat" "|" "echo" "-e" "aaa\\naacc\\nbbb\\nbbcc\\nccc\\naabb\\nabc" "|" "grep" "a" "|" "grep" "c"')
     b_res = run_bash(stdin, 'cat | echo -e "aaa\\naacc\\nbbb\\nbbcc\\nccc\\naabb\\nabc" | grep a | grep c')
-    ok, ko = put_result(m_res, b_res, ok, ko)
+    test_num, ok, ko = put_result(test_num, m_res, b_res, ok, ko)
 
     m_res = run_minishell(None, f'{PATH} "echo" "a" "|" "echo" "bb" "|" "echo" "ccc"')
     b_res = run_bash(None, "echo a | echo bb | echo ccc")
-    ok, ko = put_result(m_res, b_res, ok, ko)
+    test_num, ok, ko = put_result(test_num, m_res, b_res, ok, ko)
 
-    # stdin = "abcde"
-    # m_res = run_minishell(None, f'{PATH} "cat" "|" "cat" "|" "cat" "|" "ls"')
-    # b_res = run_bash(None, "cat | cat | cat | ls")
-    # ok, ko = put_result(m_res, b_res, ok, ko)
+    stdin = "abcde"
+    m_res = run_minishell(None, f'{PATH} "cat" "|" "cat" "|" "cat" "|" "ls"')
+    b_res = run_bash(None, "cat | cat | cat | ls")
+    test_num, ok, ko = put_result(test_num, m_res, b_res, ok, ko)
 
     put_total_result(ok, ko)
 
