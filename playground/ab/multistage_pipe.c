@@ -24,18 +24,18 @@ extern char	**environ;
 // 	return (EXIT_SUCCESS);
 // }
 
-static void	exit_success(int status, int last_cmd_status)
-{
-	ft_dprintf(STDERR_FILENO, "\nchild exit success! status: %d, last cmd exit status: %d\n", status, last_cmd_status);
-	exit(last_cmd_status);
-}
+// static void	exit_success(int status, int last_cmd_status)
+// {
+// 	ft_dprintf(STDERR_FILENO, "\nchild exit success! status: %d, last cmd exit status: %d\n", status, last_cmd_status);
+// 	exit(last_cmd_status);
+// }
 
-static void	exit_failure(char *err)
-{
-	ft_dprintf(STDERR_FILENO, "\nchild exit failure!");
-	perror(err);
-	exit(EXIT_FAILURE);
-}
+// static void	exit_failure(char *err)
+// {
+// 	ft_dprintf(STDERR_FILENO, "\nchild exit failure!");
+// 	perror(err);
+// 	exit(EXIT_FAILURE);
+// }
 
 static bool	is_first_command(int prev_fd)
 {
@@ -73,7 +73,7 @@ static void	child_proc(int pipefd[2], char **cmd, char **next_cmd, int prev_fd)
 	}
 }
 
-static void	parent_proc(int pipefd[2], pid_t pid, char **cmd, char **next_cmd, int *prev_fd)
+static int	parent_proc(int pipefd[2], pid_t pid, char **cmd, char **next_cmd, int *prev_fd)
 {
 	int		status;
 	pid_t	wait_pid;
@@ -91,23 +91,32 @@ static void	parent_proc(int pipefd[2], pid_t pid, char **cmd, char **next_cmd, i
 		*prev_fd = pipefd[READ];
 		// SYS_ERROR
 		close(pipefd[WRITE]);
-		return ;
+		return (EXIT_SUCCESS);
 	}
 	wait_pid = waitpid(pid, &status, 0);
 	// ft_dprintf(STDERR_FILENO, "last wait_pid: %d\n", wait_pid);
 	if (WIFEXITED(status))
 		last_cmd_status = WEXITSTATUS(status);
 	else
-		exit_failure("waitpid");
+	{
+		perror("waitpid");
+		return (PROCESS_ERROR);
+	}
 	while (true)
 	{
 		wait_pid = wait(NULL);
 		if (wait_pid == WAIT_ERROR)
 		{
 			if (errno == ECHILD && WIFEXITED(status))
-				exit_success(WEXITSTATUS(status), last_cmd_status);
+			{
+				ft_dprintf(STDERR_FILENO, "\nchild exit success! status: %d, last cmd exit status: %d\n", WIFEXITED(status), last_cmd_status);
+				return (last_cmd_status);
+			}
 			else
-				exit_failure("wait");
+			{
+				perror("wait");
+				return (PROCESS_ERROR);
+			}
 		}
 	}
 }
@@ -133,12 +142,14 @@ int	main(int argc, char *argv[])
 	char	**cmd;
 	char	**next_cmd;
 	int		prev_fd;
+	int		last_cmd_status;
 
 	if (argc == 1)
 		return (EXIT_SUCCESS);
 	cmd = argv + 1;
 	next_cmd = cmd;
 	prev_fd = STDIN_FILENO;
+	last_cmd_status = EXIT_SUCCESS;
 	while (true)
 	{
 		next_cmd = move_next_command(next_cmd);
@@ -154,10 +165,12 @@ int	main(int argc, char *argv[])
 		if (pid == CHILD_PID)
 			child_proc(pipefd, cmd, next_cmd, prev_fd);
 		else
-			parent_proc(pipefd, pid, cmd, next_cmd, &prev_fd);
+			last_cmd_status = parent_proc(pipefd, pid, cmd, next_cmd, &prev_fd);
+		if (last_cmd_status == PROCESS_ERROR)
+			return (EXIT_FAILURE);
 		cmd = next_cmd;
 	}
-	return (EXIT_SUCCESS);
+	return (last_cmd_status);
 }
 
 // ./a.out "echo" "-e" "aaa\naacc\nbbb\nbbcc\nccc\naabb\nabc" "|" "grep" "a" "|" "grep" "c"
