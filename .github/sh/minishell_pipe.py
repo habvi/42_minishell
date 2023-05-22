@@ -87,6 +87,10 @@ def put_total_result(val):
     print_color_str_no_lf(RED, "KO ")
     print(ko, end="")
     print(f' (test case: {test_num - 1})')
+    if ok == test_num - 1:
+        exit(0)
+    else:
+        exit(1)
 
 # ----------------------------------------------------------
 def main():
@@ -95,9 +99,9 @@ def main():
     ko = 0
     val = [test_num, ok, ko]
 
-    stdin = None
-    cmd = "make"
-    run_cmd(stdin, cmd)
+    # stdin = None
+    # cmd = "make"
+    # run_cmd(stdin, cmd)
 
     stdin = "/bin/ls -l"
     m_res, b_res = run_both(stdin)
