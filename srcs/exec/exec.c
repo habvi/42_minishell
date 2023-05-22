@@ -66,12 +66,9 @@ int	exec(char **exec_command)
 	while (*exec_command)
 	{
 		next_command = get_next_command(exec_command);
-		pid = fork();
+		pid = x_fork();
 		if (pid == FORK_ERROR)
-		{
-			perror("fork");
 			return (FORK_ERROR);
-		}
 		if (pid == CHILD_PID)
 			child_process(exec_command, environ);
 		else
