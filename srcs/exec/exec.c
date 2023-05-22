@@ -17,7 +17,10 @@ static char	**get_next_command(char **command)
 	while (*command && !is_pipe(*command))
 		command++;
 	if (*command)
+	{
+		*command = NULL;
 		command++;
+	}
 	return (command);
 }
 
