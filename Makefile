@@ -70,7 +70,7 @@ sani	:
 	make re SANI=1
 
 .PHONY	: norm
-norm	:
+norm	: all
 	python3 .github/sh/norm.py
 
 
@@ -79,5 +79,9 @@ norm	:
 .PHONY	: t
 t		: re
 	./.github/sh/test.bats
+
+.PHONY	: pipe
+pipe	: all
+	python3 ./.github/sh/minishell_pipe.py
 
 -include $(DEPS)
