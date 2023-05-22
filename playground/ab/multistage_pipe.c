@@ -50,6 +50,8 @@ static bool	is_last_command(char *next_cmd)
 
 static void	child_proc(int pipefd[2], char **cmd, char **next_cmd, int prev_fd)
 {
+	// ft_dprintf(STDERR_FILENO, "===== %s %s =====\n", cmd[0], cmd[1]);
+	// ft_dprintf(STDERR_FILENO, "[child %zu, p:%d]\n", i, prev_fd);
 	if (!is_first_command(prev_fd))
  	{
 		// SYS_ERROR >>>
@@ -67,6 +69,7 @@ static void	child_proc(int pipefd[2], char **cmd, char **next_cmd, int prev_fd)
 		close(pipefd[WRITE]);
 		// <<< SYS_ERROR
 	}
+	// ft_dprintf(STDERR_FILENO, "[prev_fd: %d]\n", prev_fd);
 	if (execvp(cmd[0], cmd) == EXECVE_ERROR) // forbidden func
 	{
 		perror("execvp");
@@ -90,6 +93,9 @@ static int	parent_proc(int pipefd[2], pid_t pid, char **cmd, char **next_cmd, in
 	if (!is_last_command(*next_cmd))
 	{
 		*prev_fd = pipefd[READ];
+		// ft_dprintf(STDERR_FILENO, "[%s, p:%d]\n", cmd[0], *prev_fd);
+		// *prev_fd = dup(pipefd[READ]);
+		// close(pipefd[READ]);
 		// SYS_ERROR
 		close(pipefd[WRITE]);
 		return (EXIT_SUCCESS);
@@ -103,6 +109,7 @@ static int	parent_proc(int pipefd[2], pid_t pid, char **cmd, char **next_cmd, in
 		perror("waitpid");
 		return (PROCESS_ERROR);
 	}
+	// ft_dprintf(STDERR_FILENO, "------------- %d", last_cmd_status);
 	while (true)
 	{
 		wait_pid = wait(NULL);
