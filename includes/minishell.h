@@ -18,10 +18,10 @@
 
 # define EXIT_MSG_NO_SUCH_FILE  "No such file or directory"
 
-// exec
+/* exec */
 int		exec(char **commands);
 
-// input
+/* input */
 char	*input_line(void);
 
 #endif

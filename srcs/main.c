@@ -1,7 +1,7 @@
 #include "minishell.h"
 #include "libft.h"
 
-int	minishell(void)
+static int	minishell(void)
 {
 	char	*line;
 	char	**commands;
