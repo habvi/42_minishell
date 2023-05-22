@@ -8,6 +8,9 @@ MKDIR		:=	mkdir -p
 SRCS_DIR	:=	srcs
 SRCS		:=	main.c
 
+DEBUG_DIR	:=	debug
+SRCS		+=	$(DEBUG_DIR)/put.c
+
 EXEC_DIR	:=	exec
 SRCS		+=	$(EXEC_DIR)/exec.c
 

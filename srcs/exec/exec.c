@@ -6,7 +6,8 @@
 // use PROMPT_NAME
 void	child_process(char **commands, char **environ)
 {
-	printf("chi : %p\n", commands);
+	debug_func(__func__, __LINE__);
+	debug_2d_array(commands);
 	// if (!commands[0])
 	// 	exit(EXIT_SUCCESS);
 	if (execve(commands[0], commands, environ) == EXECVE_ERROR)

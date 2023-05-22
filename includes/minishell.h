@@ -18,6 +18,11 @@
 
 # define EXIT_MSG_NO_SUCH_FILE  "No such file or directory"
 
+// temporarily here ...
+/* debug */
+void	debug_func(const char *func_name, const int line_num);
+void	debug_2d_array(char **array);
+
 /* exec */
 int		exec(char **commands);
 
