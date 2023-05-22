@@ -99,10 +99,6 @@ def main():
     ko = 0
     val = [test_num, ok, ko]
 
-    # stdin = None
-    # cmd = "make"
-    # run_cmd(stdin, cmd)
-
     stdin = "/bin/ls -l"
     m_res, b_res = run_both(stdin)
     put_result(val, m_res, b_res)

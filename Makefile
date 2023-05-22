@@ -80,6 +80,7 @@ norm	: all
 t		: re
 	./.github/sh/test.bats
 
+# test multi pipe
 .PHONY	: pipe
 pipe	: all
 	python3 ./.github/sh/minishell_pipe.py
