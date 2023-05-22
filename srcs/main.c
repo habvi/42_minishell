@@ -19,7 +19,7 @@ static int	minishell(void)
 		if (!commands)
 			return (EXIT_FAILURE);
 		// parse
-		process_status = exec(commands);
+		process_status = execute_command(commands);
 		free_2d_array(&commands);
 		if (process_status == PROCESS_ERROR)
 			return (EXIT_FAILURE);

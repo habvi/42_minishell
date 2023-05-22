@@ -24,7 +24,7 @@ void	debug_func(const char *func_name, const int line_num);
 void	debug_2d_array(char **array);
 
 /* exec */
-int		exec(char **commands);
+int		execute_command(char **exec_command);
 
 /* input */
 char	*input_line(void);

@@ -55,28 +55,36 @@ static char	**get_next_command(char **command)
 	return (command);
 }
 
-int	exec(char **exec_command)
+static int	dup_process_and_run(char **exec_command, int *last_exit_status)
 {
 	extern char	**environ;
 	pid_t		pid;
-	int			last_exit_status;
-	char		**next_command;
+
+	pid = x_fork();
+	if (pid == FORK_ERROR)
+		return (FORK_ERROR);
+	if (pid == CHILD_PID)
+		child_process(exec_command, environ);
+	else
+	{
+		if (parent_process(last_exit_status) == PROCESS_ERROR)
+			return (PROCESS_ERROR);
+	}
+	return (EXIT_SUCCESS);
+}
+
+int	execute_command(char **exec_command)
+{
+	int		last_exit_status;
+	char	**next_command;
 
 	last_exit_status = EXIT_SUCCESS;
 	while (*exec_command)
 	{
 		next_command = get_next_command(exec_command);
-		pid = x_fork();
-		if (pid == FORK_ERROR)
-			return (FORK_ERROR);
-		if (pid == CHILD_PID)
-			child_process(exec_command, environ);
-		else
-		{
-			last_exit_status = parent_process();
-			if (last_exit_status == PROCESS_ERROR)
-				return (last_exit_status);
-		}
+		if (dup_process_and_run(exec_command, &last_exit_status) \
+															== PROCESS_ERROR)
+			return (PROCESS_ERROR);
 		exec_command = next_command;
 	}
 	return (last_exit_status);
