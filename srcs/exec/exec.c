@@ -34,20 +34,52 @@ int	parent_process(void)
 	return (WEXITSTATUS(status));
 }
 
-int	exec(char **commands)
+static bool	is_pipe(const char *str)
+{
+	if (ft_strnlen(str, 2) == 1 && *str == '|')
+		return (true);
+	return (false);
+}
+
+// | command                  -> not handle yet
+// command arg                -> return NULL
+// command arg |              -> return NULL
+// command arg | command2 arg -> return command2
+static char	**get_next_command(char **command)
+{
+	while (*command && !is_pipe(*command))
+		command++;
+	if (*command)
+		command++;
+	return (command);
+}
+
+int	exec(char **exec_command)
 {
 	extern char	**environ;
 	pid_t		pid;
-	int			exec_status;
+	int			last_exit_status;
+	char		**next_command;
 
-	pid = fork();
-	if (pid == FORK_ERROR)
+	last_exit_status = EXIT_SUCCESS;
+	while (*exec_command)
 	{
-		perror("fork");
-		return (FORK_ERROR);
+		next_command = get_next_command(exec_command);
+		pid = fork();
+		if (pid == FORK_ERROR)
+		{
+			perror("fork");
+			return (FORK_ERROR);
+		}
+		if (pid == CHILD_PID)
+			child_process(exec_command, environ);
+		else
+		{
+			last_exit_status = parent_process();
+			if (last_exit_status == PROCESS_ERROR)
+				return (last_exit_status);
+		}
+		exec_command = next_command;
 	}
-	if (pid == CHILD_PID)
-		child_process(commands, environ);
-	exec_status = parent_process();
-	return (exec_status);
+	return (last_exit_status);
 }
