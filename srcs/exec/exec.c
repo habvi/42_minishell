@@ -24,7 +24,7 @@ static char	**get_next_command(char **command)
 	return (command);
 }
 
-static int	dup_process_and_run(char **exec_command, int *last_exit_status)
+static int	dup_process_and_run(t_command *cmd, int *last_exit_status)
 {
 	extern char	**environ;
 	pid_t		pid;
@@ -33,7 +33,7 @@ static int	dup_process_and_run(char **exec_command, int *last_exit_status)
 	if (pid == FORK_ERROR)
 		return (FORK_ERROR);
 	if (pid == CHILD_PID)
-		child_process(exec_command, environ);
+		child_process(cmd, environ);
 	else
 	{
 		if (parent_process(last_exit_status) == PROCESS_ERROR)
@@ -42,19 +42,18 @@ static int	dup_process_and_run(char **exec_command, int *last_exit_status)
 	return (EXIT_SUCCESS);
 }
 
-int	execute_command(char **exec_command)
+int	execute_command(t_command *cmd)
 {
 	int		last_exit_status;
 	char	**next_command;
 
 	last_exit_status = EXIT_SUCCESS;
-	while (*exec_command)
+	while (*cmd->exec_command)
 	{
-		next_command = get_next_command(exec_command);
-		if (dup_process_and_run(exec_command, &last_exit_status) \
-															== PROCESS_ERROR)
+		next_command = get_next_command(cmd->exec_command);
+		if (dup_process_and_run(cmd, &last_exit_status) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
-		exec_command = next_command;
+		cmd->exec_command = next_command;
 	}
 	return (last_exit_status);
 }

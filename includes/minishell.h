@@ -18,14 +18,19 @@
 
 # define EXIT_MSG_NO_SUCH_FILE  "No such file or directory"
 
+typedef struct s_command {
+	char	**head;
+	char	**exec_command;
+}	t_command;
+
 // temporarily here ...
 /* debug */
 void	debug_func(const char *func_name, const int line_num);
 void	debug_2d_array(char **array);
 
 /* exec */
-void	child_process(char **commands, char **environ);
-int		execute_command(char **exec_command);
+void	child_process(t_command *commands, char **environ);
+int		execute_command(t_command *commands);
 int		parent_process(int *last_exit_status);
 
 /* input */

@@ -1,12 +1,19 @@
 #include "minishell.h"
 #include "libft.h"
 
+static void	init_commands(t_command *cmd)
+{
+	cmd->head = NULL;
+	cmd->exec_command = NULL;
+}
+
 static int	minishell(void)
 {
-	char	*line;
-	char	**commands;
-	int		process_status;
+	char		*line;
+	t_command	cmd;
+	int			process_status;
 
+	init_commands(&cmd);
 	process_status = EXIT_SUCCESS;
 	while (true)
 	{
@@ -14,13 +21,14 @@ static int	minishell(void)
 		if (!line)
 			break ;
 		// tokenize
-		commands = ft_split(line, ' ');
+		cmd.head = ft_split(line, ' ');
 		free(line);
-		if (!commands)
+		if (!cmd.head)
 			return (EXIT_FAILURE);
+		cmd.exec_command = cmd.head;
 		// parse
-		process_status = execute_command(commands);
-		free_2d_array(&commands);
+		process_status = execute_command(&cmd);
+		free_2d_array(&cmd.head);
 		if (process_status == PROCESS_ERROR)
 			return (EXIT_FAILURE);
 	}
