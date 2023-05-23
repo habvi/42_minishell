@@ -5,6 +5,7 @@ static void	init_commands(t_command *cmd)
 {
 	cmd->head = NULL;
 	cmd->exec_command = NULL;
+	cmd->next_command = NULL;
 }
 
 static int	minishell(void)

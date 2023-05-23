@@ -44,16 +44,15 @@ static int	dup_process_and_run(t_command *cmd, int *last_exit_status)
 
 int	execute_command(t_command *cmd)
 {
-	int		last_exit_status;
-	char	**next_command;
+	int	last_exit_status;
 
 	last_exit_status = EXIT_SUCCESS;
 	while (*cmd->exec_command)
 	{
-		next_command = get_next_command(cmd->exec_command);
+		cmd->next_command = get_next_command(cmd->exec_command);
 		if (dup_process_and_run(cmd, &last_exit_status) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
-		cmd->exec_command = next_command;
+		cmd->exec_command = cmd->next_command;
 	}
 	return (last_exit_status);
 }

@@ -21,6 +21,7 @@
 typedef struct s_command {
 	char	**head;
 	char	**exec_command;
+	char	**next_command;
 }	t_command;
 
 // temporarily here ...
