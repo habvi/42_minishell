@@ -35,7 +35,7 @@ static int	dup_process_and_run(t_command *cmd, t_fd *fd, int *last_exit_status)
 		if (x_pipe(fd->pipefd) == PIPE_ERROR)
 			return (PIPE_ERROR);
 	}
-	// ft_dprintf(STDERR_FILENO, "[pipe: %d, %d]\n", fd->pipefd[0], fd->pipefd[1]);
+// ft_dprintf(STDERR_FILENO, "[pipe: %d, %d]\n", fd->pipefd[0], fd->pipefd[1]);
 	pid = x_fork();
 	if (pid == FORK_ERROR)
 		return (FORK_ERROR);
