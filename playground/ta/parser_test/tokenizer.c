@@ -4,7 +4,7 @@ void	print_token(t_token *token_head)
 {
 	t_token	*ptr;
 
-	printf("print_token:[");
+	printf("%-12s:[", "print_token");
 	ptr = token_head;
 	while (ptr)
 	{

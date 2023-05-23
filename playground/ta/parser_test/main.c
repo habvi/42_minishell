@@ -5,7 +5,7 @@ static void	print_split(char **split)
 	size_t	i;
 
 	i = 0;
-	printf("split:[");
+	printf("%-12s:[", "split");
 	while (split && split[i])
 	{
 		printf("%s", split[i]);
@@ -36,25 +36,24 @@ int	main(int argc, char **argv)
 
 	tree = expression(&token);
 
-	printf("\n");
-	print_tree_node(tree, 0, "root");
-	print_tree_node(tree->lhs, 1, "root->left");
-	print_tree_node(tree->rhs, 1, "root->right");
+//	printf("\n");
+//	print_tree_node(tree, 0, "root");
+//	print_tree_node(tree->lhs, 1, "root->left");
+//	print_tree_node(tree->rhs, 1, "root->right");
+//
+//	if (tree->lhs)
+//	{
+//		print_tree_node(tree->lhs->lhs, 2, "root->left->left");
+//		print_tree_node(tree->lhs->rhs, 2, "root->left->right");
+//	}
+//
+//	if (tree->rhs)
+//	{
+//		print_tree_node(tree->rhs->lhs, 2, "root->right->left");
+//		print_tree_node(tree->rhs->rhs, 2, "root->right->right");
+//	}
 
-	if (tree->lhs)
-	{
-		print_tree_node(tree->lhs->lhs, 2, "root->left->left");
-		print_tree_node(tree->lhs->rhs, 2, "root->left->right");
-	}
-
-	if (tree->rhs)
-	{
-		print_tree_node(tree->rhs->lhs, 2, "root->right->left");
-		print_tree_node(tree->rhs->rhs, 2, "root->right->right");
-	}
-
-
-	//	print_tree(tree);
+	print_tree(tree);
 
 //	free_2d_array(&split);
 //	free_token(token);

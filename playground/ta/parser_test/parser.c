@@ -31,23 +31,23 @@ t_tree	*new_num_leaf(int val)
 	return (node);
 }
 
-void	print_tree_node(t_tree *node, int depth, char *str)
-{
-	int	i = 0;
-
-	if (!node)
-		return ;
-	printf("%20s : ", str);
-	while (i < depth)
-	{
-		printf(" ");
-		i++;
-	}
-	if (node->kind == nd_num)
-		printf("num:%d\n", node->val);
-	else
-		printf("ope:%c\n", get_operator_char(node));
-}
+//void	print_tree_node(t_tree *node, int depth, char *str)
+//{
+//	int	i = 0;
+//
+//	if (!node)
+//		return ;
+//	printf("%20s : ", str);
+//	while (i < depth)
+//	{
+//		printf(" ");
+//		i++;
+//	}
+//	if (node->kind == nd_num)
+//		printf("num:%d\n", node->val);
+//	else
+//		printf("ope:%c\n", get_operator_char(node));
+//}
 
 void	free_tree(t_tree *tree)
 {
@@ -71,33 +71,33 @@ char	get_operator_char(t_tree *node)
 	return ('.');
 }
 
-//void print_tree_node(t_tree *node, int depth)
-//{
-//	int	i;
-//
-//	i = 0;
-//	while (i < depth)
-//	{
-//		printf("  ");
-//		i++;
-//	}
-//	if (node->kind == nd_num) {
-//		printf("%d\n", node->val);
-//	}
-//	else {
-//		printf("%c\n", get_operator_char(node));
-//		if (node->lhs != NULL) {
-//			print_tree_node(node->lhs, depth + 1);
-//		}
-//		if (node->rhs != NULL) {
-//			print_tree_node(node->rhs, depth + 1);
-//		}
-//	}
-//}
-//
-//void print_tree(t_tree *root) {
-//	print_tree_node(root, 0);
-//}
+void print_tree_node_(t_tree *node, int depth)
+{
+	int	i;
+
+	i = 0;
+	while (i < depth)
+	{
+		printf("  ");
+		i++;
+	}
+	if (node->kind == nd_num)
+	{
+		printf("%d\n", node->val);
+		return ;
+	}
+	printf("%c\n", get_operator_char(node));
+	if (node->lhs != NULL)
+		print_tree_node_(node->lhs, depth + 1);
+	if (node->rhs != NULL)
+		print_tree_node_(node->rhs, depth + 1);
+}
+
+void print_tree(t_tree *root)
+{
+	printf("%-12s:\n", "print_tree");
+	print_tree_node_(root, 0);
+}
 
 static bool	is_kind_add_or_sub(t_node_kind kind)
 {
@@ -138,25 +138,11 @@ t_tree	*expression(t_token **token)
 	//
 	while (*token && is_kind_add_or_sub((*token)->kind))
 	{
-//		printf("\n%s 2\n", __func__);
-//		print_token_node(*token);
-
 		kind = (*token)->kind;
 		*token = (*token)->next;
-
-//		printf("\n%s 3\n", __func__);
-//		print_token_node(*token);
-
 		rhs = term(token);
 		lhs = new_node(kind, lhs, rhs);
-
-//		printf("\n%s 4\n", __func__);
-//		print_token_node(*token);
-
 	}
-//	printf("\n%s 5\n", __func__);
-//	print_token_node(*token);
-
 	return (lhs);
 }
 
@@ -175,24 +161,11 @@ t_tree	*term(t_token **token)
 
 	while (*token && is_kind_mul_or_div((*token)->kind))
 	{
-//		printf("\n %s 3\n", __func__);
-//		print_token_node(*token);
-
 		kind = (*token)->kind;
 		*token = (*token)->next;
-//		printf("\n %s 4\n", __func__);
-//		print_token_node(*token);
-
 		rhs = primary(token);
 		lhs = new_node(kind, lhs, rhs);
-
-//		printf("\n %s 5\n", __func__);
-//		print_token_node(*token);
-
 	}
-	printf("\n %s 6\n", __func__);
-	print_token_node(*token);
-
 	return (lhs);
 }
 
