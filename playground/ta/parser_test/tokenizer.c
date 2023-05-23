@@ -31,6 +31,28 @@ void	print_token(t_token *token_head)
 	printf("]\n");
 }
 
+void	print_token_node(t_token *token)
+{
+	printf("print_tree_node:[");
+	if (token && token->kind == nd_num)
+		printf("%d", token->val);
+	else if (token && token->kind == nd_add)
+		printf("+");
+	else if (token && token->kind == nd_sub)
+		printf("-");
+	else if (token && token->kind == nd_mul)
+		printf("*");
+	else if (token && token->kind == nd_div)
+		printf("/");
+	else if (token && token->kind == nd_left_paren)
+		printf("(");
+	else if (token && token->kind == nd_right_paren)
+		printf(")");
+	else if (token)
+		printf("(EOF)");
+	printf("]\n");
+}
+
 void	free_token(t_token *token)
 {
 	t_token	*next_ptr;
@@ -101,7 +123,7 @@ t_token	*tokenize(char **split)
 		token_add(&token_head, new_token);
 		i++;
 	}
-	new_token = new_token_node(split[i]);
-	token_add(&token_head, new_token);
+//	new_token = new_token_node(split[i]);
+//	token_add(&token_head, new_token);
 	return (token_head);
 }

@@ -34,11 +34,30 @@ int	main(int argc, char **argv)
 	token = tokenize(split);
 	print_token(token);
 
-	tree = expr(token);
-	print_tree(tree);
+	tree = expression(&token);
 
-	free_2d_array(&split);
-	free_token(token);
-	free_tree(tree);
+	printf("\n");
+	print_tree_node(tree, 0, "root");
+	print_tree_node(tree->lhs, 1, "root->left");
+	print_tree_node(tree->rhs, 1, "root->right");
+
+	if (tree->lhs)
+	{
+		print_tree_node(tree->lhs->lhs, 2, "root->left->left");
+		print_tree_node(tree->lhs->rhs, 2, "root->left->right");
+	}
+
+	if (tree->rhs)
+	{
+		print_tree_node(tree->rhs->lhs, 2, "root->right->left");
+		print_tree_node(tree->rhs->rhs, 2, "root->right->right");
+	}
+
+
+	//	print_tree(tree);
+
+//	free_2d_array(&split);
+//	free_token(token);
+//	free_tree(tree);
 	return (0);
 }

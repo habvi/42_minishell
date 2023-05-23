@@ -42,5 +42,15 @@ re	: fclean
 	@make all
 
 .PHONY	:= run
-run	: all
+run	: re
 	./$(NAME)
+
+t1	: re
+	./$(NAME) "1 + 2"
+
+t2	: re
+	./$(NAME) "1 * 2 + 3"
+
+t3	: re
+	./$(NAME) "1 + 2 * 3"
+
