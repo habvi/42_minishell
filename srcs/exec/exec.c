@@ -1,53 +1,67 @@
-#include <sys/wait.h> // wait
 #include "minishell.h"
 #include "ft_dprintf.h"
 #include "libft.h"
 
-// use PROMPT_NAME
-void	child_process(char **commands, char **environ)
+static bool	is_pipe(const char *str)
 {
-	printf("chi : %p\n", commands);
-	// if (!commands[0])
-	// 	exit(EXIT_SUCCESS);
-	if (execve(commands[0], commands, environ) == EXECVE_ERROR)
-	{
-		// write or malloc error
-		ft_dprintf(STDERR_FILENO, "minishell: %s: %s\n", \
-											commands[0], EXIT_MSG_NO_SUCH_FILE);
-		free_2d_array(&commands);
-		exit(EXIT_CODE_NO_SUCH_FILE);
-	}
+	if (ft_strnlen(str, 2) == 1 && *str == '|')
+		return (true);
+	return (false);
 }
 
-int	parent_process(void)
+// | command                  -> not handle yet
+// command arg                -> return NULL
+// command arg |              -> return NULL
+// command arg | command2 arg -> return command2
+static char	**get_next_command(char **command)
 {
-	int		status;
-	pid_t	wait_pid;
-
-	status = 0;
-	wait_pid = wait(&status);
-	if (wait_pid == WAIT_ERROR)
+	while (*command && !is_pipe(*command))
+		command++;
+	if (*command)
 	{
-		perror("wait");
-		return (WAIT_ERROR);
+		*command = NULL;
+		command++;
 	}
-	return (WEXITSTATUS(status));
+	return (command);
 }
 
-int	exec(char **commands)
+static int	dup_process_and_run(t_command *cmd, t_fd *fd, int *last_exit_status)
 {
 	extern char	**environ;
 	pid_t		pid;
-	int			exec_status;
 
-	pid = fork();
-	if (pid == FORK_ERROR)
+	if (!is_last_command(*cmd->next_command))
 	{
-		perror("fork");
-		return (FORK_ERROR);
+		if (x_pipe(fd->pipefd) == PIPE_ERROR)
+			return (PIPE_ERROR);
 	}
+// ft_dprintf(STDERR_FILENO, "[pipe: %d, %d]\n", fd->pipefd[0], fd->pipefd[1]);
+	pid = x_fork();
+	if (pid == FORK_ERROR)
+		return (FORK_ERROR);
 	if (pid == CHILD_PID)
-		child_process(commands, environ);
-	exec_status = parent_process();
-	return (exec_status);
+		child_process(cmd, fd, environ);
+	else
+	{
+		if (parent_process(cmd, fd, pid, last_exit_status) == PROCESS_ERROR)
+			return (PROCESS_ERROR);
+	}
+	return (EXIT_SUCCESS);
+}
+
+int	execute_command(t_command *cmd)
+{
+	t_fd	fd;
+	int		last_exit_status;
+
+	fd.prev_fd = STDIN_FILENO;
+	last_exit_status = EXIT_SUCCESS;
+	while (*cmd->exec_command)
+	{
+		cmd->next_command = get_next_command(cmd->exec_command);
+		if (dup_process_and_run(cmd, &fd, &last_exit_status) == PROCESS_ERROR)
+			return (PROCESS_ERROR);
+		cmd->exec_command = cmd->next_command;
+	}
+	return (last_exit_status);
 }

@@ -8,8 +8,16 @@ MKDIR		:=	mkdir -p
 SRCS_DIR	:=	srcs
 SRCS		:=	main.c
 
+DEBUG_DIR	:=	debug
+SRCS		+=	$(DEBUG_DIR)/put.c
+
 EXEC_DIR	:=	exec
-SRCS		+=	$(EXEC_DIR)/exec.c
+SRCS		+=	$(EXEC_DIR)/check_command.c \
+				$(EXEC_DIR)/child_pipes.c \
+				$(EXEC_DIR)/child_process.c \
+				$(EXEC_DIR)/exec.c \
+				$(EXEC_DIR)/parent_pipes.c \
+				$(EXEC_DIR)/parent_process.c
 
 INPUT_DIR	:=	input
 SRCS		+=	$(INPUT_DIR)/input.c
@@ -65,7 +73,7 @@ sani	:
 	make re SANI=1
 
 .PHONY	: norm
-norm	:
+norm	: all
 	python3 .github/sh/norm.py
 
 
@@ -74,5 +82,10 @@ norm	:
 .PHONY	: t
 t		: re
 	./.github/sh/test.bats
+
+# test multi pipe
+.PHONY	: pipe
+pipe	: all
+	python3 ./.github/sh/minishell_pipe.py
 
 -include $(DEPS)
