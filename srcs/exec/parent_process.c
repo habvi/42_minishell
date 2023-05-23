@@ -40,7 +40,7 @@ int	parent_process(t_command *cmd, t_fd *fd, pid_t pid, int *last_exit_status)
 	int	status;
 
 	if (handle_parent_pipes(cmd, fd) == PROCESS_ERROR)
-		exit(EXIT_FAILURE);
+		return (PROCESS_ERROR);
 	if (get_last_command_status(pid, &status, last_exit_status) \
 															== PROCESS_ERROR)
 		return (PROCESS_ERROR);
