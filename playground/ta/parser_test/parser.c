@@ -78,15 +78,15 @@ void print_tree_node_(t_tree *node, int depth)
 	i = 0;
 	while (i < depth)
 	{
-		printf("  ");
+		dprintf(STDERR_FILENO, "  ");
 		i++;
 	}
 	if (node->kind == nd_num)
 	{
-		printf("%d\n", node->val);
+		dprintf(STDERR_FILENO, "%d\n", node->val);
 		return ;
 	}
-	printf("%c\n", get_operator_char(node));
+	dprintf(STDERR_FILENO, "%c\n", get_operator_char(node));
 	if (node->lhs != NULL)
 		print_tree_node_(node->lhs, depth + 1);
 	if (node->rhs != NULL)
@@ -95,7 +95,7 @@ void print_tree_node_(t_tree *node, int depth)
 
 void print_tree(t_tree *root)
 {
-	printf("%-12s:\n", "print_tree");
+	dprintf(STDERR_FILENO, "%-12s:\n", "print_tree");
 	print_tree_node_(root, 0);
 }
 

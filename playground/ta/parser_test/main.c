@@ -5,15 +5,15 @@ static void	print_split(char **split)
 	size_t	i;
 
 	i = 0;
-	printf("%-12s:[", "split");
+	dprintf(STDERR_FILENO, "%-12s:[", "split");
 	while (split && split[i])
 	{
-		printf("%s", split[i]);
+		dprintf(STDERR_FILENO, "%s", split[i]);
 		i++;
 		if (split[i])
-			printf(", ");
+			dprintf(STDERR_FILENO, ", ");
 	}
-	printf("]\n");
+	dprintf(STDERR_FILENO, "]\n");
 }
 
 int	main(int argc, char **argv)
@@ -24,7 +24,7 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 	{
-		printf("usage               : $ ./a.out \"numerical formula\"\n"
+		dprintf(STDERR_FILENO, "usage               : $ ./a.out \"numerical formula\"\n"
 			   "available operators : +, -, *, /, (, )\n");
 		return (1);
 	}

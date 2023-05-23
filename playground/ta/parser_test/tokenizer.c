@@ -4,53 +4,53 @@ void	print_token(t_token *token_head)
 {
 	t_token	*ptr;
 
-	printf("%-12s:[", "print_token");
+	dprintf(STDERR_FILENO, "%-12s:[", "print_token");
 	ptr = token_head;
 	while (ptr)
 	{
 		if (ptr->kind == nd_num)
-			printf("%d", ptr->val);
+			dprintf(STDERR_FILENO, "%d", ptr->val);
 		else if (ptr->kind == nd_add)
-			printf("+");
+			dprintf(STDERR_FILENO, "+");
 		else if (ptr->kind == nd_sub)
-			printf("-");
+			dprintf(STDERR_FILENO, "-");
 		else if (ptr->kind == nd_mul)
-			printf("*");
+			dprintf(STDERR_FILENO, "*");
 		else if (ptr->kind == nd_div)
-			printf("/");
+			dprintf(STDERR_FILENO, "/");
 		else if (ptr->kind == nd_left_paren)
-			printf("(");
+			dprintf(STDERR_FILENO, "(");
 		else if (ptr->kind == nd_right_paren)
-			printf(")");
+			dprintf(STDERR_FILENO, ")");
 		else
-			printf("(EOF)");
+			dprintf(STDERR_FILENO, "(EOF)");
 		ptr = ptr->next;
 		if (ptr)
-			printf(" ");
+			dprintf(STDERR_FILENO, " ");
 	}
-	printf("]\n");
+	dprintf(STDERR_FILENO, "]\n");
 }
 
 void	print_token_node(t_token *token)
 {
-	printf("print_tree_node:[");
+	dprintf(STDERR_FILENO, "print_tree_node:[");
 	if (token && token->kind == nd_num)
-		printf("%d", token->val);
+		dprintf(STDERR_FILENO, "%d", token->val);
 	else if (token && token->kind == nd_add)
-		printf("+");
+		dprintf(STDERR_FILENO, "+");
 	else if (token && token->kind == nd_sub)
-		printf("-");
+		dprintf(STDERR_FILENO, "-");
 	else if (token && token->kind == nd_mul)
-		printf("*");
+		dprintf(STDERR_FILENO, "*");
 	else if (token && token->kind == nd_div)
-		printf("/");
+		dprintf(STDERR_FILENO, "/");
 	else if (token && token->kind == nd_left_paren)
-		printf("(");
+		dprintf(STDERR_FILENO, "(");
 	else if (token && token->kind == nd_right_paren)
-		printf(")");
+		dprintf(STDERR_FILENO, ")");
 	else if (token)
-		printf("(EOF)");
-	printf("]\n");
+		dprintf(STDERR_FILENO, "(EOF)");
+	dprintf(STDERR_FILENO, "]\n");
 }
 
 void	free_token(t_token *token)
