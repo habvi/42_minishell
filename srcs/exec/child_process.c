@@ -3,7 +3,7 @@
 #include "libft.h"
 
 // use PROMPT_NAME
-void	child_process(t_command *cmd, int pipefd[2], int prev_fd, char **environ)
+void	child_process(t_command *cmd, t_fd *fd, char **environ)
 {
 	char	**command;
 
@@ -12,20 +12,20 @@ void	child_process(t_command *cmd, int pipefd[2], int prev_fd, char **environ)
 	debug_2d_array(command);
 	// if (!command[0])
 	// 	exit(EXIT_SUCCESS);
-	if (!is_first_command(prev_fd))
+	if (!is_first_command(fd->prev_fd))
  	{
 		// SYS_ERROR
 		close(STDIN_FILENO);
-		dup2(prev_fd, STDIN_FILENO);
-		close(prev_fd);
+		dup2(fd->prev_fd, STDIN_FILENO);
+		close(fd->prev_fd);
 	}
 	if (!is_last_command(*cmd->next_command))
 	{
 		// SYS_ERROR
-		close(pipefd[READ]);
+		close(fd->pipefd[READ]);
 		close(STDOUT_FILENO);
-		dup2(pipefd[WRITE], STDOUT_FILENO);
-		close(pipefd[WRITE]);
+		dup2(fd->pipefd[WRITE], STDOUT_FILENO);
+		close(fd->pipefd[WRITE]);
 	}
 	if (execve(command[0], command, environ) == EXECVE_ERROR)
 	{

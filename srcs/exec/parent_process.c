@@ -3,22 +3,22 @@
 #include "minishell.h"
 #include "ft_dprintf.h"
 
-int	parent_process(t_command *cmd, int pipefd[2], int *prev_fd, pid_t pid, int *last_exit_status)
+int	parent_process(t_command *cmd, t_fd *fd, pid_t pid, int *last_exit_status)
 {
 	int		status;
 	pid_t	wait_pid;
 
 	(void)cmd;
-	if (!is_first_command(*prev_fd))
+	if (!is_first_command(fd->prev_fd))
 	{
 		// SYS_ERROR
-		close(*prev_fd);
+		close(fd->prev_fd);
 	}
 	if (!is_last_command(*cmd->next_command))
 	{
-		*prev_fd = pipefd[READ];
+		fd->prev_fd = fd->pipefd[READ];
 		// SYS_ERROR
-		close(pipefd[WRITE]);
+		close(fd->pipefd[WRITE]);
 		return (EXIT_SUCCESS);
 	}
 	wait_pid = waitpid(pid, &status, 0);

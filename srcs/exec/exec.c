@@ -1,4 +1,5 @@
 #include "minishell.h"
+#include "ft_dprintf.h"
 #include "libft.h"
 
 bool	is_first_command(int prev_fd)
@@ -34,26 +35,25 @@ static char	**get_next_command(char **command)
 	return (command);
 }
 
-static int	dup_process_and_run(t_command *cmd, int *prev_fd, int *last_exit_status)
+static int	dup_process_and_run(t_command *cmd, t_fd *fd, int *last_exit_status)
 {
 	extern char	**environ;
-	int			pipefd[2];
 	pid_t		pid;
 
 	if (!is_last_command(*cmd->next_command))
 	{
-		if (x_pipe(pipefd) == PIPE_ERROR)
+		if (x_pipe(fd->pipefd) == PIPE_ERROR)
 			return (PIPE_ERROR);
 	}
-	printf("[pipe: %d, %d]\n", pipefd[0], pipefd[1]);
+	ft_dprintf(STDERR_FILENO, "[pipe: %d, %d]\n", fd->pipefd[0], fd->pipefd[1]);
 	pid = x_fork();
 	if (pid == FORK_ERROR)
 		return (FORK_ERROR);
 	if (pid == CHILD_PID)
-		child_process(cmd, pipefd, *prev_fd, environ);
+		child_process(cmd, fd, environ);
 	else
 	{
-		if (parent_process(cmd, pipefd, prev_fd, pid, last_exit_status) == PROCESS_ERROR)
+		if (parent_process(cmd, fd, pid, last_exit_status) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 	}
 	return (EXIT_SUCCESS);
@@ -61,15 +61,15 @@ static int	dup_process_and_run(t_command *cmd, int *prev_fd, int *last_exit_stat
 
 int	execute_command(t_command *cmd)
 {
-	int	last_exit_status;
-	int	prev_fd;
+	t_fd	fd;
+	int		last_exit_status;
 
-	prev_fd = STDIN_FILENO;
+	fd.prev_fd = STDIN_FILENO;
 	last_exit_status = EXIT_SUCCESS;
 	while (*cmd->exec_command)
 	{
 		cmd->next_command = get_next_command(cmd->exec_command);
-		if (dup_process_and_run(cmd, &prev_fd, &last_exit_status) == PROCESS_ERROR)
+		if (dup_process_and_run(cmd, &fd, &last_exit_status) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 		cmd->exec_command = cmd->next_command;
 	}
