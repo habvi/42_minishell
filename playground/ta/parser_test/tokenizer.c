@@ -20,8 +20,10 @@ void	print_token(t_token *token_head)
 			printf("/");
 		else if (ptr->kind == nd_left_paren)
 			printf("(");
-		else
+		else if (ptr->kind == nd_right_paren)
 			printf(")");
+		else
+			printf("(EOF)");
 		ptr = ptr->next;
 		if (ptr)
 			printf(" ");
@@ -47,7 +49,9 @@ static t_token	*new_token_node(char *term)
 
 	node = (t_token *)calloc(1, sizeof(t_token));
 	node->next = NULL;
-	if (isdigit(term[0]))
+	if (!term)
+		node->kind = nd_eof;
+	else if (isdigit(term[0]))
 	{
 		node->val = (int)strtol(term, NULL, 10);
 		node->kind = nd_num;
@@ -97,5 +101,7 @@ t_token	*tokenize(char **split)
 		token_add(&token_head, new_token);
 		i++;
 	}
+	new_token = new_token_node(split[i]);
+	token_add(&token_head, new_token);
 	return (token_head);
 }

@@ -20,6 +20,7 @@ int	main(int argc, char **argv)
 {
 	char	**split;
 	t_token	*token;
+	t_tree	*tree;
 
 	if (argc != 2)
 	{
@@ -33,7 +34,11 @@ int	main(int argc, char **argv)
 	token = tokenize(split);
 	print_token(token);
 
-	free_token(token);
+	tree = expr(token);
+	print_tree(tree);
+
 	free_2d_array(&split);
+	free_token(token);
+	free_tree(tree);
 	return (0);
 }
