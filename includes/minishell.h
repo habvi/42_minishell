@@ -40,6 +40,7 @@ void	debug_2d_array(char **array);
 /* exec */
 bool	is_first_command(int prev_fd);
 bool	is_last_command(char *next_cmd);
+int		handle_child_pipes(t_command *cmd, t_fd *fd);
 void	child_process(t_command *cmd, t_fd *fd, char **environ);
 int		execute_command(t_command *commands);
 int		handle_parent_pipes(t_command *cmd, t_fd *fd);
