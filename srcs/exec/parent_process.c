@@ -10,7 +10,7 @@ static int	get_last_command_status(\
 	pid_t	wait_pid;
 
 	wait_pid = x_waitpid(pid, status, 0);
-	if (WIFEXITED(*status))
+	if (wait_pid != PROCESS_ERROR && WIFEXITED(*status))
 		*last_exit_status = WEXITSTATUS(*status);
 	else
 		return (WAIT_ERROR);
