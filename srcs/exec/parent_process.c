@@ -41,13 +41,16 @@ int	parent_process(t_command *cmd, t_fd *fd, pid_t pid, int *last_exit_status)
 
 	if (handle_parent_pipes(cmd, fd) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
-	if (get_last_command_status(pid, &status, last_exit_status) \
-															== PROCESS_ERROR)
-		return (PROCESS_ERROR);
-	if (wait_all_child_process(status) == PROCESS_ERROR)
-		return (PROCESS_ERROR);
-	// ft_dprintf(STDERR_FILENO, "\nchild exit success! ");
-	// ft_dprintf(STDERR_FILENO, "status: %d,", WIFEXITED(status));
-	// ft_dprintf(STDERR_FILENO, "exit status: %d\n", *last_exit_status);
+	if (is_last_command(*cmd->next_command))
+	{
+		if (get_last_command_status(pid, &status, last_exit_status) \
+																== PROCESS_ERROR)
+			return (PROCESS_ERROR);
+		if (wait_all_child_process(status) == PROCESS_ERROR)
+			return (PROCESS_ERROR);
+		// ft_dprintf(STDERR_FILENO, "\nchild exit success! ");
+		// ft_dprintf(STDERR_FILENO, "status: %d,", WIFEXITED(status));
+		// ft_dprintf(STDERR_FILENO, "exit status: %d\n", *last_exit_status);
+	}
 	return (EXIT_SUCCESS);
 }
