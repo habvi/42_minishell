@@ -14,6 +14,8 @@
 
 # define CHILD_PID		0
 # define PROMPT_NAME    "minishell "
+# define READ			0
+# define WRITE			1
 
 # define EXIT_CODE_NO_SUCH_FILE	127
 
@@ -31,6 +33,8 @@ void	debug_func(const char *func_name, const int line_num);
 void	debug_2d_array(char **array);
 
 /* exec */
+bool	is_first_command(int prev_fd);
+bool	is_last_command(char *next_cmd);
 void	child_process(t_command *cmd, int pipefd[2], int prev_fd, char **environ);
 int		execute_command(t_command *commands);
 int		parent_process(t_command *cmd, int pipefd[2], int *prev_fd, pid_t pid, int *last_exit_status);
