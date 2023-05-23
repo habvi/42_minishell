@@ -26,26 +26,33 @@ static int	handle_child_pipes_except_last(t_fd *fd)
 	return (EXIT_SUCCESS);
 }
 
+static int	handle_child_pipes(t_command *cmd, t_fd *fd)
+{
+	if (!is_first_command(fd->prev_fd))
+	{
+		if (handle_child_pipes_except_first(fd) == PROCESS_ERROR)
+			return (PROCESS_ERROR);
+	}
+	if (!is_last_command(*cmd->next_command))
+	{
+		if (handle_child_pipes_except_last(fd) == PROCESS_ERROR)
+			return (PROCESS_ERROR);
+	}
+	return (EXIT_SUCCESS);
+}
+
 // use PROMPT_NAME
 void	child_process(t_command *cmd, t_fd *fd, char **environ)
 {
 	char	**command;
 
 	command = cmd->exec_command;
-	debug_func(__func__, __LINE__);
-	debug_2d_array(command);
+	// debug_func(__func__, __LINE__);
+	// debug_2d_array(command);
 	// if (!command[0])
 	// 	exit(EXIT_SUCCESS);
-	if (!is_first_command(fd->prev_fd))
- 	{
-		if (handle_child_pipes_except_first(fd) == PROCESS_ERROR)
-			exit(EXIT_FAILURE);
-	}
-	if (!is_last_command(*cmd->next_command))
-	{
-		if (handle_child_pipes_except_last(fd) == PROCESS_ERROR)
-			exit(EXIT_FAILURE);
-	}
+	if (handle_child_pipes(cmd, fd) == PROCESS_ERROR)
+		exit(EXIT_FAILURE);
 	if (execve(command[0], command, environ) == EXECVE_ERROR)
 	{
 		// write or malloc error..?
