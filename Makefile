@@ -12,7 +12,8 @@ DEBUG_DIR	:=	debug
 SRCS		+=	$(DEBUG_DIR)/put.c
 
 EXEC_DIR	:=	exec
-SRCS		+=	$(EXEC_DIR)/child_process.c \
+SRCS		+=	$(EXEC_DIR)/check_command.c \
+				$(EXEC_DIR)/child_process.c \
 				$(EXEC_DIR)/exec.c \
 				$(EXEC_DIR)/parent_process.c
 

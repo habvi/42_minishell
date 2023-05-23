@@ -2,16 +2,6 @@
 #include "ft_dprintf.h"
 #include "libft.h"
 
-bool	is_first_command(int prev_fd)
-{
-	return (prev_fd == STDIN_FILENO);
-}
-
-bool	is_last_command(char *next_cmd)
-{
-	return (!next_cmd);
-}
-
 static bool	is_pipe(const char *str)
 {
 	if (ft_strnlen(str, 2) == 1 && *str == '|')
