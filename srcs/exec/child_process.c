@@ -3,6 +3,7 @@
 #include "libft.h"
 
 // use PROMPT_NAME
+// if execve erorr, no need for auto perror.
 void	child_process(t_command *cmd, t_fd *fd, char **environ)
 {
 	char	**command;
@@ -14,7 +15,7 @@ void	child_process(t_command *cmd, t_fd *fd, char **environ)
 	// 	exit(EXIT_SUCCESS);
 	if (handle_child_pipes(cmd, fd) == PROCESS_ERROR)
 		exit(EXIT_FAILURE);
-	if (x_execve(command[0], command, environ) == EXECVE_ERROR)
+	if (execve(command[0], command, environ) == EXECVE_ERROR)
 	{
 		// write or malloc error..?
 		ft_dprintf(STDERR_FILENO, "minishell: %s: %s\n", \
