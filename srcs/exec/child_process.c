@@ -3,10 +3,12 @@
 #include "libft.h"
 
 // use PROMPT_NAME
-void	child_process(t_command *cmd, char **environ)
+void	child_process(t_command *cmd, int pipefd[2], int prev_fd, char **environ)
 {
 	char	**command;
 
+	(void)pipefd;
+	(void)prev_fd;
 	command = cmd->exec_command;
 	debug_func(__func__, __LINE__);
 	debug_2d_array(command);

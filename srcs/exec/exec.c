@@ -1,6 +1,11 @@
 #include "minishell.h"
 #include "libft.h"
 
+static bool	is_last_command(char *next_cmd)
+{
+	return (!next_cmd);
+}
+
 static bool	is_pipe(const char *str)
 {
 	if (ft_strnlen(str, 2) == 1 && *str == '|')
@@ -24,19 +29,26 @@ static char	**get_next_command(char **command)
 	return (command);
 }
 
-static int	dup_process_and_run(t_command *cmd, int *last_exit_status)
+static int	dup_process_and_run(t_command *cmd, int *prev_fd, int *last_exit_status)
 {
 	extern char	**environ;
+	int			pipefd[2];
 	pid_t		pid;
 
+	if (!is_last_command(*cmd->next_command))
+	{
+		if (x_pipe(pipefd) == PIPE_ERROR)
+			return (PIPE_ERROR);
+	}
+	printf("[pipe: %d, %d]\n", pipefd[0], pipefd[1]);
 	pid = x_fork();
 	if (pid == FORK_ERROR)
 		return (FORK_ERROR);
 	if (pid == CHILD_PID)
-		child_process(cmd, environ);
+		child_process(cmd, pipefd, *prev_fd, environ);
 	else
 	{
-		if (parent_process(last_exit_status) == PROCESS_ERROR)
+		if (parent_process(cmd, pipefd, prev_fd, pid, last_exit_status) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 	}
 	return (EXIT_SUCCESS);
@@ -45,12 +57,14 @@ static int	dup_process_and_run(t_command *cmd, int *last_exit_status)
 int	execute_command(t_command *cmd)
 {
 	int	last_exit_status;
+	int	prev_fd;
 
+	prev_fd = STDIN_FILENO;
 	last_exit_status = EXIT_SUCCESS;
 	while (*cmd->exec_command)
 	{
 		cmd->next_command = get_next_command(cmd->exec_command);
-		if (dup_process_and_run(cmd, &last_exit_status) == PROCESS_ERROR)
+		if (dup_process_and_run(cmd, &prev_fd, &last_exit_status) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 		cmd->exec_command = cmd->next_command;
 	}

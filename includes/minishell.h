@@ -9,6 +9,7 @@
 # define EXECVE_ERROR	(-1)
 # define FORK_ERROR		(-1)
 # define WAIT_ERROR		(-1)
+# define PIPE_ERROR		(-1)
 # define PROCESS_ERROR	(-1)
 
 # define CHILD_PID		0
@@ -30,9 +31,9 @@ void	debug_func(const char *func_name, const int line_num);
 void	debug_2d_array(char **array);
 
 /* exec */
-void	child_process(t_command *commands, char **environ);
+void	child_process(t_command *cmd, int pipefd[2], int prev_fd, char **environ);
 int		execute_command(t_command *commands);
-int		parent_process(int *last_exit_status);
+int		parent_process(t_command *cmd, int pipefd[2], int *prev_fd, pid_t pid, int *last_exit_status);
 
 /* input */
 char	*input_line(void);
