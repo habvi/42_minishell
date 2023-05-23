@@ -1,4 +1,5 @@
 import subprocess
+import shutil
 
 # ----------------------------------------------------------
 # OUT_FILE = "pipe_test_out.txt"
@@ -21,26 +22,24 @@ def print_color_str_no_lf(color=WHITE, text=""):
     print(COLOR_DICT[color] + text + COLOR_DICT["end"], end="")
 
 
-
 # ----------------------------------------------------------
 # res_valgrind
 
 def get_leak_res(stderr):
     is_leak_occurred = False
     sum_bytes = 0
-    summary_no = 0
-    last_summary = 0
+    val_results = stderr.split()
+    val_res_len = len(val_results)
 
-    # print(stderr)
-    results = stderr.split()
-    for i in range(len(results)):
-        if (results[i] == "LEAK" and results[i + 1] == "SUMMARY:"):
+    for i in range(val_res_len):
+        if val_results[i] == "LEAK" and i <= val_res_len and val_results[i + 1] == "SUMMARY:":
             last_summary = sum_bytes
             sum_bytes = 0
-            summary_no += 1
-        for lost in ["definitely", "indirectly", "possibly"]:
-            if (results[i] == lost and results[i + 2].isdigit()):
-                leak_bytes = int(results[i + 2])
+            i += 2
+            continue
+        for lost in ("definitely", "indirectly", "possibly"):
+            if val_results[i] == lost and i + 1 <= val_res_len and val_results[i + 2].isdigit():
+                leak_bytes = int(val_results[i + 2])
                 # print lost bytes
                 # print(f'{lost}:{leak_bytes}')
                 is_leak_occurred = True
@@ -63,22 +62,25 @@ def run_minishell_with_valgrind(stdin, cmd):
     res_minishell = run_cmd_with_valgrind(stdin, cmd)
     print(f'cmd:{stdin}', end='\n')
     if res_minishell.stderr:
-        print("=== minishell(leaks) ===")
         is_leak, leak_bytes = get_leak_res(res_minishell.stderr)
-        print(f'lesk : {leak_bytes} bytes')
+        print(f' minishell leaks : {leak_bytes} bytes')
         return is_leak
     return None
 
 def run_bash_with_valgrind(stdin, cmd):
     res_bash = run_cmd_with_valgrind(stdin, cmd)
     if res_bash.stderr:
-        print("===== bash(leaks) =====")
         is_leak, leak_bytes = get_leak_res(res_bash.stderr)
-        print(f'lesk : {leak_bytes} bytes')
+        print(f' bash leaks      : {leak_bytes} bytes')
         return is_leak
     return None
 
 def run_both_with_valgrind(stdin):
+    print("===== leak test =====")
+    if shutil.which("valgrind") == None:
+        print("valgrind not found")
+        return None, None
+
     leak_res_minishell = run_minishell_with_valgrind(stdin, PATH)
     leak_res_bash = run_bash_with_valgrind(None, stdin)
     return leak_res_minishell, leak_res_bash
@@ -221,18 +223,20 @@ def main():
     # stdin = "aa\nbb\ncc\nbbaa\n"
     # "cat | cat | cat | grep b"
 
-
+    # ===============================
     print("----- valgdind -----\n")
 
-    # why leak ??
     stdin = "/bin/echo aaa | /bin/cat -e"
     m_res, b_res = run_both_with_valgrind(stdin)
     put_leak_result(val, m_res, b_res)
 
-    # leak
     stdin = "/bin/echo aaa | nothing"
     m_res, b_res = run_both_with_valgrind(stdin)
     put_leak_result(val, m_res, b_res)
+
+    add_val_to_leak(val, val_leak)
+    # ===============================
+
 
     put_total_result(val)
 
