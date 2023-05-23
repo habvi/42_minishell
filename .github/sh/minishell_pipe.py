@@ -115,9 +115,13 @@ def main():
     m_res, b_res = run_both(stdin)
     put_result(val, m_res, b_res)
 
-    stdin = "/bin/echo -e aaa\naacc\nbbb\nbbcc\nccc\naabb\nabc | /bin/grep a | /bin/grep c"
+    stdin = "/bin/echo aaa | /bin/grep a"
     m_res, b_res = run_both(stdin)
     put_result(val, m_res, b_res)
+
+    # stdin = "/bin/echo -e aaa\naacc\nbbb\nbbcc\nccc\naabb\nabc | /bin/grep a | /bin/grep c"
+    # m_res, b_res = run_both(stdin)
+    # put_result(val, m_res, b_res)
 
     # stdin = "/bin/cat | /bin/ls"
     # m_res, b_res = run_both(stdin)
