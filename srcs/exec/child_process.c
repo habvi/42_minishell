@@ -2,6 +2,30 @@
 #include "ft_dprintf.h"
 #include "libft.h"
 
+static int	handle_child_pipes_except_first(t_fd *fd)
+{
+	if (x_close(STDIN_FILENO) == PROCESS_ERROR)
+		return (PROCESS_ERROR);
+	if (x_dup2(fd->prev_fd, STDIN_FILENO) == PROCESS_ERROR)
+		return (PROCESS_ERROR);
+	if (x_close(fd->prev_fd) == PROCESS_ERROR)
+		return (PROCESS_ERROR);
+	return (EXIT_SUCCESS);
+}
+
+static int	handle_child_pipes_except_last(t_fd *fd)
+{
+	if (x_close(fd->pipefd[READ]) == PROCESS_ERROR)
+		return (PROCESS_ERROR);
+	if (x_close(STDOUT_FILENO) == PROCESS_ERROR)
+		return (PROCESS_ERROR);
+	if (x_dup2(fd->pipefd[WRITE], STDOUT_FILENO) == PROCESS_ERROR)
+		return (PROCESS_ERROR);
+	if (x_close(fd->pipefd[WRITE]) == PROCESS_ERROR)
+		return (PROCESS_ERROR);
+	return (EXIT_SUCCESS);
+}
+
 // use PROMPT_NAME
 void	child_process(t_command *cmd, t_fd *fd, char **environ)
 {
@@ -14,18 +38,13 @@ void	child_process(t_command *cmd, t_fd *fd, char **environ)
 	// 	exit(EXIT_SUCCESS);
 	if (!is_first_command(fd->prev_fd))
  	{
-		// SYS_ERROR
-		close(STDIN_FILENO);
-		dup2(fd->prev_fd, STDIN_FILENO);
-		close(fd->prev_fd);
+		if (handle_child_pipes_except_first(fd) == PROCESS_ERROR)
+			exit(EXIT_FAILURE);
 	}
 	if (!is_last_command(*cmd->next_command))
 	{
-		// SYS_ERROR
-		close(fd->pipefd[READ]);
-		close(STDOUT_FILENO);
-		dup2(fd->pipefd[WRITE], STDOUT_FILENO);
-		close(fd->pipefd[WRITE]);
+		if (handle_child_pipes_except_last(fd) == PROCESS_ERROR)
+			exit(EXIT_FAILURE);
 	}
 	if (execve(command[0], command, environ) == EXECVE_ERROR)
 	{
