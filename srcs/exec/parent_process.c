@@ -17,6 +17,7 @@ static int	get_last_command_status(\
 	return (EXIT_SUCCESS);
 }
 
+// if wait error, no need for auto perror.
 static int	wait_all_child_process(int status)
 {
 	while (true)
