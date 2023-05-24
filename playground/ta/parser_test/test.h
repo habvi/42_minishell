@@ -5,7 +5,8 @@
 # include <stdbool.h>
 # include <stdio.h>
 # include <string.h>
-# include <libc.h>
+//# include <libc.h>
+# include <stdlib.h>
 
 # include "../../../libft/includes/libft.h"
 
@@ -45,12 +46,13 @@ struct s_tree
 	t_tree		*rhs;
 };
 
+
 // tokenizer
 void	free_token(t_token **token);
 t_token	*tokenize(char **split);
 
-// parser
 
+// parser
 t_tree	*expression(t_token **token);
 t_tree	*term(t_token **token);
 t_tree	*primary(t_token **token);

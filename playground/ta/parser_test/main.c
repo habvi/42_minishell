@@ -4,6 +4,7 @@ int	main(int argc, char **argv)
 {
 	char	**split;
 	t_token	*token;
+    t_token *token_head;
 	t_tree	*tree;
 
 	if (argc != 2)
@@ -17,12 +18,13 @@ int	main(int argc, char **argv)
 	token = tokenize(split);
 	print_token(token);
 
-	tree = expression(&token);
+    token_head = token;
+	tree = expression(&token_head);
 	print_tree(tree);
 
 	free_2d_array(&split);
 	free_token(&token);
 	free_tree(&tree);
-	system("leaks a.out");
+//	system("leaks a.out");
 	return (0);
 }

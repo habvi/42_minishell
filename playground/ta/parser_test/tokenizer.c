@@ -4,9 +4,9 @@ void	free_token(t_token **token)
 {
 	t_token	*next_ptr;
 
-	if (!token || !*token)
+    if (!token || !*token)
 		return ;
-	while (*token)
+    while (*token)
 	{
 		next_ptr = (*token)->next;
 		free(*token);

@@ -9,7 +9,9 @@ endif
 
 SRCS		= main.c \
 			  tokenizer.c \
-			  parser.c
+			  parser.c \
+			  print.c \
+			  tree.c
 
 OBJ_DIR		:= obj
 OBJ			:= $(SRCS:%.c=%.o)
@@ -23,7 +25,7 @@ all	:	$(NAME)
 
 $(NAME)	: $(OBJS)
 	@make -C $(LIBFT_DIR)
-	$(CC) $(CFLAGS) -o $@ $(LIBFT) $^
+	$(CC) $(CFLAGS) -o $@ $^ $(LIBFT)
 
 $(OBJ_DIR)/%.o	: %.c
 	@mkdir -p $$(dirname $@)
@@ -31,15 +33,16 @@ $(OBJ_DIR)/%.o	: %.c
 
 .PHONY	:= clean
 clean	:
+	@#make clean -C $(LIBFT_DIR)
 	rm -rf $(OBJ_DIR)
 
 .PHONY	:= fclean
 fclean	: clean
+	@#make fclean -C $(LIBFT_DIR)
 	$(RM) $(NAME)
 
 .PHONY	:= re
-re	: fclean
-	@make all
+re	: fclean all
 
 .PHONY	:= run
 run	: re
