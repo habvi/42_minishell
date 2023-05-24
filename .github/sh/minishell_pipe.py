@@ -10,9 +10,11 @@ PATH = "./minishell"
 WHITE = "white"
 RED = "red"
 GREEN = "green"
+YELLOW = "yellow"
 COLOR_DICT = {"white" : "\033[37m",
               "red" : "\033[31m",
               "green" : "\033[32m",
+              "yellow" : "\033[33m",
               "end" : "\033[0m"}
 
 def print_color_str(color=WHITE, text=""):
@@ -78,7 +80,7 @@ def run_bash_with_valgrind(stdin, cmd):
 def run_both_with_valgrind(stdin):
     print("===== leak test =====")
     if shutil.which("valgrind") == None:
-        print("valgrind not found")
+        # print("valgrind not found")
         return None, None
 
     leak_res_minishell = run_minishell_with_valgrind(stdin, PATH)
@@ -146,11 +148,11 @@ def put_result(val, m_res, b_res):
 
 
 def put_leak_result(val_leak, m_res, b_res):
-    test_num, _, _ = val_leak
+    test_num, _, _, _ = val_leak
     if m_res is None or b_res is None:
-        print_color_str(RED, f'[{test_num}. timeout]')
-        # ko
-        val_leak[2] += 1
+        print_color_str(RED, f'[{test_num}. valgrind not found]')
+        # skip
+        val_leak[3] += 1
     elif (m_res == False):
         print_color_str(GREEN, f'[{test_num}. OK]')
         # ok
@@ -163,30 +165,51 @@ def put_leak_result(val_leak, m_res, b_res):
     val_leak[0] += 1
     print()
 
-def add_val_to_leak(val, val_leak):
-    for i in range(len(val)):
-        val[i] += val_leak[i]
+# def add_val_to_leak(val, val_leak):
+#     for i in range(len(val)):
+#         val[i] += val_leak[i]
+
+def put_total_leak_result(val_leak):
+    test_num, ok, ko, skip = val_leak
+    print("#########################################")
+    print(" TOTAL RESULT : ", end="")
+    print_color_str_no_lf(GREEN, "OK ")
+    print(f'{ok}, ', end="")
+    print_color_str_no_lf(RED, "KO ")
+    print(f'{ko}, ', end="")
+    print_color_str_no_lf(YELLOW, "SKIP ")
+    print(skip, end="")
+    print(f' (test case: {test_num - 1})')
+    print("#########################################")
+    if ok == test_num - 1:
+        return 0
+    else:
+        return 1
+
 
 def put_total_result(val):
     test_num, ok, ko = val
-    print()
+    print("#########################################")
+    print(" TOTAL RESULT : ", end="")
     print_color_str_no_lf(GREEN, "OK ")
     print(f'{ok}, ', end="")
     print_color_str_no_lf(RED, "KO ")
     print(ko, end="")
     print(f' (test case: {test_num - 1})')
+    print("#########################################")
     if ok == test_num - 1:
-        exit(0)
+        return 0
     else:
-        exit(1)
+        return 1
 
 # ----------------------------------------------------------
 def main():
+    test_res = 0
+
     test_num = 1
     ok = 0
     ko = 0
     val = [test_num, ok, ko]
-    val_leak = [test_num, ok, ko]
 
     stdin = "/bin/ls -l"
     m_res, b_res = run_both(stdin)
@@ -223,22 +246,31 @@ def main():
     # stdin = "aa\nbb\ncc\nbbaa\n"
     # "cat | cat | cat | grep b"
 
+    test_res |= put_total_result(val)
+
     # ===============================
-    print("----- valgdind -----\n")
+    print("\n ----- leaks -----")
+    leak_test_num = 1
+    leak_ok = 0
+    leak_ko = 0
+    leak_skip = 0
+    val_leak = [leak_test_num, leak_ok, leak_ko, leak_skip]
 
     stdin = "/bin/echo aaa | /bin/cat -e"
     m_res, b_res = run_both_with_valgrind(stdin)
-    put_leak_result(val, m_res, b_res)
+    put_leak_result(val_leak, m_res, b_res)
 
     stdin = "/bin/echo aaa | nothing"
     m_res, b_res = run_both_with_valgrind(stdin)
-    put_leak_result(val, m_res, b_res)
+    put_leak_result(val_leak, m_res, b_res)
 
-    add_val_to_leak(val, val_leak)
+    # add_val_to_leak(val, val_leak)
+
+    test_res |= put_total_leak_result(val_leak)
+
     # ===============================
 
-
-    put_total_result(val)
+    return test_res
 
 if __name__ == '__main__':
     main()
