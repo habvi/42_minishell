@@ -36,10 +36,9 @@ int	main(int argc, char **argv)
 	tree = expression(&token);
 	print_tree(tree);
 
-
-
-//	free_2d_array(&split);
-//	free_token(token);
-//	free_tree(tree);
+	free_2d_array(&split);
+	free_token(&token);
+	free_tree(&tree);
+	system("leaks a.out");
 	return (0);
 }

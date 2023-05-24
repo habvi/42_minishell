@@ -53,16 +53,19 @@ void	print_token_node(t_token *token)
 	dprintf(STDERR_FILENO, "]\n");
 }
 
-void	free_token(t_token *token)
+void	free_token(t_token **token)
 {
 	t_token	*next_ptr;
 
-	while (token)
+	if (!token || !*token)
+		return ;
+	while (*token)
 	{
-		next_ptr = token->next;
-		free(token);
-		token = next_ptr;
+		next_ptr = (*token)->next;
+		free(*token);
+		*token = next_ptr;
 	}
+	*token = NULL;
 }
 
 static t_token	*new_token_node(char *term)

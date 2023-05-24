@@ -4,7 +4,7 @@ CC			:= cc
 CFLAGS		:= -Wall -Wextra -Werror
 
 ifdef SANI
-	CFLAGS	+= -g -fsanitized=address
+	CFLAGS	+= -g -fsanitize=address
 endif
 
 SRCS		= main.c \

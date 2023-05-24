@@ -38,27 +38,16 @@ t_tree	*new_num_leaf(int val)
 	return (node);
 }
 
-//void	print_tree_node(t_tree *node, int depth, char *str)
-//{
-//	int	i = 0;
-//
-//	if (!node)
-//		return ;
-//	printf("%20s : ", str);
-//	while (i < depth)
-//	{
-//		printf(" ");
-//		i++;
-//	}
-//	if (node->kind == nd_num)
-//		printf("num:%d\n", node->val);
-//	else
-//		printf("ope:%c\n", get_operator_char(node));
-//}
-
-void	free_tree(t_tree *tree)
+void	free_tree(t_tree **node)
 {
-	(void)tree;
+	if (!node || !*node)
+		return ;
+	free_tree(&(*node)->lhs);
+	free_tree(&(*node)->rhs);
+	(*node)->lhs = NULL;
+	(*node)->rhs = NULL;
+	free(*node);
+	*node = NULL;
 }
 
 char	get_operator_char(t_tree *node)
@@ -127,7 +116,7 @@ size_t	get_depth(t_tree *node)
 // │  │  │     └─ 3
 //             ^ right
 
-void print_tree_node(t_tree *node, int depth, int is_rhs, char *prefix)
+static void print_tree_node(t_tree *node, int depth, int is_rhs, char *prefix)
 {
 	prefix[depth * PRINT_WIDTH] = '\0';
 

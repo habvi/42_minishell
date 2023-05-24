@@ -48,7 +48,7 @@ struct s_tree
 // token
 void	print_token(t_token *token_head);
 void	print_token_node(t_token *token);
-void	free_token(t_token *token);
+void	free_token(t_token **token);
 t_token	*tokenize(char **split);
 
 // tree
@@ -60,9 +60,8 @@ t_tree	*term(t_token **token);
 t_tree	*primary(t_token **token);
 
 
-void	print_tree_node(t_tree *node, int depth, int is_rhs, char *prefix);
 void	print_tree(t_tree *tree);
-void	free_tree(t_tree *tree);
+void	free_tree(t_tree **node);
 char	get_operator_char(t_tree *node);
 
 #endif //TEST_H
