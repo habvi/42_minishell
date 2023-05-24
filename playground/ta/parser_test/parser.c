@@ -10,6 +10,13 @@
 // [ref] https://www.sigbus.info/compilerbook
 //       https://qiita.com/nomunomu0504/items/26c02aa4a5311ddcf856#%E8%A1%A8%E7%A4%BA%E9%96%A2%E6%95%B0
 
+size_t	max_size(size_t a, size_t b)
+{
+	if (a > b)
+		return (a);
+	return (b);
+}
+
 t_tree	*new_node(t_node_kind kind, t_tree *lhs, t_tree *rhs)
 {
 	t_tree	*node;
@@ -71,32 +78,81 @@ char	get_operator_char(t_tree *node)
 	return ('.');
 }
 
-void print_tree_node_(t_tree *node, int depth)
+size_t	get_depth(t_tree *node)
 {
-	int	i;
+	size_t	left;
+	size_t	right;
 
-	i = 0;
-	while (i < depth)
-	{
-		dprintf(STDERR_FILENO, "  ");
-		i++;
-	}
+	if (!node)
+		return (0);
+	left = get_depth(node->lhs);
+	right = get_depth(node->rhs);
+	return (max_size(left, right) + 1);
+}
+
+//            ' '
+// depth - 2 : │   (max_depth - 1)
+// depth - 1 : └─
+
+//[+]
+// └─[*]
+// │  └─ 1
+// │  └─ 2
+// └─[*]
+//    └─[*]
+//    │  └─ 3
+//    │  └─ 4
+//    └─ 5
+
+// depth
+// 0
+//[-] 1
+// ├─[+] 2
+// │  ├─[+] 3
+// │  │  ├─[+] 4  5
+// │  │  │  └─[*]
+// │  │  │  │  └─ 1
+// │  │  │  │  └─ 2
+// │  │  │  └─[*]
+// │  │  │     └─ 3
+// │  │  │     └─ 4
+// │  │  └─ 5
+// │  └─ 6
+// └─[*]
+//    └─ 7
+//    └─ 8
+
+
+// 0  1  2  3  4  5
+// │  │  │     └─ 3
+//             ^ right
+
+void print_tree_node(t_tree *node, int depth, int is_rhs, char *prefix)
+{
+	prefix[depth * PRINT_WIDTH] = '\0';
+
+	dprintf(STDERR_FILENO, "%s%s─", prefix, (is_rhs ? "└" : "├"));
 	if (node->kind == nd_num)
-	{
-		dprintf(STDERR_FILENO, "%d\n", node->val);
-		return ;
-	}
-	dprintf(STDERR_FILENO, "%c\n", get_operator_char(node));
+		dprintf(STDERR_FILENO, " %d \n", node->val);
+	else
+		dprintf(STDERR_FILENO, "[%c]\n", get_operator_char(node));
+
+	prefix[depth * PRINT_WIDTH] = is_rhs ? ' ' : '|';
+	prefix[depth * PRINT_WIDTH + 1] = ' ';
+	prefix[depth * PRINT_WIDTH + 2] = ' ';
+
 	if (node->lhs != NULL)
-		print_tree_node_(node->lhs, depth + 1);
+		print_tree_node(node->lhs, depth + 1, node->rhs == NULL, prefix);
 	if (node->rhs != NULL)
-		print_tree_node_(node->rhs, depth + 1);
+		print_tree_node(node->rhs, depth + 1, 1, prefix);
 }
 
 void print_tree(t_tree *root)
 {
+	char draw_prefix[MAX_DEPTH * PRINT_WIDTH + 1] = {0};
+
 	dprintf(STDERR_FILENO, "%-12s:\n", "print_tree");
-	print_tree_node_(root, 0);
+	print_tree_node(root, 0, 1, draw_prefix);
 }
 
 static bool	is_kind_add_or_sub(t_node_kind kind)

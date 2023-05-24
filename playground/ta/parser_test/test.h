@@ -9,6 +9,10 @@
 
 # include "../../../libft/includes/libft.h"
 
+# define MSG_USAGE		"usage               : $ ./a.out \"numerical formula\"\navailable operators : +, -, *, /, (, )\n"
+# define MAX_DEPTH		100
+# define PRINT_WIDTH	3
+
 typedef enum	e_node_kind	t_node_kind;
 typedef struct	s_tree		t_tree;
 typedef struct	s_token		t_token;
@@ -56,8 +60,7 @@ t_tree	*term(t_token **token);
 t_tree	*primary(t_token **token);
 
 
-void	print_tree_node(t_tree *node, int depth, char *str);
-
+void	print_tree_node(t_tree *node, int depth, int is_rhs, char *prefix);
 void	print_tree(t_tree *tree);
 void	free_tree(t_tree *tree);
 char	get_operator_char(t_tree *node);

@@ -24,8 +24,7 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 	{
-		dprintf(STDERR_FILENO, "usage               : $ ./a.out \"numerical formula\"\n"
-			   "available operators : +, -, *, /, (, )\n");
+		dprintf(STDERR_FILENO, MSG_USAGE);
 		return (1);
 	}
 	split = ft_split(argv[1], ' ');
@@ -35,25 +34,9 @@ int	main(int argc, char **argv)
 	print_token(token);
 
 	tree = expression(&token);
-
-//	printf("\n");
-//	print_tree_node(tree, 0, "root");
-//	print_tree_node(tree->lhs, 1, "root->left");
-//	print_tree_node(tree->rhs, 1, "root->right");
-//
-//	if (tree->lhs)
-//	{
-//		print_tree_node(tree->lhs->lhs, 2, "root->left->left");
-//		print_tree_node(tree->lhs->rhs, 2, "root->left->right");
-//	}
-//
-//	if (tree->rhs)
-//	{
-//		print_tree_node(tree->rhs->lhs, 2, "root->right->left");
-//		print_tree_node(tree->rhs->rhs, 2, "root->right->right");
-//	}
-
 	print_tree(tree);
+
+
 
 //	free_2d_array(&split);
 //	free_token(token);
