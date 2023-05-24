@@ -1,21 +1,5 @@
 #include "test.h"
 
-static void	print_split(char **split)
-{
-	size_t	i;
-
-	i = 0;
-	dprintf(STDERR_FILENO, "%-12s:[", "split");
-	while (split && split[i])
-	{
-		dprintf(STDERR_FILENO, "%s", split[i]);
-		i++;
-		if (split[i])
-			dprintf(STDERR_FILENO, ", ");
-	}
-	dprintf(STDERR_FILENO, "]\n");
-}
-
 int	main(int argc, char **argv)
 {
 	char	**split;
