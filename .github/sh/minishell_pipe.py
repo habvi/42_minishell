@@ -181,7 +181,7 @@ def put_total_leak_result(val_leak):
     print(skip, end="")
     print(f' (test case: {test_num - 1})')
     print("#########################################")
-    if ok == test_num - 1:
+    if ko == 0:
         return 0
     else:
         return 1
@@ -267,10 +267,10 @@ def main():
     # add_val_to_leak(val, val_leak)
 
     test_res |= put_total_leak_result(val_leak)
-
+    # test_res = 0
     # ===============================
 
-    return test_res
+    exit(test_res)
 
 if __name__ == '__main__':
     main()
