@@ -22,6 +22,8 @@ int	main(int argc, char **argv)
 	tree = expression(&token_head);
 	print_tree(tree);
 
+    printf("%d\n", calculator(tree));
+
 	free_2d_array(&split);
 	free_token(&token);
 	free_tree(&tree);

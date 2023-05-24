@@ -11,7 +11,8 @@ SRCS		= main.c \
 			  tokenizer.c \
 			  parser.c \
 			  print.c \
-			  tree.c
+			  tree.c \
+			  calculator.c
 
 OBJ_DIR		:= obj
 OBJ			:= $(SRCS:%.c=%.o)

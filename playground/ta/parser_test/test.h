@@ -58,6 +58,10 @@ t_tree	*term(t_token **token);
 t_tree	*primary(t_token **token);
 
 
+// calculator
+int     calculator(t_tree *node);
+
+
 // tree
 t_tree	*new_node(t_node_kind kind, t_tree *lhs, t_tree *rhs);
 t_tree	*new_num_leaf(int val);
