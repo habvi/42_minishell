@@ -1,0 +1,7 @@
+*
+
+!*.c
+!*.h
+!*.sh
+!*.md
+!parser_test/
