@@ -18,16 +18,13 @@ static int	minishell(void)
 		command = tokenize(line);
 		free(line);
 		debug_deque_print(command, __func__);
+		if (!command)
+			return (EXIT_FAILURE);
+		// parse()
+		process_status = execute_command(command);
 		deque_clear_all(&command);
-		// ----------------------------------
-		// if (!cmd.head)
-		// 	return (EXIT_FAILURE);
-		// cmd.exec_command = cmd.head;
-		// // parse
-		// process_status = execute_command(&cmd);
-		// free_2d_array(&cmd.head);
-		// if (process_status == PROCESS_ERROR)
-		// 	return (EXIT_FAILURE);
+		if (process_status == PROCESS_ERROR)
+			return (EXIT_FAILURE);
 	}
 	return (process_status);
 }

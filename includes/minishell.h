@@ -21,6 +21,8 @@
 
 # define EXIT_MSG_NO_SUCH_FILE  "No such file or directory"
 
+typedef struct s_deque	t_deque;
+
 typedef struct s_command {
 	char	**head;
 	char	**exec_command;
@@ -42,7 +44,7 @@ bool	is_first_command(int prev_fd);
 bool	is_last_command(char *next_cmd);
 int		handle_child_pipes(t_command *cmd, t_fd *fd);
 void	child_process(t_command *cmd, t_fd *fd, char **environ);
-int		execute_command(t_command *commands);
+int		execute_command(t_deque *command);
 int		handle_parent_pipes(t_command *cmd, t_fd *fd);
 int		parent_process(\
 					t_command *cmd, t_fd *fd, pid_t pid, int *last_exit_status);

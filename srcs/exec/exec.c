@@ -1,4 +1,5 @@
 #include "minishell.h"
+#include "deque.h"
 #include "ft_dprintf.h"
 #include "libft.h"
 
@@ -13,55 +14,60 @@ static bool	is_pipe(const char *str)
 // command arg                -> return NULL
 // command arg |              -> return NULL
 // command arg | command2 arg -> return command2
-static char	**get_next_command(char **command)
+static t_deque_node	*get_next_command(t_deque_node *cmd, size_t *cmd_size)
 {
-	while (*command && !is_pipe(*command))
-		command++;
-	if (*command)
+	*cmd_size = 0;
+	while (cmd && !is_pipe(cmd->content))
 	{
-		*command = NULL;
-		command++;
+		cmd = cmd->next;
+		(*cmd_size)++;
 	}
-	return (command);
+	if (cmd)
+		cmd = cmd->next;
+	return (cmd);
 }
 
-static int	dup_process_and_run(t_command *cmd, t_fd *fd, int *last_exit_status)
-{
-	extern char	**environ;
-	pid_t		pid;
+// static int	dup_process_and_run(t_command *cmd, t_fd *fd, int *last_exit_status)
+// {
+// 	extern char	**environ;
+// 	pid_t		pid;
 
-	if (!is_last_command(*cmd->next_command))
-	{
-		if (x_pipe(fd->pipefd) == PIPE_ERROR)
-			return (PIPE_ERROR);
-	}
-// ft_dprintf(STDERR_FILENO, "[pipe: %d, %d]\n", fd->pipefd[0], fd->pipefd[1]);
-	pid = x_fork();
-	if (pid == FORK_ERROR)
-		return (FORK_ERROR);
-	if (pid == CHILD_PID)
-		child_process(cmd, fd, environ);
-	else
-	{
-		if (parent_process(cmd, fd, pid, last_exit_status) == PROCESS_ERROR)
-			return (PROCESS_ERROR);
-	}
-	return (EXIT_SUCCESS);
-}
+// 	if (!is_last_command(*cmd->next_command))
+// 	{
+// 		if (x_pipe(fd->pipefd) == PIPE_ERROR)
+// 			return (PIPE_ERROR);
+// 	}
+// 	pid = x_fork();
+// 	if (pid == FORK_ERROR)
+// 		return (FORK_ERROR);
+// 	if (pid == CHILD_PID)
+// 		child_process(cmd, fd, environ);
+// 	else
+// 	{
+// 		if (parent_process(cmd, fd, pid, last_exit_status) == PROCESS_ERROR)
+// 			return (PROCESS_ERROR);
+// 	}
+// 	return (EXIT_SUCCESS);
+// }
 
-int	execute_command(t_command *cmd)
+int	execute_command(t_deque *cmd_head)
 {
 	t_fd	fd;
 	int		last_exit_status;
+	t_deque_node	*cmd;
+	t_deque_node	*next_cmd;
+	size_t			cmd_size;
 
 	fd.prev_fd = STDIN_FILENO;
 	last_exit_status = EXIT_SUCCESS;
-	while (*cmd->exec_command)
+	cmd = cmd_head->node;
+	while (cmd)
 	{
-		cmd->next_command = get_next_command(cmd->exec_command);
-		if (dup_process_and_run(cmd, &fd, &last_exit_status) == PROCESS_ERROR)
-			return (PROCESS_ERROR);
-		cmd->exec_command = cmd->next_command;
+		next_cmd = get_next_command(cmd, &cmd_size);
+		printf("[cmd_size: %zu]\n", cmd_size);
+		// if (dup_process_and_run(head, cmd, &fd, &last_exit_status) == PROCESS_ERROR)
+		// 	return (PROCESS_ERROR);
+		cmd = next_cmd;
 	}
 	return (last_exit_status);
 }
