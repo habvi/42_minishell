@@ -15,7 +15,7 @@ void	deque_print(t_deque *deque)
 	node = deque->node;
 	while (node)
 	{
-		// printf("[%s]", node->content);
+		printf("[%s]", (char *)node->content);
 		node = node->next;
 	}
 	printf("\nsize  : %zu\n", deque->size);
