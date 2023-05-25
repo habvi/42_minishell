@@ -21,12 +21,19 @@
 
 # define EXIT_MSG_NO_SUCH_FILE  "No such file or directory"
 
-typedef struct s_deque	t_deque;
+typedef struct s_deque_node	t_deque_node;
+typedef struct s_deque		t_deque;
+
+// typedef struct s_command {
+// 	char	**head;
+// 	char	**exec_command;
+// 	char	**next_command;
+// }	t_command;
 
 typedef struct s_command {
-	char	**head;
-	char	**exec_command;
-	char	**next_command;
+	t_deque			*head_command;
+	char			**exec_command;
+	t_deque_node	*next_command;
 }	t_command;
 
 typedef struct s_fd {
@@ -41,7 +48,7 @@ void	debug_2d_array(char **array);
 
 /* exec */
 bool	is_first_command(int prev_fd);
-bool	is_last_command(char *next_cmd);
+bool	is_last_command(t_deque_node *next_cmd);
 int		handle_child_pipes(t_command *cmd, t_fd *fd);
 void	child_process(t_command *cmd, t_fd *fd, char **environ);
 int		execute_command(t_deque *command);
