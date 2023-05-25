@@ -52,8 +52,8 @@ static t_deque_node	*get_next_command(t_deque_node *cmd, size_t *cmd_size)
 
 int	execute_command(t_deque *cmd_head)
 {
-	t_fd	fd;
-	int		last_exit_status;
+	t_fd			fd;
+	int				last_exit_status;
 	t_deque_node	*cmd;
 	t_deque_node	*next_cmd;
 	size_t			cmd_size;
