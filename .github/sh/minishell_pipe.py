@@ -44,12 +44,13 @@ def get_leak_res(stderr):
                 leak_bytes = int(val_results[i + 2])
                 # print lost bytes
                 # print(f'{lost}:{leak_bytes}')
-                is_leak_occurred = True
                 sum_bytes += leak_bytes
 
     # print valgrind result
     # print(f'\nvalgrind res:\n{stderr}')
     last_summary = sum_bytes
+    if (last_summary > 0):
+        is_leak_occurred = True
     return is_leak_occurred, last_summary
 
 def run_cmd_with_valgrind(stdin=None, cmd=None):
@@ -65,7 +66,7 @@ def run_minishell_with_valgrind(stdin, cmd):
     print(f'cmd:{stdin}', end='\n')
     if res_minishell.stderr:
         is_leak, leak_bytes = get_leak_res(res_minishell.stderr)
-        print(f' minishell leaks : {leak_bytes} bytes')
+        print(f' minishell leaks : {leak_bytes} bytes, {is_leak}')
         return is_leak
     return None
 
@@ -147,20 +148,24 @@ def put_result(val, m_res, b_res):
     print()
 
 
+LEAK_OK = 1
+LEAK_KO = 2
+LEAK_SKIP = 3
+
 def put_leak_result(val_leak, m_res, b_res):
     test_num, _, _, _ = val_leak
     if m_res is None or b_res is None:
         print_color_str(RED, f'[{test_num}. valgrind not found]')
         # skip
-        val_leak[3] += 1
+        val_leak[LEAK_SKIP] += 1
     elif (m_res == False):
         print_color_str(GREEN, f'[{test_num}. OK]')
         # ok
-        val_leak[1] += 1
+        val_leak[LEAK_OK] += 1
     else:
         print_color_str(RED, f'[{test_num}. KO]')
         # ko
-        val_leak[2] += 1
+        val_leak[LEAK_KO] += 1
     # test_num
     val_leak[0] += 1
     print()
@@ -172,7 +177,7 @@ def put_leak_result(val_leak, m_res, b_res):
 def put_total_leak_result(val_leak):
     test_num, ok, ko, skip = val_leak
     print("#########################################")
-    print(" TOTAL RESULT : ", end="")
+    print(" LEAK TOTAL RESULT : ", end="")
     print_color_str_no_lf(GREEN, "OK ")
     print(f'{ok}, ', end="")
     print_color_str_no_lf(RED, "KO ")
@@ -258,10 +263,12 @@ def main():
 
     stdin = "/bin/echo aaa | /bin/cat -e"
     m_res, b_res = run_both_with_valgrind(stdin)
+    print(f'm_res:{m_res}')
     put_leak_result(val_leak, m_res, b_res)
 
     stdin = "/bin/echo aaa | nothing"
     m_res, b_res = run_both_with_valgrind(stdin)
+    print(f'm_res:{m_res}')
     put_leak_result(val_leak, m_res, b_res)
 
     # add_val_to_leak(val, val_leak)
