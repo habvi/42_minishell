@@ -50,6 +50,23 @@ test "1 * 2 * ( 3 + 4 )"
 test "1   +   ( 2 * 3 + ( 4 + 5 ) * ( 7 * 8 + 9 ) )"
 test "1 * 2 * 3 * 4 * 5   +   6 * 7   +   1 * 2 * ( 3 + 4 )   +   1   +   ( 2 * 3 + ( 4 + 5 ) * ( 7 * 8 + 9 ) )   +   5"
 
+# subshell needs fork -> ( ) needed
+# ( cd /bin )
+#  "( 1 )"
+test "( 1 )"
+
+# pwd && ( cd /bin ) && pwd
+#  "1 + ( 2 )      + 3"
+test "1 + ( 2 ) + 3"
+
+# pwd && ( export TEST=test &&  echo TEST ) && echo TEST
+# "1  +                 ( 2 + 3 )           + 4"
+test "1 + ( 2 + 3 ) + 4"
+
+# pwd && ( cd /bin && pwd && ( echo hello | cd /bin/usr && ls > ls_out ) ) && pwd
+# "1  +        ( 2  +  3  +  (         4  *  5          +  6          ) ) + 7"
+test "1 + ( 2 + 3 + ( 4 * 5 + 6 ) ) + 7"
+
 
 echo "=============================================================="
 
