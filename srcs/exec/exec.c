@@ -78,15 +78,15 @@ static int	dup_process_and_run(t_command *cmd, t_fd *fd, int *last_exit_status)
 
 int	execute_command(t_deque *dq_cmd)
 {
+	t_command		cmd;
 	t_fd			fd;
 	int				last_exit_status;
-	t_command		cmd;
 	t_deque_node	*node;
 	size_t			cmd_size;
 
-	fd.prev_fd = STDIN_FILENO;
+	init_cmd(&cmd, dq_cmd);
+	init_fd(&fd);
 	last_exit_status = EXIT_SUCCESS;
-	cmd.head_command = dq_cmd;
 	node = dq_cmd->node;
 	while (node)
 	{

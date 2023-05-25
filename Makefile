@@ -16,6 +16,7 @@ SRCS		+=	$(EXEC_DIR)/check_command.c \
 				$(EXEC_DIR)/child_pipes.c \
 				$(EXEC_DIR)/child_process.c \
 				$(EXEC_DIR)/exec.c \
+				$(EXEC_DIR)/init.c \
 				$(EXEC_DIR)/parent_pipes.c \
 				$(EXEC_DIR)/parent_process.c
 
