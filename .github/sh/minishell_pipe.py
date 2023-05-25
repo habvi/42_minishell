@@ -265,12 +265,12 @@ def main():
 
     stdin = "/bin/echo aaa | /bin/cat -e"
     m_res, b_res = run_both_with_valgrind(stdin)
-    print(f'm_res:{m_res}')
+    # print(f'm_res:{m_res}')
     put_leak_result(val_leak, m_res, b_res)
 
     stdin = "/bin/echo aaa | nothing"
     m_res, b_res = run_both_with_valgrind(stdin)
-    print(f'm_res:{m_res}')
+    # print(f'm_res:{m_res}')
     put_leak_result(val_leak, m_res, b_res)
 
     # add_val_to_leak(val, val_leak)
