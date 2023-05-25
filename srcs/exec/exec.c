@@ -58,13 +58,11 @@ static int	dup_process_and_run(t_command *cmd, t_fd *fd, int *last_exit_status)
 	extern char	**environ;
 	pid_t		pid;
 
-	if (!cmd)
-		return (0);
-	// if (!is_last_command(*cmd->next_command))
-	// {
-	// 	if (x_pipe(fd->pipefd) == PIPE_ERROR)
-	// 		return (PIPE_ERROR);
-	// }
+	if (!is_last_command(cmd->next_command))
+	{
+		if (x_pipe(fd->pipefd) == PIPE_ERROR)
+			return (PIPE_ERROR);
+	}
 	pid = x_fork();
 	if (pid == FORK_ERROR)
 		return (FORK_ERROR);
@@ -94,10 +92,9 @@ int	execute_command(t_deque *dq_cmd)
 	{
 		cmd.next_command = get_next_command(node, &cmd_size);
 		cmd.exec_command = convert_command_to_array(node, cmd_size);
-		debug_2d_array(cmd.exec_command);
+		if (dup_process_and_run(&cmd, &fd, &last_exit_status) == PROCESS_ERROR)
+			return (PROCESS_ERROR);
 		free_2d_array(&cmd.exec_command);
-		// if (dup_process_and_run(cmd, &fd, &last_exit_status) == PROCESS_ERROR)
-		// 	return (PROCESS_ERROR);
 		node = cmd.next_command;
 	}
 	return (last_exit_status);
