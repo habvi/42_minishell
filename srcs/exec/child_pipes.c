@@ -32,7 +32,7 @@ int	handle_child_pipes(t_command *cmd, t_fd *fd)
 		if (handle_child_pipes_except_first(fd) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 	}
-	if (!is_last_command(*cmd->next_command))
+	if (!is_last_command(cmd->next_command))
 	{
 		if (handle_child_pipes_except_last(fd) == PROCESS_ERROR)
 			return (PROCESS_ERROR);

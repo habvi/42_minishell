@@ -1,35 +1,27 @@
 #include "minishell.h"
-#include "libft.h"
-
-static void	init_commands(t_command *cmd)
-{
-	cmd->head = NULL;
-	cmd->exec_command = NULL;
-	cmd->next_command = NULL;
-}
+#include "tokenize.h"
+#include "deque.h"
 
 static int	minishell(void)
 {
-	char		*line;
-	t_command	cmd;
-	int			process_status;
+	t_deque	*command;
+	char	*line;
+	int		process_status;
 
-	init_commands(&cmd);
+	command = NULL;
 	process_status = EXIT_SUCCESS;
 	while (true)
 	{
 		line = input_line();
 		if (!line)
 			break ;
-		// tokenize
-		cmd.head = ft_split(line, ' ');
+		command = tokenize(line);
 		free(line);
-		if (!cmd.head)
+		if (!command)
 			return (EXIT_FAILURE);
-		cmd.exec_command = cmd.head;
-		// parse
-		process_status = execute_command(&cmd);
-		free_2d_array(&cmd.head);
+		// parse()
+		process_status = execute_command(command);
+		deque_clear_all(&command);
 		if (process_status == PROCESS_ERROR)
 			return (EXIT_FAILURE);
 	}

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "deque.h"
+#include "ft_dprintf.h"
 
 void	deque_print(t_deque *deque)
 {
@@ -7,23 +8,23 @@ void	deque_print(t_deque *deque)
 
 	if (deque_is_empty(deque))
 	{
-		printf("deque is empty!\n");
-		printf("---------------------\n");
+		ft_dprintf(STDERR_FILENO, "deque is empty!\n");
+		ft_dprintf(STDERR_FILENO, "---------------------\n");
 		return ;
 	}
-	printf("cotent: ");
+	ft_dprintf(STDERR_FILENO, "cotent: ");
 	node = deque->node;
 	while (node)
 	{
-		// printf("[%s]", node->content);
+		ft_dprintf(STDERR_FILENO, "[%s]", (char *)node->content);
 		node = node->next;
 	}
-	printf("\nsize  : %zu\n", deque->size);
-	printf("---------------------\n");
+	ft_dprintf(STDERR_FILENO, "\nsize  : %zu\n", deque->size);
+	ft_dprintf(STDERR_FILENO, "---------------------\n");
 }
 
 void	debug_deque_print(t_deque *deque, const char *func_name)
 {
-	printf(">>> %s\n", func_name);
+	ft_dprintf(STDERR_FILENO, ">>> %s\n", func_name);
 	deque_print(deque);
 }
