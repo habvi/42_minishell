@@ -19,6 +19,9 @@ SRCS		+=	$(EXEC_DIR)/check_command.c \
 				$(EXEC_DIR)/parent_pipes.c \
 				$(EXEC_DIR)/parent_process.c
 
+TOKEN_DIR	:=	tokenize
+SRCS		+=	$(TOKEN_DIR)/tokenize.c
+
 INPUT_DIR	:=	input
 SRCS		+=	$(INPUT_DIR)/input.c
 

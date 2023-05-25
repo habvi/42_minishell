@@ -6,6 +6,8 @@
 # include <stdbool.h>
 # include <unistd.h>
 
+typedef struct s_deque	t_deque;
+
 typedef enum e_quote {
 	QUOTE_NONE = 0,
 	QUOTE_SINGLE = 1,
@@ -24,5 +26,8 @@ typedef struct s_token {
 	enum e_quote	quote;
 	enum e_concat	concat;
 }	t_token;
+
+/* tokenize */
+t_deque	*tokenize(char *line);
 
 #endif
