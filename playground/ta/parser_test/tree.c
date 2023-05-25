@@ -28,6 +28,17 @@ t_tree	*new_num_leaf(int val)
 	return (node);
 }
 
+t_tree	*new_priority_node(t_tree *next)
+{
+	t_tree	*node;
+
+	node = calloc(sizeof(t_tree), 1);
+	node->kind = nd_priority;
+	node->lhs = next;
+	node->rhs = NULL;
+	return (node);
+}
+
 void	free_tree(t_tree **node)
 {
 	if (!node || !*node)

@@ -114,6 +114,8 @@ static void print_tree_node(t_tree *node, int depth, int is_rhs, char *prefix)
 	dprintf(STDERR_FILENO, "%s%s─", prefix, (is_rhs ? "└" : "├"));
 	if (node->kind == nd_num)
 		dprintf(STDERR_FILENO, " %d \n", node->val);
+	else if (node->kind == nd_priority)
+		dprintf(STDERR_FILENO, "[()]\n");
 	else
 		dprintf(STDERR_FILENO, "[%c]\n", get_operator_char(node));
 

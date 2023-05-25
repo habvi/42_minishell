@@ -6,17 +6,19 @@ int calculator(t_tree *node)
     int right;
 
     if (!node)
-        return (0);
+		return (0);
     if (node->kind == nd_num)
-        return (node->val);
+		return (node->val);
     left = calculator(node->lhs);
     right = calculator(node->rhs);
-//    printf("left:%d, right:%d\n", left, right);
+    dprintf(STDERR_FILENO, "left:%d, right:%d\n", left, right);
     if (node->kind == nd_add)
-        return (left + right);
+		return (left + right);
     if (node->kind == nd_sub)
-        return (left - right);
+		return (left - right);
     if (node->kind == nd_mul)
-        return (left * right);
-    return (left / right);
+		return (left * right);
+	if (node->kind == nd_div)
+		return (left / right);
+    return (left);
 }

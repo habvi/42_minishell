@@ -20,11 +20,19 @@ typedef struct	s_token		t_token;
 
 enum e_node_kind
 {
+	// num
 	nd_num,
+
+	// priority
+	nd_priority,
+
+	// operator
 	nd_add,
 	nd_sub,
 	nd_mul,
 	nd_div,
+
+	// unnecessary...?
 	nd_left_paren,
 	nd_right_paren,
 	nd_eof,
@@ -65,6 +73,7 @@ int     calculator(t_tree *node);
 // tree
 t_tree	*new_node(t_node_kind kind, t_tree *lhs, t_tree *rhs);
 t_tree	*new_num_leaf(int val);
+t_tree	*new_priority_node(t_tree *next);
 void	free_tree(t_tree **node);
 char	get_operator_char(t_tree *node);
 size_t	get_depth(t_tree *node);

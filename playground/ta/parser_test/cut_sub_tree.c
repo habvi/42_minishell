@@ -27,7 +27,8 @@
 
 // treeをたどりながら実行すれば良いので、切り取る必要はない？
 
+// subshellのために()の保持が必要
 void    cut_sub_tree(t_tree *node)
 {
-
+    (void)node;
 }

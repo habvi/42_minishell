@@ -82,7 +82,8 @@ t_tree	*term(t_token **token)
 // primary = num | '(' expr ')'
 t_tree	*primary(t_token **token)
 {
-	t_tree		*node;
+	t_tree	*node;
+    t_tree	*expr;
 
 //	printf("\n  %s 1\n", __func__);
 //	print_token_node(*token);
@@ -102,12 +103,12 @@ t_tree	*primary(t_token **token)
 	{
 //		printf("\n  %s 3\n", __func__);
 //		print_token_node(*token);
-
 		*token = (*token)->next;
-		node = expression(token); // kind=( or )
+		expr = expression(token); // kind=( or )
 		if ((*token)->kind == nd_right_paren)
 		{
 			*token = (*token)->next;
+			node = new_priority_node(expr);
 			return (node);
 		}
 		dprintf(STDERR_FILENO, "error\n");
