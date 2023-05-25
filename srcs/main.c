@@ -17,7 +17,7 @@ static int	minishell(void)
 			break ;
 		command = tokenize(line);
 		free(line);
-		debug_deque_print(command, __func__);
+		// debug_deque_print(command, __func__);
 		if (!command)
 			return (EXIT_FAILURE);
 		// parse()
