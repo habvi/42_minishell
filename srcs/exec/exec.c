@@ -55,7 +55,7 @@ int	execute_command(t_deque *cmd_head)
 	t_fd			fd;
 	int				last_exit_status;
 	t_deque_node	*cmd;
-	t_deque_node	*next_cmd;
+	t_deque_node	*cmd_next;
 	size_t			cmd_size;
 
 	fd.prev_fd = STDIN_FILENO;
@@ -63,11 +63,11 @@ int	execute_command(t_deque *cmd_head)
 	cmd = cmd_head->node;
 	while (cmd)
 	{
-		next_cmd = get_next_command(cmd, &cmd_size);
+		cmd_next = get_next_command(cmd, &cmd_size);
 		printf("[cmd_size: %zu]\n", cmd_size);
 		// if (dup_process_and_run(head, cmd, &fd, &last_exit_status) == PROCESS_ERROR)
 		// 	return (PROCESS_ERROR);
-		cmd = next_cmd;
+		cmd = cmd_next;
 	}
 	return (last_exit_status);
 }
