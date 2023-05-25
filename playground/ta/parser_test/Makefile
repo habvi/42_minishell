@@ -101,6 +101,7 @@ print_tree	: re
 	@echo "[7] 1 * 2 + 3 * 4 + 5 + 6 - 7 * 8"
 	@./$(NAME) "1 * 2 + 3 * 4 + 5 + 6 - 7 * 8" 1>/dev/null
 
+# RUN test.sh
 .PHONY	:= test
 test	: re
 	./test.sh 2>/dev/null
