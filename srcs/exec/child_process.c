@@ -21,7 +21,7 @@ void	child_process(t_command *cmd, t_fd *fd, char **environ)
 		ft_dprintf(STDERR_FILENO, "minishell: %s: %s\n", \
 											command[0], EXIT_MSG_NO_SUCH_FILE);
 		// leaks
-		free_2d_array(&cmd->head);
+		// free_2d_array(&cmd->head);
 		exit(EXIT_CODE_NO_SUCH_FILE);
 	}
 }

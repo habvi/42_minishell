@@ -31,6 +31,28 @@ static t_deque_node	*get_next_command(t_deque_node *cmd, size_t *cmd_size)
 	return (cmd);
 }
 
+static char	**convert_command_to_array(t_deque_node *node, const size_t size)
+{
+	char	**command;
+	char	*tmp;
+	size_t	i;
+
+	command = (char **)x_malloc(sizeof(char *) * (size + 1));
+	if (!command)
+		exit(EXIT_FAILURE);
+	i = 0;
+	while (i < size)
+	{
+		tmp = node->content;
+		node->content = NULL;
+		command[i] = tmp;
+		node = node->next;
+		i++;
+	}
+	command[i] = NULL;
+	return (command);
+}
+
 static int	dup_process_and_run(t_command *cmd, t_fd *fd, int *last_exit_status)
 {
 	extern char	**environ;
@@ -71,10 +93,9 @@ int	execute_command(t_deque *dq_cmd)
 	while (node)
 	{
 		cmd.next_command = get_next_command(node, &cmd_size);
-		printf("[cmd_size: %zu]\n", cmd_size);
-		// cmd.exec_command = convert_command_to_array(node, cmd_size);
-		if (dup_process_and_run(NULL, NULL, &last_exit_status) == PROCESS_ERROR)
-			return (PROCESS_ERROR);
+		cmd.exec_command = convert_command_to_array(node, cmd_size);
+		debug_2d_array(cmd.exec_command);
+		free_2d_array(&cmd.exec_command);
 		// if (dup_process_and_run(cmd, &fd, &last_exit_status) == PROCESS_ERROR)
 		// 	return (PROCESS_ERROR);
 		node = cmd.next_command;
