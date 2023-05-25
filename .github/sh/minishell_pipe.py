@@ -30,6 +30,7 @@ def print_color_str_no_lf(color=WHITE, text=""):
 def get_leak_res(stderr):
     is_leak_occurred = False
     sum_bytes = 0
+    last_summary = 0
     val_results = stderr.split()
     val_res_len = len(val_results)
 
@@ -66,7 +67,7 @@ def run_minishell_with_valgrind(stdin, cmd):
     print(f'cmd:{stdin}', end='\n')
     if res_minishell.stderr:
         is_leak, leak_bytes = get_leak_res(res_minishell.stderr)
-        print(f' minishell leaks : {leak_bytes} bytes, {is_leak}')
+        print(f' minishell leaks : {leak_bytes} bytes')
         return is_leak
     return None
 
@@ -254,7 +255,7 @@ def main():
     test_res |= put_total_result(val)
 
     # ===============================
-    print("\n ----- leaks -----")
+    # print("\n ----- leaks -----")
     leak_test_num = 1
     leak_ok = 0
     leak_ko = 0
