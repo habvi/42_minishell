@@ -11,7 +11,7 @@ int calculator(t_tree *node)
 		return (node->val);
     left = calculator(node->lhs);
     right = calculator(node->rhs);
-    dprintf(STDERR_FILENO, "left:%d, right:%d\n", left, right);
+//    dprintf(STDERR_FILENO, "left:%d, right:%d\n", left, right);
     if (node->kind == nd_add)
 		return (left + right);
     if (node->kind == nd_sub)

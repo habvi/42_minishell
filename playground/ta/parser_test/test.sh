@@ -53,18 +53,32 @@ test "1 * 2 * 3 * 4 * 5   +   6 * 7   +   1 * 2 * ( 3 + 4 )   +   1   +   ( 2 * 
 # subshell needs fork -> ( ) needed
 # ( cd /bin )
 #  "( 1 )"
+echo -e "\\nexpr : ( 1 )"
+echo -e "like : ( cd /bin )\\n"
 test "( 1 )"
 
 # pwd && ( cd /bin ) && pwd
 #  "1 + ( 2 )      + 3"
+echo -e "\\nexpr : 1 + ( 2 ) + 3"
+echo -e "like : pwd && ( cd /bin ) && pwd\\n"
 test "1 + ( 2 ) + 3"
+
+# cat Makefile | grep a | grep b
+#  "         1 *  2  * 3"
+echo -e "\\nexpr : 1 * 2 * 3"
+echo -e "like : cat Makefile | grep a | grep b\\n"
+test "1 * 2 * 3"
 
 # pwd && ( export TEST=test &&  echo TEST ) && echo TEST
 # "1  +                 ( 2 + 3 )           + 4"
+echo -e "\\nexpr : 1 + ( 2 + 3 ) + 4"
+echo -e "like : pwd && ( export TEST=test &&  echo TEST ) && echo TEST\\n"
 test "1 + ( 2 + 3 ) + 4"
 
 # pwd && ( cd /bin && pwd && ( echo hello | cd /bin/usr && ls > ls_out ) ) && pwd
 # "1  +        ( 2  +  3  +  (         4  *  5          +  6          ) ) + 7"
+echo -e "\\nexpr : 1 + ( 2 + 3 + ( 4 * 5 + 6 ) ) + 7"
+echo -e "like : pwd && ( cd /bin && pwd && ( echo hello | cd /bin/usr && ls > ls_out ) ) && pwd\\n"
 test "1 + ( 2 + 3 + ( 4 * 5 + 6 ) ) + 7"
 
 
