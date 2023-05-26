@@ -16,14 +16,14 @@ static int	handle_parent_pipes_except_last(t_fd *fd)
 	return (EXIT_SUCCESS);
 }
 
-int	handle_parent_pipes(t_command *cmd, t_fd *fd)
+int	handle_parent_pipes(bool is_last_command, t_fd *fd)
 {
 	if (!is_first_command(fd->prev_fd))
 	{
 		if (handle_parent_pipes_except_first(fd) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 	}
-	if (!is_last_command(cmd->next_command))
+	if (!is_last_command)
 	{
 		if (handle_parent_pipes_except_last(fd) == PROCESS_ERROR)
 			return (PROCESS_ERROR);

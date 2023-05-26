@@ -61,6 +61,7 @@ void	print_cmds(t_ast *cmd_node)
 
 void	print_ast(t_ast *ast_node)
 {
+//	printf("node:%p\n", ast_node);
 	if (!ast_node)
 		return ;
 	if (ast_node->type == NODE_CMD)

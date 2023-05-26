@@ -35,15 +35,15 @@ static int	wait_all_child_process(int status)
 	return (EXIT_SUCCESS);
 }
 
-int	parent_process(t_command *cmd, t_fd *fd, pid_t pid, int *last_exit_status)
+int	parent_process(bool is_last_command, t_fd *fd, pid_t pid, int *last_status)
 {
 	int	status;
 
-	if (handle_parent_pipes(cmd, fd) == PROCESS_ERROR)
+	if (handle_parent_pipes(is_last_command, fd) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
-	if (is_last_command(cmd->next_command))
+	if (is_last_command)
 	{
-		if (get_last_command_status(pid, &status, last_exit_status) \
+		if (get_last_command_status(pid, &status, last_status) \
 															== PROCESS_ERROR)
 			return (PROCESS_ERROR);
 		if (wait_all_child_process(status) == PROCESS_ERROR)

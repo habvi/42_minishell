@@ -26,16 +26,10 @@ bool	is_equal_strings(const char *str1, const char *str2)
 bool	is_pipe_token(t_deque *dq_token)
 {
 //	const t_token	*token = dq_token->node->content;
-//	printf("  1 %s\n", __func__);
 	if (!dq_token || !dq_token->node)
 		return (false);
-//	printf("  2 %s\n", __func__);
 	if (is_equal_strings((char *)dq_token->node->content, "|"))
-	{
-//		printf("  3 %s\n", __func__);
 		return (true);
-	}
-//	printf("  4 %s\n", __func__);
 	return (false);
 }
 
@@ -52,18 +46,12 @@ t_ast	*parse_command_leaf(t_deque *dq_token)
 		return (NULL);
 	while (dq_token && dq_token->size && !is_pipe_token(dq_token))
 	{
-//		printf(" 3 %s\n", __func__);
 		cmd_node = deque_pop_front(dq_token);
-//		printf(" 4 %s\n", __func__);
 		deque_add_back(cmd_head, cmd_node);
-//		printf(" 5 %s\n", __func__);
 	}
-//	printf(" 6 %s\n", __func__);
 	cmd_line = new_command_leaf(cmd_head);
-//	printf(" 7 %s\n", __func__);
 	if (!cmd_line) // if handle error
 		return (NULL);
-//	printf(" 8 %s\n", __func__);
 	return (cmd_line);
 }
 
@@ -83,24 +71,16 @@ t_ast	*parser(t_deque *dq_token)
 	t_ast			*left;
 	t_ast			*right;
 
-//	printf("1 %s\n", __func__);
-
 	left = parse_command_leaf(dq_token);
-//	printf("2 %s\n", __func__);
 	while (dq_token->size && is_pipe_token(dq_token))
 	{
-//		printf("3 %s\n", __func__);
 		pop_pipe_and_clear(dq_token);
-//		printf("4 %s\n", __func__);
 		right = parse_command_leaf(dq_token);
 		if (!right)
 			exit (EXIT_FAILURE);
-//		printf("5 %s\n", __func__);
 		left = new_node(NODE_PIPE, left, right);
-//		printf("6 %s\n", __func__);
 		if (!left)
 			exit (EXIT_FAILURE);
 	}
-//	printf("7 %s\n", __func__);
 	return (left);
 }
