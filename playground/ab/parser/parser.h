@@ -1,7 +1,10 @@
 #ifndef PARSER_H
 # define PARSER_H
 
+# include <unistd.h>
 # include <stdio.h>
+# include <stdlib.h>
+# include <stdbool.h>
 
 typedef struct s_deque_node	t_deque_node;
 typedef struct s_deque		t_deque;
@@ -20,6 +23,11 @@ typedef struct s_node {
 	struct s_node	*right;
 	int				val; // use only kind == NODE_NUM
 }	t_node;
+
+// create_token.c
+t_node	*primary(t_deque *token);
+t_node	*mul(t_deque *token);
+t_node	*expr(t_deque *token);
 
 // token_new.c
 t_node	*node_new(t_node_kind kind, t_node *left, t_node *right);
