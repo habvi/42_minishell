@@ -31,6 +31,7 @@ struct s_abstract_syntax_tree {
 	t_deque	*cmd_head;
 	t_ast	*left;
 	t_ast	*right;
+	t_ast	*parent;
 };
 
 /* parser */

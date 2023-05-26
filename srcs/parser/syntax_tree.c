@@ -13,6 +13,8 @@ t_ast	*new_command_leaf(t_deque *cmd_head)
 		return (NULL);
 	new_leaf->type = NODE_CMD;
 	new_leaf->cmd_head = cmd_head;
+	new_leaf->left = NULL;
+	new_leaf->right = NULL;
 	return (new_leaf);
 }
 
@@ -23,9 +25,14 @@ t_ast	*new_node(t_type type, t_ast *left, t_ast *right)
 	new_node = (t_ast *)ft_calloc(1, sizeof(t_ast));
 	if (!new_node)
 		return (NULL);
+	new_node->cmd_head = NULL;
 	new_node->type = type;
 	new_node->left = left;
 	new_node->right = right;
+	if (left)
+		left->parent = new_node;
+	if (right)
+		right->parent = new_node;
 	return (new_node);
 }
 
@@ -61,7 +68,7 @@ void	print_ast(t_ast *ast_node)
 	else if (ast_node->type == NODE_PIPE)
 	{
 		print_ast(ast_node->left);
-		ft_dprintf(STDERR_FILENO, "  pipe \n");
+		ft_dprintf(STDERR_FILENO, "  pipe\n");
 		print_ast(ast_node->right);
 	}
 }
