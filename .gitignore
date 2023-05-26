@@ -12,5 +12,8 @@ cmake-build-debug/
 !*.h
 !*.bnf
 !.github/**
+
 !playground
+!playground/**/*.sh
+
 !.gitkeep

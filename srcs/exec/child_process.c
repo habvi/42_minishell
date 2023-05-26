@@ -1,4 +1,5 @@
 #include "minishell.h"
+#include "deque.h"
 #include "ft_dprintf.h"
 #include "libft.h"
 
@@ -20,8 +21,7 @@ void	child_process(t_command *cmd, t_fd *fd, char **environ)
 		// write or malloc error..?
 		ft_dprintf(STDERR_FILENO, "minishell: %s: %s\n", \
 											command[0], EXIT_MSG_NO_SUCH_FILE);
-		// leaks
-		free_2d_array(&cmd->head);
+		deque_clear_all(&cmd->head_command);
 		exit(EXIT_CODE_NO_SUCH_FILE);
 	}
 }
