@@ -1,12 +1,14 @@
 #include "minishell.h"
 #include "tokenize.h"
 #include "deque.h"
+#include "parser.h"
 
 static int	minishell(void)
 {
 	t_deque	*command;
 	char	*line;
 	int		process_status;
+	t_ast	*command_line;
 
 	command = NULL;
 	process_status = EXIT_SUCCESS;
@@ -19,11 +21,14 @@ static int	minishell(void)
 		free(line);
 		if (!command)
 			return (EXIT_FAILURE);
-		// parse()
-		process_status = execute_command(command);
-		deque_clear_all(&command);
-		if (process_status == PROCESS_ERROR)
-			return (EXIT_FAILURE);
+		command_line = parser(command);
+		print_ast(command_line);
+//		process_status = execute_command(command_line);
+//		process_status = execute_command(command);
+//		deque_clear_all(&command);
+//		ast_clear(&command_line);
+//		if (process_status == PROCESS_ERROR)
+//			return (EXIT_FAILURE);
 	}
 	return (process_status);
 }
