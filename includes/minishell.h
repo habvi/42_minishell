@@ -24,6 +24,8 @@
 typedef struct s_deque_node	t_deque_node;
 typedef struct s_deque		t_deque;
 
+typedef struct s_abstract_syntax_tree	t_ast; //too long?
+
 typedef struct s_command {
 	t_deque			*head_command;
 	char			**exec_command;

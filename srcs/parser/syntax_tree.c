@@ -1,6 +1,8 @@
 #include "deque.h"
 #include "parser.h"
 #include "libft.h"
+#include "ft_dprintf.h"
+#include "tokenize.h"
 
 t_ast	*new_command_leaf(t_deque *cmd_head)
 {
@@ -25,4 +27,42 @@ t_ast	*new_node(t_type type, t_ast *left, t_ast *right)
 	new_node->left = left;
 	new_node->right = right;
 	return (new_node);
+}
+
+// free tree
+void	ast_clear(t_ast **root)
+{
+	*root = NULL;
+}
+
+void	print_cmds(t_ast *cmd_node)
+{
+	t_deque_node	*node;
+//	t_token			*token;
+
+	ft_dprintf(STDERR_FILENO, "cmd:[");
+	node = cmd_node->cmd_head->node;
+	while (node)
+	{
+//		token = node->content;
+		ft_dprintf(STDERR_FILENO, "%s", node->content);
+		node = node->next;
+		if (node)
+			ft_dprintf(STDERR_FILENO, ", ");
+	}
+	ft_dprintf(STDERR_FILENO, "]\n");
+}
+
+void	print_ast(t_ast *ast_node)
+{
+	if (!ast_node)
+		return ;
+	if (ast_node->type == NODE_CMD)
+		print_cmds(ast_node);
+	else if (ast_node->type == NODE_PIPE)
+	{
+		print_ast(ast_node->left);
+		ft_dprintf(STDERR_FILENO, " pipe \n");
+		print_ast(ast_node->right);
+	}
 }
