@@ -36,40 +36,58 @@ t_ast	*new_node(t_type type, t_ast *left, t_ast *right)
 	return (new_node);
 }
 
-// free tree
-void	ast_clear(t_ast **root)
+void	free_ast(t_ast **node)
 {
-	//todo free tree
-	*root = NULL;
-}
-
-void	print_cmds(t_ast *cmd_node)
-{
-	t_deque_node	*node;
-
-	ft_dprintf(STDERR_FILENO, " cmd:[");
-	node = cmd_node->cmd_head->node;
-	while (node)
-	{
-		ft_dprintf(STDERR_FILENO, "%s", (char *)node->content);
-		node = node->next;
-		if (node)
-			ft_dprintf(STDERR_FILENO, ", ");
-	}
-	ft_dprintf(STDERR_FILENO, "]\n");
-}
-
-void	print_ast(t_ast *ast_node)
-{
-//	printf("node:%p\n", ast_node);
-	if (!ast_node)
+	if (!node || !*node)
 		return ;
-	if (ast_node->type == NODE_CMD)
-		print_cmds(ast_node);
-	else if (ast_node->type == NODE_PIPE)
-	{
-		print_ast(ast_node->left);
-		ft_dprintf(STDERR_FILENO, "  pipe\n");
-		print_ast(ast_node->right);
-	}
+	if ((*node)->cmd_head)
+		deque_clear_all(&(*node)->cmd_head);
+	free(*node);
+	*node = NULL;
 }
+
+// free tree
+void	ast_clear(t_ast **node)
+{
+	if (!node || !*node)
+		return ;
+	if ((*node)->type == NODE_CMD)
+		free_ast(node);
+	else
+	{
+		ast_clear(&(*node)->left);
+		ast_clear(&(*node)->right);
+		free_ast(node);
+	}
+	*node = NULL;
+}
+
+//void	print_cmds(t_ast *cmd_node)
+//{
+//	t_deque_node	*node;
+//
+//	ft_dprintf(STDERR_FILENO, " cmd:[");
+//	node = cmd_node->cmd_head->node;
+//	while (node)
+//	{
+//		ft_dprintf(STDERR_FILENO, "%s", (char *)node->content);
+//		node = node->next;
+//		if (node)
+//			ft_dprintf(STDERR_FILENO, ", ");
+//	}
+//	ft_dprintf(STDERR_FILENO, "]\n");
+//}
+//
+//void	print_ast(t_ast *ast_node)
+//{
+//	if (!ast_node)
+//		return ;
+//	if (ast_node->type == NODE_CMD)
+//		print_cmds(ast_node);
+//	else if (ast_node->type == NODE_PIPE)
+//	{
+//		print_ast(ast_node->left);
+//		ft_dprintf(STDERR_FILENO, "  pipe\n");
+//		print_ast(ast_node->right);
+//	}
+//}

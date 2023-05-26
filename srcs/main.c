@@ -22,6 +22,7 @@ static int	minishell(void)
 		if (!command)
 			return (EXIT_FAILURE);
 		command_line = parser(command);
+		deque_clear_all(&command);
 //		print_ast(command_line);
 		process_status = execute_command(command_line);
 		ast_clear(&command_line);
