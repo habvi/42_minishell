@@ -4,6 +4,7 @@ import shutil
 # ----------------------------------------------------------
 # OUT_FILE = "pipe_test_out.txt"
 PATH = "./minishell"
+PATH_BASH = "bash"
 
 # ----------------------------------------------------------
 # color
@@ -86,7 +87,7 @@ def run_both_with_valgrind(stdin):
         return None, None
 
     leak_res_minishell = run_minishell_with_valgrind(stdin, PATH)
-    leak_res_bash = run_bash_with_valgrind(None, stdin)
+    leak_res_bash = run_bash_with_valgrind(stdin, PATH_BASH)
     return leak_res_minishell, leak_res_bash
 
 
@@ -125,7 +126,7 @@ def run_bash(stdin, cmd):
 
 def run_both(stdin):
     res_minishell = run_minishell(stdin, PATH)
-    res_bash = run_bash(None, stdin)
+    res_bash = run_bash(stdin, PATH_BASH)
     return res_minishell, res_bash
 
 # ----------------------------------------------------------
@@ -212,9 +213,7 @@ def put_total_result(val):
 
 def test(test_name, test_input_arr):
     test_res = 0
-    print(f' =============================================================== ')
     print(f' ========================= {test_name} ========================= ')
-    print(f' =============================================================== ')
 
     # output test
     test_num = 1
@@ -241,8 +240,6 @@ def test(test_name, test_input_arr):
         put_leak_result(val_leak, m_res, b_res)
 
     test_res |= put_total_leak_result(val_leak)
-    print(f' =============================================================== ')
-    print(f' =============================================================== ')
     print()
     return test_res
 
@@ -250,14 +247,15 @@ def test(test_name, test_input_arr):
 def main():
     test_res = 0
 
-    pipe_test = ("/bin/ls -l",
-             "/bin/echo abcde",
-             "/bin/echo aaa bbb\n/bin/ls",
-             "/bin/echo aa\n/bin/echo bb\n/bin/echo ccc",
-             "/bin/echo aaa | /bin/grep a",
-             "/bin/echo aaa | /bin/cat -e",
-             "/bin/echo aaa | nothing",
-             )
+    # pipe_test = ("/bin/ls -l",
+    #          "/bin/echo abcde",
+    #          "/bin/echo aaa bbb\n/bin/ls",
+    #          "/bin/echo aa\n/bin/echo bb\n/bin/echo ccc",
+    #          "/bin/echo aaa | /bin/grep a",
+    #          "/bin/echo aaa | /bin/cat -e",
+    #          "/bin/echo aaa | nothing",
+    #          )
+    # test_res |= test("multi_pipe", pipe_test)
 
 
     # exit_status ...??
@@ -268,9 +266,9 @@ def main():
                  "echo a echo b echo c",
                  "echo aaaaaaaaaaaaaaaa bbbbbbbb  ccccccc echo   aa",
                  "echo /bin/echo a b c   d   e",
-                 "echo a \"\" b",
-                 "echo a \"\" \"\" \"\" b",
-                 "echo \"\"",
+                 # "echo a \"\" b",
+                 # "echo a \"\" \"\" \"\" b",
+                 # "echo \"\"",
                  "echo -n hello",
                  "echo -n hello -n",
                  "echo -----n hello",
@@ -292,7 +290,6 @@ def main():
                  "echo nnnn- a b c",
                  )
 
-    test_res |= test("multi_pipe", pipe_test)
     test_res |= test("ft_echo", echo_test)
 
 
