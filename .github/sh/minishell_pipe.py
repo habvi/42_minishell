@@ -273,6 +273,8 @@ def main():
                  "echo \"\"",
                  "echo -n hello",
                  "echo -n hello -n",
+                 "echo -----n hello",
+                 "echo -n -----n hello",
                  "echo -n -n -n -n -n  a  b  c",
                  "echo -n -n -n -n -n  a  b  c -n -n -n -m  d e f",
                  "echo -n -m hoge",
