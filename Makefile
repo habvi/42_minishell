@@ -24,7 +24,8 @@ TOKEN_DIR	:=	tokenize
 SRCS		+=	$(TOKEN_DIR)/tokenize.c
 
 PARSER_DIR	:=	parser
-SRCS		+=	$(PARSER_DIR)/parser.c
+SRCS		+=	$(PARSER_DIR)/parser.c \
+				$(PARSER_DIR)/syntax_tree.c
 
 INPUT_DIR	:=	input
 SRCS		+=	$(INPUT_DIR)/input.c
