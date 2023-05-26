@@ -4,3 +4,5 @@
 !*.h
 !Makefile
 !.gitignore
+
+.idea/
