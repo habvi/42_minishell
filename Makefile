@@ -23,6 +23,9 @@ SRCS		+=	$(EXEC_DIR)/check_command.c \
 TOKEN_DIR	:=	tokenize
 SRCS		+=	$(TOKEN_DIR)/tokenize.c
 
+PARSER_DIR	:=	parser
+SRCS		+=	$(PARSER_DIR)/parser.c
+
 INPUT_DIR	:=	input
 SRCS		+=	$(INPUT_DIR)/input.c
 
