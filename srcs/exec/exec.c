@@ -2,34 +2,55 @@
 #include "deque.h"
 #include "ft_dprintf.h"
 #include "libft.h"
+#include "parser.h"
 
-static bool	is_pipe(const char *str)
-{
-	if (ft_strnlen(str, 2) == 1 && *str == '|')
-		return (true);
-	return (false);
-}
+//static bool	is_pipe(const char *str)
+//{
+//	if (ft_strnlen(str, 2) == 1 && *str == '|')
+//		return (true);
+//	return (false);
+//}
 
 // | command                  -> not handle yet
 // command arg                -> return NULL
 // command arg |              -> return NULL
 // command arg | command2 arg -> return command2
-static t_deque_node	*get_next_command(t_deque_node *cmd, size_t *cmd_size)
+//static t_deque_node	*get_next_command(t_deque_node *cmd, size_t *cmd_size)
+//{
+//	*cmd_size = 0;
+//	while (cmd && !is_pipe(cmd->content))
+//	{
+//		cmd = cmd->next;
+//		(*cmd_size)++;
+//	}
+//	if (cmd)
+//	{
+//		free(cmd->content);
+//		cmd->content = NULL;
+//		cmd = cmd->next;
+//	}
+//	return (cmd);
+//}
+
+static t_deque_node	*get_next_command(t_ast *exec_node, t_ast **cmd_node, t_ast **next_node)
 {
-	*cmd_size = 0;
-	while (cmd && !is_pipe(cmd->content))
+	t_deque_node	*next_cmd;
+
+	if (exec_node->type == NODE_CMD)
 	{
-		cmd = cmd->next;
-		(*cmd_size)++;
+		*cmd_node = exec_node;
+		*next_node = NULL;
+		next_cmd = NULL;
 	}
-	if (cmd)
+	else
 	{
-		free(cmd->content);
-		cmd->content = NULL;
-		cmd = cmd->next;
+		*cmd_node = exec_node->left;
+		*next_node = exec_node->right;
+		next_cmd = (*next_node)->cmd_head->node;
 	}
-	return (cmd);
+	return (next_cmd);
 }
+
 
 static char	**convert_command_to_array(t_deque_node *node, const size_t size)
 {
@@ -76,26 +97,52 @@ static int	dup_process_and_run(t_command *cmd, t_fd *fd, int *last_exit_status)
 	return (EXIT_SUCCESS);
 }
 
-int	execute_command(t_deque *dq_cmd)
+int	execute_command(t_ast *ast_node)
 {
-	t_command		cmd;
-	t_fd			fd;
-	int				last_exit_status;
-	t_deque_node	*node;
-	size_t			cmd_size;
+	t_command	cmd;
+	t_fd		fd;
+	int			last_exit_status;
+	t_ast		*exec_node;
+	t_ast		*cmd_node;
+	t_ast		*next_node;
 
-	init_cmd(&cmd, dq_cmd);
+	init_cmd(&cmd, NULL);
 	init_fd(&fd);
 	last_exit_status = EXIT_SUCCESS;
-	node = dq_cmd->node;
-	while (node)
+
+	exec_node = ast_node;
+	while (exec_node) // pipe or cmd
 	{
-		cmd.next_command = get_next_command(node, &cmd_size);
-		cmd.exec_command = convert_command_to_array(node, cmd_size);
+		cmd.next_command = get_next_command(exec_node, &cmd_node, &next_node);
+		cmd.exec_command = convert_command_to_array(cmd_node->cmd_head->node, cmd_node->cmd_head->size);
 		if (dup_process_and_run(&cmd, &fd, &last_exit_status) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 		free_2d_array(&cmd.exec_command);
-		node = cmd.next_command;
+		exec_node = next_node;
 	}
 	return (last_exit_status);
 }
+
+//int	execute_command(t_deque *dq_cmd)
+//{
+//	t_command		cmd;
+//	t_fd			fd;
+//	int				last_exit_status;
+//	t_deque_node	*node;
+//	size_t			cmd_size;
+//
+//	init_cmd(&cmd, dq_cmd);
+//	init_fd(&fd);
+//	last_exit_status = EXIT_SUCCESS;
+//	node = dq_cmd->node;
+//	while (node)
+//	{
+//		cmd.next_command = get_next_command(node, &cmd_size);
+//		cmd.exec_command = convert_command_to_array(node, cmd_size);
+//		if (dup_process_and_run(&cmd, &fd, &last_exit_status) == PROCESS_ERROR)
+//			return (PROCESS_ERROR);
+//		free_2d_array(&cmd.exec_command);
+//		node = cmd.next_command;
+//	}
+//	return (last_exit_status);
+//}

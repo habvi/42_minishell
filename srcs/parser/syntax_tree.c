@@ -32,20 +32,19 @@ t_ast	*new_node(t_type type, t_ast *left, t_ast *right)
 // free tree
 void	ast_clear(t_ast **root)
 {
+	//todo free tree
 	*root = NULL;
 }
 
 void	print_cmds(t_ast *cmd_node)
 {
 	t_deque_node	*node;
-//	t_token			*token;
 
-	ft_dprintf(STDERR_FILENO, "cmd:[");
+	ft_dprintf(STDERR_FILENO, " cmd:[");
 	node = cmd_node->cmd_head->node;
 	while (node)
 	{
-//		token = node->content;
-		ft_dprintf(STDERR_FILENO, "%s", node->content);
+		ft_dprintf(STDERR_FILENO, "%s", (char *)node->content);
 		node = node->next;
 		if (node)
 			ft_dprintf(STDERR_FILENO, ", ");
@@ -62,7 +61,7 @@ void	print_ast(t_ast *ast_node)
 	else if (ast_node->type == NODE_PIPE)
 	{
 		print_ast(ast_node->left);
-		ft_dprintf(STDERR_FILENO, " pipe \n");
+		ft_dprintf(STDERR_FILENO, "  pipe \n");
 		print_ast(ast_node->right);
 	}
 }

@@ -47,12 +47,14 @@ void	debug_2d_array(char **array);
 // check_command.c
 bool	is_first_command(int prev_fd);
 bool	is_last_command(t_deque_node *next_cmd);
+//bool	is_last_command(t_ast *next);
 // child_pipes.c
 int		handle_child_pipes(t_command *cmd, t_fd *fd);
 // child_proces.c
 void	child_process(t_command *cmd, t_fd *fd, char **environ);
 // exec.c
-int		execute_command(t_deque *command);
+//int		execute_command(t_deque *command);
+int		execute_command(t_ast *ast);
 // init.c
 void	init_cmd(t_command *cmd, t_deque *dq_cmd);
 void	init_fd(t_fd *fd);
