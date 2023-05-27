@@ -34,7 +34,8 @@ LIB_SRC		:=	$(LIB_DIR)/ft_atoi_old.c \
 				$(LIB_DIR)/ft_atoi_strictly.c \
 				$(LIB_DIR)/ft_atoi.c \
 				$(LIB_DIR)/ft_itoa_int.c \
-				$(LIB_DIR)/ft_itoa.c
+				$(LIB_DIR)/ft_itoa.c \
+				$(LIB_DIR)/ft_strtol.c
 
 #--------------------------------------------
 # ft_list
