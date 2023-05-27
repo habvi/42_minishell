@@ -22,35 +22,31 @@ static char	*get_bool_char(bool b)
 	return ("false");
 }
 
-static char *get_result_char(int res, bool skip)
+static char *get_result_char(int res)
 {
-	if (skip)
-		return (COLOR_YELLOW"SKIP"COLOR_RESET);
 	if (res)
 		return (COLOR_GREEN"OK"COLOR_RESET);
 	return (COLOR_RED"NG"COLOR_RESET);
 }
 
-static int	test(const char *str, bool allow_tail_space, int test_no)
+static int	test(const char *str, int test_no, bool expected_success)
 {
 	long	ft_ret, lib_ret;
-	bool	ft_success, lib_success;
-	char	*endptr;
+	char	*ft_endptr, *lib_endptr;
+	bool	ft_success, res_endptr;
 
-	ft_success = ft_strtol(str, &ft_ret, allow_tail_space);
-
-	lib_ret = strtol(str, &endptr, 10);
-	lib_success = strlen(endptr) == 0;
+	ft_success = ft_strtol(str, &ft_ret, &ft_endptr);
+	lib_ret = strtol(str, &lib_endptr, 10);
+	res_endptr = strcmp(ft_endptr, lib_endptr) == 0;
 
 	printf("\n[TEST %02d] '%s'\n", test_no, str);
-	printf(   "            num:%s  lib[%ld]\n", get_result_char(lib_ret == ft_ret, false), lib_ret);
+	printf(   "            num:%s  lib[%ld]\n", get_result_char(lib_ret == ft_ret), lib_ret);
 	printf(   "                    ft_[%ld]\n", ft_ret);
-	printf(   "            end:%s  lib[%s]\n", get_result_char(lib_success == ft_success, allow_tail_space), get_bool_char(lib_success));
-	printf(   "                    ft_[%s]\n", get_bool_char(ft_success));
+	printf(   "            end:%s  lib[%s]\n", get_result_char(res_endptr), lib_endptr);
+	printf(   "                    ft_[%s]\n", ft_endptr);
+	printf(   "            suc:%s  ft_[%s]\n", get_result_char(expected_success == ft_success), get_bool_char(ft_success));
 
-	if (allow_tail_space && lib_ret == ft_ret)
-		return (1);
-	if (lib_ret == ft_ret && lib_success == ft_success)
+	if (lib_ret == ft_ret && res_endptr && expected_success == ft_success)
 		return (1);
 	return (0);
 }
@@ -65,38 +61,41 @@ int	main(void)
 	test_no = 0;
 
 	printf("===== convert success =====\n");
-	ok_cnt += test("0", false, ++test_no);
-	ok_cnt += test("1", false, ++test_no);
-	ok_cnt += test("-1", false, ++test_no);
-	ok_cnt += test("2147483647", false, ++test_no);
-	ok_cnt += test("-2147483648", false, ++test_no);
-	ok_cnt += test("9223372036854775807", false, ++test_no);
-	ok_cnt += test("-9223372036854775808", false, ++test_no);
-	ok_cnt += test("0000000000", false, ++test_no);
-	ok_cnt += test("+0000000000", false, ++test_no);
-	ok_cnt += test("-000000100", false, ++test_no);
-	ok_cnt += test("   -123", false, ++test_no);
-	ok_cnt += test(" +123", false, ++test_no);
+	ok_cnt += test("0", ++test_no, true);
+	ok_cnt += test("1", ++test_no, true);
+	ok_cnt += test("-1", ++test_no, true);
+	ok_cnt += test("2147483647", ++test_no, true);
+	ok_cnt += test("-2147483648", ++test_no, true);
+	ok_cnt += test("9223372036854775807", ++test_no, true);
+	ok_cnt += test("-9223372036854775808", ++test_no, true);
+	ok_cnt += test("0000000000", ++test_no, true);
+	ok_cnt += test("+0000000000", ++test_no, true);
+	ok_cnt += test("-000000100", ++test_no, true);
+	ok_cnt += test("   -123", ++test_no, true);
+	ok_cnt += test(" +123", ++test_no, true);
 
 	printf("\n\n===== convert failure (Not allowed tail space) =====\n");
-	ok_cnt += test("   - 123", false, ++test_no);
-	ok_cnt += test(" +-123", false, ++test_no);
-	ok_cnt += test(" +123 ", false, ++test_no);
-	ok_cnt += test("   -123.45", false, ++test_no);
-	ok_cnt += test("9223372036854775808", false, ++test_no); // lib is success??
-	ok_cnt += test("-9223372036854775809", false, ++test_no); // lib is success??
+	ok_cnt += test("   - 123", ++test_no, false);
+	ok_cnt += test(" +-123", ++test_no, false);
+	ok_cnt += test(" +123 ", ++test_no, false);
+	ok_cnt += test("   -123.45", ++test_no, false);
+	ok_cnt += test("9223372036854775808", ++test_no, false);
+	ok_cnt += test("9223372036854775809", ++test_no, false);
+	ok_cnt += test("9223372036854775809", ++test_no, false);
+	ok_cnt += test("9223372036854775810", ++test_no, false);
+	ok_cnt += test("9223372036854775811", ++test_no, false);
+	ok_cnt += test("9223372036854775812", ++test_no, false);
+	ok_cnt += test("9223372036854775899", ++test_no, false);
+	ok_cnt += test("92233720368547758080", ++test_no, false);
+	ok_cnt += test("92233720368547758081", ++test_no, false);
+	ok_cnt += test("92233720368547758082", ++test_no, false);
+	ok_cnt += test("92233720368547758080123", ++test_no, false);
+	ok_cnt += test("-9223372036854775809", ++test_no, false);
+	ok_cnt += test("92233720368547758080123 ", ++test_no, false);
+	ok_cnt += test("92233720368547758080123abc", ++test_no, false);
+	ok_cnt += test("9223372036854775808012399999999999999999999999999999999999999999999abc", ++test_no, false);
 
-	printf("\n\n===== convert success (Allowed tail space) =====\n");
-	ok_cnt += test("   0   ", true, ++test_no);
-	ok_cnt += test("1	", true, ++test_no);
-	ok_cnt += test("-1\t  ", true, ++test_no);
-	ok_cnt += test("2147483647  ", true, ++test_no);
-	ok_cnt += test("-2147483648    ", true, ++test_no);
-	ok_cnt += test("9223372036854775807  ", true, ++test_no);
-	ok_cnt += test("-9223372036854775808  ", true, ++test_no);
-
-
-	printf("############################################\n");
+		printf("############################################\n");
 	printf(" TEST RESULT :: OK %d/ ALL %d     %s\n", ok_cnt, test_no, test_no == ok_cnt ? "\x1b[32mALL OK :)\x1b[0m" : "\x1b[31mNG :X\x1b[0m");
 	printf("############################################\n\n");
 	return (0);
