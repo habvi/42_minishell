@@ -71,7 +71,7 @@ static long	get_long_num(const char *str, size_t *idx, int sign, bool *is_of)
 	return (ret_num);
 }
 
-bool	ft_strtol(const char *str, long *ret_num)
+bool	ft_strtol(const char *str, long *ret_num, bool allow_tail_space)
 {
 	int		sign;
 	size_t	idx;
@@ -85,6 +85,8 @@ bool	ft_strtol(const char *str, long *ret_num)
 	if (!ft_isdigit(str[idx]))
 		return (false);
 	*ret_num = get_long_num(str, &idx, sign, &is_overflow_occurred);
+	while (allow_tail_space && is_space(str[idx]))
+		idx++;
 	if (str[idx])
 		return (false);
 	if (is_overflow_occurred)
