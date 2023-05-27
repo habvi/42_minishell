@@ -6,27 +6,19 @@
 # include <stdlib.h>
 # include <stdbool.h>
 
-typedef struct s_deque_node	t_deque_node;
-typedef struct s_deque		t_deque;
-
 typedef enum e_node_kind {
 	NODE_ADD = 0,
 	NODE_SUB = 1,
-	NODE_NUL = 2,
+	NODE_MUL = 2,
 	NODE_DIV = 3,
 	NODE_NUM = 4, // integer
 }	t_node_kind;
 
-typedef struct s_node {
-	t_node_kind		kind;
-	struct s_node	*left;
-	struct s_node	*right;
-	int				val; // use only kind == NODE_NUM
-}	t_node;
-
 typedef struct s_token {
-	t_deque			*head_token;
-	t_deque_node	*now_token;
+	t_node_kind		kind;
+	struct s_token	*left;
+	struct s_token	*right;
+	int				val; // use only kind == NODE_NUM
 }	t_token;
 
 // create_token.c

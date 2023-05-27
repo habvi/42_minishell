@@ -1,50 +1,54 @@
 #include "test.h"
-#include "deque.h"
 
 // expr = mul ("+" mul | "-" mul)*
 // mul = primary ("*" primary | "/" primary)*
 // primary = num | "(" expr ")"
-t_node	*primary(t_token *token)
+t_token	*primary(t_token *token)
 {
-	t_node	*node;
+	t_token	*token;
 
 	if (next_token_bool(token, '('))
 	{
-		node = expr(token);
+		token = expr(token);
 
-		return (node);
+		return (token);
 	}
 	return (node_num_new(next_token_val(token)));
 }
 
-t_node	*mul(t_token *token)
+t_token	*mul(t_token *token)
 {
-	t_node	*node;
+	t_token	*token;
 
-	node = primary(token);
+	token = primary(token);
 	while (true)
 	{
 		if (next_token_bool(token, '*'))
-			node = node_new(NODE_MUL, node, primary(token));
+			token = node_new(NODE_MUL, token, primary(token));
 		else if (next_token_bool(token, '/'))
-			node = node_new(NODE_DIV, node, primary(token));
+			token = node_new(NODE_DIV, token, primary(token));
 		else
-			return (node);
+			return (token);
 	}
 }
 
-t_node	*expr(t_token *token)
+t_token	*expr(t_token *token)
 {
-	t_node	*node;
+	t_token	*token;
 
-	node = mul(token);
+	token = mul(token);
 	while (true)
 	{
 		if (next_token_bool(token, '+'))
-			node = node_new(NODE_ADD, node, mul(token));
+			token = node_new(NODE_ADD, token, mul(token));
 		else if (next_token_bool(token, '-'))
-			node = node_new(NODE_SUB, node, mul(token));
+			token = node_new(NODE_SUB, token, mul(token));
 		else
-			return (node);
+			return (token);
 	}
+}
+
+t_token	*parse(t_token *token)
+{
+	return (expr(token));
 }
