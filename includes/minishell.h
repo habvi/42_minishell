@@ -11,6 +11,7 @@
 # define WAIT_ERROR		(-1)
 # define PIPE_ERROR		(-1)
 # define PROCESS_ERROR	(-1)
+# define FATAL_ERROR	(-1)
 
 # define CHILD_PID		0
 # define PROMPT_NAME    "minishell "
