@@ -211,7 +211,7 @@ def put_total_result(val):
 
 # ----------------------------------------------------------
 
-def test(test_name, test_input_arr):
+def test(test_name, test_input_list):
     test_res = 0
     print(f' ========================= {test_name} ========================= ')
 
@@ -221,7 +221,7 @@ def test(test_name, test_input_arr):
     ko = 0
     val = [test_num, ok, ko]
 
-    for stdin in test_input_arr:
+    for stdin in test_input_list:
         m_res, b_res = run_both(stdin)
         put_result(val, m_res, b_res)
 
@@ -234,7 +234,7 @@ def test(test_name, test_input_arr):
     leak_skip = 0
     val_leak = [leak_test_num, leak_ok, leak_ko, leak_skip]
 
-    for stdin in test_input_arr:
+    for stdin in test_input_list:
         m_res, b_res = run_both_with_valgrind(stdin)
         # print(f'm_res:{m_res}')
         put_leak_result(val_leak, m_res, b_res)
@@ -247,19 +247,19 @@ def test(test_name, test_input_arr):
 def main():
     test_res = 0
 
-    # pipe_test = ("/bin/ls -l",
-    #          "/bin/echo abcde",
-    #          "/bin/echo aaa bbb\n/bin/ls",
-    #          "/bin/echo aa\n/bin/echo bb\n/bin/echo ccc",
-    #          "/bin/echo aaa | /bin/grep a",
-    #          "/bin/echo aaa | /bin/cat -e",
-    #          "/bin/echo aaa | nothing",
-    #          )
-    # test_res |= test("multi_pipe", pipe_test)
+    pipe_test = ["/bin/ls -l",
+             "/bin/echo abcde",
+             "/bin/echo aaa bbb\n/bin/ls",
+             "/bin/echo aa\n/bin/echo bb\n/bin/echo ccc",
+             "/bin/echo aaa | /bin/grep a",
+             "/bin/echo aaa | /bin/cat -e",
+             "/bin/echo aaa | nothing",
+             ]
+    test_res |= test("multi_pipe", pipe_test)
 
 
     # exit_status ...??
-    echo_test = ("echo",
+    echo_test = ["echo",
                  "echo a",
                  "echo a b c",
                  "echo a        b        c",
@@ -288,7 +288,7 @@ def main():
                  "echo -n-n a b c",
                  "echo nnnnnnn  -n a b c",
                  "echo nnnn- a b c",
-                 )
+                 ]
 
     test_res |= test("ft_echo", echo_test)
 

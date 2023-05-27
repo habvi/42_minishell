@@ -14,8 +14,6 @@ void	child_process(t_command *cmd, t_fd *fd, char **environ)
 	command = cmd->exec_command;
 	// debug_func(__func__, __LINE__);
 	// debug_2d_array(command);
-	// if (!command[0])
-	// 	exit(EXIT_SUCCESS);
 	if (handle_child_pipes(cmd, fd) == PROCESS_ERROR)
 		exit(EXIT_FAILURE);
 	if (command[0] && ft_strncmp(command[0], "echo", 5) == 0)

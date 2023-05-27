@@ -58,11 +58,10 @@ static void	put_strings(char **strs)
 // cmds[0] == "echo"
 int	ft_echo(char **cmds)
 {
-	int		status;
-	size_t	idx;
-	bool	is_n_op_validate;
+	const int	status = EXIT_SUCCESS;
+	size_t		idx;
+	bool		is_n_op_validate;
 
-	status = EXIT_SUCCESS;
 	idx = 1;
 	skip_option_part(cmds, &idx, &is_n_op_validate);
 	put_strings(&cmds[idx]);
