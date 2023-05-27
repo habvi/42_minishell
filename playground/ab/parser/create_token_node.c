@@ -4,7 +4,7 @@
 // expr = mul ("+" mul | "-" mul)*
 // mul = primary ("*" primary | "/" primary)*
 // primary = num | "(" expr ")"
-t_node	*primary(t_deque *token)
+t_node	*primary(t_token *token)
 {
 	t_node	*node;
 
@@ -17,7 +17,7 @@ t_node	*primary(t_deque *token)
 	return (node_num_new(next_token_val(token)));
 }
 
-t_node	*mul(t_deque *token)
+t_node	*mul(t_token *token)
 {
 	t_node	*node;
 
@@ -33,7 +33,7 @@ t_node	*mul(t_deque *token)
 	}
 }
 
-t_node	*expr(t_deque *token)
+t_node	*expr(t_token *token)
 {
 	t_node	*node;
 
