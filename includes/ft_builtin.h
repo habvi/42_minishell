@@ -3,7 +3,7 @@
 
 # include <stdbool.h>
 
-typedef enum e_exit_argument_stat
+typedef enum e_exit_argument
 {
 	EXIT_VALID_ARG,
 	EXIT_NON_NUMERIC_ARG,
