@@ -67,6 +67,7 @@ static long	get_long_num(const char *str, size_t *idx, int sign, bool *is_of)
 		ret_num = ret_num * 10 + digit;
 		*idx += 1;
 	}
+	ret_num *= sign;
 	return (ret_num);
 }
 
