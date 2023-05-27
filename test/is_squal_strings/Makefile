@@ -1,3 +1,4 @@
+
 NAME		=	a.out
 
 CC			=	cc
@@ -29,7 +30,7 @@ fclean	: clean
 
 re		: fclean all
 
-run		: all
+run		: re
 	./$(NAME)
 
 .PHONY	: all clean fclean re run

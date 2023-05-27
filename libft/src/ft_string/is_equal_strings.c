@@ -5,16 +5,14 @@
 /* If s1 or s2 is NULL, returns false.              */
 bool	is_equal_strings(const char *s1, const char *s2)
 {
-	size_t	s1_len;
-	size_t	s2_len;
+	size_t	i;
 
 	if (!s1 || !s2)
 		return (false);
-	s1_len = ft_strlen(s1);
-	s2_len = ft_strlen(s2);
-	if (s1_len != s2_len)
+	i = 0;
+	while (s1[i] && s1[i] == s2[i])
+		i++;
+	if (s1[i] || s2[i])
 		return (false);
-	if (ft_strncmp(s1, s2, s1_len) == 0)
-		return (true);
-	return (false);
+	return (true);
 }
