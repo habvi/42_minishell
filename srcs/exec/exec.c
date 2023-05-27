@@ -2,6 +2,7 @@
 #include "deque.h"
 #include "ft_dprintf.h"
 #include "libft.h"
+#include "ft_builtin.h"
 
 static bool	is_pipe(const char *str)
 {
@@ -14,7 +15,7 @@ static bool	is_pipe(const char *str)
 // command arg                -> return NULL
 // command arg |              -> return NULL
 // command arg | command2 arg -> return command2
-static t_deque_node	*get_next_command(t_deque_node *cmd, size_t *cmd_size)
+t_deque_node	*get_next_command(t_deque_node *cmd, size_t *cmd_size)
 {
 	*cmd_size = 0;
 	while (cmd && !is_pipe(cmd->content))
@@ -31,7 +32,7 @@ static t_deque_node	*get_next_command(t_deque_node *cmd, size_t *cmd_size)
 	return (cmd);
 }
 
-static char	**convert_command_to_array(t_deque_node *node, const size_t size)
+char	**convert_command_to_array(t_deque_node *node, const size_t size)
 {
 	char	**command;
 	char	*tmp;
@@ -76,7 +77,7 @@ static int	dup_process_and_run(t_command *cmd, t_fd *fd, int *last_exit_status)
 	return (EXIT_SUCCESS);
 }
 
-int	execute_command(t_deque *dq_cmd)
+int	execute_command(t_deque *dq_cmd, bool *is_exit_shell)
 {
 	t_command		cmd;
 	t_fd			fd;
@@ -88,6 +89,10 @@ int	execute_command(t_deque *dq_cmd)
 	init_fd(&fd);
 	last_exit_status = EXIT_SUCCESS;
 	node = dq_cmd->node;
+	if (pipe_cnt(node) == 0 && is_builtin_func((char *)dq_cmd->node->content))
+	{
+		return (exec_builtin_in_parent_proc(cmd, node, is_exit_shell));
+	}
 	while (node)
 	{
 		cmd.next_command = get_next_command(node, &cmd_size);

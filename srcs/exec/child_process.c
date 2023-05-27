@@ -4,49 +4,7 @@
 #include "deque.h"
 #include "ft_dprintf.h"
 #include "libft.h"
-
-//echo, cd, pwd, export, unset, env, exit
-static bool	is_builtin_func(char **command)
-{
-	if (!command)
-		return (false);
-	if (is_equal_strings(command[0], "echo"))
-		return (true);
-	if (is_equal_strings(command[0], "cd"))
-		return (true);
-	if (is_equal_strings(command[0], "pwd"))
-		return (true);
-	if (is_equal_strings(command[0], "export"))
-		return (true);
-	if (is_equal_strings(command[0], "unset"))
-		return (true);
-	if (is_equal_strings(command[0], "env"))
-		return (true);
-	if (is_equal_strings(command[0], "exit"))
-		return (true);
-	return (false);
-}
-
-static int	exec_builtin_func(char **command)
-{
-	if (!command)
-		return (FATAL_ERROR);
-	if (is_equal_strings(command[0], "echo"))
-		return (ft_echo(command));
-//	if (is_equal_strings(command[0], "cd"))
-//		return (true);
-//	if (is_equal_strings(command[0], "pwd"))
-//		return (true);
-//	if (is_equal_strings(command[0], "export"))
-//		return (true);
-//	if (is_equal_strings(command[0], "unset"))
-//		return (true);
-//	if (is_equal_strings(command[0], "env"))
-//		return (true);
-	if (is_equal_strings(command[0], "exit"))
-		return (ft_exit(command));
-	return (FATAL_ERROR);
-}
+#include "ft_builtin.h"
 
 // use PROMPT_NAME
 // if execve erorr, no need for auto perror.
@@ -60,9 +18,9 @@ void	child_process(t_command *cmd, t_fd *fd, char **environ)
 	// debug_2d_array(command);
 	if (handle_child_pipes(cmd, fd) == PROCESS_ERROR)
 		exit(EXIT_FAILURE);
-	if (is_builtin_func(command))
+	if (is_builtin_func(command[0]))
 	{
-		exec_status = exec_builtin_func(command);
+		exec_status = call_builtin_func(command, NULL);
 		deque_clear_all(&cmd->head_command);
 		exit(exec_status);
 	}
