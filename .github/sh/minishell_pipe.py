@@ -293,7 +293,7 @@ def main():
     test_res |= test("ft_echo", echo_test)
 
 
-    exit_test = ("exit",
+    exit_test = ["exit",
                  "exit 0",
                  "exit 1",
                  "exit 42",
@@ -320,9 +320,14 @@ def main():
                  "exit -1+ a",
                  "exit -1+ 1",
                  "exit 9999999999999999999999999999999999999999999999999999999999999999",
-                 )
+                 "exit \t42",
+                 "exit \n42",
+                 "exit \v42",
+                 "exit \f42",
+                 "exit \r42",
+                 ] # add more test after update tokenizer
 
-    test_res |= test("ft_echo", exit_test)
+    test_res |= test("ft_exit", exit_test)
 
 
 
