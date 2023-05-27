@@ -29,7 +29,8 @@ SRCS		+=	$(INPUT_DIR)/input.c
 
 BUILTIN_DIR	:=	builtin
 SRCS		+=	$(BUILTIN_DIR)/ft_echo.c \
-				$(BUILTIN_DIR)/ft_exit.c
+				$(BUILTIN_DIR)/ft_exit.c \
+				$(BUILTIN_DIR)/ft_legal_number.c
 
 OBJ_DIR	:=	obj
 OBJS	:=	$(SRCS:%.c=$(OBJ_DIR)/%.o)
