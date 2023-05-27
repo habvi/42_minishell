@@ -22,13 +22,6 @@ static size_t	cnt_2d_array(const char **arr)
 	return (i);
 }
 
-typedef enum e_exit_arg
-{
-	EXIT_VALID_ARG,
-	EXIT_TOO_MANY_NUMERIC_ARG,
-	EXIT_NON_NUMERIC_ARG,
-}	t_exit_arg;
-
 // argv != NULL
 static t_exit_arg	validate_argument(const char **cmds)
 {
@@ -38,29 +31,30 @@ static t_exit_arg	validate_argument(const char **cmds)
 	argc = cnt_2d_array(cmds);
 	if (argc == 1)
 		return (EXIT_VALID_ARG);
-	if (!ft_strtol(cmds[1], &long_num))
+	if (!ft_strtol(cmds[1], &long_num, true))
 		return (EXIT_NON_NUMERIC_ARG);
 	if (argc > 2)
-		return (EXIT_TOO_MANY_NUMERIC_ARG);
+		return (NOT_EXIT_TOO_MANY_NUMERIC_ARG);
 	return (EXIT_VALID_ARG);
 }
 
-static int	get_exit_status(const char **cmds, \
+// ft_strtol returns true
+static int	get_exit_status(const char *arg, \
 							t_exit_arg res, int latest_status)
 {
 	long	long_num;
 
-	if (res == EXIT_TOO_MANY_NUMERIC_ARG || res == EXIT_NON_NUMERIC_ARG)
+	if (res == NOT_EXIT_TOO_MANY_NUMERIC_ARG || res == EXIT_NON_NUMERIC_ARG)
 		return (2);
-	if (!cmds[1])
+	if (!arg)
 		return (latest_status);
-	ft_strtol(cmds[1], &long_num);
+	ft_strtol(arg, &long_num, true);
 	return (long_num % 256);
 }
 
-static void	exec_exit(const char *cmds, t_exit_arg res, int status)
+static void	exec_exit(const char *arg, t_exit_arg res, int status)
 {
-	if (res == EXIT_TOO_MANY_NUMERIC_ARG)
+	if (res == NOT_EXIT_TOO_MANY_NUMERIC_ARG)
 	{
 		ft_dprintf(STDERR_FILENO, \
 		"minishell: exit: too many arguments\n");
@@ -69,7 +63,7 @@ static void	exec_exit(const char *cmds, t_exit_arg res, int status)
 	if (res == EXIT_NON_NUMERIC_ARG)
 	{
 		ft_dprintf(STDERR_FILENO, \
-		"minishell: exit: %s: numeric argument required\n", cmds[1]);
+		"minishell: exit: %s: numeric argument required\n", arg);
 		exit (status);
 	}
 	exit (status);
@@ -79,11 +73,11 @@ static void	exec_exit(const char *cmds, t_exit_arg res, int status)
 int	ft_exit(char **cmds)
 {
 	int			status;
-	t_exit_arg	result;
+	t_exit_arg	arg_result;
 
 	status = EXIT_SUCCESS; // todo: get latest status
-	result = validate_argument((const char **)cmds);
-	status = get_exit_status((const char **)cmds, result, status);
-	exec_exit((const char *)cmds, result, status);
+	arg_result = validate_argument((const char **)cmds);
+	status = get_exit_status((const char *)cmds[1], arg_result, status);
+	exec_exit((const char *)cmds[1], arg_result, status);
 	return (status);
 }
