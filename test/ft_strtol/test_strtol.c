@@ -74,11 +74,15 @@ int	main(void)
 	ok_cnt += test("   -123", ++test_no, true);
 	ok_cnt += test(" +123", ++test_no, true);
 
-	printf("\n\n===== convert failure (Not allowed tail space) =====\n");
+	printf("\n\n===== convert success (must check endptr) =====\n");
+	ok_cnt += test(" +123 ", ++test_no, true);
+	ok_cnt += test("   -123.45", ++test_no, true);
+	ok_cnt += test(" 123 000abc", ++test_no, true);
+
+
+	printf("\n\n===== convert failure (non numeric, over/under flow) =====\n");
 	ok_cnt += test("   - 123", ++test_no, false);
 	ok_cnt += test(" +-123", ++test_no, false);
-	ok_cnt += test(" +123 ", ++test_no, false);
-	ok_cnt += test("   -123.45", ++test_no, false);
 	ok_cnt += test("9223372036854775808", ++test_no, false);
 	ok_cnt += test("9223372036854775809", ++test_no, false);
 	ok_cnt += test("9223372036854775809", ++test_no, false);

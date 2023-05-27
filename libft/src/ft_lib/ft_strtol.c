@@ -1,6 +1,7 @@
 #include <limits.h>
 #include "ft_lib.h"
 #include "ft_ascii.h"
+#include <sys/errno.h>
 
 static bool	is_space(int c)
 {
@@ -91,8 +92,6 @@ bool	ft_strtol(const char *str, long *ret_num, char **endptr)
 	*ret_num = get_long_num(str, &idx, sign, &is_overflow_occurred);
 	if (endptr)
 		*endptr = (char *)&str[idx];
-	if (str[idx])
-		return (false);
 	if (is_overflow_occurred)
 		return (false);
 	return (true);
