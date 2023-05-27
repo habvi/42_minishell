@@ -2,6 +2,7 @@
 #include "ft_builtin.h"
 #include "ft_lib.h"
 #include "ft_dprintf.h"
+#include "ft_string.h"
 
 //exit [n]
 // Exit the shell, returning a status of n to the shell’s parent.
@@ -22,16 +23,28 @@ static size_t	cnt_2d_array(const char **arr)
 	return (i);
 }
 
+// todo: libft ...?
+static bool	is_space(int c)
+{
+	return (c == '\t' || c == '\n' || c == '\v' || \
+			c == '\f' || c == '\r' || c == ' ');
+}
+
 // argv != NULL
 static t_exit_arg	validate_argument(const char **cmds)
 {
 	long	long_num;
 	size_t	argc;
+	char	*endptr;
+	bool	strtol_success;
 
 	argc = cnt_2d_array(cmds);
 	if (argc == 1)
 		return (EXIT_VALID_ARG);
-	if (!ft_strtol(cmds[1], &long_num, true))
+	strtol_success = ft_strtol(cmds[1], &long_num, &endptr);
+	while (is_space(*endptr))
+		endptr++;
+	if (!strtol_success || ft_strlen(endptr) > 0)
 		return (EXIT_NON_NUMERIC_ARG);
 	if (argc > 2)
 		return (NOT_EXIT_TOO_MANY_NUMERIC_ARG);
@@ -48,7 +61,7 @@ static int	get_exit_status(const char *arg, \
 		return (2);
 	if (!arg)
 		return (latest_status);
-	ft_strtol(arg, &long_num, true);
+	ft_strtol(arg, &long_num, NULL);
 	return (long_num % 256);
 }
 
