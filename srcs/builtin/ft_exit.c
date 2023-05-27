@@ -81,33 +81,37 @@ static int	get_exit_status(const char **cmds, \
 	return ((int)(long_num & 255));
 }
 
-static void	exec_exit(const char *arg, t_exit_arg res, int status)
+static void	put_err(const char *arg, t_exit_arg res)
 {
 	if (res == RETURN_TOO_MANY_NUMERIC_ARG)
 	{
 		ft_dprintf(STDERR_FILENO, \
 		"minishell: exit: too many arguments\n");
-		return ;
 	}
-	if (res == EXIT_NON_NUMERIC_ARG)
+	else if (res == EXIT_NON_NUMERIC_ARG)
 	{
 		ft_dprintf(STDERR_FILENO, \
 		"minishell: exit: %s: numeric argument required\n", arg);
-		exit (status);
 	}
-	exit (status);
 }
 
-const char	*get_res_char(t_exit_arg res)
+static bool	is_exit(t_exit_arg res)
 {
-	if (res == EXIT_VALID_ARG)
-		return ("EXIT_VALID_ARG");
-	if (res == EXIT_NON_NUMERIC_ARG)
-		return ("EXIT_NON_NUMERIC_ARG");
 	if (res == RETURN_TOO_MANY_NUMERIC_ARG)
-		return ("RETURN_TOO_MANY_NUMERIC_ARG");
-	return ("ERROR");
+		return (false);
+	return (true);
 }
+
+//const char	*get_res_char(t_exit_arg res)
+//{
+//	if (res == EXIT_VALID_ARG)
+//		return ("EXIT_VALID_ARG");
+//	if (res == EXIT_NON_NUMERIC_ARG)
+//		return ("EXIT_NON_NUMERIC_ARG");
+//	if (res == RETURN_TOO_MANY_NUMERIC_ARG)
+//		return ("RETURN_TOO_MANY_NUMERIC_ARG");
+//	return ("ERROR");
+//}
 
 //exit [n]
 // Exit the shell, returning a status of n to the shell’s parent.
@@ -119,7 +123,7 @@ const char	*get_res_char(t_exit_arg res)
 
 // cmds[0] == "exit"
 
-int	ft_exit(char **cmds)
+int	ft_exit(char **cmds, bool *is_exit_shell)
 {
 	int			status;
 	t_exit_arg	arg_result;
@@ -127,7 +131,9 @@ int	ft_exit(char **cmds)
 	status = EXIT_SUCCESS; // todo: get latest status
 	status = get_exit_status((const char **)cmds, &arg_result, status);
 //	printf("status:%d, res:%s\n", status, get_res_char(arg_result));
-	exec_exit((const char *)cmds[EXIT_ARG_IDX], arg_result, status);
+	put_err((const char *)cmds[EXIT_ARG_IDX], arg_result);
+	if (is_exit_shell)
+		*is_exit_shell = is_exit(arg_result);
 	return (status);
 }
 // todo: return to main, exit prompt loop and put 'exit\n' to stderr

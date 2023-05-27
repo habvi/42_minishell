@@ -78,7 +78,7 @@ static int	dup_process_and_run(t_command *cmd, t_fd *fd, int *last_exit_status)
 	return (EXIT_SUCCESS);
 }
 
-int	execute_command(t_deque *dq_cmd)
+int	execute_command(t_deque *dq_cmd, bool *is_exit_shell)
 {
 	t_command		cmd;
 	t_fd			fd;
@@ -91,7 +91,10 @@ int	execute_command(t_deque *dq_cmd)
 	last_exit_status = EXIT_SUCCESS;
 	node = dq_cmd->node;
 	if (pipe_cnt(node) == 0 && is_builtin_func((char *)dq_cmd->node->content))
-		return (exec_builtin_in_parent_proc(cmd, node));
+	{
+
+		return (exec_builtin_in_parent_proc(cmd, node, is_exit_shell));
+	}
 	while (node)
 	{
 		cmd.next_command = get_next_command(node, &cmd_size);

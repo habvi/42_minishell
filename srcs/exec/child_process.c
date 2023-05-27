@@ -19,7 +19,7 @@ void	child_process(t_command *cmd, t_fd *fd, char **environ)
 		exit(EXIT_FAILURE);
 	if (command && is_builtin_func(command[0]))
 	{
-		exec_status = call_builtin_func(command);
+		exec_status = call_builtin_func(command, NULL);
 		deque_clear_all(&cmd->head_command);
 		exit(exec_status);
 	}

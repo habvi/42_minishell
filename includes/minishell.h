@@ -51,7 +51,7 @@ int				handle_child_pipes(t_command *cmd, t_fd *fd);
 // child_proces.c
 void			child_process(t_command *cmd, t_fd *fd, char **environ);
 // exec.c
-int				execute_command(t_deque *command);
+int				execute_command(t_deque *command, bool *is_exit_shell);
 t_deque_node	*get_next_command(t_deque_node *cmd, size_t *cmd_size);
 char			**convert_command_to_array(t_deque_node *node, \
 											const size_t size);
@@ -66,7 +66,9 @@ int				parent_process(\
 					t_command *cmd, t_fd *fd, pid_t pid, int *last_exit_status);
 
 // exec_builtin_in_parent_proc
-int				exec_builtin_in_parent_proc(t_command cmd, t_deque_node *node);
+int				exec_builtin_in_parent_proc(t_command cmd, \
+											t_deque_node *node, \
+											bool *is_exit_shell);
 size_t			pipe_cnt(t_deque_node *node);
 
 /* input */
