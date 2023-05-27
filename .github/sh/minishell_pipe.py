@@ -107,7 +107,7 @@ def run_cmd(stdin=None, cmd=None):
 def run_minishell(stdin, cmd):
     res_minishell = run_cmd(stdin, cmd)
     if res_minishell:
-        print("=== minishell ===")
+        print(f'=== minishell $?=({res_minishell.returncode}) ===')
         print(cmd, len(res_minishell.stdout), "byte")
         print(f'[{res_minishell.stdout}]')
         # print(res_minishell.stderr)
@@ -117,7 +117,7 @@ def run_minishell(stdin, cmd):
 def run_bash(stdin, cmd):
     res_bash = run_cmd(stdin, cmd)
     if res_bash:
-        print("===== bash =====")
+        print(f'=== bash $?=({res_bash.returncode}) ===')
         print(cmd, len(res_bash.stdout), "byte")
         print(f'[{res_bash.stdout}]')
         # print(res_bash.stderr)
@@ -291,6 +291,39 @@ def main():
                  )
 
     test_res |= test("ft_echo", echo_test)
+
+
+    exit_test = ("exit",
+                 "exit 0",
+                 "exit 1",
+                 "exit 42",
+                 "exit -1",
+                 "exit 2147483647",
+                 "exit -2147483648",
+                 "exit 9223372036854775807",
+                 "exit -9223372036854775808",
+                 "exit 0000000000000000000",
+                 "exit 0000000000000000001",
+                 # "exit \"  +42 \"",
+                 "exit 1 1",
+                 "exit -1 1",
+                 "exit 1 1 1",
+                 "exit 9223372036854775808",
+                 "exit a",
+                 "exit a b",
+                 "exit a b c",
+                 "exit a 1 b",
+                 "exit a 1 1",
+                 "exit a b 1",
+                 "exit --1",
+                 "exit -1+",
+                 "exit -1+ a",
+                 "exit -1+ 1",
+                 "exit 9999999999999999999999999999999999999999999999999999999999999999",
+                 )
+
+    test_res |= test("ft_echo", exit_test)
+
 
 
     # stdin = "/bin/echo -e aaa\naacc\nbbb\nbbcc\nccc\naabb\nabc | /bin/grep a | /bin/grep c"
