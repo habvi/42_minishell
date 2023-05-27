@@ -1,5 +1,5 @@
-#ifndef PARSER_H
-# define PARSER_H
+#ifndef TEST_H
+# define TEST_H
 
 # include <unistd.h>
 # include <stdio.h>
@@ -24,13 +24,21 @@ typedef struct s_node {
 	int				val; // use only kind == NODE_NUM
 }	t_node;
 
+typedef struct s_token {
+	t_deque			*head_token;
+	t_deque_node	*now_token;
+}	t_token;
+
 // create_token.c
-t_node	*primary(t_deque *token);
-t_node	*mul(t_deque *token);
-t_node	*expr(t_deque *token);
+t_node	*primary(t_token *token);
+t_node	*mul(t_token *token);
+t_node	*expr(t_token *token);
 
 // token_new.c
 t_node	*node_new(t_node_kind kind, t_node *left, t_node *right);
 t_node	*node_num_new(int val);
+
+// tokenize.c
+void	tokenize(char *str, t_deque **head_token);
 
 #endif
