@@ -4,6 +4,7 @@ import shutil
 # ----------------------------------------------------------
 # OUT_FILE = "pipe_test_out.txt"
 PATH = "./minishell"
+PATH_BASH = "bash"
 
 # ----------------------------------------------------------
 # color
@@ -86,7 +87,7 @@ def run_both_with_valgrind(stdin):
         return None, None
 
     leak_res_minishell = run_minishell_with_valgrind(stdin, PATH)
-    leak_res_bash = run_bash_with_valgrind(None, stdin)
+    leak_res_bash = run_bash_with_valgrind(stdin, PATH_BASH)
     return leak_res_minishell, leak_res_bash
 
 
@@ -125,7 +126,7 @@ def run_bash(stdin, cmd):
 
 def run_both(stdin):
     res_minishell = run_minishell(stdin, PATH)
-    res_bash = run_bash(None, stdin)
+    res_bash = run_bash(stdin, PATH_BASH)
     return res_minishell, res_bash
 
 # ----------------------------------------------------------
@@ -186,7 +187,7 @@ def put_total_leak_result(val_leak):
     print_color_str_no_lf(YELLOW, "SKIP ")
     print(skip, end="")
     print(f' (test case: {test_num - 1})')
-    print("#########################################")
+    print("#########################################\n")
     if ko == 0:
         return 0
     else:
@@ -202,40 +203,94 @@ def put_total_result(val):
     print_color_str_no_lf(RED, "KO ")
     print(ko, end="")
     print(f' (test case: {test_num - 1})')
-    print("#########################################")
+    print("#########################################\n")
     if ok == test_num - 1:
         return 0
     else:
         return 1
 
 # ----------------------------------------------------------
-def main():
-    test_res = 0
 
+def test(test_name, test_input_list):
+    test_res = 0
+    print(f' ========================= {test_name} ========================= ')
+
+    # output test
     test_num = 1
     ok = 0
     ko = 0
     val = [test_num, ok, ko]
 
-    stdin = "/bin/ls -l"
-    m_res, b_res = run_both(stdin)
-    put_result(val, m_res, b_res)
+    for stdin in test_input_list:
+        m_res, b_res = run_both(stdin)
+        put_result(val, m_res, b_res)
 
-    stdin = "/bin/echo abcde"
-    m_res, b_res = run_both(stdin)
-    put_result(val, m_res, b_res)
+    test_res |= put_total_result(val)
 
-    stdin = "/bin/echo aaa bbb\n/bin/ls"
-    m_res, b_res = run_both(stdin)
-    put_result(val, m_res, b_res)
+    # leak test
+    leak_test_num = 1
+    leak_ok = 0
+    leak_ko = 0
+    leak_skip = 0
+    val_leak = [leak_test_num, leak_ok, leak_ko, leak_skip]
 
-    stdin = "/bin/echo aa\n/bin/echo bb\n/bin/echo ccc"
-    m_res, b_res = run_both(stdin)
-    put_result(val, m_res, b_res)
+    for stdin in test_input_list:
+        m_res, b_res = run_both_with_valgrind(stdin)
+        # print(f'm_res:{m_res}')
+        put_leak_result(val_leak, m_res, b_res)
 
-    stdin = "/bin/echo aaa | /bin/grep a"
-    m_res, b_res = run_both(stdin)
-    put_result(val, m_res, b_res)
+    test_res |= put_total_leak_result(val_leak)
+    print()
+    return test_res
+
+# ----------------------------------------------------------
+def main():
+    test_res = 0
+
+    pipe_test = ["/bin/ls -l",
+             "/bin/echo abcde",
+             "/bin/echo aaa bbb\n/bin/ls",
+             "/bin/echo aa\n/bin/echo bb\n/bin/echo ccc",
+             "/bin/echo aaa | /bin/grep a",
+             "/bin/echo aaa | /bin/cat -e",
+             "/bin/echo aaa | nothing",
+             ]
+    test_res |= test("multi_pipe", pipe_test)
+
+
+    # exit_status ...??
+    echo_test = ["echo",
+                 "echo a",
+                 "echo a b c",
+                 "echo a        b        c",
+                 "echo a echo b echo c",
+                 "echo aaaaaaaaaaaaaaaa bbbbbbbb  ccccccc echo   aa",
+                 "echo /bin/echo a b c   d   e",
+                 # "echo a \"\" b",
+                 # "echo a \"\" \"\" \"\" b",
+                 # "echo \"\"",
+                 "echo -n hello",
+                 "echo -n hello -n",
+                 "echo -----n hello",
+                 "echo -n -----n hello",
+                 "echo -n -n -n -n -n  a  b  c",
+                 "echo -n -n -n -n -n  a  b  c -n -n -n -m  d e f",
+                 "echo -n -m hoge",
+                 "echo - -n a b c",
+                 "echo -n - -n a   b   c",
+                 "echo -nnnnnnnnnnnnnnnnnnnnn a   b   c",
+                 "echo -nnnnnnnnnmnnnnnnnnnnn a   b   c",
+                 "echo -nnnnnn -n -n -n -nnnnnn a  -n -n -n   b",
+                 "echo 123 456 -n  a b c  d",
+                 "echo -N a b c",
+                 "echo -n- a b c",
+                 "echo n- a b c",
+                 "echo -n-n a b c",
+                 "echo nnnnnnn  -n a b c",
+                 "echo nnnn- a b c",
+                 ]
+
+    test_res |= test("ft_echo", echo_test)
 
 
     # stdin = "/bin/echo -e aaa\naacc\nbbb\nbbcc\nccc\naabb\nabc | /bin/grep a | /bin/grep c"
@@ -251,33 +306,6 @@ def main():
 
     # stdin = "aa\nbb\ncc\nbbaa\n"
     # "cat | cat | cat | grep b"
-
-    test_res |= put_total_result(val)
-
-    # ===============================
-    # print("\n ----- leaks -----")
-    print("\n\n")
-    leak_test_num = 1
-    leak_ok = 0
-    leak_ko = 0
-    leak_skip = 0
-    val_leak = [leak_test_num, leak_ok, leak_ko, leak_skip]
-
-    stdin = "/bin/echo aaa | /bin/cat -e"
-    m_res, b_res = run_both_with_valgrind(stdin)
-    # print(f'm_res:{m_res}')
-    put_leak_result(val_leak, m_res, b_res)
-
-    stdin = "/bin/echo aaa | nothing"
-    m_res, b_res = run_both_with_valgrind(stdin)
-    # print(f'm_res:{m_res}')
-    put_leak_result(val_leak, m_res, b_res)
-
-    # add_val_to_leak(val, val_leak)
-
-    test_res |= put_total_leak_result(val_leak)
-    # test_res = 0
-    # ===============================
 
     exit(test_res)
 

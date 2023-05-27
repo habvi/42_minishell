@@ -1,3 +1,4 @@
+
 NAME	:=	minishell
 
 CC			:=	clang
@@ -25,6 +26,9 @@ SRCS		+=	$(TOKEN_DIR)/tokenize.c
 
 INPUT_DIR	:=	input
 SRCS		+=	$(INPUT_DIR)/input.c
+
+BUILTIN_DIR	:=	builtin
+SRCS		+=	$(BUILTIN_DIR)/ft_echo.c
 
 OBJ_DIR	:=	obj
 OBJS	:=	$(SRCS:%.c=$(OBJ_DIR)/%.o)
