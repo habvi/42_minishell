@@ -11,14 +11,14 @@ static bool	is_space(int c)
 static void	get_sign(const char *str, size_t *idx, int *sign)
 {
 	*sign = 1;
-	if (str[idx] != '+' && str[idx] != '-')
+	if (str[*idx] != '+' && str[*idx] != '-')
 		return ;
-	if (str[idx] == '+')
+	if (str[*idx] == '+')
 	{
 		*idx += 1;
 		return ;
 	}
-	if (str[idx] == '-')
+	if (str[*idx] == '-')
 	{
 		*idx += 1;
 		*sign = -1;
@@ -73,14 +73,11 @@ static long	get_long_num(const char *str, size_t *idx, int sign, bool *is_of)
 bool	ft_strtol(const char *str, long *ret_num)
 {
 	int		sign;
-	int		result;
 	size_t	idx;
 	bool	is_overflow_occurred;
 
 	*ret_num = 0;
 	idx = 0;
-
-	is_success = false;
 	while (is_space(str[idx]))
 		idx++;
 	get_sign(str, &idx, &sign);
