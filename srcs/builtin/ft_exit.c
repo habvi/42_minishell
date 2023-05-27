@@ -1,8 +1,7 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include "ft_builtin.h"
-#include "ft_lib.h"
 #include "ft_dprintf.h"
-#include "ft_string.h"
 
 // {"exit", "valid_arg", "invalid_arg1", "invalid_arg2", ..., NULL};
 // todo: naming...
@@ -79,7 +78,7 @@ static int	get_exit_status(const char **cmds, \
 		return (INVALID_EXIT_STATUS);
 	}
 	*res = EXIT_VALID_ARG;
-	return (long_num & 255);
+	return ((int)(long_num & 255));
 }
 
 static void	exec_exit(const char *arg, t_exit_arg res, int status)
@@ -99,6 +98,17 @@ static void	exec_exit(const char *arg, t_exit_arg res, int status)
 	exit (status);
 }
 
+const char	*get_res_char(t_exit_arg res)
+{
+	if (res == EXIT_VALID_ARG)
+		return ("EXIT_VALID_ARG");
+	if (res == EXIT_NON_NUMERIC_ARG)
+		return ("EXIT_NON_NUMERIC_ARG");
+	if (res == RETURN_TOO_MANY_NUMERIC_ARG)
+		return ("RETURN_TOO_MANY_NUMERIC_ARG");
+	return ("ERROR");
+}
+
 //exit [n]
 // Exit the shell, returning a status of n to the shell’s parent.
 // If n is omitted, the exit status is that of the last command executed.
@@ -108,6 +118,7 @@ static void	exec_exit(const char *arg, t_exit_arg res, int status)
 // \d is signed int. over long max, it's interpreted as non-numeric argument
 
 // cmds[0] == "exit"
+
 int	ft_exit(char **cmds)
 {
 	int			status;
@@ -115,6 +126,8 @@ int	ft_exit(char **cmds)
 
 	status = EXIT_SUCCESS; // todo: get latest status
 	status = get_exit_status((const char **)cmds, &arg_result, status);
+//	printf("status:%d, res:%s\n", status, get_res_char(arg_result));
 	exec_exit((const char *)cmds[EXIT_ARG_IDX], arg_result, status);
 	return (status);
 }
+// todo: return to main, exit prompt loop and put 'exit\n' to stderr

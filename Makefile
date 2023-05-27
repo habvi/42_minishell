@@ -17,6 +17,7 @@ SRCS		+=	$(EXEC_DIR)/check_command.c \
 				$(EXEC_DIR)/child_pipes.c \
 				$(EXEC_DIR)/child_process.c \
 				$(EXEC_DIR)/exec.c \
+				$(EXEC_DIR)/exec_builtin_in_parent_proc.c \
 				$(EXEC_DIR)/init.c \
 				$(EXEC_DIR)/parent_pipes.c \
 				$(EXEC_DIR)/parent_process.c
@@ -28,7 +29,8 @@ INPUT_DIR	:=	input
 SRCS		+=	$(INPUT_DIR)/input.c
 
 BUILTIN_DIR	:=	builtin
-SRCS		+=	$(BUILTIN_DIR)/ft_echo.c \
+SRCS		+=	$(BUILTIN_DIR)/call_builtin_func.c \
+				$(BUILTIN_DIR)/ft_echo.c \
 				$(BUILTIN_DIR)/ft_exit.c \
 				$(BUILTIN_DIR)/ft_legal_number.c
 

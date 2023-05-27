@@ -13,5 +13,7 @@ typedef enum e_exit_argument_stat
 int		ft_echo(char **cmds);
 int		ft_exit(char **cmds);
 bool	ft_legal_number(const char *str, long *result);
+bool	is_builtin_func(char *cmd);
+int		call_builtin_func(char **command);
 
 #endif //FT_BUILTIN_H

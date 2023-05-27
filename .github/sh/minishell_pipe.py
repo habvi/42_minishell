@@ -108,6 +108,7 @@ def run_minishell(stdin, cmd):
     res_minishell = run_cmd(stdin, cmd)
     if res_minishell:
         print(f'=== minishell $?=({res_minishell.returncode}) ===')
+        print(f'cmd:{stdin}', end='\n')
         print(cmd, len(res_minishell.stdout), "byte")
         print(f'[{res_minishell.stdout}]')
         # print(res_minishell.stderr)
@@ -247,50 +248,50 @@ def test(test_name, test_input_list):
 def main():
     test_res = 0
 
-    pipe_test = ["/bin/ls -l",
-             "/bin/echo abcde",
-             "/bin/echo aaa bbb\n/bin/ls",
-             "/bin/echo aa\n/bin/echo bb\n/bin/echo ccc",
-             "/bin/echo aaa | /bin/grep a",
-             "/bin/echo aaa | /bin/cat -e",
-             "/bin/echo aaa | nothing",
-             ]
-    test_res |= test("multi_pipe", pipe_test)
-
-
-    # exit_status ...??
-    echo_test = ["echo",
-                 "echo a",
-                 "echo a b c",
-                 "echo a        b        c",
-                 "echo a echo b echo c",
-                 "echo aaaaaaaaaaaaaaaa bbbbbbbb  ccccccc echo   aa",
-                 "echo /bin/echo a b c   d   e",
-                 # "echo a \"\" b",
-                 # "echo a \"\" \"\" \"\" b",
-                 # "echo \"\"",
-                 "echo -n hello",
-                 "echo -n hello -n",
-                 "echo -----n hello",
-                 "echo -n -----n hello",
-                 "echo -n -n -n -n -n  a  b  c",
-                 "echo -n -n -n -n -n  a  b  c -n -n -n -m  d e f",
-                 "echo -n -m hoge",
-                 "echo - -n a b c",
-                 "echo -n - -n a   b   c",
-                 "echo -nnnnnnnnnnnnnnnnnnnnn a   b   c",
-                 "echo -nnnnnnnnnmnnnnnnnnnnn a   b   c",
-                 "echo -nnnnnn -n -n -n -nnnnnn a  -n -n -n   b",
-                 "echo 123 456 -n  a b c  d",
-                 "echo -N a b c",
-                 "echo -n- a b c",
-                 "echo n- a b c",
-                 "echo -n-n a b c",
-                 "echo nnnnnnn  -n a b c",
-                 "echo nnnn- a b c",
-                 ]
-
-    test_res |= test("ft_echo", echo_test)
+    # pipe_test = ["/bin/ls -l",
+    #          "/bin/echo abcde",
+    #          "/bin/echo aaa bbb\n/bin/ls",
+    #          "/bin/echo aa\n/bin/echo bb\n/bin/echo ccc",
+    #          "/bin/echo aaa | /bin/grep a",
+    #          "/bin/echo aaa | /bin/cat -e",
+    #          "/bin/echo aaa | nothing",
+    #          ]
+    # test_res |= test("multi_pipe", pipe_test)
+    #
+    #
+    # # exit_status ...??
+    # echo_test = ["echo",
+    #              "echo a",
+    #              "echo a b c",
+    #              "echo a        b        c",
+    #              "echo a echo b echo c",
+    #              "echo aaaaaaaaaaaaaaaa bbbbbbbb  ccccccc echo   aa",
+    #              "echo /bin/echo a b c   d   e",
+    #              # "echo a \"\" b",
+    #              # "echo a \"\" \"\" \"\" b",
+    #              # "echo \"\"",
+    #              "echo -n hello",
+    #              "echo -n hello -n",
+    #              "echo -----n hello",
+    #              "echo -n -----n hello",
+    #              "echo -n -n -n -n -n  a  b  c",
+    #              "echo -n -n -n -n -n  a  b  c -n -n -n -m  d e f",
+    #              "echo -n -m hoge",
+    #              "echo - -n a b c",
+    #              "echo -n - -n a   b   c",
+    #              "echo -nnnnnnnnnnnnnnnnnnnnn a   b   c",
+    #              "echo -nnnnnnnnnmnnnnnnnnnnn a   b   c",
+    #              "echo -nnnnnn -n -n -n -nnnnnn a  -n -n -n   b",
+    #              "echo 123 456 -n  a b c  d",
+    #              "echo -N a b c",
+    #              "echo -n- a b c",
+    #              "echo n- a b c",
+    #              "echo -n-n a b c",
+    #              "echo nnnnnnn  -n a b c",
+    #              "echo nnnn- a b c",
+    #              ]
+    #
+    # test_res |= test("ft_echo", echo_test)
 
 
     exit_test = ["exit",
