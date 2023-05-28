@@ -21,3 +21,9 @@ void	free_token(t_token *token)
 		free(tmp);
 	}
 }
+
+void	error_exit(const char *func_name, const char *msg)
+{
+	dprintf(STDERR_FILENO, "Error(%s): %s\n", func_name, msg);
+	exit(EXIT_FAILURE);
+}

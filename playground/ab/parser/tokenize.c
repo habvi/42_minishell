@@ -24,7 +24,7 @@ static t_token	*token_new(char *str)
 
 	token = (t_token *)malloc(sizeof(t_token));
 	if (token == NULL)
-		exit(EXIT_FAILURE);
+		error_exit(__func__, "failed to allocate");
 	token->str = str;
 	token->next = NULL;
 	if (ft_atoi(str, &num))
@@ -54,10 +54,7 @@ t_token *tokenize(char *p)
 	t_token	token = {.str = NULL, .kind = NODE_NONE, .val = 0, .next = NULL};
 
 	if (!isdigit(*p))
-	{
-		printf("first must digit");
-		exit(EXIT_FAILURE);
-	}
+		error_exit(__func__, "first must digit");
 	split_str = ft_split(p, ' ');
 	i = 0;
 	while (split_str[i])
