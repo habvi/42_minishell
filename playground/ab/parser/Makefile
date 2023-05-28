@@ -1,7 +1,6 @@
 NAME	:=	a.out
 
-SRCS	:=	is_equal_strings.c \
-			main.c \
+SRCS	:=	main.c \
 			tokenize.c \
 
 CC		:=	clang
