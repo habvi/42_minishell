@@ -1,16 +1,19 @@
-from minishell_test import test
+from test_functions import test
+
 
 def main():
     test_res = 0
 
+    print(" **************************** PIPE ****************************")
+
     pipe_test = ["/bin/ls -l",
-             "/bin/echo abcde",
-             "/bin/echo aaa bbb\n/bin/ls",
-             "/bin/echo aa\n/bin/echo bb\n/bin/echo ccc",
-             "/bin/echo aaa | /bin/grep a",
-             "/bin/echo aaa | /bin/cat -e",
-             "/bin/echo aaa | nothing",
-             ]
+                 "/bin/echo abcde",
+                 "/bin/echo aaa bbb\n/bin/ls",
+                 "/bin/echo aa\n/bin/echo bb\n/bin/echo ccc",
+                 "/bin/echo aaa | /bin/grep a",
+                 "/bin/echo aaa | /bin/cat -e",
+                 "/bin/echo aaa | nothing",
+                 ]
     test_res |= test("multi_pipe", pipe_test)
 
     # stdin = "/bin/echo -e aaa\naacc\nbbb\nbbcc\nccc\naabb\nabc | /bin/grep a | /bin/grep c"
@@ -28,6 +31,7 @@ def main():
     # "cat | cat | cat | grep b"
 
     exit(test_res)
+
 
 if __name__ == '__main__':
     main()

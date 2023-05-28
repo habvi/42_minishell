@@ -1,9 +1,10 @@
-from minishell_pipe import test
-
+from test_functions import test
 
 
 def main():
     test_res = 0
+
+    print(" **************************** ECHO ****************************")
 
     echo_test = ["echo",
                  "echo a",
@@ -38,6 +39,7 @@ def main():
 
     test_res |= test("ft_echo", echo_test)
     exit(test_res)
+
 
 if __name__ == '__main__':
     main()

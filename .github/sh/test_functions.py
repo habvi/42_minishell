@@ -12,14 +12,16 @@ WHITE = "white"
 RED = "red"
 GREEN = "green"
 YELLOW = "yellow"
-COLOR_DICT = {"white" : "\033[37m",
-              "red" : "\033[31m",
-              "green" : "\033[32m",
-              "yellow" : "\033[33m",
-              "end" : "\033[0m"}
+COLOR_DICT = {"white": "\033[37m",
+              "red": "\033[31m",
+              "green": "\033[32m",
+              "yellow": "\033[33m",
+              "end": "\033[0m"}
+
 
 def print_color_str(color=WHITE, text=""):
     print(COLOR_DICT[color] + text + COLOR_DICT["end"])
+
 
 def print_color_str_no_lf(color=WHITE, text=""):
     print(COLOR_DICT[color] + text + COLOR_DICT["end"], end="")
@@ -36,13 +38,15 @@ def get_leak_res(stderr):
     val_res_len = len(val_results)
 
     for i in range(val_res_len):
-        if val_results[i] == "LEAK" and i <= val_res_len and val_results[i + 1] == "SUMMARY:":
+        if val_results[i] == "LEAK" and i <= val_res_len and val_results[
+            i + 1] == "SUMMARY:":
             last_summary = sum_bytes
             sum_bytes = 0
             i += 2
             continue
         for lost in ("definitely", "indirectly", "possibly"):
-            if val_results[i] == lost and i + 1 <= val_res_len and val_results[i + 2].isdigit():
+            if val_results[i] == lost and i + 1 <= val_res_len and val_results[
+                i + 2].isdigit():
                 leak_bytes = int(val_results[i + 2])
                 # print lost bytes
                 # print(f'{lost}:{leak_bytes}')
@@ -55,13 +59,16 @@ def get_leak_res(stderr):
         is_leak_occurred = True
     return is_leak_occurred, last_summary
 
+
 def run_cmd_with_valgrind(stdin=None, cmd=None):
-    valgrind="valgrind "
+    valgrind = "valgrind "
     try:
-        res = subprocess.run(valgrind + cmd, input=stdin, capture_output=True, text=True, shell=True, timeout=2)
+        res = subprocess.run(valgrind + cmd, input=stdin, capture_output=True,
+                             text=True, shell=True, timeout=2)
         return res
     except subprocess.TimeoutExpired as e:
         print(e.cmd)
+
 
 def run_minishell_with_valgrind(stdin, cmd):
     res_minishell = run_cmd_with_valgrind(stdin, cmd)
@@ -72,6 +79,7 @@ def run_minishell_with_valgrind(stdin, cmd):
         return is_leak
     return None
 
+
 def run_bash_with_valgrind(stdin, cmd):
     res_bash = run_cmd_with_valgrind(stdin, cmd)
     if res_bash.stderr:
@@ -80,9 +88,10 @@ def run_bash_with_valgrind(stdin, cmd):
         return is_leak
     return None
 
+
 def run_both_with_valgrind(stdin):
     print("===== leak test =====")
-    if shutil.which("valgrind") == None:
+    if shutil.which("valgrind") is None:
         # print("valgrind not found")
         return None, None
 
@@ -95,7 +104,8 @@ def run_both_with_valgrind(stdin):
 # run
 def run_cmd(stdin=None, cmd=None):
     try:
-        res = subprocess.run(cmd, input=stdin, capture_output=True, text=True, shell=True, timeout=2)
+        res = subprocess.run(cmd, input=stdin, capture_output=True, text=True,
+                             shell=True, timeout=2)
         return res
     except subprocess.TimeoutExpired as e:
         print(e.cmd)
@@ -103,6 +113,7 @@ def run_cmd(stdin=None, cmd=None):
         # print(e.output)
         # print(e.stdout)
         # print(e.stderr)
+
 
 def run_minishell(stdin, cmd):
     res_minishell = run_cmd(stdin, cmd)
@@ -115,6 +126,7 @@ def run_minishell(stdin, cmd):
         return res_minishell
     return None
 
+
 def run_bash(stdin, cmd):
     res_bash = run_cmd(stdin, cmd)
     if res_bash:
@@ -125,10 +137,12 @@ def run_bash(stdin, cmd):
         return res_bash
     return None
 
+
 def run_both(stdin):
     res_minishell = run_minishell(stdin, PATH)
     res_bash = run_bash(stdin, PATH_BASH)
     return res_minishell, res_bash
+
 
 # ----------------------------------------------------------
 # put
@@ -138,7 +152,8 @@ def put_result(val, m_res, b_res):
         print_color_str(RED, f'[{test_num}. timeout]')
         # ko
         val[2] += 1
-    elif (m_res.stdout == b_res.stdout) and (m_res.returncode == b_res.returncode):
+    elif (m_res.stdout == b_res.stdout) and (
+            m_res.returncode == b_res.returncode):
         print_color_str(GREEN, f'[{test_num}. OK]')
         # ok
         val[1] += 1
@@ -154,6 +169,7 @@ def put_result(val, m_res, b_res):
 LEAK_OK = 1
 LEAK_KO = 2
 LEAK_SKIP = 3
+
 
 def put_leak_result(val_leak, m_res, b_res):
     test_num, _, _, _ = val_leak
@@ -172,6 +188,7 @@ def put_leak_result(val_leak, m_res, b_res):
     # test_num
     val_leak[0] += 1
     print()
+
 
 # def add_val_to_leak(val, val_leak):
 #     for i in range(len(val)):
@@ -209,6 +226,7 @@ def put_total_result(val):
         return 0
     else:
         return 1
+
 
 # ----------------------------------------------------------
 

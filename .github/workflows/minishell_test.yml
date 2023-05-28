@@ -18,5 +18,5 @@ jobs:
 
       - name: Install python3.
         run: python3 -m pip install --upgrade pip setuptools
-      - name: Minishell multi pipe check.
-        run: python3 .github/sh/minishell_pipe.py
+      - name: Run all test of MINISHELL.
+        run: python3 .github/sh/run_all.py

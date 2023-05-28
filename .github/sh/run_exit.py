@@ -1,8 +1,10 @@
-from minishell_pipe import test
+from test_functions import test
 
 
 def main():
     test_res = 0
+
+    print(" **************************** EXIT ****************************")
 
     exit_test = ["exit",
                  "exit 0",
@@ -37,10 +39,11 @@ def main():
                  "exit \f42",
                  # "exit \r42",
                  # "exit \r\r42",
-                 ] # add more test after update tokenizer
+                 ]  # add more test after update tokenizer
 
     test_res |= test("ft_exit", exit_test)
     exit(test_res)
+
 
 if __name__ == '__main__':
     main()
