@@ -18,9 +18,10 @@
 # define READ			0
 # define WRITE			1
 
-# define EXIT_CODE_NO_SUCH_FILE	127
+# define EXIT_CODE_NO_SUCH_FILE		127
 
-# define EXIT_MSG_NO_SUCH_FILE  "No such file or directory"
+# define ERROR_MSG_NO_SUCH_FILE		"No such file or directory"
+# define ERROR_MSG_CMD_NOT_FOUND	"command not found"
 
 typedef struct s_deque_node	t_deque_node;
 typedef struct s_deque		t_deque;
