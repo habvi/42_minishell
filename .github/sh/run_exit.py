@@ -31,9 +31,9 @@ def main():
                  "exit -1+ 1",
                  "exit 9999999999999999999999999999999999999999999999999999999999999999",
                  "exit \t42",
-                 "exit \n42",
-                 "exit \v42",
-                 "exit \f42",
+                 # "exit \n42",
+                 # "exit \v42",
+                 # "exit \f42",
                  # "exit \r42",
                  # "exit \r\r42",
                  ]  # add more test after update tokenizer

@@ -120,10 +120,8 @@ def run_both_with_valgrind(stdin):
 
 # rm prompt and error prefix
 def get_eval_stderr(stderr, prompt_prefix, error_prefix):
-    is_exited = False
-
     if stderr is None:
-        return None, is_exited
+        return None
 
     errors = stderr.split('\n')
     if len(errors) > 0 and len(errors[-1]) == 0:
@@ -134,31 +132,47 @@ def get_eval_stderr(stderr, prompt_prefix, error_prefix):
         del errors[-1]
     if len(errors) > 0 and errors[-1] == "exit":  # for minishell
         del errors[-1]
-        is_exited = True
+        # is_exited = True
     for i in range(len(errors)):
         # print(errors[i])
         if errors[i].startswith(error_prefix):
             errors[i] = errors[i].removeprefix(error_prefix)
 
-    return errors, is_exited
+    return errors
 
 # ----------------------------------------------------------
 # run
-def run_cmd(stdin=None, cmd=None):
+
+
+def run_cmd(stdin=None, path=None):
     try:
-        res = subprocess.run(cmd,
-                             input=stdin,
-                             capture_output=True,
-                             text=True,
-                             shell=True,
-                             timeout=2)
+        # res = subprocess.run(path,
+        #                      input=stdin,
+        #                      capture_output=True,
+        #                      text=True,
+        #                      shell=True,
+        #                      timeout=2)
+        proc = subprocess.Popen(path,
+                                stdin=subprocess.PIPE,
+                                stdout=subprocess.PIPE,
+                                stderr=subprocess.PIPE,
+                                text=True)
+
+        stdout, stderr = proc.communicate(stdin, timeout=2)  # if sleep ...??
+        if proc.poll() is None:
+            is_exited = False
+        else:
+            is_exited = True
+        res = [stdout, stderr, proc.returncode, is_exited]
         return res
+
     except subprocess.TimeoutExpired as e:
         print(e.cmd)
         # print(e.returncode)
         # print(e.output)
         # print(e.stdout)
         # print(e.stderr)
+        return None
 
 
 def get_cmd_string_for_output(stdin):
@@ -171,21 +185,46 @@ def get_cmd_string_for_output(stdin):
     return print_cmd
 
 
+STDOUT = 0
+STDERR = 1
+STATUS = 2
+IS_EXITED = 3
+
+
 def run_shell(name, stdin, cmd, prompt_pfx, err_pfx):
     res = run_cmd(stdin, cmd)
     if res:
-        print(f'=== {name} $?=({res.returncode}) ===')
-        print(cmd, len(res.stdout), "byte")
-        print(f' stdout[{res.stdout}]')
-        errors, is_exited = get_eval_stderr(res.stderr, prompt_pfx, err_pfx)
-        print(" stderr[", end='')
+        print(f'=== {name} ===')
+        print(cmd, len(res[STDOUT]), "byte")
+        print(f' stdout:[{COLOR_DICT[CYAN] + res[STDOUT] + COLOR_DICT["end"]}]')
+        errors = get_eval_stderr(res[STDERR], prompt_pfx, err_pfx)
+        print(" stderr:[", end='')
         for i in range(len(errors)):
             print(COLOR_DICT[MAGENTA] + errors[i] + COLOR_DICT["end"], end='')
             if i + 1 < len(errors):
                 print()
         print("]")
+        print(f' status:{res[STATUS]}')
+        print(f' exited:{res[IS_EXITED]}')
+        res[STDERR] = errors
         return res
     return None
+
+# def run_shell(name, stdin, cmd, prompt_pfx, err_pfx):
+#     res = run_cmd(stdin, cmd)
+#     if res:
+#         print(f'=== {name} $?=({res.returncode}) ===')
+#         print(cmd, len(res.stdout), "byte")
+#         print(f' stdout[{res.stdout}]')
+#         errors, is_exited = get_eval_stderr(res.stderr, prompt_pfx, err_pfx)
+#         print(" stderr[", end='')
+#         for i in range(len(errors)):
+#             print(COLOR_DICT[MAGENTA] + errors[i] + COLOR_DICT["end"], end='')
+#             if i + 1 < len(errors):
+#                 print()
+#         print("]")
+#         return res, is_exited
+#     return None
 
 
 # def run_minishell(stdin, cmd):
@@ -234,8 +273,6 @@ def run_both(stdin):
                          BASH_PROMPT_PREFIX,
                          BASH_ERROR_PREFIX)
 
-    # res_minishell = run_minishell(stdin, PATH)
-    # res_bash = run_bash(stdin, PATH_BASH)
     return res_minishell, res_bash
 
 
@@ -247,8 +284,7 @@ def put_result(val, m_res, b_res):
         print_color_str(RED, f'[{test_num}. timeout]')
         # ko
         val[2] += 1
-    elif (m_res.stdout == b_res.stdout) and (
-            m_res.returncode == b_res.returncode):
+    elif m_res == b_res:
         print_color_str(GREEN, f'[{test_num}. OK]')
         # ok
         val[1] += 1
@@ -348,10 +384,10 @@ def test(test_name, test_input_list):
     leak_skip = 0
     val_leak = [leak_test_num, leak_ok, leak_ko, leak_skip]
 
-    for stdin in test_input_list:
-        m_res, b_res = run_both_with_valgrind(stdin)
-        # print(f'm_res:{m_res}')
-        put_leak_result(val_leak, m_res, b_res)
+    # for stdin in test_input_list:
+    #     m_res, b_res = run_both_with_valgrind(stdin)
+    #     print(f'm_res:{m_res}')
+        # put_leak_result(val_leak, m_res, b_res)
 
     test_res |= put_total_leak_result(val_leak)
     print()

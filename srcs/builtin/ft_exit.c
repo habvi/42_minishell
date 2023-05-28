@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "ft_builtin.h"
 #include "ft_dprintf.h"
+#include "minishell.h"
 
 // {"exit", "valid_arg", "invalid_arg1", "invalid_arg2", ..., NULL};
 // todo: naming...
