@@ -83,6 +83,9 @@ int	main(void)
 	ok_cnt += test("    9223372036854775807   ", LONG_MAX, true, ++test_no);
 	ok_cnt += test("   -9223372036854775808 ", LONG_MIN, true, ++test_no);
 	ok_cnt += test("  \n     \r +123\t\t\t\t\t    \t", 123, true, ++test_no);
+	ok_cnt += test("\r42", 42, true, ++test_no);
+	ok_cnt += test("  \r42", 42, true, ++test_no);
+	ok_cnt += test("  \r \r42   ", 42, true, ++test_no);
 
 	printf("\n\n===== convert failure =====\n");
 	ok_cnt += test(" --0 ", 0, false, ++test_no);
