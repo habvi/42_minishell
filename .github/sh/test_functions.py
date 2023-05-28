@@ -3,8 +3,14 @@ import shutil
 
 # ----------------------------------------------------------
 # OUT_FILE = "pipe_test_out.txt"
-PATH = "./minishell"
+PATH_MINISHELL = "./minishell"
 PATH_BASH = "bash"
+
+# ----------------------------------------------------------
+MINISHELL_PROMPT_PREFIX = "minishell "
+MINISHELL_ERROR_PREFIX = "minishell: "
+BASH_PROMPT_PREFIX = "bash "
+BASH_ERROR_PREFIX = "bash: line 1: "
 
 # ----------------------------------------------------------
 # color
@@ -12,10 +18,14 @@ WHITE = "white"
 RED = "red"
 GREEN = "green"
 YELLOW = "yellow"
+MAGENTA = "magenta"
+CYAN = "cyan"
 COLOR_DICT = {"white": "\033[37m",
               "red": "\033[31m",
               "green": "\033[32m",
               "yellow": "\033[33m",
+              "magenta": "\033[35m",
+              "cyan": "\033[36m",
               "end": "\033[0m"}
 
 
@@ -65,8 +75,12 @@ def get_leak_res(stderr):
 def run_cmd_with_valgrind(stdin=None, cmd=None):
     valgrind = "valgrind "
     try:
-        res = subprocess.run(valgrind + cmd, input=stdin, capture_output=True,
-                             text=True, shell=True, timeout=2)
+        res = subprocess.run(valgrind + cmd,
+                             input=stdin,
+                             capture_output=True,
+                             text=True,
+                             shell=True,
+                             timeout=2)
         return res
     except subprocess.TimeoutExpired as e:
         print(e.cmd)
@@ -97,17 +111,47 @@ def run_both_with_valgrind(stdin):
         # print("valgrind not found")
         return None, None
 
-    leak_res_minishell = run_minishell_with_valgrind(stdin, PATH)
+    leak_res_minishell = run_minishell_with_valgrind(stdin, PATH_MINISHELL)
     leak_res_bash = run_bash_with_valgrind(stdin, PATH_BASH)
     return leak_res_minishell, leak_res_bash
 
 
 # ----------------------------------------------------------
+
+# rm prompt and error prefix
+def get_eval_stderr(stderr, prompt_prefix, error_prefix):
+    is_exited = False
+
+    if stderr is None:
+        return None, is_exited
+
+    errors = stderr.split('\n')
+    if len(errors) > 0 and len(errors[-1]) == 0:
+        del errors[-1]
+    if len(errors) > 0 and errors[0].startswith(prompt_prefix):
+        del errors[0]
+    if len(errors) > 0 and errors[-1].startswith(prompt_prefix):
+        del errors[-1]
+    if len(errors) > 0 and errors[-1] == "exit":  # for minishell
+        del errors[-1]
+        is_exited = True
+    for i in range(len(errors)):
+        # print(errors[i])
+        if errors[i].startswith(error_prefix):
+            errors[i] = errors[i].removeprefix(error_prefix)
+
+    return errors, is_exited
+
+# ----------------------------------------------------------
 # run
 def run_cmd(stdin=None, cmd=None):
     try:
-        res = subprocess.run(cmd, input=stdin, capture_output=True, text=True,
-                             shell=True, timeout=2)
+        res = subprocess.run(cmd,
+                             input=stdin,
+                             capture_output=True,
+                             text=True,
+                             shell=True,
+                             timeout=2)
         return res
     except subprocess.TimeoutExpired as e:
         print(e.cmd)
@@ -117,38 +161,81 @@ def run_cmd(stdin=None, cmd=None):
         # print(e.stderr)
 
 
-def run_minishell(stdin, cmd):
-    res_minishell = run_cmd(stdin, cmd)
-    if res_minishell:
-        print(f'=== minishell $?=({res_minishell.returncode}) ===')
-        print_cmd = stdin \
-            .replace("\t", "\\t") \
-            .replace("\n", "\\n") \
-            .replace("\v", "\\v") \
-            .replace("\f", "\\f") \
-            .replace("\r", "\\r")
-        print(f'cmd:[{print_cmd}]', end='\n')
-        print(cmd, len(res_minishell.stdout), "byte")
-        print(f'[{res_minishell.stdout}]')
-        # print(res_minishell.stderr)
-        return res_minishell
+def get_cmd_string_for_output(stdin):
+    print_cmd = stdin \
+        .replace("\t", "\\t") \
+        .replace("\n", "\\n") \
+        .replace("\v", "\\v") \
+        .replace("\f", "\\f") \
+        .replace("\r", "\\r")
+    return print_cmd
+
+
+def run_shell(name, stdin, cmd, prompt_pfx, err_pfx):
+    res = run_cmd(stdin, cmd)
+    if res:
+        print(f'=== {name} $?=({res.returncode}) ===')
+        print(cmd, len(res.stdout), "byte")
+        print(f' stdout[{res.stdout}]')
+        errors, is_exited = get_eval_stderr(res.stderr, prompt_pfx, err_pfx)
+        print(" stderr[", end='')
+        for i in range(len(errors)):
+            print(COLOR_DICT[MAGENTA] + errors[i] + COLOR_DICT["end"], end='')
+            if i + 1 < len(errors):
+                print()
+        print("]")
+        return res
     return None
 
 
-def run_bash(stdin, cmd):
-    res_bash = run_cmd(stdin, cmd)
-    if res_bash:
-        print(f'=== bash $?=({res_bash.returncode}) ===')
-        print(cmd, len(res_bash.stdout), "byte")
-        print(f'[{res_bash.stdout}]')
-        # print(res_bash.stderr)
-        return res_bash
-    return None
+# def run_minishell(stdin, cmd):
+#     res_minishell = run_cmd(stdin, cmd)
+#     if res_minishell:
+#         print(f'=== minishell $?=({res_minishell.returncode}) ===')
+#         print_cmd = stdin \
+#             .replace("\t", "\\t") \
+#             .replace("\n", "\\n") \
+#             .replace("\v", "\\v") \
+#             .replace("\f", "\\f") \
+#             .replace("\r", "\\r")
+#         print(f'cmd:[{print_cmd}]', end='\n')
+#         print(cmd, len(res_minishell.stdout), "byte")
+#         print(f'stdout[{res_minishell.stdout}]')
+#         print(f'stderr[{COLOR_DICT[MAGENTA] + res_minishell.stderr + COLOR_DICT["end"]}]')
+#         eval_stderr(res_minishell.stderr, MINISH_PROMPT_PREFIX, MINISHELL_ERROR_PREFIX)
+#         # print(res_minishell.stderr)
+#         return res_minishell
+#     return None
+#
+#
+# def run_bash(stdin, cmd):
+#     res_bash = run_cmd(stdin, cmd)
+#     if res_bash:
+#         print(f'=== bash $?=({res_bash.returncode}) ===')
+#         print(cmd, len(res_bash.stdout), "byte")
+#         print(f'[{res_bash.stdout}]')
+#         print(f'stderr[{COLOR_DICT[CYAN] + res_bash.stderr + COLOR_DICT["end"]}]')
+#         # print(res_bash.stderr)
+#         return res_bash
+#     return None
 
 
 def run_both(stdin):
-    res_minishell = run_minishell(stdin, PATH)
-    res_bash = run_bash(stdin, PATH_BASH)
+    print_cmd = get_cmd_string_for_output(stdin)
+    print(f'input cmd:[{print_cmd}]', end='\n')
+    res_minishell = run_shell("minishell",
+                              stdin,
+                              PATH_MINISHELL,
+                              MINISHELL_PROMPT_PREFIX,
+                              MINISHELL_ERROR_PREFIX)
+    res_bash = run_shell("bash",
+                         stdin,
+                         PATH_BASH,
+                         BASH_PROMPT_PREFIX,
+                         BASH_ERROR_PREFIX)
+
+    # res_minishell = run_minishell(stdin, PATH)
+    # res_bash = run_bash(stdin, PATH_BASH)
     return res_minishell, res_bash
 
 
