@@ -33,6 +33,7 @@ t_ast_node	*primary(t_token **token)
 	if (next_token_bool(token, "("))
 	{
 		node = expr(token);
+		// next_token_bool(token, ")");
 		return (node);
 	}
 	return (node_num_new(next_token_val(token)));
