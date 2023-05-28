@@ -13,6 +13,7 @@ def main():
                  # "echo a \"\" b",
                  # "echo a \"\" \"\" \"\" b",
                  # "echo \"\"",
+                 "echo -n",
                  "echo -n hello",
                  "echo -n hello -n",
                  "echo -----n hello",
