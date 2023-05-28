@@ -48,6 +48,7 @@ t_token *tokenize(char *p);
 
 // util_ast.c
 void	print_ast(t_ast_node *ast);
+void	free_ast_node(t_ast_node *ast);
 
 // util_token.c
 void	print_token(t_token *token);

@@ -16,8 +16,6 @@ static void	print_kind(t_node_kind kind)
 
 void	print_ast(t_ast_node *ast)
 {
-	if (ast == NULL)
-		return ;
 	if (ast->kind == NODE_NUM)
 	{
 		printf("%d ", ast->val);
@@ -26,4 +24,13 @@ void	print_ast(t_ast_node *ast)
 	print_ast(ast->left);
 	print_ast(ast->right);
 	print_kind(ast->kind);
+}
+
+void	free_ast_node(t_ast_node *ast)
+{
+	if (ast == NULL)
+		return ;
+	free_ast_node(ast->left);
+	free_ast_node(ast->right);
+	free(ast);
 }
