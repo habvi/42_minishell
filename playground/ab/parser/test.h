@@ -37,5 +37,6 @@ t_token *tokenize(char *p);
 // util_token.c
 void	print_token(t_token *token);
 void	free_token(t_token *token);
+void	error_exit(const char *func_name, const char *msg);
 
 #endif

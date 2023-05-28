@@ -1,12 +1,6 @@
 #include "test.h"
 #include "libft.h"
 
-// void	error_exit(const char *func_name, const char *msg)
-// {
-// 	dprintf(STDERR_FILENO, "Error(%s): %s\n", func_name, msg);
-// 	exit(EXIT_FAILURE);
-// }
-
 // bool	next_token_bool(t_token *token, char op)
 // {
 // 	const char	*str = token->now_token->content;
@@ -35,15 +29,9 @@ int	main(int argc, char **argv)
 	t_token	*token;
 
 	if (argc != 2)
-	{
-		dprintf(STDERR_FILENO, "Error-!: need 1 argv");
-		return (EXIT_FAILURE);
-	}
+		error_exit(__func__, "need 1 argv");
 	if (!ft_isdigit(argv[1][0]))
-	{
-		dprintf(STDERR_FILENO, "Error-!: first argv must digit");
-		return (EXIT_FAILURE);
-	}
+		error_exit(__func__, "first argv must digit");
 	token = tokenize(argv[1]);
 	print_token(token);
 	// parse_to_ast()
