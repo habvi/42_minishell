@@ -38,15 +38,17 @@ def get_leak_res(stderr):
     val_res_len = len(val_results)
 
     for i in range(val_res_len):
-        if val_results[i] == "LEAK" and i <= val_res_len and val_results[
-            i + 1] == "SUMMARY:":
+        if val_results[i] == "LEAK" \
+                and i <= val_res_len \
+                and val_results[i + 1] == "SUMMARY:":
             last_summary = sum_bytes
             sum_bytes = 0
             i += 2
             continue
         for lost in ("definitely", "indirectly", "possibly"):
-            if val_results[i] == lost and i + 1 <= val_res_len and val_results[
-                i + 2].isdigit():
+            if val_results[i] == lost \
+                    and i + 1 <= val_res_len \
+                    and val_results[i + 2].isdigit():
                 leak_bytes = int(val_results[i + 2])
                 # print lost bytes
                 # print(f'{lost}:{leak_bytes}')
@@ -55,7 +57,7 @@ def get_leak_res(stderr):
     # print valgrind result
     # print(f'\nvalgrind res:\n{stderr}')
     last_summary = sum_bytes
-    if (last_summary > 0):
+    if last_summary > 0:
         is_leak_occurred = True
     return is_leak_occurred, last_summary
 

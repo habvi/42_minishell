@@ -39,7 +39,8 @@ def main():
                  ]  # add more test after update tokenizer
 
     test_res |= test("ft_exit", exit_test)
-    exit(test_res)
+
+    return test_res
 
 
 if __name__ == '__main__':

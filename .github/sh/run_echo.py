@@ -35,7 +35,8 @@ def main():
                  ]
 
     test_res |= test("ft_echo", echo_test)
-    exit(test_res)
+
+    return test_res
 
 
 if __name__ == '__main__':

@@ -27,7 +27,7 @@ def main():
     # stdin = "aa\nbb\ncc\nbbaa\n"
     # "cat | cat | cat | grep b"
 
-    exit(test_res)
+    return test_res
 
 
 if __name__ == '__main__':

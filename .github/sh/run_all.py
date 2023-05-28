@@ -13,12 +13,17 @@ def print_test_title(title):
     print(" " + "*" * (len(title) * 9 + 1) + " ")
     print(RESET)
 
+
 def main():
+    test_res = 0
+
     print_test_title("BUILTIN")
-    run_builtin.main()
+    test_res |= run_builtin.main()
 
     print_test_title("EXECUTION")
-    run_pipe.main()
+    test_res |= run_pipe.main()
+
+    exit(test_res)
 
 
 if __name__ == '__main__':
