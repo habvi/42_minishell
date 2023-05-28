@@ -2,6 +2,7 @@ NAME	:=	a.out
 
 SRCS	:=	ast_node_new.c \
 			ast_rule.c \
+			calc.c \
 			main.c \
 			tokenize.c \
 			util_token.c
