@@ -1,6 +1,8 @@
 NAME	:=	a.out
 
-SRCS	:=	$(wildcard *.c)
+SRCS	:=	is_equal_strings.c \
+			main.c \
+			tokenize.c \
 
 CC		:=	clang
 CFLAGS	:=	-Wall -Wextra -Werror

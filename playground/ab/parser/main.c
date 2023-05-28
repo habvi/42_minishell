@@ -1,38 +1,60 @@
 #include "test.h"
 #include "libft.h"
 
-void	error_exit(const char *func_name, const char *msg)
-{
-	dprintf(STDERR_FILENO, "Error(%s): %s\n", func_name, msg);
-	exit(EXIT_FAILURE);
-}
+// void	error_exit(const char *func_name, const char *msg)
+// {
+// 	dprintf(STDERR_FILENO, "Error(%s): %s\n", func_name, msg);
+// 	exit(EXIT_FAILURE);
+// }
 
-bool	next_token_bool(t_token *token, char op)
-{
-	const char	*str = token->now_token->content;
+// bool	next_token_bool(t_token *token, char op)
+// {
+// 	const char	*str = token->now_token->content;
 
-	if (ft_strnlen(str, 2) == 1 && str[0] == op)
+// 	if (ft_strnlen(str, 2) == 1 && str[0] == op)
+// 	{
+// 		token->now_token = token->now_token->next;
+// 		return (true);
+// 	}
+// 	return (false);
+// }
+
+// int	next_token_val(t_token *token)
+// {
+// 	int	val;
+
+// 	if (token->now_token->kind != NODE_NUM)
+// 		error_exit(__func__, "not num");
+// 	val = token->now_token->val;
+// 	token->now_token = token->now_token->next;
+// 	return (val);
+// }
+
+static void	print_token(t_token *token)
+{
+	while (token)
 	{
-		token->now_token = token->now_token->next;
-		return (true);
+		printf("%s\n", token->str);
+		token = token->next;
 	}
-	return (false);
 }
 
-int	next_token_val(t_token *token)
+static void	free_token(t_token *token)
 {
-	int	val;
+	t_token	*tmp;
 
-	if (token->now_token->kind != NODE_NUM)
-		error_exit(__func__, "not num");
-	val = token->now_token->val;
-	token->now_token = token->now_token->next;
-	return (val);
+	while (token)
+	{
+		tmp = token;
+		token = token->next;
+		free(tmp->str);
+		free(tmp);
+	}
 }
 
 int	main(int argc, char **argv)
 {
-	t_token	token;
+	t_token	*token;
 
 	if (argc != 2)
 	{
@@ -45,7 +67,9 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	}
 	token = tokenize(argv[1]);
-	// print_tken()
+	print_token(token);
+	// parse_to_ast()
 	// calc()
-	return (0);
+	free_token(token);
+	return (EXIT_SUCCESS);
 }
