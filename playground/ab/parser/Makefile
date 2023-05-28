@@ -5,6 +5,7 @@ SRCS	:=	ast_node_new.c \
 			calc.c \
 			main.c \
 			tokenize.c \
+			util_ast.c \
 			util_token.c
 
 CC		:=	clang
