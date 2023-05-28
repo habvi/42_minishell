@@ -3,9 +3,6 @@ from test_functions import test
 
 def main():
     test_res = 0
-
-    print(" **************************** EXIT ****************************")
-
     exit_test = ["exit",
                  "exit 0",
                  "exit 1",

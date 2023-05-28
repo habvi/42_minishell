@@ -3,9 +3,6 @@ from test_functions import test
 
 def main():
     test_res = 0
-
-    print(" **************************** PIPE ****************************")
-
     pipe_test = ["/bin/ls -l",
                  "/bin/echo abcde",
                  "/bin/echo aaa bbb\n/bin/ls",

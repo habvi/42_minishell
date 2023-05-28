@@ -3,3 +3,6 @@ out
 
 # norm.py
 norm_out.txt
+
+# pycache
+__pycache__

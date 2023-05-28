@@ -72,7 +72,7 @@ def run_cmd_with_valgrind(stdin=None, cmd=None):
 
 def run_minishell_with_valgrind(stdin, cmd):
     res_minishell = run_cmd_with_valgrind(stdin, cmd)
-    print(f'cmd:{stdin}', end='\n')
+    print(f'cmd:[{stdin}]', end='\n')
     if res_minishell.stderr:
         is_leak, leak_bytes = get_leak_res(res_minishell.stderr)
         print(f' minishell leaks : {leak_bytes} bytes')
@@ -119,7 +119,7 @@ def run_minishell(stdin, cmd):
     res_minishell = run_cmd(stdin, cmd)
     if res_minishell:
         print(f'=== minishell $?=({res_minishell.returncode}) ===')
-        print(f'cmd:{stdin}', end='\n')
+        print(f'cmd:[{stdin}]', end='\n')
         print(cmd, len(res_minishell.stdout), "byte")
         print(f'[{res_minishell.stdout}]')
         # print(res_minishell.stderr)

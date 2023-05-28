@@ -3,9 +3,6 @@ from test_functions import test
 
 def main():
     test_res = 0
-
-    print(" **************************** ECHO ****************************")
-
     echo_test = ["echo",
                  "echo a",
                  "echo a b c",
