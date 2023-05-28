@@ -174,7 +174,7 @@ LEAK_SKIP = 3
 def put_leak_result(val_leak, m_res, b_res):
     test_num, _, _, _ = val_leak
     if m_res is None or b_res is None:
-        print_color_str(RED, f'[{test_num}. valgrind not found]')
+        print_color_str(YELLOW, f'[{test_num}. valgrind not found]')
         # skip
         val_leak[LEAK_SKIP] += 1
     elif (m_res == False):
