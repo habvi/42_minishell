@@ -96,8 +96,18 @@ t		: re
 	./.github/sh/test.bats
 
 # test multi pipe
-.PHONY	: pipe
-pipe	: all
+.PHONY		: test_pipe
+test_pipe	: all
 	python3 ./.github/sh/minishell_pipe.py
+
+# test builtin echo
+.PHONY		: test_echo
+test_echo	: all
+	python3 ./.github/sh/test_echo.py
+
+# test builtin exit
+.PHONY		: test_exit
+test_exit	: all
+	python3 ./.github/sh/test_exit.py
 
 -include $(DEPS)
