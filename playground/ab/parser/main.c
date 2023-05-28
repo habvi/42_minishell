@@ -21,6 +21,6 @@ int	main(int argc, char **argv)
 	free_token(token_head); // free(token->str)
 	result = calc_from_ast(ast);
 	printf("calc result: %d\n", result);
-	// free_ast_node(ast)
+	free_ast_node(ast);
 	return (EXIT_SUCCESS);
 }
