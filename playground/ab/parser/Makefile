@@ -2,6 +2,7 @@ NAME	:=	a.out
 
 SRCS	:=	main.c \
 			tokenize.c \
+			util_token.c
 
 CC		:=	clang
 CFLAGS	:=	-Wall -Wextra -Werror

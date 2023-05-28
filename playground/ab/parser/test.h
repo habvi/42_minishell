@@ -34,4 +34,8 @@ bool	is_equal_strings(const char *s1, const char *s2);
 // tokenize.c
 t_token *tokenize(char *p);
 
+// util_token.c
+void	print_token(t_token *token);
+void	free_token(t_token *token);
+
 #endif
