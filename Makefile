@@ -91,13 +91,29 @@ norm	: all
 
 #--------------------------------------------
 # test.bats
-.PHONY	: t
-t		: re
-	./.github/sh/test.bats
+#.PHONY	: t
+#t		: re
+#	./.github/sh/test.bats
 
 # test multi pipe
-.PHONY	: pipe
-pipe	: all
-	python3 ./.github/sh/minishell_pipe.py
+.PHONY		: test_all
+test_all	: all
+	python3 ./.github/sh/run_all.py
+
+# test multi pipe
+.PHONY		: test_pipe
+test_pipe	: all
+	python3 ./.github/sh/run_pipe.py
+
+# test builtin echo
+.PHONY		: test_echo
+test_echo	: all
+	python3 ./.github/sh/run_echo.py
+
+# test builtin exit
+.PHONY		: test_exit
+test_exit	: all
+	python3 ./.github/sh/run_exit.py
+
 
 -include $(DEPS)
