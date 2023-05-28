@@ -33,7 +33,7 @@ t_ast_node	*primary(t_token **token)
 	if (next_token_bool(token, "("))
 	{
 		node = expr(token);
-		// next_token_bool(token, ")");
+		next_token_bool(token, ")");
 		return (node);
 	}
 	return (node_num_new(next_token_val(token)));
@@ -45,7 +45,7 @@ t_ast_node	*mul(t_token **token)
 	char		*str;
 
 	node = primary(token);
-	while (*token)
+	while ((*token)->kind != NODE_EOF)
 	{
 		str = (*token)->str;
 		if (next_token_bool(token, "*"))
@@ -55,7 +55,7 @@ t_ast_node	*mul(t_token **token)
 		else
 			return (node);
 	}
-	return (NULL);
+	return (node);
 }
 
 t_ast_node	*expr(t_token **token)
@@ -64,7 +64,7 @@ t_ast_node	*expr(t_token **token)
 	char		*str;
 
 	node = mul(token);
-	while (*token)
+	while ((*token)->kind != NODE_EOF)
 	{
 		str = (*token)->str;
 		if (next_token_bool(token, "+"))
@@ -74,7 +74,7 @@ t_ast_node	*expr(t_token **token)
 		else
 			return (node);
 	}
-	return (NULL);
+	return (node);
 }
 
 t_ast_node	*create_ast(t_token *token)

@@ -27,7 +27,7 @@ static t_token	*token_new(char *str)
 		error_exit(__func__, "failed to allocate");
 	token->str = str;
 	token->next = NULL;
-	if (ft_atoi(str, &num))
+	if (str && ft_atoi(str, &num))
 	{
 		token->kind = NODE_NUM;
 		token->val = num;
@@ -63,7 +63,7 @@ t_token *tokenize(char *p)
 		split_str[i] = NULL;
 		i++;
 	}
-	// add_back_token(&token, token_new(NULL));
+	add_back_token(&token, token_new(NULL));
 	free(split_str);
 	return (token.next);
 }
