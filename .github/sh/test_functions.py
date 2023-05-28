@@ -126,19 +126,15 @@ def get_eval_stderr(stderr, prompt_prefix, error_prefix):
     errors = stderr.split('\n')
     if len(errors) > 0 and len(errors[-1]) == 0:
         del errors[-1]
-    if len(errors) > 0 and errors[0].startswith(prompt_prefix):
-        del errors[0]
-    if len(errors) > 0 and errors[-1].startswith(prompt_prefix):
-        del errors[-1]
     if len(errors) > 0 and errors[-1] == "exit":  # for minishell
         del errors[-1]
-        # is_exited = True
-    for i in range(len(errors)):
+    err_list = [err for err in errors if not err.startswith(prompt_prefix)]
+    for i in range(len(err_list)):
         # print(errors[i])
-        if errors[i].startswith(error_prefix):
-            errors[i] = errors[i].removeprefix(error_prefix)
+        if err_list[i].startswith(error_prefix):
+            err_list[i] = err_list[i].removeprefix(error_prefix)
 
-    return errors
+    return err_list
 
 # ----------------------------------------------------------
 # run
@@ -384,10 +380,10 @@ def test(test_name, test_input_list):
     leak_skip = 0
     val_leak = [leak_test_num, leak_ok, leak_ko, leak_skip]
 
-    # for stdin in test_input_list:
-    #     m_res, b_res = run_both_with_valgrind(stdin)
-    #     print(f'm_res:{m_res}')
-        # put_leak_result(val_leak, m_res, b_res)
+    for stdin in test_input_list:
+        m_res, b_res = run_both_with_valgrind(stdin)
+        print(f'm_res:{m_res}')
+        put_leak_result(val_leak, m_res, b_res)
 
     test_res |= put_total_leak_result(val_leak)
     print()

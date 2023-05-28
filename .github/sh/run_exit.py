@@ -24,7 +24,7 @@ def main():
                  "exit a b c",
                  "exit a 1 b",
                  "exit a 1 1",
-                 "exit a b 1",
+                 "exit a b 1"
                  "exit --1",
                  "exit -1+",
                  "exit -1+ a",
