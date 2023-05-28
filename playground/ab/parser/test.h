@@ -24,7 +24,6 @@ typedef struct	s_token {
 }	t_token;
 
 typedef struct s_ast_node {
-	char				*str;
 	t_node_kind			kind;
 	int					val; // use only kind == NODE_NUM
 	struct s_ast_node	*left;
@@ -32,8 +31,14 @@ typedef struct s_ast_node {
 }	t_ast_node;
 
 // ast_node_new.c
-t_ast_node	*node_new(char *str, t_node_kind kind, t_ast_node *left, t_ast_node *right);
-t_ast_node	*node_num_new(char *str, int val);
+t_ast_node	*node_new(t_node_kind kind, t_ast_node *left, t_ast_node *right);
+t_ast_node	*node_num_new(int val);
+
+// create_token_node.c
+t_ast_node	*primary(t_token **token);
+t_ast_node	*mul(t_token **token);
+t_ast_node	*expr(t_token **token);
+t_ast_node	*create_ast(t_token *token);
 
 // is_equal_strings.c
 bool	is_equal_strings(const char *s1, const char *s2);
