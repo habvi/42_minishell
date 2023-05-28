@@ -17,7 +17,6 @@ int	main(int argc, char **argv)
 	token_head = token;
 	ast = create_ast(token);
 	print_ast(ast);
-	printf("\n");
 	free_token(token_head); // free(token->str)
 	result = calc_from_ast(ast);
 	printf("calc result: %d\n", result);
