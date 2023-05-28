@@ -121,7 +121,13 @@ def run_minishell(stdin, cmd):
     res_minishell = run_cmd(stdin, cmd)
     if res_minishell:
         print(f'=== minishell $?=({res_minishell.returncode}) ===')
-        print(f'cmd:[{stdin}]', end='\n')
+        print_cmd = stdin \
+            .replace("\t", "\\t") \
+            .replace("\n", "\\n") \
+            .replace("\v", "\\v") \
+            .replace("\f", "\\f") \
+            .replace("\r", "\\r")
+        print(f'cmd:[{print_cmd}]', end='\n')
         print(cmd, len(res_minishell.stdout), "byte")
         print(f'[{res_minishell.stdout}]')
         # print(res_minishell.stderr)
