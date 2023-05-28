@@ -27,7 +27,7 @@ void	child_process(t_command *cmd, t_fd *fd, char **environ)
 	{
 		// write or malloc error..?
 		ft_dprintf(STDERR_FILENO, "minishell: %s: %s\n", \
-											command[0], EXIT_MSG_NO_SUCH_FILE);
+											command[0], ERROR_MSG_CMD_NOT_FOUND);
 		deque_clear_all(&cmd->head_command);
 		exit(EXIT_CODE_NO_SUCH_FILE);
 	}
