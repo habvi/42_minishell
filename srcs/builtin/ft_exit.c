@@ -5,10 +5,12 @@
 
 // {"exit", "valid_arg", "invalid_arg1", "invalid_arg2", ..., NULL};
 // todo: naming...
-#define EXIT_ONLY_CMD_CNT	1
-#define EXIT_ARG_IDX		1
-#define VALID_ARG_CNT		2
-#define INVALID_EXIT_STATUS	2
+#define EXIT_ONLY_CMD_CNT		1
+#define EXIT_ARG_IDX			1
+#define VALID_ARG_CNT			2
+
+#define NON_NUMERIC_ARG_STATUS	2
+#define TOO_MANY_ARG_STATUS		1
 
 // todo: libft ...?
 static size_t	cnt_2d_array(const char **arr)
@@ -70,12 +72,12 @@ static int	get_exit_status(const char **cmds, \
 	if (!is_legal_num)
 	{
 		*res = EXIT_NON_NUMERIC_ARG;
-		return (INVALID_EXIT_STATUS);
+		return (NON_NUMERIC_ARG_STATUS);
 	}
 	if (argc > VALID_ARG_CNT)
 	{
 		*res = RETURN_TOO_MANY_NUMERIC_ARG;
-		return (INVALID_EXIT_STATUS);
+		return (TOO_MANY_ARG_STATUS);
 	}
 	*res = EXIT_VALID_ARG;
 	return ((int)(long_num & 255));
