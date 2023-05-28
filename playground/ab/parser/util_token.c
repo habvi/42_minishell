@@ -4,7 +4,7 @@ void	print_token(t_token *token)
 {
 	while (token)
 	{
-		printf("%s\n", token->str);
+		dprintf(STDERR_FILENO, "%s\n", token->str);
 		token = token->next;
 	}
 }

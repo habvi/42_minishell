@@ -4,7 +4,7 @@ t_ast_node	*node_new(t_node_kind kind, t_ast_node *left, t_ast_node *right)
 {
 	t_ast_node	*node;
 
-	printf("%s\n", __func__);
+	dprintf(STDERR_FILENO, "%s\n", __func__);
 	node = (t_ast_node *)malloc(sizeof(t_ast_node));
 	if (node == NULL)
 		error_exit(__func__, "failed to allocate");
@@ -19,7 +19,7 @@ t_ast_node	*node_num_new(int val)
 {
 	t_ast_node	*node;
 
-	printf("%s: %d\n", __func__, val);
+	dprintf(STDERR_FILENO, "%s: %d\n", __func__, val);
 	node = (t_ast_node *)malloc(sizeof(t_ast_node));
 	if (node == NULL)
 		error_exit(__func__, "failed to allocate");
