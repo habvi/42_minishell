@@ -23,10 +23,17 @@ typedef struct	s_token {
 	struct s_token	*next;
 }	t_token;
 
-// create_token.c
-t_node	*primary(t_token *token);
-t_node	*mul(t_token *token);
-t_node	*expr(t_token *token);
+typedef struct s_ast_node {
+	char				*str;
+	t_node_kind			kind;
+	int					val; // use only kind == NODE_NUM
+	struct s_ast_node	*left;
+	struct s_ast_node	*right;
+}	t_ast_node;
+
+// ast_node_new.c
+t_ast_node	*node_new(char *str, t_node_kind kind, t_ast_node *left, t_ast_node *right);
+t_ast_node	*node_num_new(char *str, int val);
 
 // is_equal_strings.c
 bool	is_equal_strings(const char *s1, const char *s2);

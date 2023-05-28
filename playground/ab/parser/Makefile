@@ -1,6 +1,7 @@
 NAME	:=	a.out
 
-SRCS	:=	main.c \
+SRCS	:=	ast_node_new.c \
+			main.c \
 			tokenize.c \
 			util_token.c
 
