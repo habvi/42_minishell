@@ -30,28 +30,6 @@
 // 	return (val);
 // }
 
-static void	print_token(t_token *token)
-{
-	while (token)
-	{
-		printf("%s\n", token->str);
-		token = token->next;
-	}
-}
-
-static void	free_token(t_token *token)
-{
-	t_token	*tmp;
-
-	while (token)
-	{
-		tmp = token;
-		token = token->next;
-		free(tmp->str);
-		free(tmp);
-	}
-}
-
 int	main(int argc, char **argv)
 {
 	t_token	*token;
