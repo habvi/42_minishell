@@ -7,18 +7,20 @@
 # include <stdbool.h>
 
 typedef enum e_node_kind {
-	NODE_ADD = 0,
-	NODE_SUB = 1,
-	NODE_MUL = 2,
-	NODE_DIV = 3,
-	NODE_NUM = 4, // integer
+	NODE_NONE = 0,
+	NODE_ADD = 1,
+	NODE_SUB = 2,
+	NODE_MUL = 3,
+	NODE_DIV = 4,
+	NODE_NUM = 5, // integer
+	NODE_EOF = 6
 }	t_node_kind;
 
-typedef struct s_token {
+typedef struct	s_token {
+	char			*str;
 	t_node_kind		kind;
-	struct s_token	*left;
-	struct s_token	*right;
 	int				val; // use only kind == NODE_NUM
+	struct s_token	*next;
 }	t_token;
 
 // create_token.c
@@ -26,11 +28,10 @@ t_node	*primary(t_token *token);
 t_node	*mul(t_token *token);
 t_node	*expr(t_token *token);
 
-// token_new.c
-t_node	*node_new(t_node_kind kind, t_node *left, t_node *right);
-t_node	*node_num_new(int val);
+// is_equal_strings.c
+bool	is_equal_strings(const char *s1, const char *s2);
 
 // tokenize.c
-void	tokenize(char *str, t_deque **head_token);
+t_token *tokenize(char *p);
 
 #endif
