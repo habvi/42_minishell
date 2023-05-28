@@ -6,6 +6,7 @@ int	main(int argc, char **argv)
 	t_token		*token;
 	t_token		*token_head;
 	t_ast_node	*ast;
+	int			result;
 
 	if (argc != 2)
 		error_exit(__func__, "need 1 argv");
@@ -17,7 +18,8 @@ int	main(int argc, char **argv)
 	ast = create_ast(token);
 	// print_ast()
 	free_token(token_head); // free(token->str)
-	// calc()
+	result = calc_from_ast(ast);
+	printf("calc result: %d\n", result);
 	// free_ast_node(ast)
 	return (EXIT_SUCCESS);
 }

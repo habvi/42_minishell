@@ -34,14 +34,14 @@ typedef struct s_ast_node {
 t_ast_node	*node_new(t_node_kind kind, t_ast_node *left, t_ast_node *right);
 t_ast_node	*node_num_new(int val);
 
-// create_token_node.c
+// ast_rule.c
 t_ast_node	*primary(t_token **token);
 t_ast_node	*mul(t_token **token);
 t_ast_node	*expr(t_token **token);
 t_ast_node	*create_ast(t_token *token);
 
-// is_equal_strings.c
-bool	is_equal_strings(const char *s1, const char *s2);
+// calc.c
+int	calc_from_ast(t_ast_node *ast);
 
 // tokenize.c
 t_token *tokenize(char *p);
