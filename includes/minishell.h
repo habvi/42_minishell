@@ -40,8 +40,8 @@ typedef struct s_fd {
 // temporarily here ...
 /* debug */
 // put.c
-void	debug_func(const char *func_name, const int line_num);
-void	debug_2d_array(char **array);
+void			debug_func(const char *func_name, const int line_num);
+void			debug_2d_array(char **array);
 
 /* exec */
 // check_command.c
@@ -74,6 +74,6 @@ size_t			pipe_cnt(t_deque_node *node);
 
 /* input */
 // input.c
-char	*input_line(void);
+char			*input_line(void);
 
 #endif
