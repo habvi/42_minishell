@@ -1,0 +1,4 @@
+/bin/echo hello
+/bin/echo world
+/bin/ls
+/no_such_file
