@@ -29,7 +29,6 @@ INPUT_DIR	:=	input
 SRCS		+=	$(INPUT_DIR)/input.c
 
 BUILTIN_DIR	:=	builtin
-<<<<<<< HEAD
 SRCS		+=	$(BUILTIN_DIR)/call_builtin_func.c \
 				$(BUILTIN_DIR)/ft_echo.c \
 				$(BUILTIN_DIR)/ft_exit.c \
