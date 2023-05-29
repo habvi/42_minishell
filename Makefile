@@ -88,9 +88,12 @@ norm	: all
 
 #--------------------------------------------
 # test.bats
-.PHONY	: t
-t		: re
-	./.github/sh/test.bats
+#.PHONY	: t
+#t		: re
+#	./.github/sh/test.bats
+
+t		: all
+	./.github/sh/unit_test.sh
 
 # test multi pipe
 .PHONY	: pipe
