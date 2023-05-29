@@ -22,8 +22,8 @@ jobs:
       - name: Install pip.
         run: python3 -m pip install --upgrade pip setuptools
 
-      - name: Install valgrind
-        run: sudo apt-get -y install valgrind
+      - name: Install valgrind, clang
+        run: sudo apt-get -y install valgrind clang
 
       - name: Run make
         run: make
