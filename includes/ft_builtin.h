@@ -3,6 +3,7 @@
 
 # include <stdbool.h>
 
+<<<<<<< HEAD
 // todo: naming...
 # define EXIT_ONLY_CMD_CNT		1
 # define EXIT_ARG_IDX			1
@@ -12,6 +13,15 @@
 # define TOO_MANY_ARG_STATUS	1
 
 # define BYTE_MASK				(0xFF)
+=======
+# define STR_ECHO	"echo"
+# define STR_CD		"cd"
+# define STR_PWD	"pwd"
+# define STR_EXPORT	"export"
+# define STR_UNSET	"unset"
+# define STR_ENV	"env"
+# define STR_EXIT	"exit"
+>>>>>>> 9fa0d9e (update(calc_builtin): command str in header)
 
 typedef enum e_exit_argument
 {
