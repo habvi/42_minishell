@@ -124,19 +124,19 @@ def get_eval_stderr(stderr, prompt_prefix, error_prefix):
         return None
 
     errors = stderr.split('\n')
-    print(f'errors:[{errors}]')
+    # print(f'errors:[{errors}]')
     if len(errors) > 0 and len(errors[-1]) == 0:
         del errors[-1]
     if len(errors) > 0 and errors[-1] == "exit":  # for minishell
         del errors[-1]
-    print(f'errors:[{errors}]')
+    # print(f'errors:[{errors}]')
     err_list = [err for err in errors if not err.startswith(prompt_prefix)]
-    print(f'err_ls:[{err_list}]')
+    # print(f'err_ls:[{err_list}]')
     for i in range(len(err_list)):
         # print(errors[i])
         if err_list[i].startswith(error_prefix):
             err_list[i] = err_list[i].removeprefix(error_prefix)
-    print(f'err_ls:[{err_list}]')
+    # print(f'err_ls:[{err_list}]')
 
     return err_list
 
@@ -158,7 +158,7 @@ def run_cmd(stdin=None, path=None):
                                 text=True)
 
         stdout, stderr = proc.communicate(stdin, timeout=2)  # if sleep ...??
-        print(f'proc_stderr:[{stderr}]')
+        # print(f'proc_stderr:[{stderr}]')
         if proc.poll() is None:
             is_exited = False
         else:
