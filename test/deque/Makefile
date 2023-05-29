@@ -16,8 +16,11 @@ SRCS		:=	test.c \
 OBJ_DIR		:=	obj
 OBJS		:=	$(SRCS:%.c=$(OBJ_DIR)/%.o)
 
+LIBFT_DIR	:= ../../libft
+LIBFT		:= $(LIBFT_DIR)/libft.a
+
 INCLUDE_DIR	:=	includes
-INCLUDES	:=	-I../../libft/$(INCLUDE_DIR)/
+INCLUDES	:=	-I$(LIBFT_DIR)/$(INCLUDE_DIR)/
 DEPS		:=	$(OBJS:.o=.d)
 
 CC			:=	clang
@@ -32,13 +35,16 @@ $(OBJ_DIR)/%.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $(OBJS)
+	@make -C $(LIBFT_DIR)
+	$(CC) $(CFLAGS) -o $@ $(OBJS) $(LIBFT)
 
 clean:
+	@make clean -C $(LIBFT_DIR)
 	$(RM) -r $(OBJ_DIR)
 #	$(RM) -r $(OBJ_DIR) libft/
 
 fclean: clean
+	@make fclean -C $(LIBFT_DIR)
 	$(RM) $(NAME)
 
 re: fclean all
