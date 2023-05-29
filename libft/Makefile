@@ -101,7 +101,8 @@ STRING_SRC	:=	$(STRING_DIR)/ft_free.c \
 				$(STRING_DIR)/ft_strrchr.c \
 				$(STRING_DIR)/ft_strtrim.c \
 				$(STRING_DIR)/ft_substr.c \
-				$(STRING_DIR)/is_equal_strings.c
+				$(STRING_DIR)/is_equal_strings.c \
+				$(STRING_DIR)/count_2d_array.c
 
 #--------------------------------------------
 # ft_dprintf
