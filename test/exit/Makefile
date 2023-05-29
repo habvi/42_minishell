@@ -3,26 +3,28 @@ NAME		=	a.out
 CC			=	cc
 CFLAGS		=	-Wall -Wextra -Werror -g -fsanitize=address -fsanitize=undefined
 
-SRCS		=	test_legal_number.c \
-				../../srcs/builtin/ft_legal_number.c
+SRCS		=	test_exit.c \
+				./../../srcs/builtin/ft_exit.c \
+				./../../srcs/builtin/ft_legal_number.c
 
-OBJS		=	test_legal_number.o \
+OBJS		=	test_exit.o \
+				ft_exit.o \
 				ft_legal_number.o
 
-INCLUDE		=	-I../../includes -I../../libft/includes
 
-LIBFT_DIR	= ../../libft
-LIBFT		= $(LIBFT_DIR)/libft.a
+LIBFT_DIR	=	./../../libft
+LIBFT		=	$(LIBFT_DIR)/libft.a
+
+INCLUDES	=	-I./../../includes -I./../../libft/includes
 
 all		: $(NAME)
 
 $(NAME)	: $(OBJS)
 	@make -C $(LIBFT_DIR)
-
-	$(CC) $(CFLAGS) $(INCLUDE) -o $@ $^ $(LIBFT)
+	$(CC) $(CFLAGS) -o $@ $^ $(LIBFT)
 
 $(OBJS)	: $(SRCS)
-	$(CC) $(CFLAGS) $(INCLUDE) -c $^
+	$(CC) $(CFLAGS) $(INCLUDES) -c $^
 
 clean	:
 	$(RM) $(OBJS)
