@@ -3,6 +3,14 @@
 
 # include <stdbool.h>
 
+# define STR_ECHO	"echo"
+# define STR_CD		"cd"
+# define STR_PWD	"pwd"
+# define STR_EXPORT	"export"
+# define STR_UNSET	"unset"
+# define STR_ENV	"env"
+# define STR_EXIT	"exit"
+
 typedef enum e_exit_argument
 {
 	EXIT_VALID_ARG,
