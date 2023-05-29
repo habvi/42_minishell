@@ -247,15 +247,15 @@ def test(test_name, test_input_arr):
 def main():
     test_res = 0
 
-    # pipe_test = ("/bin/ls -l",
-    #          "/bin/echo abcde",
-    #          "/bin/echo aaa bbb\n/bin/ls",
-    #          "/bin/echo aa\n/bin/echo bb\n/bin/echo ccc",
-    #          "/bin/echo aaa | /bin/grep a",
-    #          "/bin/echo aaa | /bin/cat -e",
-    #          "/bin/echo aaa | nothing",
-    #          )
-    # test_res |= test("multi_pipe", pipe_test)
+    pipe_test = ("/bin/ls -l",
+             "/bin/echo abcde",
+             "/bin/echo aaa bbb\n/bin/ls",
+             "/bin/echo aa\n/bin/echo bb\n/bin/echo ccc",
+             "/bin/echo aaa | /bin/grep a",
+             "/bin/echo aaa | /bin/cat -e",
+             "/bin/echo aaa | nothing",
+             )
+    test_res |= test("multi_pipe", pipe_test)
 
 
     # exit_status ...??
