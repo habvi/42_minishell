@@ -6,6 +6,7 @@
 #include <sys/errno.h>
 #include "./../../libft/includes/ft_lib.h"
 #include "./../../libft/includes/ft_ascii.h"
+#include "ft_builtin.h"
 
 #define COLOR_RED		"\x1b[31m"
 #define COLOR_GREEN		"\x1b[32m"
@@ -18,26 +19,6 @@
 static bool	is_whitespace(char c)
 {
 	return (c == ' ' || c == '\t');
-}
-
-bool	ft_legal_number(const char *str, long *result)
-{
-	long	value;
-	char	*endptr;
-	bool	is_strtol_success;
-
-	*result = 0;
-	if (!str)
-		return (false);
-	is_strtol_success = ft_strtol(str, &value, &endptr);
-	if (!is_strtol_success)
-		return (false);
-	while (is_whitespace(*endptr))
-		endptr++;
-	if (*endptr)
-		return (false);
-	*result = value;
-	return (true);
 }
 
 static char	*get_bool_char(bool b)
