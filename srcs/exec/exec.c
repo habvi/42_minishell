@@ -4,13 +4,6 @@
 #include "libft.h"
 #include "ft_builtin.h"
 
-static bool	is_pipe(const char *str)
-{
-	if (ft_strnlen(str, 2) == 1 && *str == '|')
-		return (true);
-	return (false);
-}
-
 // | command                  -> not handle yet
 // command arg                -> return NULL
 // command arg |              -> return NULL
@@ -18,7 +11,7 @@ static bool	is_pipe(const char *str)
 t_deque_node	*get_next_command(t_deque_node *cmd, size_t *cmd_size)
 {
 	*cmd_size = 0;
-	while (cmd && !is_pipe(cmd->content))
+	while (cmd && !is_equal_strings(cmd->content, "|"))
 	{
 		cmd = cmd->next;
 		(*cmd_size)++;
