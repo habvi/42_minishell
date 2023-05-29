@@ -3,6 +3,7 @@ NAME	:=	minishell
 
 CC			:=	clang
 CFLAGS		:=	-Wall -Wextra -Werror -MMD -MP
+RL_FLAGS	:=	-lreadline
 MKDIR		:=	mkdir -p
 
 SRCS_DIR	:=	srcs
