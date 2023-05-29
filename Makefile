@@ -28,13 +28,8 @@ INPUT_DIR	:=	input
 SRCS		+=	$(INPUT_DIR)/input.c
 
 BUILTIN_DIR	:=	builtin
-<<<<<<< HEAD
-SRCS		+=	$(BUILTIN_DIR)/ft_echo.c
-=======
 SRCS		+=	$(BUILTIN_DIR)/ft_echo.c \
-				$(BUILTIN_DIR)/ft_exit.c \
 				$(BUILTIN_DIR)/ft_legal_number.c
->>>>>>> 3f634aa (add(ft_legal_number):implement ft_legal_number and add simple test)
 
 OBJ_DIR	:=	obj
 OBJS	:=	$(SRCS:%.c=$(OBJ_DIR)/%.o)
