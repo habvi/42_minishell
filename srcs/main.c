@@ -1,26 +1,27 @@
 #include "minishell.h"
-#include "ft_string.h"
+#include "tokenize.h"
+#include "deque.h"
 
-int	minishell(void)
+static int	minishell(void)
 {
+	t_deque	*command;
 	char	*line;
-	char	**commands;
 	int		process_status;
 
+	command = NULL;
 	process_status = EXIT_SUCCESS;
 	while (true)
 	{
 		line = input_line();
 		if (!line)
 			break ;
-		// tokenize
-		commands = ft_split(line, ' ');
+		command = tokenize(line);
 		free(line);
-		if (!commands)
+		if (!command)
 			return (EXIT_FAILURE);
-		// parse
-		process_status = exec(commands);
-		free_all(commands);
+		// parse()
+		process_status = execute_command(command);
+		deque_clear_all(&command);
 		if (process_status == PROCESS_ERROR)
 			return (EXIT_FAILURE);
 	}

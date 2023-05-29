@@ -1,4 +1,20 @@
 #--------------------------------------------
+# deque
+#--------------------------------------------
+DEQUE_DIR	:=	deque
+DEQUE_SRC	:=	$(DEQUE_DIR)/dq_add_back.c \
+				$(DEQUE_DIR)/dq_add_front.c \
+				$(DEQUE_DIR)/dq_clear_all.c \
+				$(DEQUE_DIR)/dq_clear_node.c \
+				$(DEQUE_DIR)/dq_is_empty.c \
+				$(DEQUE_DIR)/dq_new.c \
+				$(DEQUE_DIR)/dq_node_new.c \
+				$(DEQUE_DIR)/dq_pop_back.c \
+				$(DEQUE_DIR)/dq_pop_front.c \
+				$(DEQUE_DIR)/dq_print.c \
+				$(DEQUE_DIR)/dq_set_node.c
+
+#--------------------------------------------
 # ft_ascii
 #--------------------------------------------
 ASCII_DIR	:=	ft_ascii
@@ -18,7 +34,8 @@ LIB_SRC		:=	$(LIB_DIR)/ft_atoi_old.c \
 				$(LIB_DIR)/ft_atoi_strictly.c \
 				$(LIB_DIR)/ft_atoi.c \
 				$(LIB_DIR)/ft_itoa_int.c \
-				$(LIB_DIR)/ft_itoa.c
+				$(LIB_DIR)/ft_itoa.c \
+				$(LIB_DIR)/ft_strtol.c
 
 #--------------------------------------------
 # ft_list
@@ -83,20 +100,70 @@ STRING_SRC	:=	$(STRING_DIR)/ft_free.c \
 				$(STRING_DIR)/ft_strnstr.c \
 				$(STRING_DIR)/ft_strrchr.c \
 				$(STRING_DIR)/ft_strtrim.c \
-				$(STRING_DIR)/ft_substr.c
+				$(STRING_DIR)/ft_substr.c \
+				$(STRING_DIR)/is_equal_strings.c
+
+#--------------------------------------------
+# ft_dprintf
+#--------------------------------------------
+FT_DPRINTF_DIR	:=	ft_dprintf
+FT_DPRINTF_SRC	:=	$(FT_DPRINTF_DIR)/convert_to_str.c \
+					$(FT_DPRINTF_DIR)/convert_to_str2.c \
+					$(FT_DPRINTF_DIR)/ft_dprintf.c \
+					$(FT_DPRINTF_DIR)/handle_info.c \
+					$(FT_DPRINTF_DIR)/itoa_utoa_for_printf.c\
+					$(FT_DPRINTF_DIR)/parse_format.c \
+					$(FT_DPRINTF_DIR)/ptoa_xtoa_for_printf.c \
+					$(FT_DPRINTF_DIR)/set_field.c \
+					$(FT_DPRINTF_DIR)/set_output.c \
+					$(FT_DPRINTF_DIR)/strdup_for_printf.c
+
+#--------------------------------------------
+# ft_sys
+#--------------------------------------------
+SYS_DIR	:=	ft_sys
+SYS_SRC	:=	$(SYS_DIR)/x_access.c \
+			$(SYS_DIR)/x_chdir.c \
+			$(SYS_DIR)/x_close.c \
+			$(SYS_DIR)/x_closedir.c \
+			$(SYS_DIR)/x_dup.c \
+			$(SYS_DIR)/x_dup2.c \
+			$(SYS_DIR)/x_execve.c \
+			$(SYS_DIR)/x_fork.c \
+			$(SYS_DIR)/x_getcwd.c \
+			$(SYS_DIR)/x_isatty.c \
+			$(SYS_DIR)/x_kill.c \
+			$(SYS_DIR)/x_malloc.c \
+			$(SYS_DIR)/x_open.c \
+			$(SYS_DIR)/x_opendir.c \
+			$(SYS_DIR)/x_pipe.c \
+			$(SYS_DIR)/x_read.c \
+			$(SYS_DIR)/x_readdir.c \
+			$(SYS_DIR)/x_sigaction.c \
+			$(SYS_DIR)/x_signal.c \
+			$(SYS_DIR)/x_tcgetattr.c \
+			$(SYS_DIR)/x_tcsetattr.c \
+			$(SYS_DIR)/x_ttyname.c \
+			$(SYS_DIR)/x_unlink.c \
+			$(SYS_DIR)/x_wait.c \
+			$(SYS_DIR)/x_waitpid.c \
+			$(SYS_DIR)/x_write.c
 
 #--------------------------------------------
 NAME		:=	libft.a
 
 SRC_DIR		:=	src
 OBJ_DIR		:=	obj
-OBJS		:=	$(ASCII_SRC:%.c=$(OBJ_DIR)/%.o) \
+OBJS		:=	$(DEQUE_SRC:%.c=$(OBJ_DIR)/%.o) \
+				$(ASCII_SRC:%.c=$(OBJ_DIR)/%.o) \
 				$(LIB_SRC:%.c=$(OBJ_DIR)/%.o) \
 				$(LIST_SRC:%.c=$(OBJ_DIR)/%.o) \
 				$(MATH_SRC:%.c=$(OBJ_DIR)/%.o) \
 				$(MEM_SRC:%.c=$(OBJ_DIR)/%.o) \
 				$(PUT_SRC:%.c=$(OBJ_DIR)/%.o) \
-				$(STRING_SRC:%.c=$(OBJ_DIR)/%.o)
+				$(STRING_SRC:%.c=$(OBJ_DIR)/%.o) \
+				$(FT_DPRINTF_SRC:%.c=$(OBJ_DIR)/%.o) \
+				$(SYS_SRC:%.c=$(OBJ_DIR)/%.o)
 
 #--------------------------------------------
 INCLUDE_DIR	:=	includes

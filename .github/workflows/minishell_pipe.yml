@@ -1,0 +1,22 @@
+name: Minishell
+on:
+  push:
+    branches: [ "dev" ]
+  pull_request:
+    branches: [ "dev" ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: make
+        run: make
+
+      - name: Install python3.
+        run: python3 -m pip install --upgrade pip setuptools
+      - name: Minishell multi pipe check.
+        run: python3 .github/sh/minishell_pipe.py

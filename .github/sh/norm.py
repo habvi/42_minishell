@@ -3,7 +3,7 @@ import sys
 
 # ----------------------------------------------------------
 OUT_FILE = "norm_out.txt"
-NORM_CHECK_PATH_ACTIONS = "includes srcs"
+NORM_CHECK_PATH_ACTIONS = "includes srcs libft"
 NORM_CHECK_PATH_LOCAL = "playground"
 
 # ----------------------------------------------------------
@@ -76,7 +76,7 @@ def norm_check_exclude_header():
             exit(1)
 
 def run_norm(check_path):
-    cmd = "norminette " + check_path +  " > " + OUT_FILE
+    cmd = "python3 -m norminette " + check_path +  " > " + OUT_FILE
     print(cmd)
     run_cmd(cmd)
 

@@ -1,3 +1,4 @@
+
 NAME	:=	minishell
 
 CC			:=	clang
@@ -7,11 +8,27 @@ MKDIR		:=	mkdir -p
 SRCS_DIR	:=	srcs
 SRCS		:=	main.c
 
+DEBUG_DIR	:=	debug
+SRCS		+=	$(DEBUG_DIR)/put.c
+
 EXEC_DIR	:=	exec
-SRCS		+=	$(EXEC_DIR)/exec.c
+SRCS		+=	$(EXEC_DIR)/check_command.c \
+				$(EXEC_DIR)/child_pipes.c \
+				$(EXEC_DIR)/child_process.c \
+				$(EXEC_DIR)/exec.c \
+				$(EXEC_DIR)/init.c \
+				$(EXEC_DIR)/parent_pipes.c \
+				$(EXEC_DIR)/parent_process.c
+
+TOKEN_DIR	:=	tokenize
+SRCS		+=	$(TOKEN_DIR)/tokenize.c
 
 INPUT_DIR	:=	input
 SRCS		+=	$(INPUT_DIR)/input.c
+
+BUILTIN_DIR	:=	builtin
+SRCS		+=	$(BUILTIN_DIR)/ft_echo.c \
+				$(BUILTIN_DIR)/ft_legal_number.c
 
 OBJ_DIR	:=	obj
 OBJS	:=	$(SRCS:%.c=$(OBJ_DIR)/%.o)
@@ -27,11 +44,7 @@ INCLUDE_DIR	:=	includes
 INCLUDES	:=	-I./$(INCLUDE_DIR)/ -I$(LIBFT_DIR)/$(INCLUDE_DIR)/
 DEPS		:=	$(OBJS:.o=.d)
 
-RL_DIR		:= $(shell brew --prefix readline)/lib
-RL_FLAGS	:=	-L$(RL_DIR) -lreadline -lhistory
-
-
-PHONY	:= all
+.PHONY	: all
 all		: $(NAME)
 
 $(NAME)	: $(OBJS) $(LIBFT)
@@ -44,40 +57,43 @@ $(OBJ_DIR)/%.o: $(SRCS_DIR)/%.c
 $(LIBFT): FORCE
 	$(MAKE) -C $(LIBFT_DIR)
 
-PHONY += clean
+.PHONY	: clean
 clean	:
-	$(RM) -r $(OBJ_DIR)
+	$(RM) -r $(OBJ_DIR) $(LIBFT_DIR)/$(OBJ_DIR)
 
-PHONY += fclean
+.PHONY	: fclean
 fclean	: clean
-	$(RM) $(NAME)
+	$(RM) $(NAME) $(LIBFT)
 
-PHONY += re
+.PHONY	: re
 re		: fclean all
 
-PHONY += FORCE
+.PHONY	: FORCE
 FORCE	:
 
 #--------------------------------------------
-PHONY += run
+.PHONY	: run
 run		: re
 	./$(NAME)
 
-PHONY += sani
+.PHONY	: sani
 sani	:
 	make re SANI=1
 
-PHONY += norm
-norm	:
+.PHONY	: norm
+norm	: all
 	python3 .github/sh/norm.py
 
 
 #--------------------------------------------
 # test.bats
-PHONY += t
+.PHONY	: t
 t		: re
 	./.github/sh/test.bats
 
+# test multi pipe
+.PHONY	: pipe
+pipe	: all
+	python3 ./.github/sh/minishell_pipe.py
 
-.PHONY: $(PHONY)
 -include $(DEPS)
