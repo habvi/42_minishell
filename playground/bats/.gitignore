@@ -1,6 +1,1 @@
-!bats-assert/**
-!bats-support/**
-!workflows/**
-!input1
-!test.sh
-!test.bats
+!**/**/**
