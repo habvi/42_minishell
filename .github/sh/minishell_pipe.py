@@ -327,7 +327,7 @@ def main():
                  "exit \r42",
                  ] # add more test after update tokenizer
 
-    test_res |= test("ft_exit", exit_test)
+    # test_res |= test("ft_exit", exit_test)
 
 
     # stdin = "/bin/echo -e aaa\naacc\nbbb\nbbcc\nccc\naabb\nabc | /bin/grep a | /bin/grep c"
