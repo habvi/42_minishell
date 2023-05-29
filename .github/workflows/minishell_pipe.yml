@@ -9,23 +9,17 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set-up python
-        uses: actions/setup-python@v3
-
-      - name: Update apt-get
-        run: sudo apt-get update
-
-      - name: Install pip.
+      - name: Install python3.
         run: python3 -m pip install --upgrade pip setuptools
 
-      - name: Install valgrind, clang
-        run: sudo apt-get -y install valgrind clang
+      - name: Install valgrind
+        run: sudo apt-get -y install valgrind
 
-      - name: Run make
+      - name: make
         run: make
 
       - name: Run all test of MINISHELL.
