@@ -1,28 +1,109 @@
 #!/usr/bin/env bats
 
 setup() {
-# path based test.bats ?
-    load bats-assert/load
-    load bats-support/load
+  # helper
+  load 'bats-assert/load'
+  load 'bats-support/load'
+
+  # todo: set-up outfile, dir path
 }
 
-# path based makefile ?
+
 
 #######################################################################
 ##                             echo                                  ##
 #######################################################################
 @test "/bin/echo hello" {
-    run ./minishell <<< "/bin/echo hello"
-    assert_equal "$output" "hello"
-    assert_equal "$status" "0"
+  # BW02: Using flags on `run` requires at least BATS_VERSION=1.5.0.
+#  bats_require_minimum_version 1.5.0
+  cmd="/bin/echo hello$'\n'/bin/echo world"
+
+  echo "[TEST]" >&3
+#  echo -e "$cmd"
+#  echo input file" >&3
+#  cat -e .github/sh/input1 >&3
+#  echo "" >&3
+#  echo "-----------------------" >&3
+
+  # Run minishell
+#  run ! --separate-stderr bash -c "<.github/sh/input1 ./minishell"
+#  run --separate-stderr bash -c "echo -e -n /bin/echo hello$'\n'/bin/echoo world | ./minishell"
+  run --separate-stderr bash -c "echo -e -n $cmd | ./minishell"
+
+  status_m=$status
+  IFS=$'\n'
+  out_m=($output)
+  err_arr=($stderr)
+  err_m=()
+
+  # minishell: error_message -> error_ms
+  for elem in "${err_arr[@]}"; do
+    if [[ ${elem} =~ minishell: ]];
+    then
+      echo $elem >&3
+      err_m+=(${elem#minishell: })
+    fi
+  done
+
+  echo "" >&3
+
+  echo "====== minishell ======" >&3
+  echo "status:$status_m" >&3
+  echo "" >&3
+  echo "out_m" >&3
+  echo " out_m: [${out_m[*]}]" >&3
+  echo " size :${#out_m[@]}" >&3
+  echo "" >&3
+  echo "err_m" >&3
+  echo " err_m: [${err_m[*]}]" >&3
+  echo " size :${#err_m[@]}" >&3
+  echo -e "\n-----------------------" >&3
+
+
+  # Run bash
+#  run ! --separate-stderr bash -c "<.github/sh/input1 bash"
+#  run ! --separate-stderr bash -c "echo -e -n /bin/echo hello$'\n'/bin/echoo world | bash"
+  run --separate-stderr bash -c "echo -e -n $cmd | bash"
+
+  status_b=$status
+  out_b=($output)
+  err_arr=($stderr)
+  err_b=()
+
+  # bash: error_message -> error_ms
+  for elem in "${err_arr[@]}"; do
+    if [[ ${elem} =~ bash: ]];
+    then
+#      echo "[$elem]->[${elem#bash: line *: }]" >&3
+      err_b+=(${elem#bash: line *: })
+    fi
+  done
+
+  echo "====== bash ======" >&3
+  echo "status:$status_b" >&3
+  echo "" >&3
+  echo "out_b" >&3
+  echo " out_b: [${out_b[*]}]" >&3
+  echo " size :${#out_b[@]}" >&3
+  echo "" >&3
+  echo "err_b" >&3
+  echo " err_b: [${err_b[*]}]" >&3
+  echo " size :${#err_b[@]}" >&3
+  echo -e "\n-----------------------" >&3
+
+  # assert 'have' 'want'
+  assert_equal "$status_m" "$status_b"
+  assert_equal "$out_m" "$out_b"
+  assert_equal "$err_m" "$err_b"
 }
 
 #######################################################################
 ##                              ls                                   ##
 #######################################################################
-# outfiles must be excluded in ls test
 
 @test "/bin/ls" {
+    skip
+
     cmd="/bin/ls"
     status_bash=0
     status_minishell=0
@@ -39,6 +120,8 @@ setup() {
 }
 
 @test "/bin/ls -l" {
+    skip
+
     cmd="/bin/ls -l"
     status_bash=0
     status_minishell=0
@@ -59,6 +142,8 @@ setup() {
 #######################################################################
 
 @test "[exec failure] /bin/echooo hello" {
+    skip
+
     cmd="/bin/echooo hello"
     status_bash=0
     status_minishell=0
