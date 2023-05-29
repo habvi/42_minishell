@@ -38,36 +38,8 @@ static int	get_exit_status(const char *arg, \
 	if (!arg)
 		return (latest_status);
 	ft_legal_number(arg, &long_num);
-	return ((int)(long_num & ((1U << BIT_SHIFT) - 1)));
+	return ((int)(long_num & ((1U << BIT_SHIFT_FOR_STATUS) - 1)));
 }
-
-//// ft_legal_number returns true
-//static int	get_exit_status(const char **cmds,
-//							t_exit_arg *res, int latest_status)
-//{
-//	const size_t	argc = cnt_2d_array(cmds);
-//	long			long_num;
-//	bool			is_legal_num;
-//
-//	if (argc == EXIT_ONLY_CMD_CNT)
-//	{
-//		*res = EXIT_VALID_ARG;
-//		return (latest_status);
-//	}
-//	is_legal_num = ft_legal_number(cmds[EXIT_ARG_IDX], &long_num);
-//	if (!is_legal_num)
-//	{
-//		*res = EXIT_NON_NUMERIC_ARG;
-//		return (NON_NUMERIC_ARG_STATUS);
-//	}
-//	if (argc > VALID_ARG_CNT)
-//	{
-//		*res = RETURN_TOO_MANY_NUMERIC_ARG;
-//		return (TOO_MANY_ARG_STATUS);
-//	}
-//	*res = EXIT_VALID_ARG;
-//	return ((int)(long_num & ( 1U << BIT_SHIFT) - 1 ));
-//}
 
 static void	put_exit_err(const char *arg, t_exit_arg res)
 {
@@ -119,8 +91,6 @@ int	ft_exit(const char **cmds, bool *is_exit_shell)
 	arg_result = validate_argument(cmds);
 	status = EXIT_SUCCESS; // todo: get latest status
 	status = get_exit_status(cmds[EXIT_ARG_IDX], arg_result, status);
-//	status = get_exit_status((const char **)cmds, &arg_result, status);
-//	printf("status:%d, res:%s\n", status, get_res_char(arg_result));
 	put_exit_err((const char *)cmds[EXIT_ARG_IDX], arg_result);
 	if (is_exit_shell)
 		*is_exit_shell = is_exit(arg_result);

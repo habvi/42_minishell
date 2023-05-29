@@ -11,7 +11,7 @@
 # define NON_NUMERIC_ARG_STATUS	2
 # define TOO_MANY_ARG_STATUS	1
 
-# define BIT_SHIFT				8
+# define BIT_SHIFT_FOR_STATUS	8
 
 typedef enum e_exit_argument
 {
