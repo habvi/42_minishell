@@ -9,5 +9,6 @@ bool	ft_atoi_strictly(const char *str, int *num);
 bool	ft_atoi(const char *str, int *num);
 char	*ft_itoa_int(int n);
 char	*ft_itoa(int n);
+bool	ft_strtol(const char *str, long *ret_num, char **endptr);
 
 #endif
