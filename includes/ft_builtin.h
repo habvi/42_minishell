@@ -3,19 +3,17 @@
 
 # include <stdbool.h>
 
-typedef enum e_exit_argument
+typedef enum e_exit_argument_stat
 {
 	EXIT_VALID_ARG,
 	EXIT_NON_NUMERIC_ARG,
-	NOT_EXIT_TOO_MANY_NUMERIC_ARG,
+	RETURN_TOO_MANY_NUMERIC_ARG,
 }	t_exit_arg;
 
-<<<<<<< HEAD
-int	ft_echo(char **cmds);
-=======
 int		ft_echo(char **cmds);
-int		ft_exit(char **cmds);
+int		ft_exit(char **cmds, bool *is_exit_shell);
 bool	ft_legal_number(const char *str, long *result);
->>>>>>> 3f634aa (add(ft_legal_number):implement ft_legal_number and add simple test)
+bool	is_builtin_func(char *cmd);
+int		call_builtin_func(char **command, bool *is_exit_shell);
 
 #endif //FT_BUILTIN_H
