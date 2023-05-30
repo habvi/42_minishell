@@ -9,8 +9,8 @@
 // if execve erorr, no need for auto perror.
 void	child_process(t_command *cmd, t_fd *fd, char **environ)
 {
-	const char	**command;
-	int			exec_status;
+	char	**command;
+	int		exec_status;
 
 	command = cmd->exec_command;
 	// debug_func(__func__, __LINE__);
@@ -19,11 +19,11 @@ void	child_process(t_command *cmd, t_fd *fd, char **environ)
 		exit(EXIT_FAILURE);
 	if (is_command_builtin(command[0]))
 	{
-		exec_status = call_builtin_func(command, NULL);
+		exec_status = call_builtin_func((const char **)command, NULL);
 		deque_clear_all(&cmd->head_command);
 		exit(exec_status);
 	}
-	if (execve(command[0], (char **)command, environ) == EXECVE_ERROR)
+	if (execve(command[0], command, environ) == EXECVE_ERROR)
 	{
 		// write or malloc error..?
 		ft_dprintf(STDERR_FILENO, "minishell: %s: %s\n", \
