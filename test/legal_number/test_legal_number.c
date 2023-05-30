@@ -16,6 +16,11 @@
 #define COLOR_CYAN		"\x1b[36m"
 #define COLOR_RESET		"\x1b[0m"
 
+static bool	is_whitespace(char c)
+{
+	return (c == ' ' || c == '\t');
+}
+
 static char	*get_bool_char(bool b)
 {
 	if (b)

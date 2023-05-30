@@ -18,7 +18,6 @@ all		: $(NAME)
 
 $(NAME)	: $(OBJS)
 	@make -C $(LIBFT_DIR)
-
 	$(CC) $(CFLAGS) $(INCLUDE) -o $@ $^ $(LIBFT)
 
 $(OBJS)	: $(SRCS)

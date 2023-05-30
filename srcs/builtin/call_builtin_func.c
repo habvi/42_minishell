@@ -41,6 +41,6 @@ int	call_builtin_func(char **command, bool *is_exit_shell)
 //	if (is_equal_strings(command[0], "env"))
 //		return (true);
 	if (is_equal_strings(command[0], "exit"))
-		return (ft_exit(command, is_exit_shell));
+		return (ft_exit((const char **)command, is_exit_shell));
 	return (FATAL_ERROR);
 }

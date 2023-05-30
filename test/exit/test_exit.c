@@ -40,7 +40,7 @@ static void	print_cmds(const char **cmds)
 
 static int	test(const char **cmds, int expected_status, int test_no)
 {
-	int	ft_ret = ft_exit((char **)cmds, NULL);
+	int	ft_ret = ft_exit(cmds, NULL);
 
 	printf("\n[TEST %02d] ", test_no);
 	print_cmds(cmds);
