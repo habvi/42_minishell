@@ -112,12 +112,11 @@ int	main(void)
 	const char *cmds26[10] = {"exit", "+-1"};
 	ok_cnt += test(cmds26, 2, ++test_no);
 
-
-
-
-
 	printf("############################################\n");
 	printf(" TEST RESULT :: OK %d/ ALL %d     %s\n", ok_cnt, test_no, test_no == ok_cnt ? "\x1b[32mALL OK :)\x1b[0m" : "\x1b[31mNG :X\x1b[0m");
 	printf("############################################\n\n");
-	return (0);
+
+	if (test_no != ok_cnt)
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }

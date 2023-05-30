@@ -4,7 +4,7 @@ NAME		=	a.out
 CC			=	cc
 CFLAGS		=	-Wall -Wextra -Werror -g -fsanitize=address -fsanitize=undefined
 
-SRCS		=	test_sq_str.c
+SRCS		=	test_eq_str.c
 
 OBJS		=	$(SRCS:%.c=%.o)
 
@@ -30,7 +30,7 @@ fclean	: clean
 
 re		: fclean all
 
-run		: re
+run		: all
 	./$(NAME)
 
 .PHONY	: all clean fclean re run

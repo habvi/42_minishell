@@ -99,8 +99,11 @@ int	main(void)
 	ok_cnt += test("92233720368547758080123abc", ++test_no, false);
 	ok_cnt += test("9223372036854775808012399999999999999999999999999999999999999999999abc", ++test_no, false);
 
-		printf("############################################\n");
+	printf("############################################\n");
 	printf(" TEST RESULT :: OK %d/ ALL %d     %s\n", ok_cnt, test_no, test_no == ok_cnt ? "\x1b[32mALL OK :)\x1b[0m" : "\x1b[31mNG :X\x1b[0m");
 	printf("############################################\n\n");
-	return (0);
+
+	if (test_no != ok_cnt)
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
