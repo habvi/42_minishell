@@ -178,14 +178,6 @@ CFLAGS		:=	-Wall -Wextra -Werror -MMD -MP
 ARFLAGS		:=	rcs
 MKDIR		:=	mkdir -p
 
-# ifeq ($(MAKECMDGOALS), gcc)
-# 	CC	:=	gcc
-# endif
-
-# ifeq ($(MAKECMDGOALS), clang)
-# 	CC	:=	clang
-# endif
-
 #--------------------------------------------
 all: $(NAME)
 
@@ -212,10 +204,3 @@ info:
 	$(info >>> obj : $(OBJS))
 
 .PHONY: all clean fclean re info
-
-
-# gcc: re
-# .PHONY: gcc
-
-# clang: re
-# .PHONY: clang
