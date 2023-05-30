@@ -153,22 +153,22 @@ SYS_SRC	:=	$(SYS_DIR)/x_access.c \
 #--------------------------------------------
 NAME		:=	libft.a
 
-SRC_DIR		:=	src
-OBJ_DIR		:=	obj
-OBJS		:=	$(DEQUE_SRC:%.c=$(OBJ_DIR)/%.o) \
-				$(ASCII_SRC:%.c=$(OBJ_DIR)/%.o) \
-				$(LIB_SRC:%.c=$(OBJ_DIR)/%.o) \
-				$(LIST_SRC:%.c=$(OBJ_DIR)/%.o) \
-				$(MATH_SRC:%.c=$(OBJ_DIR)/%.o) \
-				$(MEM_SRC:%.c=$(OBJ_DIR)/%.o) \
-				$(PUT_SRC:%.c=$(OBJ_DIR)/%.o) \
-				$(STRING_SRC:%.c=$(OBJ_DIR)/%.o) \
-				$(FT_DPRINTF_SRC:%.c=$(OBJ_DIR)/%.o) \
-				$(SYS_SRC:%.c=$(OBJ_DIR)/%.o)
+SRCS_DIR	:=	srcs
+OBJS_DIR	:=	objs
+OBJS		:=	$(DEQUE_SRC:%.c=$(OBJS_DIR)/%.o) \
+				$(ASCII_SRC:%.c=$(OBJS_DIR)/%.o) \
+				$(LIB_SRC:%.c=$(OBJS_DIR)/%.o) \
+				$(LIST_SRC:%.c=$(OBJS_DIR)/%.o) \
+				$(MATH_SRC:%.c=$(OBJS_DIR)/%.o) \
+				$(MEM_SRC:%.c=$(OBJS_DIR)/%.o) \
+				$(PUT_SRC:%.c=$(OBJS_DIR)/%.o) \
+				$(STRING_SRC:%.c=$(OBJS_DIR)/%.o) \
+				$(FT_DPRINTF_SRC:%.c=$(OBJS_DIR)/%.o) \
+				$(SYS_SRC:%.c=$(OBJS_DIR)/%.o)
 
 #--------------------------------------------
-INCLUDE_DIR	:=	includes
-INCLUDES	:=	-I$(INCLUDE_DIR)/
+INCLUDES_DIR	:=	includes
+INCLUDES		:=	-I$(INCLUDES_DIR)/
 
 DEPS		:=	$(OBJS:.o=.d)
 
@@ -191,7 +191,7 @@ all: $(NAME)
 
 -include $(DEPS)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+$(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
 	@$(MKDIR) $(dir $@)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
@@ -199,7 +199,7 @@ $(NAME): $(OBJS)
 	$(AR) $(ARFLAGS) $(NAME) $(OBJS)
 
 clean:
-	$(RM) -r $(OBJ_DIR)
+	$(RM) -r $(OBJS_DIR)
 
 fclean: clean
 	$(RM) $(NAME)
