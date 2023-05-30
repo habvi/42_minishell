@@ -96,6 +96,9 @@ norm	: all
 #t		: re
 #	./.github/sh/test.bats
 
+t		: all
+	./.github/sh/unit_test.sh
+
 # test multi pipe
 .PHONY		: test_all
 test_all	: all

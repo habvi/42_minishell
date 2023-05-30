@@ -12,6 +12,16 @@
 # define STR_ENV	"env"
 # define STR_EXIT	"exit"
 
+// todo: naming...
+# define EXIT_ONLY_CMD_CNT		1
+# define EXIT_ARG_IDX			1
+# define VALID_ARG_CNT			2
+
+# define NON_NUMERIC_ARG_STATUS	2
+# define TOO_MANY_ARG_STATUS	1
+
+# define BYTE_MASK				(0xFF)
+
 typedef enum e_exit_argument
 {
 	EXIT_VALID_ARG,

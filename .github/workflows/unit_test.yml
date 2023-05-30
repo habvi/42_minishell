@@ -1,0 +1,17 @@
+name: Unit test
+on:
+  push:
+    branches: [ "dev" ]
+  pull_request:
+    branches: [ "dev" ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run all unit test.
+        run: chmod +x .github/sh/unit_test.sh && ./.github/sh/unit_test.sh

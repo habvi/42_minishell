@@ -58,7 +58,7 @@ static void	pop_back_test(t_deque *deque)
 		deque_print(deque);
 		return ;
 	}
-	printf("pop_back success: %s\n", pop_node->content);
+	printf("pop_back success: %s\n", (char *)pop_node->content);
 	deque_clear_node(&pop_node);
 	debug_deque_print(deque, __func__);
 }
@@ -74,7 +74,7 @@ static void	pop_front_test(t_deque *deque)
 		deque_print(deque);
 		return ;
 	}
-	printf("pop_front success: %s\n", pop_node->content);
+	printf("pop_front success: %s\n", (char *)pop_node->content);
 	deque_clear_node(&pop_node);
 	debug_deque_print(deque, __func__);
 }
