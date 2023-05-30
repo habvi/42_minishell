@@ -1,16 +1,13 @@
-#include "minishell.h"
 #include "deque.h"
-#include "ft_dprintf.h"
-#include "libft.h"
 #include "ft_builtin.h"
 #include "ft_string.h"
+#include "exec.h"
 
 size_t	count_pipe(t_deque_node *node)
 {
 	size_t	cnt;
 
 	cnt = 0;
-
 	while (node)
 	{
 		if (is_equal_strings(node->content, "|"))
