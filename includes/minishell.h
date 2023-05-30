@@ -70,7 +70,7 @@ int				parent_process(\
 int				exec_builtin_in_parent_proc(t_command cmd, \
 											t_deque_node *node, \
 											bool *is_exit_shell);
-size_t			pipe_cnt(t_deque_node *node);
+size_t			count_pipe(t_deque_node *node);
 
 /* input */
 // input.c

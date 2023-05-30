@@ -5,7 +5,7 @@
 #include "ft_builtin.h"
 #include "ft_string.h"
 
-size_t	pipe_cnt(t_deque_node *node)
+size_t	count_pipe(t_deque_node *node)
 {
 	size_t	cnt;
 
