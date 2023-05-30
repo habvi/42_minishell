@@ -52,12 +52,7 @@ int	call_builtin_func(const char **command, bool *is_exit_shell)
 //		return (true);
 //	if (is_equal_strings(command[0], STR_ENV))
 //		return (true);
-<<<<<<< HEAD
-	if (is_equal_strings(command[0], "exit"))
-		return (ft_exit((const char **)command, is_exit_shell));
-=======
 	if (is_equal_strings(command[0], STR_EXIT))
 		return (ft_exit(command, is_exit_shell));
->>>>>>> 9fa0d9e (update(calc_builtin): command str in header)
 	return (FATAL_ERROR);
 }
