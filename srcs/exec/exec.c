@@ -82,7 +82,7 @@ int	execute_command(t_deque *dq_cmd, bool *is_exit_shell)
 	init_fd(&fd);
 	last_exit_status = EXIT_SUCCESS;
 	node = dq_cmd->node;
-	if (pipe_cnt(node) == 0 && is_builtin_func((char *)dq_cmd->node->content))
+	if (is_single_builtin(node, (char *)dq_cmd->node->content))
 		return (exec_builtin_in_parent_proc(cmd, node, is_exit_shell));
 	while (node)
 	{
