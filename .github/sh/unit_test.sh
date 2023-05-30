@@ -78,7 +78,7 @@ cd $TEST_DIR
 for dir in *; do
     status=$EXIT_SUCCESS
     ((total_cnt++))
-    echo -e "[TEST $total_test] $dir"
+    echo -e "[TEST $total_cnt] $dir"
 #     echo -e "path:$PWD"
     if [ -d "$dir" ]; then
         cd $dir
