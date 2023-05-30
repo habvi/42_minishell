@@ -1,10 +1,8 @@
-*
-
 # test.bats
-!bats-assert/
-!bats-support/
-!test.bats
-!input1
+out
 
 # norm.py
-!norm.py
+norm_out.txt
+
+# __pycache__
+__pycache__/
