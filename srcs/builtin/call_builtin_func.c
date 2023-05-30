@@ -3,9 +3,11 @@
 #include "ft_string.h"
 #include "minishell.h"
 
-bool	is_single_builtin(t_deque_node *node, const char *cmd)
+bool	is_single_builtin(t_deque_node *node)
 {
-	if (!is_command_builtin(cmd))
+	if (!node)
+		return (false);
+	if (!is_command_builtin((const char *)node->content))
 		return (false);
 	if (count_pipe(node) > 0)
 		return (false);
