@@ -91,7 +91,7 @@ int	ft_exit(const char **cmds, bool *is_exit_shell)
 	arg_result = validate_argument(cmds);
 	status = EXIT_SUCCESS; // todo: get latest status
 	status = get_exit_status(cmds[EXIT_ARG_IDX], arg_result, status);
-	put_exit_err((const char *)cmds[EXIT_ARG_IDX], arg_result);
+	put_exit_err(cmds[EXIT_ARG_IDX], arg_result);
 	if (is_exit_shell)
 		*is_exit_shell = is_exit(arg_result);
 	return (status);
