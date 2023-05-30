@@ -87,10 +87,11 @@ int	execute_command(t_deque *dq_cmd, bool *is_exit_shell)
 	while (node)
 	{
 		cmd.next_command = get_next_command(node, &cmd_size);
-		cmd.exec_command = convert_command_to_array(node, cmd_size);
+		cmd.exec_command = \
+			(const char **)convert_command_to_array(node, cmd_size);
 		if (dup_process_and_run(&cmd, &fd, &last_exit_status) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
-		free_2d_array(&cmd.exec_command);
+		free_2d_array((char ***)&cmd.exec_command);
 		node = cmd.next_command;
 	}
 	return (last_exit_status);

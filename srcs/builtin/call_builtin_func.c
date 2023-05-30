@@ -2,7 +2,7 @@
 #include "minishell.h"
 #include "ft_string.h"
 
-bool	is_single_builtin(t_deque_node *node, char *cmd)
+bool	is_single_builtin(t_deque_node *node, const char *cmd)
 {
 	if (!is_builtin_func(cmd))
 		return (false);
@@ -12,7 +12,7 @@ bool	is_single_builtin(t_deque_node *node, char *cmd)
 }
 
 //echo, cd, pwd, export, unset, env, exit
-bool	is_builtin_func(char *cmd)
+bool	is_builtin_func(const char *cmd)
 {
 	if (!cmd)
 		return (false);
@@ -33,7 +33,7 @@ bool	is_builtin_func(char *cmd)
 	return (false);
 }
 
-int	call_builtin_func(char **command, bool *is_exit_shell)
+int	call_builtin_func(const char **command, bool *is_exit_shell)
 {
 	if (!command)
 		return (FATAL_ERROR);

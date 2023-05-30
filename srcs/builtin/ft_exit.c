@@ -94,7 +94,7 @@ static bool	is_exit(t_exit_arg res)
 
 // cmds[0] == "exit"
 
-int	ft_exit(char **cmds, bool *is_exit_shell)
+int	ft_exit(const char **cmds, bool *is_exit_shell)
 {
 	int			status;
 	t_exit_arg	arg_result;
