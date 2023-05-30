@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "exec.h"
 
 void	init_cmd(t_command *cmd, t_deque *dq_cmd)
 {

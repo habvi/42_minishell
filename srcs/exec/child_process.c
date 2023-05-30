@@ -1,10 +1,9 @@
-#include "minishell.h"
 #include "ft_string.h"
 #include "ft_builtin.h"
 #include "deque.h"
 #include "ft_dprintf.h"
-#include "libft.h"
-#include "ft_builtin.h"
+#include "exec.h"
+#include "minishell.h"
 
 // use PROMPT_NAME
 // if execve erorr, no need for auto perror.
