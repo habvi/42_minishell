@@ -38,7 +38,7 @@ static int	get_exit_status(const char *arg, \
 	if (!arg)
 		return (latest_status);
 	ft_legal_number(arg, &long_num);
-	return ((int)(long_num & ((1U << BIT_SHIFT_FOR_STATUS) - 1)));
+	return ((int)(long_num & BYTE_MASK));
 }
 
 static void	put_exit_err(const char *arg, t_exit_arg res)
