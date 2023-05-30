@@ -28,7 +28,7 @@ typedef struct s_deque		t_deque;
 
 typedef struct s_command {
 	t_deque			*head_command;
-	char			**exec_command;
+	const char		**exec_command;
 	t_deque_node	*next_command;
 }	t_command;
 

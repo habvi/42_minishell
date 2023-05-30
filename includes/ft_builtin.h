@@ -2,6 +2,7 @@
 # define FT_BUILTIN_H
 
 # include <stdbool.h>
+# include "deque.h"
 
 <<<<<<< HEAD
 // todo: naming...
@@ -30,17 +31,22 @@ typedef enum e_exit_argument
 	RETURN_TOO_MANY_NUMERIC_ARG,
 }	t_exit_arg;
 
+<<<<<<< HEAD
 int		ft_echo(char **cmds);
 <<<<<<< HEAD
 int		ft_exit(const char **cmds, bool *is_exit_shell);
 =======
 int		ft_exit(char **cmds, bool *is_exit_shell);
+=======
+int		ft_echo(const char **cmds);
+int		ft_exit(const char **cmds, bool *is_exit_shell);
+>>>>>>> 400ba13 (update: char **cmds to const)
 
 >>>>>>> 07b4f47 (add(is_sigle_builtin))
 bool	ft_legal_number(const char *str, long *result);
-bool	is_builtin_func(char *cmd);
-bool	is_single_builtin(t_deque_node *node, char *cmd);
+bool	is_builtin_func(const char *cmd);
+bool	is_single_builtin(t_deque_node *node, const char *cmd);
 
-int		call_builtin_func(char **command, bool *is_exit_shell);
+int		call_builtin_func(const char **command, bool *is_exit_shell);
 
 #endif //FT_BUILTIN_H
