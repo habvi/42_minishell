@@ -11,7 +11,7 @@
 # define NON_NUMERIC_ARG_STATUS	2
 # define TOO_MANY_ARG_STATUS	1
 
-# define BYTE_MASK				0xFF
+# define BYTE_MASK				(0xFF)
 
 typedef enum e_exit_argument
 {
