@@ -4,6 +4,14 @@
 # include <stdbool.h>
 # include "deque.h"
 
+# define STR_ECHO	"echo"
+# define STR_CD		"cd"
+# define STR_PWD	"pwd"
+# define STR_EXPORT	"export"
+# define STR_UNSET	"unset"
+# define STR_ENV	"env"
+# define STR_EXIT	"exit"
+
 // todo: naming...
 # define EXIT_ONLY_CMD_CNT		1
 # define EXIT_ARG_IDX			1
@@ -13,13 +21,6 @@
 # define TOO_MANY_ARG_STATUS	1
 
 # define BYTE_MASK				(0xFF)
-# define STR_ECHO	"echo"
-# define STR_CD		"cd"
-# define STR_PWD	"pwd"
-# define STR_EXPORT	"export"
-# define STR_UNSET	"unset"
-# define STR_ENV	"env"
-# define STR_EXIT	"exit"
 
 typedef enum e_exit_argument
 {
@@ -30,6 +31,7 @@ typedef enum e_exit_argument
 
 int		ft_echo(const char **cmds);
 int		ft_exit(const char **cmds, bool *is_exit_shell);
+
 bool	ft_legal_number(const char *str, long *result);
 bool	is_command_builtin(const char *cmd);
 bool	is_single_builtin(t_deque_node *node);
