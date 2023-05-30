@@ -99,7 +99,7 @@ norm	: all
 t		: all
 	./.github/sh/unit_test.sh
 
-# test multi pipe
+# test all
 .PHONY		: test_all
 test_all	: all
 	python3 ./.github/sh/run_all.py
