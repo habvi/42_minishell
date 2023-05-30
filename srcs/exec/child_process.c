@@ -18,7 +18,7 @@ void	child_process(t_command *cmd, t_fd *fd, char **environ)
 	// debug_2d_array(command);
 	if (handle_child_pipes(cmd, fd) == PROCESS_ERROR)
 		exit(EXIT_FAILURE);
-	if (is_builtin_func(command[0]))
+	if (is_command_builtin(command[0]))
 	{
 		exec_status = call_builtin_func(command, NULL);
 		deque_clear_all(&cmd->head_command);
