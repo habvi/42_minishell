@@ -4,7 +4,7 @@
 
 bool	is_single_builtin(t_deque_node *node, const char *cmd)
 {
-	if (!is_builtin_func(cmd))
+	if (!is_command_builtin(cmd))
 		return (false);
 	if (count_pipe(node) > 0)
 		return (false);
@@ -12,7 +12,7 @@ bool	is_single_builtin(t_deque_node *node, const char *cmd)
 }
 
 //echo, cd, pwd, export, unset, env, exit
-bool	is_builtin_func(const char *cmd)
+bool	is_command_builtin(const char *cmd)
 {
 	if (!cmd)
 		return (false);

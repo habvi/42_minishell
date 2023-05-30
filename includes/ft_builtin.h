@@ -44,7 +44,7 @@ int		ft_exit(const char **cmds, bool *is_exit_shell);
 
 >>>>>>> 07b4f47 (add(is_sigle_builtin))
 bool	ft_legal_number(const char *str, long *result);
-bool	is_builtin_func(const char *cmd);
+bool	is_command_builtin(const char *cmd);
 bool	is_single_builtin(t_deque_node *node, const char *cmd);
 
 int		call_builtin_func(const char **command, bool *is_exit_shell);
