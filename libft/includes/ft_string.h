@@ -5,22 +5,29 @@
 # include <stddef.h>
 
 void	*free_2d_array(char ***ptr);
+// if malloc error, return NULL
 char	**ft_split(char const *s, char c);
 char	*ft_strchr(const char *s, int c);
+// if malloc error, return NULL
 char	*ft_strdup(const char *s1);
 void	ft_striteri(char *s, void (*f)(unsigned int, char*));
+// if malloc error, return NULL
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
 void	ft_strlcpy_void(char *dst, const char *src, size_t dstsize);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 size_t	ft_strlen(const char *s);
+// if malloc error, return NULL
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
+// if malloc error, return NULL
 char	*ft_strndup(const char *s, size_t maxlen);
 size_t	ft_strnlen(const char *s, size_t maxlen);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 char	*ft_strrchr(const char *s, int c);
+// if malloc error, return NULL
 char	*ft_strtrim(char const *s1, char const *set);
+// if malloc error, return NULL
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 
 #endif
