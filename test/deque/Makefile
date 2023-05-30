@@ -13,7 +13,7 @@ SRCS		:=	test.c \
 				$(PREFIX)/dq_set_node.c
 
 # SRC_DIR		:=	src
-OBJ_DIR		:=	obj
+OBJ_DIR		:=	../../libft/obj
 OBJS		:=	$(SRCS:%.c=$(OBJ_DIR)/%.o)
 
 LIBFT_DIR	:= ../../libft
