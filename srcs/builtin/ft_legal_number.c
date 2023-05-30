@@ -1,5 +1,3 @@
-#include <stdbool.h>
-#include "ms_builtin.h"
 #include "ft_lib.h"
 
 static bool	is_whitespace(char c)

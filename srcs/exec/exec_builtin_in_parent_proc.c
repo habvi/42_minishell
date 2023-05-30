@@ -1,7 +1,7 @@
-#include "ft_deque.h"
 #include "ms_builtin.h"
-#include "ft_string.h"
 #include "ms_exec.h"
+#include "ft_deque.h"
+#include "ft_string.h"
 
 size_t	count_pipe(t_deque_node *node)
 {

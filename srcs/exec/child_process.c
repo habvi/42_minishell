@@ -1,9 +1,9 @@
-#include "ft_string.h"
+#include <stdlib.h>
+#include "minishell.h"
 #include "ms_builtin.h"
+#include "ms_exec.h"
 #include "ft_deque.h"
 #include "ft_dprintf.h"
-#include "ms_exec.h"
-#include "minishell.h"
 
 // use PROMPT_NAME
 // if execve erorr, no need for auto perror.

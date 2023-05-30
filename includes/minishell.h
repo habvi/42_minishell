@@ -1,11 +1,6 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <stdbool.h>
-# include <unistd.h>
-
 # define EXECVE_ERROR	(-1)
 # define FORK_ERROR		(-1)
 # define WAIT_ERROR		(-1)
@@ -25,4 +20,4 @@ void			debug_2d_array(char **array);
 // input.c
 char			*input_line(void);
 
-#endif
+#endif //MINISHELL_H

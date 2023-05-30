@@ -9,6 +9,12 @@ MKDIR		:=	mkdir -p
 SRCS_DIR	:=	srcs
 SRCS		:=	main.c
 
+BUILTIN_DIR	:=	builtin
+SRCS		+=	$(BUILTIN_DIR)/call_builtin_func.c \
+				$(BUILTIN_DIR)/ft_echo.c \
+				$(BUILTIN_DIR)/ft_exit.c \
+				$(BUILTIN_DIR)/ft_legal_number.c
+
 DEBUG_DIR	:=	debug
 SRCS		+=	$(DEBUG_DIR)/put.c
 
@@ -23,17 +29,11 @@ SRCS		+=	$(EXEC_DIR)/check_command.c \
 				$(EXEC_DIR)/parent_pipes.c \
 				$(EXEC_DIR)/parent_process.c \
 
-TOKEN_DIR	:=	tokenize
-SRCS		+=	$(TOKEN_DIR)/tokenize.c
-
 INPUT_DIR	:=	input
 SRCS		+=	$(INPUT_DIR)/input.c
 
-BUILTIN_DIR	:=	builtin
-SRCS		+=	$(BUILTIN_DIR)/call_builtin_func.c \
-				$(BUILTIN_DIR)/ft_echo.c \
-				$(BUILTIN_DIR)/ft_exit.c \
-				$(BUILTIN_DIR)/ft_legal_number.c
+TOKEN_DIR	:=	tokenize
+SRCS		+=	$(TOKEN_DIR)/tokenize.c
 
 OBJ_DIR	:=	obj
 OBJS	:=	$(SRCS:%.c=$(OBJ_DIR)/%.o)

@@ -1,6 +1,7 @@
+#include "minishell.h"
 #include "ms_builtin.h"
 #include "ms_exec.h"
-#include "minishell.h"
+#include "ft_deque.h"
 #include "ft_string.h"
 
 bool	is_single_builtin(t_deque_node *node)

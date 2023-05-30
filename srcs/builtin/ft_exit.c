@@ -1,7 +1,5 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include "ms_builtin.h"
-#include "minishell.h"
 #include "ft_dprintf.h"
 #include "ft_string.h"
 

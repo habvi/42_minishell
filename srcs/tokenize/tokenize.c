@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include <stdlib.h>
 #include "ft_deque.h"
 #include "ft_string.h"
 

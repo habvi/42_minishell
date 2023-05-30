@@ -1,9 +1,9 @@
 #include "minishell.h"
-#include "ft_deque.h"
 #include "ms_builtin.h"
 #include "ms_exec.h"
-#include "ft_sys.h"
+#include "ft_deque.h"
 #include "ft_string.h"
+#include "ft_sys.h"
 
 static int	dup_process_and_run(t_command *cmd, t_fd *fd, int *last_exit_status)
 {
