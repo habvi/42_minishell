@@ -2,7 +2,7 @@
 #include <errno.h> // ECHILD
 #include "minishell.h"
 #include "ft_dprintf.h"
-#include "exec.h"
+#include "ms_exec.h"
 #include "ft_sys.h"
 
 static int	get_last_command_status(\

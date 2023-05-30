@@ -1,5 +1,5 @@
-#ifndef TOKENIZE_H
-# define TOKENIZE_H
+#ifndef MS_TOKENIZE_H
+# define MS_TOKENIZE_H
 
 # include <stdio.h>
 # include <stdlib.h>

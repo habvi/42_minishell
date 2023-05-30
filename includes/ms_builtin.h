@@ -1,5 +1,5 @@
-#ifndef FT_BUILTIN_H
-# define FT_BUILTIN_H
+#ifndef MS_BUILTIN_H
+# define MS_BUILTIN_H
 
 # include <stdbool.h>
 # include "ft_deque.h"

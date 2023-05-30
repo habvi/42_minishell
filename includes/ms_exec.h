@@ -1,5 +1,5 @@
-#ifndef EXEC_H
-# define EXEC_H
+#ifndef MS_EXEC_H
+# define MS_EXEC_H
 
 # include <stdio.h>
 # include <stdlib.h>
