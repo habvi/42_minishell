@@ -35,7 +35,7 @@ SRCS		+=	$(INPUT_DIR)/input.c
 TOKEN_DIR	:=	tokenize
 SRCS		+=	$(TOKEN_DIR)/tokenize.c
 
-OBJ_DIR	:=	obj
+OBJ_DIR	:=	objs
 OBJS	:=	$(SRCS:%.c=$(OBJ_DIR)/%.o)
 
 LIBFT_DIR	:=	libft
