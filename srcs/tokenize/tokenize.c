@@ -1,5 +1,5 @@
 #include "minishell.h"
-#include "deque.h"
+#include "ft_deque.h"
 #include "ft_string.h"
 
 static void	add_split_str_to_command(t_deque *command, char *split_str)

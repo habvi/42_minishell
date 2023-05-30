@@ -2,7 +2,7 @@
 # define FT_BUILTIN_H
 
 # include <stdbool.h>
-# include "deque.h"
+# include "ft_deque.h"
 
 # define STR_ECHO	"echo"
 # define STR_CD		"cd"

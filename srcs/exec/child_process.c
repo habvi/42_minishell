@@ -1,6 +1,6 @@
 #include "ft_string.h"
 #include "ft_builtin.h"
-#include "deque.h"
+#include "ft_deque.h"
 #include "ft_dprintf.h"
 #include "exec.h"
 #include "minishell.h"

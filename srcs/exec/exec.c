@@ -1,5 +1,5 @@
 #include "minishell.h"
-#include "deque.h"
+#include "ft_deque.h"
 #include "ft_builtin.h"
 #include "exec.h"
 #include "ft_sys.h"

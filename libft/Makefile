@@ -1,7 +1,19 @@
 #--------------------------------------------
-# deque
+# ft_ascii
 #--------------------------------------------
-DEQUE_DIR	:=	deque
+ASCII_DIR	:=	ft_ascii
+ASCII_SRC	:=	$(ASCII_DIR)/ft_isalnum.c \
+				$(ASCII_DIR)/ft_isalpha.c \
+				$(ASCII_DIR)/ft_isascii.c \
+				$(ASCII_DIR)/ft_isdigit.c \
+				$(ASCII_DIR)/ft_isprint.c \
+				$(ASCII_DIR)/ft_tolower.c \
+				$(ASCII_DIR)/ft_toupper.c
+
+#--------------------------------------------
+# ft_deque
+#--------------------------------------------
+DEQUE_DIR	:=	ft_deque
 DEQUE_SRC	:=	$(DEQUE_DIR)/dq_add_back.c \
 				$(DEQUE_DIR)/dq_add_front.c \
 				$(DEQUE_DIR)/dq_clear_all.c \
@@ -13,18 +25,6 @@ DEQUE_SRC	:=	$(DEQUE_DIR)/dq_add_back.c \
 				$(DEQUE_DIR)/dq_pop_front.c \
 				$(DEQUE_DIR)/dq_print.c \
 				$(DEQUE_DIR)/dq_set_node.c
-
-#--------------------------------------------
-# ft_ascii
-#--------------------------------------------
-ASCII_DIR	:=	ft_ascii
-ASCII_SRC	:=	$(ASCII_DIR)/ft_isalnum.c \
-				$(ASCII_DIR)/ft_isalpha.c \
-				$(ASCII_DIR)/ft_isascii.c \
-				$(ASCII_DIR)/ft_isdigit.c \
-				$(ASCII_DIR)/ft_isprint.c \
-				$(ASCII_DIR)/ft_tolower.c \
-				$(ASCII_DIR)/ft_toupper.c
 
 #--------------------------------------------
 # ft_lib

@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "deque.h"
+#include "ft_deque.h"
 
 void	deque_clear_node(t_deque_node **node)
 {

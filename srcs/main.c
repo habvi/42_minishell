@@ -1,7 +1,7 @@
 #include "minishell.h"
 #include "tokenize.h"
 #include "exec.h"
-#include "deque.h"
+#include "ft_deque.h"
 #include "ft_dprintf.h"
 #include "ft_builtin.h"
 

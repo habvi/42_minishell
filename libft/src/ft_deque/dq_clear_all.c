@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "deque.h"
+#include "ft_deque.h"
 
 void	deque_clear_all(t_deque **deque)
 {

@@ -1,4 +1,4 @@
-#include "deque.h"
+#include "ft_deque.h"
 
 bool	deque_is_empty(t_deque *deque)
 {
