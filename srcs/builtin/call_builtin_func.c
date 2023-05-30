@@ -2,6 +2,15 @@
 #include "minishell.h"
 #include "ft_string.h"
 
+bool	is_single_builtin(t_deque_node *node, char *cmd)
+{
+	if (!is_builtin_func(cmd))
+		return (false);
+	if (count_pipe(node) > 0)
+		return (false);
+	return (true);
+}
+
 //echo, cd, pwd, export, unset, env, exit
 bool	is_builtin_func(char *cmd)
 {

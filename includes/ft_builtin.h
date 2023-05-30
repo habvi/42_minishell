@@ -20,8 +20,11 @@ typedef enum e_exit_argument
 
 int		ft_echo(char **cmds);
 int		ft_exit(char **cmds, bool *is_exit_shell);
+
 bool	ft_legal_number(const char *str, long *result);
 bool	is_builtin_func(char *cmd);
+bool	is_single_builtin(t_deque_node *node, char *cmd);
+
 int		call_builtin_func(char **command, bool *is_exit_shell);
 
 #endif //FT_BUILTIN_H
