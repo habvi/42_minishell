@@ -1,5 +1,5 @@
-#include "minishell.h"
 #include "deque.h"
+#include "exec.h"
 
 bool	is_first_command(int prev_fd)
 {

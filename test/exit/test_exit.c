@@ -112,6 +112,11 @@ int	main(void)
 	const char *cmds26[10] = {"exit", "+-1"};
 	ok_cnt += test(cmds26, 2, ++test_no);
 
+	const char *cmds27[10] = {"exit", "", "5"};
+	ok_cnt += test(cmds27, 2, ++test_no);
+
+	const char *cmds28[10] = {"exit", "5", ""};
+	ok_cnt += test(cmds28, 1, ++test_no);
 
 
 

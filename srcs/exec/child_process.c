@@ -1,10 +1,9 @@
-#include "minishell.h"
 #include "ft_string.h"
 #include "ft_builtin.h"
 #include "deque.h"
 #include "ft_dprintf.h"
-#include "libft.h"
-#include "ft_builtin.h"
+#include "exec.h"
+#include "minishell.h"
 
 // use PROMPT_NAME
 // if execve erorr, no need for auto perror.
@@ -18,9 +17,9 @@ void	child_process(t_command *cmd, t_fd *fd, char **environ)
 	// debug_2d_array(command);
 	if (handle_child_pipes(cmd, fd) == PROCESS_ERROR)
 		exit(EXIT_FAILURE);
-	if (is_builtin_func(command[0]))
+	if (is_command_builtin(command[0]))
 	{
-		exec_status = call_builtin_func(command, NULL);
+		exec_status = call_builtin_func((const char **)command, NULL);
 		deque_clear_all(&cmd->head_command);
 		exit(exec_status);
 	}

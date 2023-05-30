@@ -2,7 +2,8 @@
 #include <errno.h> // ECHILD
 #include "minishell.h"
 #include "ft_dprintf.h"
-#include "libft.h"
+#include "exec.h"
+#include "ft_sys.h"
 
 static int	get_last_command_status(\
 								pid_t pid, int *status, int *last_exit_status)

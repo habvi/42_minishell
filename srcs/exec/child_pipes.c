@@ -1,5 +1,6 @@
 #include "minishell.h"
-#include "libft.h"
+#include "exec.h"
+#include "ft_sys.h"
 
 static int	handle_child_pipes_except_first(t_fd *fd)
 {
