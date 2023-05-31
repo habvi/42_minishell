@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # setting
-TEST_DIR="test"
+TEST_DIR="test/unit_test"
 PROGRAM_NAME=a.out
 MAKE_OUTPUT=false
 TEST_OUTPUT=false
