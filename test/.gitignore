@@ -1,7 +1,18 @@
-# test.bats
-out
+*
+
+# directries
+!integration_test
+!unit_test
+!unit_test/**/
+
+# files
+!Makefile
+!*.c
+!*.h
+!*.sh
+!*.py
 
 # norm.py
 norm_out.txt
 
-# __pycache__
+integration_test/__pycache__
