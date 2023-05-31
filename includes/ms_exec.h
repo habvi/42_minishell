@@ -1,8 +1,6 @@
-#ifndef EXEC_H
-# define EXEC_H
+#ifndef MS_EXEC_H
+# define MS_EXEC_H
 
-# include <stdio.h>
-# include <stdlib.h>
 # include <stdbool.h>
 # include <unistd.h>
 
@@ -58,4 +56,4 @@ int				exec_builtin_in_parent_proc(t_command cmd, \
 											bool *is_exit_shell);
 size_t			count_pipe(t_deque_node *node);
 
-#endif //EXEC_H
+#endif //MS_EXEC_H

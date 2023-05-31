@@ -1,4 +1,4 @@
-#include "deque.h"
+#include "ft_deque.h"
 
 void	deque_add_back(t_deque *deque, t_deque_node *new_node)
 {

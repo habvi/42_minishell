@@ -1,2 +1,3 @@
 !multistage_pipe_test.py
 .github/
+!workflows/**

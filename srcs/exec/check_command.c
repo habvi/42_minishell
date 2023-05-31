@@ -1,5 +1,5 @@
-#include "deque.h"
-#include "exec.h"
+#include <unistd.h>
+#include "ft_deque.h"
 
 bool	is_first_command(int prev_fd)
 {
