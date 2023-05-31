@@ -11,5 +11,6 @@ bool	ft_atoi(const char *str, int *num);
 char	*ft_itoa_int(int n);
 // if malloc error, return NULL
 char	*ft_itoa(int n);
+bool	ft_strtol(const char *str, long *ret_num, char **endptr);
 
 #endif

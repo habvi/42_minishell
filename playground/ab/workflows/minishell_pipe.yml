@@ -1,0 +1,32 @@
+name: Minishell
+on:
+  push:
+    branches: [ "dev" ]
+  pull_request:
+    branches: [ "dev" ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set-up python
+        uses: actions/setup-python@v3
+
+      - name: Update apt-get
+        run: sudo apt-get update
+
+      - name: Install pip.
+        run: python3 -m pip install --upgrade pip setuptools
+
+      - name: Install valgrind, clang
+        run: sudo apt-get -y install valgrind clang
+
+      - name: Run make
+        run: make
+
+      - name: Run all test of MINISHELL.
+        run: python3 .github/sh/run_all.py

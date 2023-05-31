@@ -29,5 +29,7 @@ char	*ft_strrchr(const char *s, int c);
 char	*ft_strtrim(char const *s1, char const *set);
 // if malloc error, return NULL
 char	*ft_substr(char const *s, unsigned int start, size_t len);
+bool	is_equal_strings(const char *s1, const char *s2);
+size_t	count_2d_array(const char **arr);
 
 #endif
