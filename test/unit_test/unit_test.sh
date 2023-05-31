@@ -5,6 +5,7 @@ TEST_DIR="test/unit_test"
 PROGRAM_NAME=a.out
 MAKE_OUTPUT=false
 TEST_OUTPUT=false
+MAKE_FCLEAN=true
 
 # const
 EXIT_SUCCESS=0
@@ -30,7 +31,14 @@ exec_make() {
     fi
 
     put_result $make_res " Make : "
+
     return $make_res
+}
+
+fclean() {
+    if "${MAKE_FCLEAN}"; then
+        make fclean -C $1 >/dev/null 2>&1
+    fi
 }
 
 exec_test() {
@@ -123,6 +131,7 @@ for dir in *; do
     exec_make $dir
     exec_test $? $dir
     count_result $?
+    fclean $dir
     echo ""
 
 done
