@@ -98,17 +98,9 @@ is_makefile_exist() {
     return 1
 }
 
-if_make_success() {
-    if [ $status -eq $EXIT_SUCCESS ]; then
-        return 0
-    fi
-    return 1
-}
-
 # init
 total_cnt=0
 ok_cnt=0
-status=0
 
 cd $TEST_DIR
 
