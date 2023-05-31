@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "./../../libft/includes/ft_string.h"
+#include "./../../../libft/includes/ft_string.h"
 
 #define COLOR_RED		"\x1b[31m"
 #define COLOR_GREEN		"\x1b[32m"
@@ -35,29 +35,32 @@ static int	test(char *s1, char *s2, int test_no, bool expected)
 
 int	main(void)
 {
-	int	ok = 0;
+	int	ok_cnt = 0;
 	int	test_no = 0;
 
 	printf("=============== true expected ===============\n");
-	ok += test("a", "a", ++test_no, true);
-	ok += test("abc", "abc", ++test_no, true);
-	ok += test("Abc123 ", "Abc123 ", ++test_no, true);
-	ok += test("", "", ++test_no, true);
-	ok += test("abc\0def", "abc\0DEF", ++test_no, true);
+	ok_cnt += test("a", "a", ++test_no, true);
+	ok_cnt += test("abc", "abc", ++test_no, true);
+	ok_cnt += test("Abc123 ", "Abc123 ", ++test_no, true);
+	ok_cnt += test("", "", ++test_no, true);
+	ok_cnt += test("abc\0def", "abc\0DEF", ++test_no, true);
 
 	printf("\n\n=============== false  expected ===============\n\n");
-	ok += test(NULL, NULL, ++test_no, false);
-	ok += test(NULL, "", ++test_no, false);
-	ok += test("a", NULL, ++test_no, false);
-	ok += test("abc", "ABC", ++test_no, false);
-	ok += test("abc", "abcd", ++test_no, false);
-	ok += test("abcd", "abc", ++test_no, false);
-	ok += test("abcdefg", "", ++test_no, false);
-	ok += test("", "            ", ++test_no, false);
-	ok += test("123", "123123", ++test_no, false);
+	ok_cnt += test(NULL, NULL, ++test_no, false);
+	ok_cnt += test(NULL, "", ++test_no, false);
+	ok_cnt += test("a", NULL, ++test_no, false);
+	ok_cnt += test("abc", "ABC", ++test_no, false);
+	ok_cnt += test("abc", "abcd", ++test_no, false);
+	ok_cnt += test("abcd", "abc", ++test_no, false);
+	ok_cnt += test("abcdefg", "", ++test_no, false);
+	ok_cnt += test("", "            ", ++test_no, false);
+	ok_cnt += test("123", "123123", ++test_no, false);
 
 	printf("\n#############################\n");
-	printf("   RESULT: ok %d/ all %d    %s\n", ok, test_no, ok == test_no ? COLOR_GREEN"OK"COLOR_RESET : COLOR_RED"NG"COLOR_RESET);
+	printf("   RESULT: ok_cnt %d/ all %d    %s\n", ok_cnt, test_no, ok_cnt == test_no ? COLOR_GREEN"OK"COLOR_RESET : COLOR_RED"NG"COLOR_RESET);
 	printf("#############################\n");
-	return (0);
+
+	if (test_no != ok_cnt)
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }

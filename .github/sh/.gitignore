@@ -1,8 +1,0 @@
-# test.bats
-out
-
-# norm.py
-norm_out.txt
-
-# __pycache__
-__pycache__/

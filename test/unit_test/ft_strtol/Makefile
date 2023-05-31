@@ -3,19 +3,12 @@ NAME		=	a.out
 CC			=	cc
 CFLAGS		=	-Wall -Wextra -Werror -g -fsanitize=address -fsanitize=undefined
 
-SRCS		=	test_exit.c \
-				./../../srcs/builtin/ft_exit.c \
-				./../../srcs/builtin/ft_legal_number.c
+SRCS		=	test_strtol.c
 
-OBJS		=	test_exit.o \
-				ft_exit.o \
-				ft_legal_number.o
+OBJS		=	$(SRCS:%.c=%.o)
 
-
-LIBFT_DIR	=	./../../libft
-LIBFT		=	$(LIBFT_DIR)/libft.a
-
-INCLUDES	=	-I./../../includes -I./../../libft/includes
+LIBFT_DIR	= ../../../libft
+LIBFT		= $(LIBFT_DIR)/libft.a
 
 all		: $(NAME)
 
@@ -24,7 +17,7 @@ $(NAME)	: $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $^ $(LIBFT)
 
 $(OBJS)	: $(SRCS)
-	$(CC) $(CFLAGS) $(INCLUDES) -c $^
+	$(CC) $(CFLAGS) -c $^
 
 clean	:
 	$(RM) $(OBJS)

@@ -2,10 +2,6 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <limits.h>
-#include <string.h>
-#include <sys/errno.h>
-#include "./../../libft/includes/ft_lib.h"
-#include "./../../libft/includes/ft_ascii.h"
 #include "ms_builtin.h"
 
 #define COLOR_RED		"\x1b[31m"
@@ -15,11 +11,6 @@
 #define COLOR_MAGENTA	"\x1b[35m"
 #define COLOR_CYAN		"\x1b[36m"
 #define COLOR_RESET		"\x1b[0m"
-
-static bool	is_whitespace(char c)
-{
-	return (c == ' ' || c == '\t');
-}
 
 static char	*get_bool_char(bool b)
 {
@@ -75,5 +66,8 @@ int	main(void)
 	printf("############################################\n");
 	printf(" TEST RESULT :: OK %d/ ALL %d     %s\n", ok_cnt, test_no, test_no == ok_cnt ? "\x1b[32mALL OK :)\x1b[0m" : "\x1b[31mNG :X\x1b[0m");
 	printf("############################################\n\n");
-	return (0);
+
+	if (test_no != ok_cnt)
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }

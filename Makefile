@@ -97,27 +97,27 @@ norm	: all
 #	./.github/sh/test.bats
 
 t		: all
-	./.github/sh/unit_test.sh
+	./test/unit_test/unit_test.sh
 
 # test all
 .PHONY		: test_all
 test_all	: all
-	python3 ./.github/sh/run_all.py
+	python3 ./test/integration_test/run_all.py
 
 # test multi pipe
 .PHONY		: test_pipe
 test_pipe	: all
-	python3 ./.github/sh/run_pipe.py
+	python3 ./test/integration_test/run_pipe.py
 
 # test builtin echo
 .PHONY		: test_echo
 test_echo	: all
-	python3 ./.github/sh/run_echo.py
+	python3 ./test/integration_test/run_echo.py
 
 # test builtin exit
 .PHONY		: test_exit
 test_exit	: all
-	python3 ./.github/sh/run_exit.py
+	python3 ./test/integration_test/run_exit.py
 
 
 -include $(DEPS)

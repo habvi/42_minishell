@@ -1,0 +1,18 @@
+*
+
+# directries
+!integration_test
+!unit_test
+!unit_test/**/
+
+# files
+!Makefile
+!*.c
+!*.h
+!*.sh
+!*.py
+
+# norm.py
+norm_out.txt
+
+integration_test/__pycache__
