@@ -1,5 +1,5 @@
-#ifndef DEQUE_H
-# define DEQUE_H
+#ifndef FT_DEQUE_H
+# define FT_DEQUE_H
 
 # include <stddef.h>
 # include <stdbool.h>

@@ -1,4 +1,4 @@
-PREFIX		:=	../../libft/src/deque
+PREFIX		:=	../../libft/src/ft_deque
 SRCS		:=	test.c \
 				$(PREFIX)/dq_add_back.c \
 				$(PREFIX)/dq_add_front.c \

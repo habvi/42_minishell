@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "deque.h"
+#include "ft_deque.h"
 
 t_deque_node	*deque_node_new(void *content)
 {

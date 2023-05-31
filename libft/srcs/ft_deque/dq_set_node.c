@@ -1,4 +1,4 @@
-#include "deque.h"
+#include "ft_deque.h"
 
 void	deque_set_next(t_deque_node *node, t_deque_node *new_node)
 {

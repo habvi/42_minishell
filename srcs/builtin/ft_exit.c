@@ -1,8 +1,6 @@
-#include <stdio.h>
 #include <stdlib.h>
-#include "ft_builtin.h"
+#include "ms_builtin.h"
 #include "ft_dprintf.h"
-#include "minishell.h"
 #include "ft_string.h"
 
 // {"exit", "valid_arg", "invalid_arg1", "invalid_arg2", ..., NULL};

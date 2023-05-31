@@ -1,4 +1,4 @@
-#include "deque.h"
+#include "ft_deque.h"
 
 t_deque_node	*deque_pop_last_node(t_deque *deque)
 {

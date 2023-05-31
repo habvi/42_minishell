@@ -1,7 +1,6 @@
-#include "deque.h"
-#include "exec.h"
-#include "ft_sys.h"
+#include "ft_deque.h"
 #include "ft_string.h"
+#include "ft_sys.h"
 
 // | command                  -> not handle yet
 // command arg                -> return NULL

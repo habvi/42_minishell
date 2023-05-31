@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "deque.h"
+#include "ft_deque.h"
 #include "ft_dprintf.h"
 
 void	deque_print(t_deque *deque)

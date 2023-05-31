@@ -1,7 +1,6 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "minishell.h"
-#include "libft.h"
 
 char	*input_line(void)
 {

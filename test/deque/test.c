@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "deque.h"
+#include "ft_deque.h"
 
 static t_deque	*init_test()
 {

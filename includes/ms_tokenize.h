@@ -1,10 +1,5 @@
-#ifndef TOKENIZE_H
-# define TOKENIZE_H
-
-# include <stdio.h>
-# include <stdlib.h>
-# include <stdbool.h>
-# include <unistd.h>
+#ifndef MS_TOKENIZE_H
+# define MS_TOKENIZE_H
 
 typedef struct s_deque	t_deque;
 
@@ -30,4 +25,4 @@ typedef struct s_token {
 /* tokenize */
 t_deque	*tokenize(char *line);
 
-#endif
+#endif //MS_TOKENIZE_H

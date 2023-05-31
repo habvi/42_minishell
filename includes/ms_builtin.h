@@ -1,8 +1,7 @@
-#ifndef FT_BUILTIN_H
-# define FT_BUILTIN_H
+#ifndef MS_BUILTIN_H
+# define MS_BUILTIN_H
 
 # include <stdbool.h>
-# include "deque.h"
 
 # define STR_ECHO	"echo"
 # define STR_CD		"cd"
@@ -22,6 +21,8 @@
 
 # define BYTE_MASK				(0xFF)
 
+typedef struct s_deque_node	t_deque_node;
+
 typedef enum e_exit_argument
 {
 	EXIT_VALID_ARG,
@@ -38,4 +39,4 @@ bool	is_single_builtin(t_deque_node *node);
 
 int		call_builtin_func(const char **command, bool *is_exit_shell);
 
-#endif //FT_BUILTIN_H
+#endif //MS_BUILTIN_H
