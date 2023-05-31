@@ -12,7 +12,7 @@
 
 // temporarily here ...
 /* debug */
-void    debug_func(const char *func_name, const int line_num);
+void	debug_func(const char *func_name, const int line_num);
 void	debug_2d_array(char **array);
 
 /* input */
