@@ -7,7 +7,7 @@ SRCS		=	test_strtol.c
 
 OBJS		=	$(SRCS:%.c=%.o)
 
-LIBFT_DIR	= ../../libft
+LIBFT_DIR	= ../../../libft
 LIBFT		= $(LIBFT_DIR)/libft.a
 
 all		: $(NAME)

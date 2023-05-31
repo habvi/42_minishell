@@ -3,9 +3,7 @@
 #include <stdbool.h>
 #include <limits.h>
 #include <string.h>
-#include <sys/errno.h>
-#include "./../../libft/includes/ft_lib.h"
-#include "./../../libft/includes/ft_ascii.h"
+#include "./../../../libft/includes/ft_lib.h"
 
 #define COLOR_RED		"\x1b[31m"
 #define COLOR_GREEN		"\x1b[32m"

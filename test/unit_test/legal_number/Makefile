@@ -4,14 +4,14 @@ CC			=	cc
 CFLAGS		=	-Wall -Wextra -Werror -g -fsanitize=address -fsanitize=undefined
 
 SRCS		=	test_legal_number.c \
-				../../srcs/builtin/ft_legal_number.c
+				../../../srcs/builtin/ft_legal_number.c
 
 OBJS		=	test_legal_number.o \
 				ft_legal_number.o
 
-INCLUDE		=	-I../../includes -I../../libft/includes
+INCLUDE		=	-I../../../includes -I../../../libft/includes
 
-LIBFT_DIR	= ../../libft
+LIBFT_DIR	= ../../../libft
 LIBFT		= $(LIBFT_DIR)/libft.a
 
 all		: $(NAME)

@@ -8,7 +8,7 @@ SRCS		=	test_eq_str.c
 
 OBJS		=	$(SRCS:%.c=%.o)
 
-LIBFT_DIR	= ../../libft
+LIBFT_DIR	= ../../../libft
 LIBFT		= $(LIBFT_DIR)/libft.a
 
 all		: $(NAME)

@@ -2,10 +2,6 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <limits.h>
-#include <string.h>
-#include <sys/errno.h>
-#include "./../../libft/includes/ft_lib.h"
-#include "./../../libft/includes/ft_ascii.h"
 #include "ms_builtin.h"
 
 #define COLOR_RED		"\x1b[31m"

@@ -1,4 +1,4 @@
-PREFIX		:=	../../libft/srcs/ft_deque
+PREFIX		:=	../../../libft/srcs/ft_deque
 SRCS		:=	test.c \
 				$(PREFIX)/dq_add_back.c \
 				$(PREFIX)/dq_add_front.c \
@@ -13,10 +13,10 @@ SRCS		:=	test.c \
 				$(PREFIX)/dq_set_node.c
 
 # SRC_DIR		:=	src
-OBJ_DIR		:=	../../libft/objs
+OBJ_DIR		:=	../../../libft/objs
 OBJS		:=	$(SRCS:%.c=$(OBJ_DIR)/%.o)
 
-LIBFT_DIR	:= ../../libft
+LIBFT_DIR	:= ../../../libft
 LIBFT		:= $(LIBFT_DIR)/libft.a
 
 INCLUDE_DIR	:=	includes
