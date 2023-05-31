@@ -10,7 +10,7 @@ size_t	count_pipe(t_deque_node *node)
 	cnt = 0;
 	while (node)
 	{
-		if (is_equal_strings(node->content, "|"))
+		if (ft_streq(node->content, "|"))
 			cnt++;
 		node = node->next;
 	}

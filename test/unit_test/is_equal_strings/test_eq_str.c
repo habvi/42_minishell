@@ -20,7 +20,7 @@ static char	*get_bool_str(bool b)
 
 static int	test(char *s1, char *s2, int test_no, bool expected)
 {
-	bool	ret = is_equal_strings(s1, s2);
+	bool	ret = ft_streq(s1, s2);
 	printf(" [TEST %02d] ret = %s, %s\n", \
 	test_no, get_bool_str(ret), \
 	ret == expected ? COLOR_GREEN"OK"COLOR_RESET : COLOR_RED"NG"COLOR_RESET);

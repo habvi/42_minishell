@@ -22,7 +22,7 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 char	*ft_strrchr(const char *s, int c);
 char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
-bool	is_equal_strings(const char *s1, const char *s2);
+bool	ft_streq(const char *s1, const char *s2);
 size_t	count_2d_array(const char **arr);
 
 #endif

@@ -9,7 +9,7 @@
 t_deque_node	*get_next_command(t_deque_node *cmd, size_t *cmd_size)
 {
 	*cmd_size = 0;
-	while (cmd && !is_equal_strings(cmd->content, "|"))
+	while (cmd && !ft_streq(cmd->content, "|"))
 	{
 		cmd = cmd->next;
 		(*cmd_size)++;

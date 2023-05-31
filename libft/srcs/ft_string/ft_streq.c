@@ -3,7 +3,7 @@
 
 /* Returns bool true if s1 == s2, otherwise false.  */
 /* If s1 or s2 is NULL, returns false.              */
-bool	is_equal_strings(const char *s1, const char *s2)
+bool	ft_streq(const char *s1, const char *s2)
 {
 	size_t	i;
 
