@@ -7,6 +7,7 @@
 # define PIPE_ERROR		(-1)
 # define PROCESS_ERROR	(-1)
 # define FATAL_ERROR	(-1)
+# define UNREACHABLE	FATAL_ERROR
 
 # define PROMPT_NAME    "minishell "
 
