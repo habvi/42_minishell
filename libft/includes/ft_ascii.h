@@ -8,6 +8,7 @@ bool	ft_isalpha(int c);
 bool	ft_isascii(int c);
 bool	ft_isdigit(int c);
 bool	ft_isprint(int c);
+
 int		ft_tolower(int c);
 int		ft_toupper(int c);
 
