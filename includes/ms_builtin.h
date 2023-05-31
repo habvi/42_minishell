@@ -3,13 +3,13 @@
 
 # include <stdbool.h>
 
-# define STR_ECHO	"echo"
-# define STR_CD		"cd"
-# define STR_PWD	"pwd"
-# define STR_EXPORT	"export"
-# define STR_UNSET	"unset"
-# define STR_ENV	"env"
-# define STR_EXIT	"exit"
+# define CMD_ECHO	"echo"
+# define CMD_CD		"cd"
+# define CMD_PWD	"pwd"
+# define CMD_EXPORT	"export"
+# define CMD_UNSET	"unset"
+# define CMD_ENV	"env"
+# define CMD_EXIT	"exit"
 
 // todo: naming...
 # define EXIT_ONLY_CMD_CNT		1
