@@ -20,19 +20,19 @@ bool	is_command_builtin(const char *cmd)
 {
 	if (!cmd)
 		return (false);
-	if (is_equal_strings(cmd, STR_ECHO))
+	if (ft_streq(cmd, CMD_ECHO))
 		return (true);
-	if (is_equal_strings(cmd, STR_CD))
+	if (ft_streq(cmd, CMD_CD))
 		return (true);
-	if (is_equal_strings(cmd, STR_PWD))
+	if (ft_streq(cmd, CMD_PWD))
 		return (true);
-	if (is_equal_strings(cmd, STR_EXPORT))
+	if (ft_streq(cmd, CMD_EXPORT))
 		return (true);
-	if (is_equal_strings(cmd, STR_UNSET))
+	if (ft_streq(cmd, CMD_UNSET))
 		return (true);
-	if (is_equal_strings(cmd, STR_ENV))
+	if (ft_streq(cmd, CMD_ENV))
 		return (true);
-	if (is_equal_strings(cmd, STR_EXIT))
+	if (ft_streq(cmd, CMD_EXIT))
 		return (true);
 	return (false);
 }
@@ -41,19 +41,19 @@ int	call_builtin_func(const char **command, bool *is_exit_shell)
 {
 	if (!command)
 		return (FATAL_ERROR);
-	if (is_equal_strings(command[0], STR_ECHO))
+	if (ft_streq(command[0], CMD_ECHO))
 		return (ft_echo(command));
-//	if (is_equal_strings(command[0], STR_CD))
+//	if (ft_streq(command[0], CMD_CD))
 //		return (true);
-//	if (is_equal_strings(command[0], STR_PWD))
+//	if (ft_streq(command[0], CMD_PWD))
 //		return (true);
-//	if (is_equal_strings(command[0], STR_EXPORT))
+//	if (ft_streq(command[0], CMD_EXPORT))
 //		return (true);
-//	if (is_equal_strings(command[0], STR_UNSET))
+//	if (ft_streq(command[0], CMD_UNSET))
 //		return (true);
-//	if (is_equal_strings(command[0], STR_ENV))
+//	if (ft_streq(command[0], CMD_ENV))
 //		return (true);
-	if (is_equal_strings(command[0], STR_EXIT))
+	if (ft_streq(command[0], CMD_EXIT))
 		return (ft_exit(command, is_exit_shell));
-	return (FATAL_ERROR);
+	return (UNREACHABLE);
 }

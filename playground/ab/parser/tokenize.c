@@ -6,13 +6,13 @@ static t_node_kind	get_kind(char *str)
 {
 	if (str == NULL)
 		return (NODE_EOF);
-	if (is_equal_strings(str, "+"))
+	if (ft_streq(str, "+"))
 		return (NODE_ADD);
-	if (is_equal_strings(str, "-"))
+	if (ft_streq(str, "-"))
 		return (NODE_SUB);
-	if (is_equal_strings(str, "*"))
+	if (ft_streq(str, "*"))
 		return (NODE_MUL);
-	if (is_equal_strings(str, "/"))
+	if (ft_streq(str, "/"))
 		return (NODE_DIV);
 	return (NODE_NONE);
 }

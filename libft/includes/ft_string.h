@@ -11,9 +11,9 @@ void	*free_2d_array(char ***ptr);
 /* compare */
 char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);
+bool	ft_streq(const char *s1, const char *s2);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
-bool	is_equal_strings(const char *s1, const char *s2);
 
 /* iterator */
 void	ft_striteri(char *s, void (*f)(unsigned int, char*));

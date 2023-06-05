@@ -3,7 +3,7 @@
 
 static bool	next_token_bool(t_token **token, char *op)
 {
-	if (is_equal_strings((*token)->str, op))
+	if (ft_streq((*token)->str, op))
 	{
 		*token = (*token)->next;
 		return (true);
