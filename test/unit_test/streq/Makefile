@@ -4,7 +4,7 @@ NAME		=	a.out
 CC			=	cc
 CFLAGS		=	-Wall -Wextra -Werror -g -fsanitize=address -fsanitize=undefined
 
-SRCS		=	test_eq_str.c
+SRCS		=	test_streq.c
 
 OBJS		=	$(SRCS:%.c=%.o)
 
