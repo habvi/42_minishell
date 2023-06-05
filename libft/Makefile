@@ -1,7 +1,19 @@
 #--------------------------------------------
-# deque
+# ft_ascii
 #--------------------------------------------
-DEQUE_DIR	:=	deque
+ASCII_DIR	:=	ft_ascii
+ASCII_SRC	:=	$(ASCII_DIR)/ft_isalnum.c \
+				$(ASCII_DIR)/ft_isalpha.c \
+				$(ASCII_DIR)/ft_isascii.c \
+				$(ASCII_DIR)/ft_isdigit.c \
+				$(ASCII_DIR)/ft_isprint.c \
+				$(ASCII_DIR)/ft_tolower.c \
+				$(ASCII_DIR)/ft_toupper.c
+
+#--------------------------------------------
+# ft_deque
+#--------------------------------------------
+DEQUE_DIR	:=	ft_deque
 DEQUE_SRC	:=	$(DEQUE_DIR)/dq_add_back.c \
 				$(DEQUE_DIR)/dq_add_front.c \
 				$(DEQUE_DIR)/dq_clear_all.c \
@@ -15,18 +27,6 @@ DEQUE_SRC	:=	$(DEQUE_DIR)/dq_add_back.c \
 				$(DEQUE_DIR)/dq_set_node.c
 
 #--------------------------------------------
-# ft_ascii
-#--------------------------------------------
-ASCII_DIR	:=	ft_ascii
-ASCII_SRC	:=	$(ASCII_DIR)/ft_isalnum.c \
-				$(ASCII_DIR)/ft_isalpha.c \
-				$(ASCII_DIR)/ft_isascii.c \
-				$(ASCII_DIR)/ft_isdigit.c \
-				$(ASCII_DIR)/ft_isprint.c \
-				$(ASCII_DIR)/ft_tolower.c \
-				$(ASCII_DIR)/ft_toupper.c
-
-#--------------------------------------------
 # ft_lib
 #--------------------------------------------
 LIB_DIR		:=	ft_lib
@@ -34,7 +34,8 @@ LIB_SRC		:=	$(LIB_DIR)/ft_atoi_old.c \
 				$(LIB_DIR)/ft_atoi_strictly.c \
 				$(LIB_DIR)/ft_atoi.c \
 				$(LIB_DIR)/ft_itoa_int.c \
-				$(LIB_DIR)/ft_itoa.c
+				$(LIB_DIR)/ft_itoa.c \
+				$(LIB_DIR)/ft_strtol.c
 
 #--------------------------------------------
 # ft_list
@@ -86,6 +87,7 @@ STRING_SRC	:=	$(STRING_DIR)/ft_free.c \
 				$(STRING_DIR)/ft_split.c \
 				$(STRING_DIR)/ft_strchr.c \
 				$(STRING_DIR)/ft_strdup.c \
+				$(STRING_DIR)/ft_streq.c \
 				$(STRING_DIR)/ft_striteri.c \
 				$(STRING_DIR)/ft_strjoin.c \
 				$(STRING_DIR)/ft_strlcat.c \
@@ -99,7 +101,8 @@ STRING_SRC	:=	$(STRING_DIR)/ft_free.c \
 				$(STRING_DIR)/ft_strnstr.c \
 				$(STRING_DIR)/ft_strrchr.c \
 				$(STRING_DIR)/ft_strtrim.c \
-				$(STRING_DIR)/ft_substr.c
+				$(STRING_DIR)/ft_substr.c \
+				$(STRING_DIR)/count_2d_array.c
 
 #--------------------------------------------
 # ft_dprintf
@@ -150,22 +153,22 @@ SYS_SRC	:=	$(SYS_DIR)/x_access.c \
 #--------------------------------------------
 NAME		:=	libft.a
 
-SRC_DIR		:=	src
-OBJ_DIR		:=	obj
-OBJS		:=	$(DEQUE_SRC:%.c=$(OBJ_DIR)/%.o) \
-				$(ASCII_SRC:%.c=$(OBJ_DIR)/%.o) \
-				$(LIB_SRC:%.c=$(OBJ_DIR)/%.o) \
-				$(LIST_SRC:%.c=$(OBJ_DIR)/%.o) \
-				$(MATH_SRC:%.c=$(OBJ_DIR)/%.o) \
-				$(MEM_SRC:%.c=$(OBJ_DIR)/%.o) \
-				$(PUT_SRC:%.c=$(OBJ_DIR)/%.o) \
-				$(STRING_SRC:%.c=$(OBJ_DIR)/%.o) \
-				$(FT_DPRINTF_SRC:%.c=$(OBJ_DIR)/%.o) \
-				$(SYS_SRC:%.c=$(OBJ_DIR)/%.o)
+SRCS_DIR	:=	srcs
+OBJS_DIR	:=	objs
+OBJS		:=	$(DEQUE_SRC:%.c=$(OBJS_DIR)/%.o) \
+				$(ASCII_SRC:%.c=$(OBJS_DIR)/%.o) \
+				$(LIB_SRC:%.c=$(OBJS_DIR)/%.o) \
+				$(LIST_SRC:%.c=$(OBJS_DIR)/%.o) \
+				$(MATH_SRC:%.c=$(OBJS_DIR)/%.o) \
+				$(MEM_SRC:%.c=$(OBJS_DIR)/%.o) \
+				$(PUT_SRC:%.c=$(OBJS_DIR)/%.o) \
+				$(STRING_SRC:%.c=$(OBJS_DIR)/%.o) \
+				$(FT_DPRINTF_SRC:%.c=$(OBJS_DIR)/%.o) \
+				$(SYS_SRC:%.c=$(OBJS_DIR)/%.o)
 
 #--------------------------------------------
-INCLUDE_DIR	:=	includes
-INCLUDES	:=	-I$(INCLUDE_DIR)/
+INCLUDES_DIR	:=	includes
+INCLUDES		:=	-I$(INCLUDES_DIR)/
 
 DEPS		:=	$(OBJS:.o=.d)
 
@@ -175,20 +178,12 @@ CFLAGS		:=	-Wall -Wextra -Werror -MMD -MP
 ARFLAGS		:=	rcs
 MKDIR		:=	mkdir -p
 
-# ifeq ($(MAKECMDGOALS), gcc)
-# 	CC	:=	gcc
-# endif
-
-# ifeq ($(MAKECMDGOALS), clang)
-# 	CC	:=	clang
-# endif
-
 #--------------------------------------------
 all: $(NAME)
 
 -include $(DEPS)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+$(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
 	@$(MKDIR) $(dir $@)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
@@ -196,7 +191,7 @@ $(NAME): $(OBJS)
 	$(AR) $(ARFLAGS) $(NAME) $(OBJS)
 
 clean:
-	$(RM) -r $(OBJ_DIR)
+	$(RM) -r $(OBJS_DIR)
 
 fclean: clean
 	$(RM) $(NAME)
@@ -209,10 +204,3 @@ info:
 	$(info >>> obj : $(OBJS))
 
 .PHONY: all clean fclean re info
-
-
-# gcc: re
-# .PHONY: gcc
-
-# clang: re
-# .PHONY: clang
