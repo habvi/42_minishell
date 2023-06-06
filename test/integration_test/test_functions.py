@@ -6,7 +6,7 @@ import subprocess
 # OUT_FILE = "pipe_test_out.txt"
 PATH_MINISHELL = "./minishell"
 BASH_INIT_FILE = 'bash_init_file'
-PATH_BASH = ["bash", "--init-file", BASH_INIT_FILE, "-i"]
+PATH_BASH = ["/bin/bash", "--init-file", BASH_INIT_FILE, "-i"]
 PATH_BASH_LEAK = "bash"
 
 # ----------------------------------------------------------
@@ -14,6 +14,7 @@ MINISHELL_PROMPT_PREFIX = "minishell "
 MINISHELL_ERROR_PREFIX = "minishell: "
 BASH_PROMPT_PREFIX = "bash "
 BASH_ERROR_PREFIX = "bash: "
+GITHUB_ERROR_PREFIX = ["cannot set terminal", "no job"]
 
 # ----------------------------------------------------------
 STDOUT = 0
@@ -137,7 +138,14 @@ def get_eval_stderr(stderr, prompt_prefix, error_prefix):
     if len(errors) > 0 and len(errors[-1]) == 0:
         del errors[-1]
     # print(f'errors:[{errors}]')
-    err_list = [err for err in errors if not err.startswith(prompt_prefix)]
+
+    # err_list = [err for err in errors if not err.startswith(prompt_prefix)]
+    err_list = []
+    for err in errors:
+        if err.startswith(prompt_prefix):
+            continue
+        err_list.append(err)
+
     # print(f'err_ls:[{err_list}]')
     for i in range(len(err_list)):
         # print(errors[i])
@@ -145,7 +153,13 @@ def get_eval_stderr(stderr, prompt_prefix, error_prefix):
             err_list[i] = err_list[i].removeprefix(error_prefix)
     # print(f'err_ls:[{err_list}]')
 
-    return err_list
+    ret = []
+    for err in err_list:
+        if any(err.startswith(prefix) for prefix in GITHUB_ERROR_PREFIX):
+            continue
+        ret.append(err)
+
+    return ret
 
 # ----------------------------------------------------------
 # run
