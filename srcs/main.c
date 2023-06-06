@@ -10,12 +10,10 @@ static int	minishell(void)
 	t_deque	*command;
 	char	*line;
 	int		process_status;
-	bool	is_exit_shell;
 
 	command = NULL;
 	process_status = EXIT_SUCCESS;
-	is_exit_shell = false;
-	while (!is_exit_shell)
+	while (true)
 	{
 		line = input_line();
 		if (!line)
@@ -25,12 +23,11 @@ static int	minishell(void)
 		if (!command)
 			return (EXIT_FAILURE);
 		// parse()
-		process_status = execute_command(command, &is_exit_shell);
+		process_status = execute_command(command);
 		deque_clear_all(&command);
 		if (process_status == PROCESS_ERROR)
 			return (EXIT_FAILURE);
 	}
-	ft_dprintf(STDERR_FILENO, "exit\n");
 	return (process_status);
 }
 

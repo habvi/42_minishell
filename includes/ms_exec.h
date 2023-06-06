@@ -36,7 +36,7 @@ int				handle_child_pipes(t_command *cmd, t_fd *fd);
 // child_proces.c
 void			child_process(t_command *cmd, t_fd *fd, char **environ);
 // exec.c
-int				execute_command(t_deque *command, bool *is_exit_shell);
+int				execute_command(t_deque *command);
 t_deque_node	*get_next_command(t_deque_node *cmd, size_t *cmd_size);
 char			**convert_command_to_array(t_deque_node *node, \
 											const size_t size);
@@ -53,7 +53,7 @@ int				parent_process(\
 // exec_builtin_in_parent_proc
 int				exec_builtin_in_parent_proc(t_command cmd, \
 											t_deque_node *node, \
-											bool *is_exit_shell);
+											bool is_interactive);
 size_t			count_pipe(t_deque_node *node);
 
 #endif //MS_EXEC_H

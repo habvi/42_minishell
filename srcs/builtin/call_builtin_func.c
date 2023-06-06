@@ -37,7 +37,8 @@ bool	is_command_builtin(const char *cmd)
 	return (false);
 }
 
-int	call_builtin_func(const char **command, bool *is_exit_shell)
+// todo: char *const
+int	call_builtin_func(const char **command, bool is_interactive)
 {
 	if (!command)
 		return (FATAL_ERROR);
@@ -54,6 +55,6 @@ int	call_builtin_func(const char **command, bool *is_exit_shell)
 //	if (ft_streq(command[0], CMD_ENV))
 //		return (true);
 	if (ft_streq(command[0], CMD_EXIT))
-		return (ft_exit(command, is_exit_shell));
+		return (ft_exit(command, is_interactive));
 	return (UNREACHABLE);
 }
