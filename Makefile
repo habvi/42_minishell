@@ -87,7 +87,7 @@ sani	:
 
 .PHONY	: norm
 norm	: all
-	python3 .github/sh/norm.py
+	python3 ./test/integration_test/norm.py
 
 
 #--------------------------------------------
