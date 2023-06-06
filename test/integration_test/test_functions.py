@@ -118,7 +118,6 @@ def run_bash_with_valgrind(stdin, cmd):
 def run_both_with_valgrind(stdin):
     print("===== leak test =====")
     if shutil.which("valgrind") is None:
-        # print("valgrind not found")
         return None, None
 
     leak_res_minishell = run_minishell_with_valgrind(stdin, PATH_MINISHELL)
@@ -134,7 +133,7 @@ def get_eval_stderr(stderr, prompt_prefix, error_prefix):
         return None
 
     errors = stderr.split('\n')
-    print(f'errors:[{errors}]')
+    # print(f'errors:[{errors}]')
     if len(errors) > 0 and len(errors[-1]) == 0:
         del errors[-1]
     # print(f'errors:[{errors}]')
@@ -190,17 +189,17 @@ def run_shell(name, stdin, cmd, prompt_pfx, err_pfx):
     res = run_cmd(stdin, cmd)
     if res:
         print(f'=== {name} ===')
-        print(cmd, len(res[STDOUT]), "byte")
-        print(f' stdout:[{COLOR_DICT[CYAN] + res[STDOUT] + COLOR_DICT["end"]}]')
+        print(f' stdin  : [{stdin}]')
+        print(f' stdout : [{COLOR_DICT[CYAN] + res[STDOUT] + COLOR_DICT["end"]}]')
         errors = get_eval_stderr(res[STDERR], prompt_pfx, err_pfx)
-        print(" stderr:[", end='')
+        print(" stderr : [", end='')
         for i in range(len(errors)):
             print(COLOR_DICT[MAGENTA] + errors[i] + COLOR_DICT["end"], end='')
             if i + 1 < len(errors):
                 print()
         print("]")
-        print(f' status:{res[STATUS]}')
-        print(f' exited:{res[IS_EXITED]}')
+        print(f' status : {res[STATUS]}')
+        print(f' exited : {res[IS_EXITED]}')
         res[STDERR] = errors
         return res
     return None
@@ -308,6 +307,36 @@ def put_total_result(val):
 
 # ----------------------------------------------------------
 
+def output_test(test_input_list):
+    test_num = 1
+    ok = 0
+    ko = 0
+    val = [test_num, ok, ko]
+
+    for stdin in test_input_list:
+        m_res, b_res = run_both(stdin)
+        put_result(val, m_res, b_res)
+
+    return put_total_result(val)
+
+
+def leak_test(test_input_list):
+    leak_test_num = 1
+    leak_ok = 0
+    leak_ko = 0
+    leak_skip = 0
+    val_leak = [leak_test_num, leak_ok, leak_ko, leak_skip]
+
+    for stdin in test_input_list:
+        m_res, b_res = run_both_with_valgrind(stdin)
+        print(f'm_res:{m_res}')
+        put_leak_result(val_leak, m_res, b_res)
+
+    return put_total_leak_result(val_leak)
+
+
+# ----------------------------------------------------------
+
 def test(test_name, test_input_list):
     try:
         with open(BASH_INIT_FILE, "w") as init_file:
@@ -316,31 +345,8 @@ def test(test_name, test_input_list):
         test_res = 0
         print(f' ========================= {test_name} ========================= ')
 
-        # output test
-        test_num = 1
-        ok = 0
-        ko = 0
-        val = [test_num, ok, ko]
-
-        for stdin in test_input_list:
-            m_res, b_res = run_both(stdin)
-            put_result(val, m_res, b_res)
-
-        test_res |= put_total_result(val)
-
-        # leak test
-        leak_test_num = 1
-        leak_ok = 0
-        leak_ko = 0
-        leak_skip = 0
-        val_leak = [leak_test_num, leak_ok, leak_ko, leak_skip]
-
-        for stdin in test_input_list:
-            m_res, b_res = run_both_with_valgrind(stdin)
-            print(f'm_res:{m_res}')
-            put_leak_result(val_leak, m_res, b_res)
-
-        test_res |= put_total_leak_result(val_leak)
+        test_res |= output_test(test_input_list)
+        test_res |= leak_test(test_input_list)
         print()
 
     finally:
