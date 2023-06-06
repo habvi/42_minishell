@@ -85,7 +85,7 @@ static bool	is_exit(t_exit_arg res)
 
 // cmds[0] == "exit"
 
-int	ft_exit(const char **cmds, bool *is_exit_shell)
+int	ft_exit(const char **cmds, bool is_interactive)
 {
 	int			status;
 	t_exit_arg	arg_result;
@@ -93,9 +93,11 @@ int	ft_exit(const char **cmds, bool *is_exit_shell)
 	arg_result = validate_argument(cmds);
 	status = EXIT_SUCCESS; // todo: get latest status
 	status = get_exit_status(cmds[EXIT_ARG_IDX], arg_result, status);
+	if (is_interactive)
+		ft_dprintf(STDERR_FILENO, "exit\n");
 	put_exit_err(cmds[EXIT_ARG_IDX], arg_result);
-	if (is_exit_shell)
-		*is_exit_shell = is_exit(arg_result);
-	return (status);
+	if (!is_exit(arg_result))
+		return (status);
+	exit (status);
 }
 // todo: return to main, exit prompt loop and put 'exit\n' to stderr
