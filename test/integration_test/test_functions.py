@@ -127,8 +127,35 @@ def run_both_with_valgrind(stdin):
 
 
 # ----------------------------------------------------------
+# remove prompt and error prefix
 
-# rm prompt and error prefix
+def remove_prompt_prefix(err_list, prompt_prefix):
+    ret = []
+    for err in err_list:
+        if err.startswith(prompt_prefix):
+            continue
+        ret.append(err)
+    return ret
+
+
+def remove_error_prefix(err_list, error_prefix):
+    ret = []
+    for err in err_list:
+        if err.startswith(error_prefix):
+            err = err.removeprefix(error_prefix)
+        ret.append(err)
+    return ret
+
+
+def remove_github_error(err_list, err_prefixes):
+    ret = []
+    for err in err_list:
+        if any(err.startswith(prefix) for prefix in err_prefixes):
+            continue
+        ret.append(err)
+    return ret
+
+
 def get_eval_stderr(stderr, prompt_prefix, error_prefix):
     if stderr is None:
         return None
@@ -137,29 +164,12 @@ def get_eval_stderr(stderr, prompt_prefix, error_prefix):
     # print(f'errors:[{errors}]')
     if len(errors) > 0 and len(errors[-1]) == 0:
         del errors[-1]
-    # print(f'errors:[{errors}]')
 
-    # err_list = [err for err in errors if not err.startswith(prompt_prefix)]
-    err_list = []
-    for err in errors:
-        if err.startswith(prompt_prefix):
-            continue
-        err_list.append(err)
+    err_list = remove_prompt_prefix(errors, prompt_prefix)
+    err_list = remove_error_prefix(err_list, error_prefix)
+    err_list = remove_github_error(err_list, GITHUB_ERROR_PREFIX)
 
-    # print(f'err_ls:[{err_list}]')
-    for i in range(len(err_list)):
-        # print(errors[i])
-        if err_list[i].startswith(error_prefix):
-            err_list[i] = err_list[i].removeprefix(error_prefix)
-    # print(f'err_ls:[{err_list}]')
-
-    ret = []
-    for err in err_list:
-        if any(err.startswith(prefix) for prefix in GITHUB_ERROR_PREFIX):
-            continue
-        ret.append(err)
-
-    return ret
+    return err_list
 
 # ----------------------------------------------------------
 # run
