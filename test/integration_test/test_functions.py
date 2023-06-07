@@ -1,16 +1,26 @@
-import subprocess
+import os
 import shutil
+import subprocess
 
 # ----------------------------------------------------------
 # OUT_FILE = "pipe_test_out.txt"
 PATH_MINISHELL = "./minishell"
-PATH_BASH = "bash"
+BASH_INIT_FILE = 'bash_init_file'
+PATH_BASH = ["/bin/bash", "--init-file", BASH_INIT_FILE, "-i"]
+PATH_BASH_LEAK = "bash"
 
 # ----------------------------------------------------------
 MINISHELL_PROMPT_PREFIX = "minishell "
 MINISHELL_ERROR_PREFIX = "minishell: "
 BASH_PROMPT_PREFIX = "bash "
-BASH_ERROR_PREFIX = "bash: line 1: "
+BASH_ERROR_PREFIX = "bash: "
+GITHUB_ERROR_PREFIX = ["cannot set terminal", "no job"]
+
+# ----------------------------------------------------------
+STDOUT = 0
+STDERR = 1
+STATUS = 2
+IS_EXITED = 3
 
 # ----------------------------------------------------------
 # color
@@ -28,6 +38,7 @@ COLOR_DICT = {"white": "\033[37m",
               "cyan": "\033[36m",
               "end": "\033[0m"}
 
+# ----------------------------------------------------------
 
 def print_color_str(color=WHITE, text=""):
     print(COLOR_DICT[color] + text + COLOR_DICT["end"])
@@ -108,17 +119,43 @@ def run_bash_with_valgrind(stdin, cmd):
 def run_both_with_valgrind(stdin):
     print("===== leak test =====")
     if shutil.which("valgrind") is None:
-        # print("valgrind not found")
         return None, None
 
     leak_res_minishell = run_minishell_with_valgrind(stdin, PATH_MINISHELL)
-    leak_res_bash = run_bash_with_valgrind(stdin, PATH_BASH)
+    leak_res_bash = run_bash_with_valgrind(stdin, PATH_BASH_LEAK)
     return leak_res_minishell, leak_res_bash
 
 
 # ----------------------------------------------------------
+# remove prompt and error prefix
 
-# rm prompt and error prefix
+def remove_prompt_prefix(err_list, prompt_prefix):
+    ret = []
+    for err in err_list:
+        if err.startswith(prompt_prefix):
+            continue
+        ret.append(err)
+    return ret
+
+
+def remove_error_prefix(err_list, error_prefix):
+    ret = []
+    for err in err_list:
+        if err.startswith(error_prefix):
+            err = err.removeprefix(error_prefix)
+        ret.append(err)
+    return ret
+
+
+def remove_github_error(err_list, err_prefixes):
+    ret = []
+    for err in err_list:
+        if any(err.startswith(prefix) for prefix in err_prefixes):
+            continue
+        ret.append(err)
+    return ret
+
+
 def get_eval_stderr(stderr, prompt_prefix, error_prefix):
     if stderr is None:
         return None
@@ -127,16 +164,10 @@ def get_eval_stderr(stderr, prompt_prefix, error_prefix):
     # print(f'errors:[{errors}]')
     if len(errors) > 0 and len(errors[-1]) == 0:
         del errors[-1]
-    if len(errors) > 0 and errors[-1] == "exit":  # for minishell
-        del errors[-1]
-    # print(f'errors:[{errors}]')
-    err_list = [err for err in errors if not err.startswith(prompt_prefix)]
-    # print(f'err_ls:[{err_list}]')
-    for i in range(len(err_list)):
-        # print(errors[i])
-        if err_list[i].startswith(error_prefix):
-            err_list[i] = err_list[i].removeprefix(error_prefix)
-    # print(f'err_ls:[{err_list}]')
+
+    err_list = remove_prompt_prefix(errors, prompt_prefix)
+    err_list = remove_error_prefix(err_list, error_prefix)
+    err_list = remove_github_error(err_list, GITHUB_ERROR_PREFIX)
 
     return err_list
 
@@ -145,20 +176,13 @@ def get_eval_stderr(stderr, prompt_prefix, error_prefix):
 
 def run_cmd(stdin=None, path=None):
     try:
-        # res = subprocess.run(path,
-        #                      input=stdin,
-        #                      capture_output=True,
-        #                      text=True,
-        #                      shell=True,
-        #                      timeout=2)
         proc = subprocess.Popen(path,
                                 stdin=subprocess.PIPE,
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.PIPE,
                                 text=True)
 
-        stdout, stderr = proc.communicate(stdin, timeout=2)  # if sleep ...??
-        # print(f'proc_stderr:[{stderr}]')
+        stdout, stderr = proc.communicate(stdin, timeout=2)
         if proc.poll() is None:
             is_exited = False
         else:
@@ -185,78 +209,24 @@ def get_cmd_string_for_output(stdin):
     return print_cmd
 
 
-STDOUT = 0
-STDERR = 1
-STATUS = 2
-IS_EXITED = 3
-
-
 def run_shell(name, stdin, cmd, prompt_pfx, err_pfx):
     res = run_cmd(stdin, cmd)
     if res:
         print(f'=== {name} ===')
-        print(cmd, len(res[STDOUT]), "byte")
-        print(f' stdout:[{COLOR_DICT[CYAN] + res[STDOUT] + COLOR_DICT["end"]}]')
+        print(f' stdin  : [{stdin}]')
+        print(f' stdout : [{COLOR_DICT[CYAN] + res[STDOUT] + COLOR_DICT["end"]}]')
         errors = get_eval_stderr(res[STDERR], prompt_pfx, err_pfx)
-        print(" stderr:[", end='')
+        print(" stderr : [", end='')
         for i in range(len(errors)):
             print(COLOR_DICT[MAGENTA] + errors[i] + COLOR_DICT["end"], end='')
             if i + 1 < len(errors):
                 print()
         print("]")
-        print(f' status:{res[STATUS]}')
-        print(f' exited:{res[IS_EXITED]}')
+        print(f' status : {res[STATUS]}')
+        print(f' exited : {res[IS_EXITED]}')
         res[STDERR] = errors
         return res
     return None
-
-# def run_shell(name, stdin, cmd, prompt_pfx, err_pfx):
-#     res = run_cmd(stdin, cmd)
-#     if res:
-#         print(f'=== {name} $?=({res.returncode}) ===')
-#         print(cmd, len(res.stdout), "byte")
-#         print(f' stdout[{res.stdout}]')
-#         errors, is_exited = get_eval_stderr(res.stderr, prompt_pfx, err_pfx)
-#         print(" stderr[", end='')
-#         for i in range(len(errors)):
-#             print(COLOR_DICT[MAGENTA] + errors[i] + COLOR_DICT["end"], end='')
-#             if i + 1 < len(errors):
-#                 print()
-#         print("]")
-#         return res, is_exited
-#     return None
-
-
-# def run_minishell(stdin, cmd):
-#     res_minishell = run_cmd(stdin, cmd)
-#     if res_minishell:
-#         print(f'=== minishell $?=({res_minishell.returncode}) ===')
-#         print_cmd = stdin \
-#             .replace("\t", "\\t") \
-#             .replace("\n", "\\n") \
-#             .replace("\v", "\\v") \
-#             .replace("\f", "\\f") \
-#             .replace("\r", "\\r")
-#         print(f'cmd:[{print_cmd}]', end='\n')
-#         print(cmd, len(res_minishell.stdout), "byte")
-#         print(f'stdout[{res_minishell.stdout}]')
-#         print(f'stderr[{COLOR_DICT[MAGENTA] + res_minishell.stderr + COLOR_DICT["end"]}]')
-#         eval_stderr(res_minishell.stderr, MINISH_PROMPT_PREFIX, MINISHELL_ERROR_PREFIX)
-#         # print(res_minishell.stderr)
-#         return res_minishell
-#     return None
-#
-#
-# def run_bash(stdin, cmd):
-#     res_bash = run_cmd(stdin, cmd)
-#     if res_bash:
-#         print(f'=== bash $?=({res_bash.returncode}) ===')
-#         print(cmd, len(res_bash.stdout), "byte")
-#         print(f'[{res_bash.stdout}]')
-#         print(f'stderr[{COLOR_DICT[CYAN] + res_bash.stderr + COLOR_DICT["end"]}]')
-#         # print(res_bash.stderr)
-#         return res_bash
-#     return None
 
 
 def run_both(stdin):
@@ -361,11 +331,7 @@ def put_total_result(val):
 
 # ----------------------------------------------------------
 
-def test(test_name, test_input_list):
-    test_res = 0
-    print(f' ========================= {test_name} ========================= ')
-
-    # output test
+def output_test(test_input_list):
     test_num = 1
     ok = 0
     ko = 0
@@ -375,9 +341,10 @@ def test(test_name, test_input_list):
         m_res, b_res = run_both(stdin)
         put_result(val, m_res, b_res)
 
-    test_res |= put_total_result(val)
+    return put_total_result(val)
 
-    # leak test
+
+def leak_test(test_input_list):
     leak_test_num = 1
     leak_ok = 0
     leak_ko = 0
@@ -389,8 +356,27 @@ def test(test_name, test_input_list):
         print(f'm_res:{m_res}')
         put_leak_result(val_leak, m_res, b_res)
 
-    test_res |= put_total_leak_result(val_leak)
-    print()
+    return put_total_leak_result(val_leak)
+
+
+# ----------------------------------------------------------
+
+def test(test_name, test_input_list):
+    try:
+        with open(BASH_INIT_FILE, "w") as init_file:
+            init_file.write(f'PS1="{BASH_PROMPT_PREFIX} "')
+
+        test_res = 0
+        print(f' ========================= {test_name} ========================= ')
+
+        test_res |= output_test(test_input_list)
+        test_res |= leak_test(test_input_list)
+        print()
+
+    finally:
+        if os.path.exists(BASH_INIT_FILE):
+            os.remove(BASH_INIT_FILE)
+
     return test_res
 
 # ----------------------------------------------------------

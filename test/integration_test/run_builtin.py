@@ -6,7 +6,7 @@ def main():
     test_res = 0
 
     test_res |= run_echo.main()
-    # test_res |= run_exit.main()
+    test_res |= run_exit.main()
 
     return test_res
 
