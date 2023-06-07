@@ -18,12 +18,12 @@ static char *get_result_char(int res)
 	return (COLOR_RED"NG"COLOR_RESET);
 }
 
-static void	print_cmds(const char **cmds)
+static void	print_cmds(char *const *cmds)
 {
 	size_t i = 0;
 
 	printf("cmds:[\n");
-	while (cmds && cmds[i])
+	while (cmds[i])
 	{
 		printf("%s", cmds[i]);
 		i++;
@@ -33,7 +33,7 @@ static void	print_cmds(const char **cmds)
 	printf("]\n");
 }
 
-static int	test(const char **cmds, int expected_status, int test_no)
+static int	test(char *const *cmds, int expected_status, int test_no)
 {
 	int	ft_ret = ft_exit(cmds, NULL);
 
@@ -56,61 +56,61 @@ int	main(void)
 	test_no = 0;
 
 	printf("===== success =====\n");
-	const char *cmds1[10] = {"exit", NULL};
+	char *const cmds1[10] = {"exit", NULL};
 	ok_cnt += test(cmds1, 0, ++test_no); // actually KO
 
-	const char *cmds2[10] = {"exit", "1"};
+	char *const cmds2[10] = {"exit", "1"};
 	ok_cnt += test(cmds2, 1, ++test_no);
 
-	const char *cmds3[10] = {"exit", "42"};
+	char *const cmds3[10] = {"exit", "42"};
 	ok_cnt += test(cmds3, 42, ++test_no);
 
-	const char *cmds4[10] = {"exit", "-1"};
+	char *const cmds4[10] = {"exit", "-1"};
 	ok_cnt += test(cmds4, 255, ++test_no);
 
-	const char *cmds5[10] = {"exit", "2147483647"};
+	char *const cmds5[10] = {"exit", "2147483647"};
 	ok_cnt += test(cmds5, 255, ++test_no);
 
-	const char *cmds6[10] = {"exit", "-2147483648"};
+	char *const cmds6[10] = {"exit", "-2147483648"};
 	ok_cnt += test(cmds6, 0, ++test_no);
 
-	const char *cmds7[10] = {"exit", "9223372036854775807"};
+	char *const cmds7[10] = {"exit", "9223372036854775807"};
 	ok_cnt += test(cmds7, 255, ++test_no);
 
-	const char *cmds8[10] = {"exit", "-9223372036854775808"};
+	char *const cmds8[10] = {"exit", "-9223372036854775808"};
 	ok_cnt += test(cmds8, 0, ++test_no);
 
-	const char *cmds9[10] = {"exit", "+0000000001"};
+	char *const cmds9[10] = {"exit", "+0000000001"};
 	ok_cnt += test(cmds9, 1, ++test_no);
 
-	const char *cmds10[10] = {"exit", "+000000000"};
+	char *const cmds10[10] = {"exit", "+000000000"};
 	ok_cnt += test(cmds10, 0, ++test_no);
 
 
 	printf("\n===== faulure =====\n");
 
-	const char *cmds21[10] = {"exit", "9223372036854775808"};
+	char *const cmds21[10] = {"exit", "9223372036854775808"};
 	ok_cnt += test(cmds21, 2, ++test_no);
 
-	const char *cmds22[10] = {"exit", "-9223372036854775809"};
+	char *const cmds22[10] = {"exit", "-9223372036854775809"};
 	ok_cnt += test(cmds22, 2, ++test_no);
 
-	const char *cmds23[10] = {"exit", "a"};
+	char *const cmds23[10] = {"exit", "a"};
 	ok_cnt += test(cmds23, 2, ++test_no);
 
-	const char *cmds24[10] = {"exit", "a", "a"};
+	char *const cmds24[10] = {"exit", "a", "a"};
 	ok_cnt += test(cmds24, 2, ++test_no);
 
-	const char *cmds25[10] = {"exit", "1", "a"};
+	char *const cmds25[10] = {"exit", "1", "a"};
 	ok_cnt += test(cmds25, 1, ++test_no);
 
-	const char *cmds26[10] = {"exit", "+-1"};
+	char *const cmds26[10] = {"exit", "+-1"};
 	ok_cnt += test(cmds26, 2, ++test_no);
 
-	const char *cmds27[10] = {"exit", "", "5"};
+	char *const cmds27[10] = {"exit", "", "5"};
 	ok_cnt += test(cmds27, 2, ++test_no);
 
-	const char *cmds28[10] = {"exit", "5", ""};
+	char *const cmds28[10] = {"exit", "5", ""};
 	ok_cnt += test(cmds28, 1, ++test_no);
 
 	printf("############################################\n");
