@@ -1,7 +1,7 @@
 
 NAME		:=	minishell
 
-CC			:=	clang
+CC			:=	cc
 CFLAGS		:=	-Wall -Wextra -Werror -MMD -MP
 RL_FLAGS	:=	-lreadline
 MKDIR		:=	mkdir -p
