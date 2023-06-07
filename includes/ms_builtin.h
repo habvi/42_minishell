@@ -37,6 +37,6 @@ bool	ft_legal_number(const char *str, long *result);
 bool	is_command_builtin(const char *cmd);
 bool	is_single_builtin(t_deque_node *node);
 
-int		call_builtin_func(const char **command, bool is_interactive);
+int		call_builtin_command(const char **command, bool is_interactive);
 
 #endif //MS_BUILTIN_H

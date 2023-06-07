@@ -10,7 +10,7 @@ static int	execute_builtin_command(t_command *cmd)
 	const char	**command = (const char **)cmd->exec_command;
 	int			exec_status;
 
-	exec_status = call_builtin_func(command, false);
+	exec_status = call_builtin_command(command, false);
 	deque_clear_all(&cmd->head_command);
 	return (exec_status);
 }
