@@ -1,6 +1,6 @@
 NAME	:=	a.out
 
-CC		:=	clang
+CC		:=	cc
 CFLAGS	:=	-Wall -Wextra -Werror
 INCLUDES	:=	-I. -I../../../libft/includes/
 

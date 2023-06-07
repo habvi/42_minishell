@@ -8,7 +8,7 @@ SRCS	:=	ast_node_new.c \
 			token_utils.c \
 			tokenize.c
 
-CC		:=	clang
+CC		:=	cc
 CFLAGS	:=	-Wall -Wextra -Werror
 INCLUDES	:=	-I. -I../../../libft/includes/
 

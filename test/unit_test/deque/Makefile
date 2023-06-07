@@ -10,7 +10,7 @@ INCLUDES_DIR	:=	includes
 INCLUDES	:=	-I$(LIBFT_DIR)/$(INCLUDES_DIR)/
 DEPS		:=	$(OBJS:.o=.d)
 
-CC			:=	clang
+CC			:=	cc
 CFLAGS		:=	-Wall -Wextra -Werror -MMD -MP
 MKDIR		:=	mkdir -p
 
