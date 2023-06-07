@@ -80,9 +80,7 @@ static bool	is_exit(t_exit_arg res)
 // argv[1] == \d or not
 // \d is signed int. over long max, it's interpreted as non-numeric argument
 
-// if exit called from parent proc, assign bool `is_exit` to *is_exit_shell.
-// is_exit_shell is NULL when called from child proc,
-// because of no need to update is_exit_shell.
+// if exit called from interactive shell, output `exit` to the console.
 
 // cmds[0] == "exit"
 
