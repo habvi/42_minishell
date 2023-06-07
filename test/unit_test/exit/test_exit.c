@@ -1,5 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
+#include <wait.h>
 #include "ft_lib.h"
 #include "ms_builtin.h"
 
@@ -22,7 +24,7 @@ static void	print_cmds(char *const *cmds)
 {
 	size_t i = 0;
 
-	printf("cmds:[\n");
+	printf("cmds:[");
 	while (cmds[i])
 	{
 		printf("%s", cmds[i]);
@@ -35,14 +37,25 @@ static void	print_cmds(char *const *cmds)
 
 static int	test(char *const *cmds, int expected_status, int test_no)
 {
-	int	ft_ret = ft_exit(cmds, NULL);
+	int		ret;
+	int		status;
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == 0)
+	{
+		status = ft_exit(cmds, NULL);
+		exit (status);
+	}
+	waitpid(pid, &status, 0);
+	ret = WEXITSTATUS(status);
 
 	printf("\n[TEST %02d] ", test_no);
 	print_cmds(cmds);
-	printf(   "           result:%s  exp[%d]\n", get_result_char(ft_ret == expected_status), expected_status);
-	printf(   "                      ft_[%d]\n", ft_ret);
+	printf(   "           result:%s  exp[%d]\n", get_result_char(ret == expected_status), expected_status);
+	printf(   "                      ft_[%d]\n", ret);
 
-	if (ft_ret == expected_status)
+	if (ret == expected_status)
 		return (1);
 	return (0);
 }
