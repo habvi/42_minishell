@@ -30,13 +30,13 @@ typedef enum e_exit_argument
 	RETURN_TOO_MANY_NUMERIC_ARG,
 }	t_exit_arg;
 
-int		ft_echo(const char **cmds);
-int		ft_exit(const char **cmds, bool is_interactive);
+int		ft_echo(char *const *command);
+int		ft_exit(char *const *command, bool is_interactive);
 
 bool	ft_legal_number(const char *str, long *result);
 bool	is_command_builtin(const char *cmd);
 bool	is_single_builtin(t_deque_node *node);
 
-int		call_builtin_command(const char **command, bool is_interactive);
+int		call_builtin_command(char *const *command, bool is_interactive);
 
 #endif //MS_BUILTIN_H

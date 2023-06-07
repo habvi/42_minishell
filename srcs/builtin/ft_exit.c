@@ -1,17 +1,18 @@
 #include <stdlib.h>
 #include "ms_builtin.h"
+#include "ms_exec.h"
 #include "ft_dprintf.h"
 #include "ft_string.h"
 
 // {"exit", "valid_arg", "invalid_arg1", "invalid_arg2", ..., NULL};
 
-static t_exit_arg	validate_argument(const char **cmds)
+static t_exit_arg	validate_argument(char *const *cmds)
 {
 	long	long_num;
 	size_t	argc;
 	bool	is_legal_num;
 
-	argc = count_2d_array(cmds);
+	argc = count_commands(cmds);
 	if (argc == EXIT_ONLY_CMD_CNT)
 		return (EXIT_VALID_ARG);
 	is_legal_num = ft_legal_number(cmds[EXIT_ARG_IDX], &long_num);
@@ -85,7 +86,7 @@ static bool	is_exit(t_exit_arg res)
 
 // cmds[0] == "exit"
 
-int	ft_exit(const char **cmds, bool is_interactive)
+int	ft_exit(char *const *cmds, bool is_interactive)
 {
 	int			status;
 	t_exit_arg	arg_result;

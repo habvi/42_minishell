@@ -56,4 +56,7 @@ int				exec_builtin_in_parent_proc(t_command cmd, \
 											bool is_interactive);
 size_t			count_pipe(t_deque_node *node);
 
+// count_commands
+size_t			count_commands(char *const *commands);
+
 #endif //MS_EXEC_H

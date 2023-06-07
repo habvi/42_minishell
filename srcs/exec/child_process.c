@@ -7,7 +7,7 @@
 
 static int	execute_builtin_command(t_command *cmd)
 {
-	const char	**command = (const char **)cmd->exec_command;
+	char *const	*command = (char *const *)cmd->exec_command;
 	int			exec_status;
 
 	exec_status = call_builtin_command(command, false);

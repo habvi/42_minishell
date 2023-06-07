@@ -37,8 +37,7 @@ bool	is_command_builtin(const char *cmd)
 	return (false);
 }
 
-// todo: char *const
-int	call_builtin_command(const char **command, bool is_interactive)
+int	call_builtin_command(char *const *command, bool is_interactive)
 {
 	if (!command)
 		return (FATAL_ERROR);
