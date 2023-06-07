@@ -5,7 +5,6 @@
 # include <stddef.h>
 
 /* 2d array */
-size_t	count_2d_array(const char **arr);
 void	*free_2d_array(char ***ptr);
 
 /* compare */

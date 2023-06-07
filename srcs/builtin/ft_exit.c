@@ -1,17 +1,18 @@
 #include <stdlib.h>
 #include "ms_builtin.h"
+#include "ms_exec.h"
 #include "ft_dprintf.h"
 #include "ft_string.h"
 
 // {"exit", "valid_arg", "invalid_arg1", "invalid_arg2", ..., NULL};
 
-static t_exit_arg	validate_argument(const char **cmds)
+static t_exit_arg	validate_argument(char *const *cmds)
 {
 	long	long_num;
 	size_t	argc;
 	bool	is_legal_num;
 
-	argc = count_2d_array(cmds);
+	argc = count_commands(cmds);
 	if (argc == EXIT_ONLY_CMD_CNT)
 		return (EXIT_VALID_ARG);
 	is_legal_num = ft_legal_number(cmds[EXIT_ARG_IDX], &long_num);
@@ -79,13 +80,11 @@ static bool	is_exit(t_exit_arg res)
 // argv[1] == \d or not
 // \d is signed int. over long max, it's interpreted as non-numeric argument
 
-// if exit called from parent proc, assign bool `is_exit` to *is_exit_shell.
-// is_exit_shell is NULL when called from child proc,
-// because of no need to update is_exit_shell.
+// if exit called from interactive shell, output `exit` to the console.
 
 // cmds[0] == "exit"
 
-int	ft_exit(const char **cmds, bool is_interactive)
+int	ft_exit(char *const *cmds, bool is_interactive)
 {
 	int			status;
 	t_exit_arg	arg_result;

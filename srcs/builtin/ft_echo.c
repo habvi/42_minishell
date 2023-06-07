@@ -29,7 +29,7 @@ static bool	is_n_option(const char *str)
 	return (true);
 }
 
-static void	skip_option_part(const char **cmds, size_t *idx, bool *is_valid_op)
+static void	skip_option_part(char *const *cmds, size_t *idx, bool *is_valid_op)
 {
 	*is_valid_op = false;
 	if (!cmds)
@@ -39,7 +39,7 @@ static void	skip_option_part(const char **cmds, size_t *idx, bool *is_valid_op)
 	*is_valid_op = *idx > 1;
 }
 
-static void	put_strings(const char **strs)
+static void	put_strings(char *const *strs)
 {
 	size_t	idx;
 
@@ -55,7 +55,7 @@ static void	put_strings(const char **strs)
 
 // cmds != NULL
 // cmds[0] == "echo"
-int	ft_echo(const char **cmds)
+int	ft_echo(char *const *cmds)
 {
 	const int	status = EXIT_SUCCESS;
 	size_t		idx;

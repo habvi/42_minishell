@@ -22,6 +22,7 @@ EXEC_DIR	:=	exec
 SRCS		+=	$(EXEC_DIR)/check_command.c \
 				$(EXEC_DIR)/child_pipes.c \
 				$(EXEC_DIR)/child_process.c \
+				$(EXEC_DIR)/count_commands.c \
 				$(EXEC_DIR)/exec.c \
 				$(EXEC_DIR)/exec_builtin_in_parent_proc.c \
 				$(EXEC_DIR)/get_exec_command.c \
