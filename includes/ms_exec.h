@@ -34,9 +34,9 @@ bool			is_last_command(t_deque_node *next_cmd);
 // child_pipes.c
 int				handle_child_pipes(t_command *cmd, t_fd *fd);
 // child_proces.c
-void			child_process(t_command *cmd, t_fd *fd, char **environ);
+void			child_process(t_command *cmd, t_fd *fd, char **environ, bool is_interactive);
 // exec.c
-int				execute_command(t_deque *command);
+int				execute_command(t_deque *dq_cmd, bool is_interactive);
 t_deque_node	*get_next_command(t_deque_node *cmd, size_t *cmd_size);
 char			**convert_command_to_array(t_deque_node *node, \
 											const size_t size);

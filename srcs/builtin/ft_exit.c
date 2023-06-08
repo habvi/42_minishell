@@ -92,6 +92,7 @@ int	ft_exit(char *const *cmds, bool is_interactive)
 	arg_result = validate_argument(cmds);
 	status = EXIT_SUCCESS; // todo: get latest status
 	status = get_exit_status(cmds[EXIT_ARG_IDX], arg_result, status);
+	ft_dprintf(2, "ft_exit: %d\n", is_interactive);
 	if (is_interactive)
 		ft_dprintf(STDERR_FILENO, "exit\n");
 	put_exit_err(cmds[EXIT_ARG_IDX], arg_result);
