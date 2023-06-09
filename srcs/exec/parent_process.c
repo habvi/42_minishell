@@ -4,8 +4,9 @@
 #include "ms_exec.h"
 #include "ft_sys.h"
 
-static int	get_last_command_status(\
-								pid_t pid, int *status, int *last_exit_status)
+static int	get_last_command_status(pid_t pid, \
+									int *status, \
+									int *last_exit_status)
 {
 	pid_t	wait_pid;
 
