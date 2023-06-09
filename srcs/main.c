@@ -22,7 +22,7 @@ static int	minishell(t_params *params)
 		if (!command)
 			return (EXIT_FAILURE);
 		// parse()
-		params->status = execute_command(command, params->is_interactive);
+		params->status = execute_command(command, params);
 		deque_clear_all(&command);
 		if (params->status == PROCESS_ERROR)
 			return (EXIT_FAILURE);

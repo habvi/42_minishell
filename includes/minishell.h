@@ -14,7 +14,7 @@
 # define PROMPT_NAME    "minishell "
 
 // add: hash
-typedef struct params
+typedef struct s_params
 {
 	char	**env;
 	bool	is_interactive;
