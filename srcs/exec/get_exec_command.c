@@ -23,7 +23,7 @@ t_deque_node	*get_next_command(t_deque_node *cmd, size_t *cmd_size)
 	return (cmd);
 }
 
-char	**convert_command_to_array(t_deque_node *node, const size_t size)
+char	**convert_command_to_array(t_deque_node *cmd, const size_t size)
 {
 	char	**command;
 	char	*tmp;
@@ -35,10 +35,10 @@ char	**convert_command_to_array(t_deque_node *node, const size_t size)
 	i = 0;
 	while (i < size)
 	{
-		tmp = node->content;
-		node->content = NULL;
+		tmp = cmd->content;
+		cmd->content = NULL;
 		command[i] = tmp;
-		node = node->next;
+		cmd = cmd->next;
 		i++;
 	}
 	command[i] = NULL;

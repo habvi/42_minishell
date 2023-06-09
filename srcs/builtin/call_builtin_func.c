@@ -4,13 +4,13 @@
 #include "ft_deque.h"
 #include "ft_string.h"
 
-bool	is_single_builtin(t_deque_node *node)
+bool	is_single_builtin(t_deque_node *cmd)
 {
-	if (!node)
+	if (!cmd)
 		return (false);
-	if (!is_command_builtin((const char *)node->content))
+	if (!is_command_builtin((const char *)cmd->content))
 		return (false);
-	if (count_pipe(node) > 0)
+	if (count_pipe(cmd) > 0)
 		return (false);
 	return (true);
 }

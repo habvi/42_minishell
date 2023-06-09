@@ -36,7 +36,7 @@ int		ft_exit(char *const *command, t_params *params);
 
 bool	ft_legal_number(const char *str, long *result);
 bool	is_command_builtin(const char *cmd);
-bool	is_single_builtin(t_deque_node *node);
+bool	is_single_builtin(t_deque_node *cmd);
 
 int		call_builtin_command(char *const *command, t_params *params);
 
