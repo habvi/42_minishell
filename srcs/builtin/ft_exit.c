@@ -91,8 +91,7 @@ int	ft_exit(char *const *cmds, t_params *params)
 	t_exit_arg	arg_result;
 
 	arg_result = validate_argument(cmds);
-	status = params->status;
-	status = get_exit_status(cmds[EXIT_ARG_IDX], arg_result, status);
+	status = get_exit_status(cmds[EXIT_ARG_IDX], arg_result, params->status);
 	if (params->is_interactive)
 		ft_dprintf(STDERR_FILENO, "exit\n");
 	put_exit_err(cmds[EXIT_ARG_IDX], arg_result);
