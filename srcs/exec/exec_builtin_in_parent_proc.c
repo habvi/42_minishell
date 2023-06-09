@@ -3,18 +3,25 @@
 #include "ft_deque.h"
 #include "ft_string.h"
 
-size_t	count_pipe(t_deque_node *cmd)
+int	call_builtin_command(char *const *command, t_params *params)
 {
-	size_t	cnt;
-
-	cnt = 0;
-	while (cmd)
-	{
-		if (ft_streq(cmd->content, "|"))
-			cnt++;
-		cmd = cmd->next;
-	}
-	return (cnt);
+	if (!command)
+		return (FATAL_ERROR);
+	if (ft_streq(command[0], CMD_ECHO))
+		return (ft_echo(command));
+//	if (ft_streq(command[0], CMD_CD))
+//		return (true);
+//	if (ft_streq(command[0], CMD_PWD))
+//		return (true);
+//	if (ft_streq(command[0], CMD_EXPORT))
+//		return (true);
+//	if (ft_streq(command[0], CMD_UNSET))
+//		return (true);
+//	if (ft_streq(command[0], CMD_ENV))
+//		return (true);
+	if (ft_streq(command[0], CMD_EXIT))
+		return (ft_exit(command, params));
+	return (UNREACHABLE);
 }
 
 int	exec_builtin_in_parent_proc(t_command cmd, \

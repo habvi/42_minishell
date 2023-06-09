@@ -57,10 +57,10 @@ int				parent_process(t_command *cmd, \
 								int *last_exit_status);
 
 // exec_builtin_in_parent_proc
+int				call_builtin_command(char *const *command, t_params *params);
 int				exec_builtin_in_parent_proc(t_command cmd, \
 											t_deque_node *exec_cmd, \
 											t_params *params);
-size_t			count_pipe(t_deque_node *cmd);
 
 // count_commands
 size_t			count_commands(char *const *commands);
