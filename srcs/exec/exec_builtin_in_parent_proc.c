@@ -17,7 +17,9 @@ size_t	count_pipe(t_deque_node *node)
 	return (cnt);
 }
 
-int	exec_builtin_in_parent_proc(t_command cmd, t_deque_node *node, t_params *params)
+int	exec_builtin_in_parent_proc(t_command cmd, \
+								t_deque_node *node, \
+								t_params *params)
 {
 	int		status;
 	size_t	cmd_size;
