@@ -28,6 +28,9 @@ typedef struct s_fd {
 	int	prev_fd;
 }	t_fd;
 
+/* call_builtin_command */
+int				call_builtin_command(char *const *command, t_params *params);
+
 /* check_command */
 bool			is_first_command(int prev_fd);
 bool			is_last_command(t_deque_node *next_cmd);
@@ -41,12 +44,6 @@ void			child_process(t_command *cmd, \
 
 /* count_commands */
 size_t			count_commands(char *const *commands);
-
-/* exec_builtin_in_parent_proc */
-int				call_builtin_command(char *const *command, t_params *params);
-int				exec_builtin_in_parent_proc(t_command cmd, \
-											t_deque_node *exec_cmd, \
-											t_params *params);
 
 /* exec */
 int				execute_command(t_deque *dq_cmd, t_params *params);

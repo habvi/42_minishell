@@ -5,6 +5,20 @@
 #include "ft_string.h"
 #include "ft_sys.h"
 
+static int	exec_builtin_in_parent_proc(t_command cmd, \
+										t_deque_node *exec_cmd, \
+										t_params *params)
+{
+	int		status;
+	size_t	cmd_size;
+
+	cmd.next_command = get_next_command(exec_cmd, &cmd_size);
+	cmd.exec_command = convert_command_to_array(exec_cmd, cmd_size);
+	status = call_builtin_command(cmd.exec_command, params);
+	free_2d_array(&cmd.exec_command);
+	return (status);
+}
+
 static int	dup_process_and_run(t_command *cmd, \
 								t_fd *fd, \
 								int *last_exit_status, \
