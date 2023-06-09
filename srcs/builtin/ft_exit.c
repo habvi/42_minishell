@@ -45,13 +45,13 @@ static void	put_exit_err(const char *arg, t_exit_arg res)
 {
 	if (res == RETURN_TOO_MANY_NUMERIC_ARG)
 	{
-		ft_dprintf(STDERR_FILENO, \
-		"minishell: exit: too many arguments\n");
+		ft_dprintf(STDERR_FILENO, "%s: %s: %s\n", \
+					PROMPT_NAME, CMD_EXIT, ERROR_MSG_TOO_MANY_ARG);
 	}
 	else if (res == EXIT_NON_NUMERIC_ARG)
 	{
-		ft_dprintf(STDERR_FILENO, \
-		"minishell: exit: %s: numeric argument required\n", arg);
+		ft_dprintf(STDERR_FILENO, "%s: %s: %s: %s\n", \
+					PROMPT_NAME, CMD_EXIT, arg, ERROR_MSG_REQUIRED_NUM);
 	}
 }
 

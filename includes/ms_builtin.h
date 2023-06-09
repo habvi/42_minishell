@@ -21,6 +21,9 @@
 
 # define BYTE_MASK				(0xFF)
 
+# define ERROR_MSG_TOO_MANY_ARG	"too many arguments"
+# define ERROR_MSG_REQUIRED_NUM	"numeric argument required"
+
 typedef struct s_deque_node	t_deque_node;
 typedef struct s_params		t_params;
 

@@ -23,14 +23,13 @@ static int	execute_external_command(t_command *cmd, char **environ)
 	exec_status = execve(command[0], command, environ);
 	if (exec_status == EXECVE_ERROR)
 	{
-		ft_dprintf(STDERR_FILENO, "minishell: %s: %s\n", \
-			command[0], ERROR_MSG_CMD_NOT_FOUND);
+		ft_dprintf(STDERR_FILENO, "%s: %s: %s\n", \
+					PROMPT_NAME, command[0], ERROR_MSG_CMD_NOT_FOUND);
 		deque_clear_all(&cmd->head_command);
 	}
 	return (EXIT_CODE_NO_SUCH_FILE);
 }
 
-// use PROMPT_NAME
 // if execve erorr, no need for auto perror.
 void	child_process(t_command *cmd, \
 						t_fd *fd, \
