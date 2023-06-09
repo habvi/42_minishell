@@ -27,7 +27,7 @@ char	*input_line(void)
 	char	*line;
 
 	rl_outstream = stderr;
-	line = readline(PROMPT_NAME);
+	line = readline(PROMPT_NAME_FOR_READLINE);
 	if (!line)
 		return (NULL);
 	add_accept_line_to_history(line);
