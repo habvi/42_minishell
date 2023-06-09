@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include "minishell.h"
 
-static bool	is_empty(const char *line)
+static bool	is_empty_line(const char *line)
 {
 	return (line[0] == '\0');
 }
@@ -15,7 +15,7 @@ static bool	is_ignorespace(const char *line)
 
 static void	add_accept_line_to_history(const char *line)
 {
-	if (is_empty(line))
+	if (is_empty_line(line))
 		return ;
 	if (is_ignorespace(line))
 		return ;
