@@ -5,7 +5,10 @@
 #include "ft_string.h"
 #include "ft_sys.h"
 
-static int	dup_process_and_run(t_command *cmd, t_fd *fd, int *last_exit_status, bool is_interactive)
+static int	dup_process_and_run(t_command *cmd, \
+								t_fd *fd, \
+								int *last_exit_status, \
+								bool is_interactive)
 {
 	extern char	**environ;
 	pid_t		pid;
@@ -47,7 +50,8 @@ int	execute_command(t_deque *dq_cmd, bool is_interactive)
 	{
 		cmd.next_command = get_next_command(node, &cmd_size);
 		cmd.exec_command = convert_command_to_array(node, cmd_size);
-		if (dup_process_and_run(&cmd, &fd, &last_exit_status, is_interactive) == PROCESS_ERROR)
+		if (dup_process_and_run(&cmd, &fd, &last_exit_status, is_interactive) \
+															== PROCESS_ERROR)
 			return (PROCESS_ERROR);
 		free_2d_array(&cmd.exec_command);
 		node = cmd.next_command;

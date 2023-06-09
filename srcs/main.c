@@ -10,11 +10,8 @@ static int	minishell(t_params *params)
 {
 	t_deque	*command;
 	char	*line;
-	int		process_status;
 
-	ft_dprintf(2, "[isatty(): %d, %d]\n", isatty(STDIN_FILENO), isatty(STDOUT_FILENO));
 	command = NULL;
-	process_status = EXIT_SUCCESS;
 	while (true)
 	{
 		line = input_line();
@@ -25,12 +22,12 @@ static int	minishell(t_params *params)
 		if (!command)
 			return (EXIT_FAILURE);
 		// parse()
-		process_status = execute_command(command, params->is_interactive);
+		params->status = execute_command(command, params->is_interactive);
 		deque_clear_all(&command);
-		if (process_status == PROCESS_ERROR)
+		if (params->status == PROCESS_ERROR)
 			return (EXIT_FAILURE);
 	}
-	return (process_status);
+	return (params->status);
 }
 
 int	main(void)

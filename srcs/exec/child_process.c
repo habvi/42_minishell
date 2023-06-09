@@ -32,7 +32,10 @@ static int	execute_external_command(t_command *cmd, char **environ)
 
 // use PROMPT_NAME
 // if execve erorr, no need for auto perror.
-void	child_process(t_command *cmd, t_fd *fd, char **environ, bool is_interactive)
+void	child_process(t_command *cmd, \
+						t_fd *fd, \
+						char **environ, \
+						bool is_interactive)
 {
 	char	**command;
 

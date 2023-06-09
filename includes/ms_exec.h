@@ -34,7 +34,10 @@ bool			is_last_command(t_deque_node *next_cmd);
 // child_pipes.c
 int				handle_child_pipes(t_command *cmd, t_fd *fd);
 // child_proces.c
-void			child_process(t_command *cmd, t_fd *fd, char **environ, bool is_interactive);
+void			child_process(t_command *cmd, \
+								t_fd *fd, \
+								char **environ, \
+								bool is_interactive);
 // exec.c
 int				execute_command(t_deque *dq_cmd, bool is_interactive);
 t_deque_node	*get_next_command(t_deque_node *cmd, size_t *cmd_size);
@@ -47,8 +50,10 @@ void			init_fd(t_fd *fd);
 // parent_pipes.c
 int				handle_parent_pipes(t_command *cmd, t_fd *fd);
 // parent_process.c
-int				parent_process(\
-					t_command *cmd, t_fd *fd, pid_t pid, int *last_exit_status);
+int				parent_process(t_command *cmd, \
+								t_fd *fd, \
+								pid_t pid, \
+								int *last_exit_status);
 
 // exec_builtin_in_parent_proc
 int				exec_builtin_in_parent_proc(t_command cmd, \
