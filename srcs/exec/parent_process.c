@@ -2,7 +2,6 @@
 #include <sys/wait.h>
 #include "minishell.h"
 #include "ms_exec.h"
-// #include "ft_dprintf.h"
 #include "ft_sys.h"
 
 static int	get_last_command_status(\
@@ -49,10 +48,6 @@ int	parent_process(t_command *cmd, t_fd *fd, pid_t pid, int *last_exit_status)
 			return (PROCESS_ERROR);
 		if (wait_all_child_process(status) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
-		// ft_dprintf(STDERR_FILENO, "\nchild exit success! ");
-		// ft_dprintf(STDERR_FILENO, "status: %d,", WIFEXITED(status));
-		// ft_dprintf(STDERR_FILENO, "exit status: %d\n", *last_exit_status);
-
 	}
 	return (EXIT_SUCCESS);
 }

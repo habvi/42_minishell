@@ -7,7 +7,6 @@ static void	add_split_str_to_command(t_deque *command, char *split_str)
 	char			*str;
 	t_deque_node	*node;
 
-	// to do: ft_strndup -> ft_strdup
 	str = ft_strdup(split_str);
 	if (!str)
 		exit(EXIT_FAILURE);
