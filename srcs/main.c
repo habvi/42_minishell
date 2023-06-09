@@ -6,17 +6,15 @@
 #include "ft_dprintf.h"
 #include "ft_sys.h"
 
-static int	minishell(void)
+static int	minishell(t_params *params)
 {
 	t_deque	*command;
 	char	*line;
 	int		process_status;
-	bool	is_interactive;
 
 	ft_dprintf(2, "[isatty(): %d, %d]\n", isatty(STDIN_FILENO), isatty(STDOUT_FILENO));
 	command = NULL;
 	process_status = EXIT_SUCCESS;
-	is_interactive = true;
 	while (true)
 	{
 		line = input_line();
@@ -27,7 +25,7 @@ static int	minishell(void)
 		if (!command)
 			return (EXIT_FAILURE);
 		// parse()
-		process_status = execute_command(command, is_interactive);
+		process_status = execute_command(command, params->is_interactive);
 		deque_clear_all(&command);
 		if (process_status == PROCESS_ERROR)
 			return (EXIT_FAILURE);
@@ -41,6 +39,6 @@ int	main(void)
 	int			process_status;
 
 	init_params(&params);
-	process_status = minishell();
+	process_status = minishell(&params);
 	return (process_status);
 }
