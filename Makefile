@@ -13,7 +13,7 @@ SRCS		:=	init.c \
 BUILTIN_DIR	:=	builtin
 SRCS		+=	$(BUILTIN_DIR)/ft_echo.c \
 				$(BUILTIN_DIR)/ft_exit.c \
-				$(BUILTIN_DIR)/ft_legal_number.c \
+				$(BUILTIN_DIR)/is_legal_number.c \
 				$(BUILTIN_DIR)/is_single_builtin.c
 
 DEBUG_DIR	:=	debug

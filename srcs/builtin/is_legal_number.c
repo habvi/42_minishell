@@ -5,7 +5,7 @@ static bool	is_whitespace(char c)
 	return (c == ' ' || c == '\t');
 }
 
-bool	ft_legal_number(const char *str, long *result)
+bool	is_legal_number(const char *str, long *result)
 {
 	long	value;
 	char	*endptr;
