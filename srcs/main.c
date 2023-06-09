@@ -4,7 +4,6 @@
 #include "ms_tokenize.h"
 #include "ft_deque.h"
 #include "ft_dprintf.h"
-#include "ft_sys.h"
 
 static int	minishell(t_params *params)
 {
