@@ -11,6 +11,15 @@
 
 # define PROMPT_NAME    "minishell "
 
+// add: hash
+typedef struct params
+{
+	char	**env;
+	bool	is_interactive;
+	char	*pwd;
+	int		status;
+}	t_params;
+
 // temporarily here ...
 /* debug */
 void	debug_func(const char *func_name, const int line_num);
