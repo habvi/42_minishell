@@ -11,10 +11,10 @@ SRCS		:=	init.c \
 				main.c
 
 BUILTIN_DIR	:=	builtin
-SRCS		+=	$(BUILTIN_DIR)/call_builtin_func.c \
-				$(BUILTIN_DIR)/ft_echo.c \
+SRCS		+=	$(BUILTIN_DIR)/ft_echo.c \
 				$(BUILTIN_DIR)/ft_exit.c \
-				$(BUILTIN_DIR)/ft_legal_number.c
+				$(BUILTIN_DIR)/ft_legal_number.c \
+				$(BUILTIN_DIR)/is_single_builtin.c
 
 DEBUG_DIR	:=	debug
 SRCS		+=	$(DEBUG_DIR)/put.c

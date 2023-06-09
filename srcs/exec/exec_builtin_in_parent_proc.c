@@ -1,3 +1,4 @@
+#include "minishell.h"
 #include "ms_builtin.h"
 #include "ms_exec.h"
 #include "ft_deque.h"
