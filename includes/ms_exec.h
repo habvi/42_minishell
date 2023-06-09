@@ -15,6 +15,7 @@
 
 typedef struct s_deque_node	t_deque_node;
 typedef struct s_deque		t_deque;
+typedef struct s_params		t_params;
 
 typedef struct s_command {
 	t_deque			*head_command;
@@ -34,9 +35,12 @@ bool			is_last_command(t_deque_node *next_cmd);
 // child_pipes.c
 int				handle_child_pipes(t_command *cmd, t_fd *fd);
 // child_proces.c
-void			child_process(t_command *cmd, t_fd *fd, char **environ);
+void			child_process(t_command *cmd, \
+								t_fd *fd, \
+								char **environ, \
+								t_params *params);
 // exec.c
-int				execute_command(t_deque *command);
+int				execute_command(t_deque *dq_cmd, t_params *params);
 t_deque_node	*get_next_command(t_deque_node *cmd, size_t *cmd_size);
 char			**convert_command_to_array(t_deque_node *node, \
 											const size_t size);
@@ -47,13 +51,15 @@ void			init_fd(t_fd *fd);
 // parent_pipes.c
 int				handle_parent_pipes(t_command *cmd, t_fd *fd);
 // parent_process.c
-int				parent_process(\
-					t_command *cmd, t_fd *fd, pid_t pid, int *last_exit_status);
+int				parent_process(t_command *cmd, \
+								t_fd *fd, \
+								pid_t pid, \
+								int *last_exit_status);
 
 // exec_builtin_in_parent_proc
 int				exec_builtin_in_parent_proc(t_command cmd, \
 											t_deque_node *node, \
-											bool is_interactive);
+											t_params *params);
 size_t			count_pipe(t_deque_node *node);
 
 // count_commands

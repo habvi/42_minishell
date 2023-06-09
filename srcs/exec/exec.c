@@ -5,7 +5,10 @@
 #include "ft_string.h"
 #include "ft_sys.h"
 
-static int	dup_process_and_run(t_command *cmd, t_fd *fd, int *last_exit_status)
+static int	dup_process_and_run(t_command *cmd, \
+								t_fd *fd, \
+								int *last_exit_status, \
+								t_params *params)
 {
 	extern char	**environ;
 	pid_t		pid;
@@ -18,8 +21,9 @@ static int	dup_process_and_run(t_command *cmd, t_fd *fd, int *last_exit_status)
 	pid = x_fork();
 	if (pid == FORK_ERROR)
 		return (FORK_ERROR);
+	params->is_interactive = false;
 	if (pid == CHILD_PID)
-		child_process(cmd, fd, environ);
+		child_process(cmd, fd, environ, params);
 	else
 	{
 		if (parent_process(cmd, fd, pid, last_exit_status) == PROCESS_ERROR)
@@ -28,7 +32,7 @@ static int	dup_process_and_run(t_command *cmd, t_fd *fd, int *last_exit_status)
 	return (EXIT_SUCCESS);
 }
 
-int	execute_command(t_deque *dq_cmd)
+int	execute_command(t_deque *dq_cmd, t_params *params)
 {
 	t_command		cmd;
 	t_fd			fd;
@@ -41,12 +45,13 @@ int	execute_command(t_deque *dq_cmd)
 	last_exit_status = EXIT_SUCCESS;
 	node = dq_cmd->node;
 	if (is_single_builtin(node))
-		return (exec_builtin_in_parent_proc(cmd, node, true));
+		return (exec_builtin_in_parent_proc(cmd, node, params));
 	while (node)
 	{
 		cmd.next_command = get_next_command(node, &cmd_size);
 		cmd.exec_command = convert_command_to_array(node, cmd_size);
-		if (dup_process_and_run(&cmd, &fd, &last_exit_status) == PROCESS_ERROR)
+		if (dup_process_and_run(&cmd, &fd, &last_exit_status, params) \
+															== PROCESS_ERROR)
 			return (PROCESS_ERROR);
 		free_2d_array(&cmd.exec_command);
 		node = cmd.next_command;

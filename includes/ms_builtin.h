@@ -22,6 +22,7 @@
 # define BYTE_MASK				(0xFF)
 
 typedef struct s_deque_node	t_deque_node;
+typedef struct s_params		t_params;
 
 typedef enum e_exit_argument
 {
@@ -31,12 +32,12 @@ typedef enum e_exit_argument
 }	t_exit_arg;
 
 int		ft_echo(char *const *command);
-int		ft_exit(char *const *command, bool is_interactive);
+int		ft_exit(char *const *command, t_params *params);
 
 bool	ft_legal_number(const char *str, long *result);
 bool	is_command_builtin(const char *cmd);
 bool	is_single_builtin(t_deque_node *node);
 
-int		call_builtin_command(char *const *command, bool is_interactive);
+int		call_builtin_command(char *const *command, t_params *params);
 
 #endif //MS_BUILTIN_H

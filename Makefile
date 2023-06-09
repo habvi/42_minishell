@@ -7,7 +7,8 @@ RL_FLAGS	:=	-lreadline
 MKDIR		:=	mkdir -p
 
 SRCS_DIR	:=	srcs
-SRCS		:=	main.c
+SRCS		:=	init.c \
+				main.c
 
 BUILTIN_DIR	:=	builtin
 SRCS		+=	$(BUILTIN_DIR)/call_builtin_func.c \

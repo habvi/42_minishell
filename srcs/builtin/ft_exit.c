@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include "minishell.h"
 #include "ms_builtin.h"
 #include "ms_exec.h"
 #include "ft_dprintf.h"
@@ -84,15 +85,15 @@ static bool	is_exit(t_exit_arg res)
 
 // cmds[0] == "exit"
 
-int	ft_exit(char *const *cmds, bool is_interactive)
+int	ft_exit(char *const *cmds, t_params *params)
 {
 	int			status;
 	t_exit_arg	arg_result;
 
 	arg_result = validate_argument(cmds);
-	status = EXIT_SUCCESS; // todo: get latest status
+	status = params->status;
 	status = get_exit_status(cmds[EXIT_ARG_IDX], arg_result, status);
-	if (is_interactive)
+	if (params->is_interactive)
 		ft_dprintf(STDERR_FILENO, "exit\n");
 	put_exit_err(cmds[EXIT_ARG_IDX], arg_result);
 	if (!is_exit(arg_result))

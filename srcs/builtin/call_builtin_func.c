@@ -37,7 +37,7 @@ bool	is_command_builtin(const char *cmd)
 	return (false);
 }
 
-int	call_builtin_command(char *const *command, bool is_interactive)
+int	call_builtin_command(char *const *command, t_params *params)
 {
 	if (!command)
 		return (FATAL_ERROR);
@@ -54,6 +54,6 @@ int	call_builtin_command(char *const *command, bool is_interactive)
 //	if (ft_streq(command[0], CMD_ENV))
 //		return (true);
 	if (ft_streq(command[0], CMD_EXIT))
-		return (ft_exit(command, is_interactive));
+		return (ft_exit(command, params));
 	return (UNREACHABLE);
 }
