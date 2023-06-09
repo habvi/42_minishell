@@ -6,12 +6,6 @@
 #include "ft_dprintf.h"
 #include "ft_sys.h"
 
-// If an error occurs, will not exit.
-static bool	set_is_interactive(void)
-{
-	return (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO));
-}
-
 static int	minishell(void)
 {
 	t_deque	*command;
@@ -22,7 +16,7 @@ static int	minishell(void)
 	ft_dprintf(2, "[isatty(): %d, %d]\n", isatty(STDIN_FILENO), isatty(STDOUT_FILENO));
 	command = NULL;
 	process_status = EXIT_SUCCESS;
-	is_interactive = set_is_interactive();
+	is_interactive = true;
 	while (true)
 	{
 		line = input_line();
@@ -43,8 +37,10 @@ static int	minishell(void)
 
 int	main(void)
 {
-	int	process_status;
+	t_params	params;
+	int			process_status;
 
+	init_params(&params);
 	process_status = minishell();
 	return (process_status);
 }
