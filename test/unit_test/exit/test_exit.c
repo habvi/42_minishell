@@ -2,8 +2,9 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <wait.h>
-#include "ft_lib.h"
+#include "minishell.h"
 #include "ms_builtin.h"
+#include "ft_lib.h"
 
 #define COLOR_RED		"\x1b[31m"
 #define COLOR_GREEN		"\x1b[32m"
@@ -40,11 +41,12 @@ static int	test(char *const *cmds, int expected_status, int test_no)
 	int		ret;
 	int		status;
 	pid_t	pid;
+	t_params	params = {.env = NULL, .is_interactive = true, .pwd = NULL, .status = 0};
 
 	pid = fork();
 	if (pid == 0)
 	{
-		status = ft_exit(cmds, NULL);
+		status = ft_exit(cmds, &params);
 		exit (status);
 	}
 	waitpid(pid, &status, 0);

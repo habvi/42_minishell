@@ -5,12 +5,12 @@
 #include "ft_deque.h"
 #include "ft_dprintf.h"
 
-static int	execute_builtin_command(t_command *cmd)
+static int	execute_builtin_command(t_command *cmd, t_params *params)
 {
 	char *const	*command = (char *const *)cmd->exec_command;
 	int			exec_status;
 
-	exec_status = call_builtin_command(command, false);
+	exec_status = call_builtin_command(command, params);
 	deque_clear_all(&cmd->head_command);
 	return (exec_status);
 }
@@ -32,7 +32,10 @@ static int	execute_external_command(t_command *cmd, char **environ)
 
 // use PROMPT_NAME
 // if execve erorr, no need for auto perror.
-void	child_process(t_command *cmd, t_fd *fd, char **environ)
+void	child_process(t_command *cmd, \
+						t_fd *fd, \
+						char **environ, \
+						t_params *params)
 {
 	char	**command;
 
@@ -42,7 +45,7 @@ void	child_process(t_command *cmd, t_fd *fd, char **environ)
 	if (handle_child_pipes(cmd, fd) == PROCESS_ERROR)
 		exit(EXIT_FAILURE);
 	if (is_command_builtin(command[0]))
-		exit (execute_builtin_command(cmd));
+		exit (execute_builtin_command(cmd, params));
 	else
 		exit (execute_external_command(cmd, environ));
 }

@@ -4,15 +4,14 @@
 #include "ms_tokenize.h"
 #include "ft_deque.h"
 #include "ft_dprintf.h"
+#include "ft_sys.h"
 
-static int	minishell(void)
+static int	minishell(t_params *params)
 {
 	t_deque	*command;
 	char	*line;
-	int		process_status;
 
 	command = NULL;
-	process_status = EXIT_SUCCESS;
 	while (true)
 	{
 		line = input_line();
@@ -23,18 +22,20 @@ static int	minishell(void)
 		if (!command)
 			return (EXIT_FAILURE);
 		// parse()
-		process_status = execute_command(command);
+		params->status = execute_command(command, params);
 		deque_clear_all(&command);
-		if (process_status == PROCESS_ERROR)
+		if (params->status == PROCESS_ERROR)
 			return (EXIT_FAILURE);
 	}
-	return (process_status);
+	return (params->status);
 }
 
 int	main(void)
 {
-	int	process_status;
+	t_params	params;
+	int			process_status;
 
-	process_status = minishell();
+	init_params(&params);
+	process_status = minishell(&params);
 	return (process_status);
 }
