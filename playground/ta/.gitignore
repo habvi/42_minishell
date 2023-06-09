@@ -5,5 +5,4 @@
 !*.sh
 !*.md
 !parser_test/
-!parser_pipe/
-!parser_pipe/**
+!chdir/
