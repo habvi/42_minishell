@@ -11,6 +11,10 @@
 # define CMD_ENV	"env"
 # define CMD_EXIT	"exit"
 
+# define CMD_OPTION_MARKER	'-'
+# define ECHO_OPTION		'n'
+# define ECHO_SEPARATOR		' '
+
 // todo: naming...
 # define EXIT_ONLY_CMD_CNT		1
 # define EXIT_ARG_IDX			1
