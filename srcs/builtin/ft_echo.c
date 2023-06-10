@@ -18,11 +18,9 @@ static bool	is_n_option(const char *str)
 
 	if (!str)
 		return (false);
-	i = 0;
-	while (str[i] == CMD_OPTION_MARKER)
-		i++;
-	if (i != 1 || str[i] != ECHO_OPTION)
+	if (str[0] != CMD_OPTION_MARKER || str[1] != ECHO_OPTION)
 		return (false);
+	i = 1;
 	while (str[i] == ECHO_OPTION)
 		i++;
 	if (str[i])
