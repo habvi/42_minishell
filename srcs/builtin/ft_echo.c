@@ -1,5 +1,6 @@
 #include <stdbool.h>
 #include <stdlib.h>
+#include "ms_builtin.h"
 #include "ft_dprintf.h"
 
 // valid option
@@ -18,11 +19,11 @@ static bool	is_n_option(const char *str)
 	if (!str)
 		return (false);
 	i = 0;
-	while (str[i] == '-')
+	while (str[i] == CMD_OPTION_MARKER)
 		i++;
-	if (i != 1 || str[i] != 'n')
+	if (i != 1 || str[i] != ECHO_OPTION)
 		return (false);
-	while (str[i] == 'n')
+	while (str[i] == ECHO_OPTION)
 		i++;
 	if (str[i])
 		return (false);
@@ -49,7 +50,7 @@ static void	put_strings(char *const *strs)
 		ft_dprintf(STDOUT_FILENO, "%s", strs[idx]);
 		idx++;
 		if (strs[idx])
-			ft_dprintf(STDOUT_FILENO, " ");
+			ft_dprintf(STDOUT_FILENO, "%c", ECHO_SEPARATOR);
 	}
 }
 
