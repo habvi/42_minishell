@@ -13,7 +13,6 @@ SRCS		:=	init.c \
 BUILTIN_DIR	:=	builtin
 SRCS		+=	$(BUILTIN_DIR)/ft_echo.c \
 				$(BUILTIN_DIR)/ft_exit.c \
-				$(BUILTIN_DIR)/is_single_builtin.c \
 				$(BUILTIN_DIR)/str_to_legal_number.c
 
 DEBUG_DIR	:=	debug
@@ -28,6 +27,7 @@ SRCS		+=	$(EXEC_DIR)/call_builtin_command.c \
 				$(EXEC_DIR)/exec.c \
 				$(EXEC_DIR)/get_exec_command.c \
 				$(EXEC_DIR)/init.c \
+				$(EXEC_DIR)/is_single_builtin.c \
 				$(EXEC_DIR)/parent_pipes.c \
 				$(EXEC_DIR)/parent_process.c \
 

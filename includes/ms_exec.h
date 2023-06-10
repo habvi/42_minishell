@@ -55,6 +55,10 @@ char			**convert_command_to_array(t_deque_node *cmd, \
 void			init_cmd(t_command *cmd, t_deque *dq_cmd);
 void			init_fd(t_fd *fd);
 
+/* is_single_builtin */
+bool			is_command_builtin(const char *cmd);
+bool			is_single_builtin(t_deque_node *cmd);
+
 /* parent */
 int				handle_parent_pipes(t_command *cmd, t_fd *fd);
 int				parent_process(t_command *cmd, \
