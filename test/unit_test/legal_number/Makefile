@@ -4,10 +4,10 @@ CC			=	cc
 CFLAGS		=	-Wall -Wextra -Werror -g -fsanitize=address -fsanitize=undefined
 
 SRCS		=	test_legal_number.c \
-				../../../srcs/builtin/is_legal_number.c
+				../../../srcs/builtin/str_to_legal_number.c
 
 OBJS		=	test_legal_number.o \
-				is_legal_number.o
+				str_to_legal_number.o
 
 INCLUDE		=	-I../../../includes -I../../../libft/includes
 

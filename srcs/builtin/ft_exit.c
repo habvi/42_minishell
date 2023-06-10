@@ -16,7 +16,7 @@ static t_exit_arg	validate_argument(char *const *cmds)
 	argc = count_commands(cmds);
 	if (argc == EXIT_ONLY_CMD_CNT)
 		return (EXIT_VALID_ARG);
-	is_legal_num = is_legal_number(cmds[EXIT_ARG_IDX], &long_num);
+	is_legal_num = str_to_legal_number(cmds[EXIT_ARG_IDX], &long_num);
 	if (!is_legal_num)
 		return (EXIT_NON_NUMERIC_ARG);
 	if (argc > VALID_ARG_CNT)
@@ -24,7 +24,7 @@ static t_exit_arg	validate_argument(char *const *cmds)
 	return (EXIT_VALID_ARG);
 }
 
-// is_legal_number returns true
+// str_to_legal_number returns true
 static int	get_exit_status(const char *arg, \
 							t_exit_arg res, \
 							int latest_status)
@@ -37,7 +37,7 @@ static int	get_exit_status(const char *arg, \
 		return (NON_NUMERIC_ARG_STATUS);
 	if (!arg)
 		return (latest_status);
-	is_legal_number(arg, &long_num);
+	str_to_legal_number(arg, &long_num);
 	return ((int)(long_num & BYTE_MASK));
 }
 
