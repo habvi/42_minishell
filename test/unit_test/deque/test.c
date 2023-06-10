@@ -79,6 +79,29 @@ static void	pop_front_test(t_deque *deque)
 	debug_deque_print(deque, __func__);
 }
 
+static void	pop_selected_node_test(t_deque *deque, size_t idx)
+{
+	t_deque_node	*pop_node = deque->node;
+	size_t			i;
+
+	if (!deque_is_empty(deque))
+	{
+		i = 0;
+		while (pop_node && i < idx)
+		{
+			pop_node = pop_node->next;
+			i++;
+		}
+	}
+	deque_pop_selected_node(deque, pop_node);
+	if (pop_node)
+	{
+		printf("pop_selected success: %s\n", (char *)pop_node->content);
+		deque_clear_node(&pop_node);
+	}
+	debug_deque_print(deque, __func__);
+}
+
 char *get_s(char c)
 {
 	char	*s;
@@ -126,6 +149,23 @@ int	main(void)
 	pop_front_test(deque);
 	pop_front_test(deque);
 	pop_front_test(deque);
+
+	add_front_test(deque, get_s('c'));
+	add_front_test(deque, get_s('b'));
+	add_front_test(deque, get_s('a'));
+
+	pop_selected_node_test(deque, 1);
+
+	add_front_test(deque, get_s('d'));
+	add_front_test(deque, get_s('e'));
+	add_front_test(deque, get_s('f'));
+
+	pop_selected_node_test(deque, 1);
+	pop_selected_node_test(deque, 3);
+	pop_selected_node_test(deque, 0);
+	pop_selected_node_test(deque, 1);
+	pop_selected_node_test(deque, 0);
+	pop_selected_node_test(deque, 0);
 
 	deque_clear_all(&deque);
 	return (EXIT_SUCCESS);
