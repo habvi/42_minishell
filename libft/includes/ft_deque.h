@@ -31,6 +31,8 @@ bool			deque_is_empty(t_deque *deque);
 t_deque_node	*deque_pop_back(t_deque *deque);
 t_deque_node	*deque_pop_last_node(t_deque *deque);
 t_deque_node	*deque_pop_front(t_deque *deque);
+void			deque_pop_selected_node(t_deque *deque, \
+										t_deque_node *target_node);
 
 /* print */
 void			deque_print(t_deque *deque);

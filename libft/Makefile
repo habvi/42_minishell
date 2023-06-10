@@ -23,6 +23,7 @@ DEQUE_SRC	:=	$(DEQUE_DIR)/dq_add_back.c \
 				$(DEQUE_DIR)/dq_node_new.c \
 				$(DEQUE_DIR)/dq_pop_back.c \
 				$(DEQUE_DIR)/dq_pop_front.c \
+				$(DEQUE_DIR)/dq_pop_selected_node.c \
 				$(DEQUE_DIR)/dq_print.c \
 				$(DEQUE_DIR)/dq_set_node.c
 
