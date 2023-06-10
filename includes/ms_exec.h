@@ -28,41 +28,42 @@ typedef struct s_fd {
 	int	prev_fd;
 }	t_fd;
 
-/* exec */
-// check_command.c
+/* call_builtin_command */
+int				call_builtin_command(char *const *command, t_params *params);
+
+/* check_command */
 bool			is_first_command(int prev_fd);
 bool			is_last_command(t_deque_node *next_cmd);
-// child_pipes.c
+
+/* child_process */
 int				handle_child_pipes(t_command *cmd, t_fd *fd);
-// child_proces.c
 void			child_process(t_command *cmd, \
 								t_fd *fd, \
 								char **environ, \
 								t_params *params);
-// exec.c
+
+/* count_commands */
+size_t			count_commands(char *const *commands);
+
+/* exec */
 int				execute_command(t_deque *dq_cmd, t_params *params);
 t_deque_node	*get_next_command(t_deque_node *cmd, size_t *cmd_size);
-char			**convert_command_to_array(t_deque_node *node, \
+char			**convert_command_to_array(t_deque_node *cmd, \
 											const size_t size);
 
-// init.c
+/* init */
 void			init_cmd(t_command *cmd, t_deque *dq_cmd);
 void			init_fd(t_fd *fd);
-// parent_pipes.c
+
+/* is_single_builtin */
+bool			is_command_builtin(const char *cmd);
+bool			is_single_builtin(t_deque_node *cmd);
+
+/* parent */
 int				handle_parent_pipes(t_command *cmd, t_fd *fd);
-// parent_process.c
 int				parent_process(t_command *cmd, \
 								t_fd *fd, \
 								pid_t pid, \
 								int *last_exit_status);
-
-// exec_builtin_in_parent_proc
-int				exec_builtin_in_parent_proc(t_command cmd, \
-											t_deque_node *node, \
-											t_params *params);
-size_t			count_pipe(t_deque_node *node);
-
-// count_commands
-size_t			count_commands(char *const *commands);
 
 #endif //MS_EXEC_H

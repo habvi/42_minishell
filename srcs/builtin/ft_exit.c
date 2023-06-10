@@ -16,7 +16,7 @@ static t_exit_arg	validate_argument(char *const *cmds)
 	argc = count_commands(cmds);
 	if (argc == EXIT_ONLY_CMD_CNT)
 		return (EXIT_VALID_ARG);
-	is_legal_num = ft_legal_number(cmds[EXIT_ARG_IDX], &long_num);
+	is_legal_num = str_to_legal_number(cmds[EXIT_ARG_IDX], &long_num);
 	if (!is_legal_num)
 		return (EXIT_NON_NUMERIC_ARG);
 	if (argc > VALID_ARG_CNT)
@@ -24,7 +24,7 @@ static t_exit_arg	validate_argument(char *const *cmds)
 	return (EXIT_VALID_ARG);
 }
 
-// ft_legal_number returns true
+// str_to_legal_number returns true
 static int	get_exit_status(const char *arg, \
 							t_exit_arg res, \
 							int latest_status)
@@ -37,7 +37,7 @@ static int	get_exit_status(const char *arg, \
 		return (NON_NUMERIC_ARG_STATUS);
 	if (!arg)
 		return (latest_status);
-	ft_legal_number(arg, &long_num);
+	str_to_legal_number(arg, &long_num);
 	return ((int)(long_num & BYTE_MASK));
 }
 
@@ -45,13 +45,13 @@ static void	put_exit_err(const char *arg, t_exit_arg res)
 {
 	if (res == RETURN_TOO_MANY_NUMERIC_ARG)
 	{
-		ft_dprintf(STDERR_FILENO, \
-		"minishell: exit: too many arguments\n");
+		ft_dprintf(STDERR_FILENO, "%s: %s: %s\n", \
+					SHELL_NAME, CMD_EXIT, ERROR_MSG_TOO_MANY_ARG);
 	}
 	else if (res == EXIT_NON_NUMERIC_ARG)
 	{
-		ft_dprintf(STDERR_FILENO, \
-		"minishell: exit: %s: numeric argument required\n", arg);
+		ft_dprintf(STDERR_FILENO, "%s: %s: %s: %s\n", \
+					SHELL_NAME, CMD_EXIT, arg, ERROR_MSG_REQUIRED_NUM);
 	}
 }
 
@@ -93,7 +93,7 @@ int	ft_exit(char *const *cmds, t_params *params)
 	arg_result = validate_argument(cmds);
 	status = get_exit_status(cmds[EXIT_ARG_IDX], arg_result, params->status);
 	if (params->is_interactive)
-		ft_dprintf(STDERR_FILENO, "exit\n");
+		ft_dprintf(STDERR_FILENO, "%s\n", CMD_EXIT);
 	put_exit_err(cmds[EXIT_ARG_IDX], arg_result);
 	if (!is_exit(arg_result))
 		return (status);

@@ -7,7 +7,7 @@ void	init_cmd(t_command *cmd, t_deque *dq_cmd)
 	cmd->next_command = NULL;
 }
 
-// need..?
+// todo: init pipefd is necessary..?
 void	init_fd(t_fd *fd)
 {
 	fd->pipefd[0] = 0;

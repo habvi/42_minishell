@@ -31,7 +31,7 @@ static int	test(const char *str, long expected_val, bool expected_bool, int test
 	long	res_val;
 	bool	ret_bool;
 
-	ret_bool = ft_legal_number(str, &res_val);
+	ret_bool = str_to_legal_number(str, &res_val);
 
 	printf("\n[TEST %02d] '%s'\n", test_no, str);
 	printf(   "            %s : val=[%ld]\n", get_result_char(res_val == expected_val), res_val);

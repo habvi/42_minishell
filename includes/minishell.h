@@ -11,7 +11,8 @@
 # define FATAL_ERROR	(-1)
 # define UNREACHABLE	FATAL_ERROR
 
-# define PROMPT_NAME    "minishell "
+# define SHELL_NAME		"minishell"
+# define PROMPT_NAME	"minishell "
 
 // add: hash
 typedef struct s_params

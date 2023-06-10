@@ -1,9 +1,22 @@
 #include "minishell.h"
-#include "ms_builtin.h"
 #include "ms_exec.h"
 #include "ft_deque.h"
 #include "ft_string.h"
 #include "ft_sys.h"
+
+static int	exec_builtin_in_parent_proc(t_command cmd, \
+										t_deque_node *exec_cmd, \
+										t_params *params)
+{
+	int		status;
+	size_t	cmd_size;
+
+	cmd.next_command = get_next_command(exec_cmd, &cmd_size);
+	cmd.exec_command = convert_command_to_array(exec_cmd, cmd_size);
+	status = call_builtin_command(cmd.exec_command, params);
+	free_2d_array(&cmd.exec_command);
+	return (status);
+}
 
 static int	dup_process_and_run(t_command *cmd, \
 								t_fd *fd, \
@@ -37,24 +50,24 @@ int	execute_command(t_deque *dq_cmd, t_params *params)
 	t_command		cmd;
 	t_fd			fd;
 	int				last_exit_status;
-	t_deque_node	*node;
+	t_deque_node	*exec_cmd;
 	size_t			cmd_size;
 
 	init_cmd(&cmd, dq_cmd);
 	init_fd(&fd);
 	last_exit_status = EXIT_SUCCESS;
-	node = dq_cmd->node;
-	if (is_single_builtin(node))
-		return (exec_builtin_in_parent_proc(cmd, node, params));
-	while (node)
+	exec_cmd = dq_cmd->node;
+	if (is_single_builtin(exec_cmd))
+		return (exec_builtin_in_parent_proc(cmd, exec_cmd, params));
+	while (exec_cmd)
 	{
-		cmd.next_command = get_next_command(node, &cmd_size);
-		cmd.exec_command = convert_command_to_array(node, cmd_size);
+		cmd.next_command = get_next_command(exec_cmd, &cmd_size);
+		cmd.exec_command = convert_command_to_array(exec_cmd, cmd_size);
 		if (dup_process_and_run(&cmd, &fd, &last_exit_status, params) \
 															== PROCESS_ERROR)
 			return (PROCESS_ERROR);
 		free_2d_array(&cmd.exec_command);
-		node = cmd.next_command;
+		exec_cmd = cmd.next_command;
 	}
 	return (last_exit_status);
 }
