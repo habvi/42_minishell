@@ -5,11 +5,13 @@
 #include "ft_deque.h"
 #include "ft_dprintf.h"
 
-static int	minishell(t_params *params)
+int	main(void)
 {
-	t_deque	*command;
-	char	*line;
+	t_params	params;
+	t_deque		*command;
+	char		*line;
 
+	init_params(&params);
 	command = NULL;
 	while (true)
 	{
@@ -21,20 +23,10 @@ static int	minishell(t_params *params)
 		if (!command)
 			return (EXIT_FAILURE);
 		// parse()
-		params->status = execute_command(command, params);
+		params.status = execute_command(command, &params);
 		deque_clear_all(&command);
-		if (params->status == PROCESS_ERROR)
+		if (params.status == PROCESS_ERROR)
 			return (EXIT_FAILURE);
 	}
-	return (params->status);
-}
-
-int	main(void)
-{
-	t_params	params;
-	int			process_status;
-
-	init_params(&params);
-	process_status = minishell(&params);
-	return (process_status);
+	return (params.status);
 }
