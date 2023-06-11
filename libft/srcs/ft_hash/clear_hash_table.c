@@ -26,6 +26,7 @@ void	clear_hash_table(t_hash **hash)
 		idx++;
 	}
 	free((*hash)->table);
+	(*hash)->table = NULL;
 	free(*hash);
 	*hash = NULL;
 }
