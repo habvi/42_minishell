@@ -1,7 +1,7 @@
 #include <stdint.h>
 #include "ft_mem.h"
 
-static uint64_t	modulus_hash_mod(uint64_t hash, uint64_t hash_mod)
+static uint64_t	modulo_hash_mod(uint64_t hash, uint64_t hash_mod)
 {
 	if (hash_mod)
 		return (hash % hash_mod);
@@ -23,10 +23,10 @@ uint64_t	generate_fnv_hash_64(const unsigned char *key, uint64_t hash_mod)
 	while (key[idx])
 	{
 		hash = prime * hash;
-		hash = modulus_hash_mod(hash, hash_mod);
+		hash = modulo_hash_mod(hash, hash_mod);
 		hash ^= key[idx];
 		idx++;
 	}
-	hash = modulus_hash_mod(hash, hash_mod);
+	hash = modulo_hash_mod(hash, hash_mod);
 	return (hash);
 }
