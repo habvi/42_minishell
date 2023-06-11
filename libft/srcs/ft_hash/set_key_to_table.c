@@ -1,14 +1,14 @@
 #include <stdlib.h>
 #include "ft_deque.h"
 #include "ft_hash.h"
+#include "ft_sys.h"
 
 // if malloc error, return NULL
-// todo: perror?
 static t_elem	*create_hash_elem(char *key, void *content)
 {
 	t_elem	*elem;
 
-	elem = (t_elem *)malloc(sizeof(t_elem));
+	elem = (t_elem *)x_malloc(sizeof(t_elem));
 	if (!elem)
 		return (NULL);
 	elem->key = key;
@@ -50,6 +50,7 @@ int	set_to_table(t_hash *hash, char *key, void *content)
 		elem = create_hash_elem(key, content);
 		if (!elem)
 			return (HASH_ERROR);
+		//todo:rehash
 		hash_val = generate_fnv_hash_64((unsigned char *)key, hash->table_size);
 		if (add_elem_to_table(hash, elem, hash_val) == HASH_ERROR)
 		{
@@ -61,6 +62,5 @@ int	set_to_table(t_hash *hash, char *key, void *content)
 		}
 		hash->key_count++;
 	}
-	//todo:rehash
 	return (HASH_SUCCESS);
 }
