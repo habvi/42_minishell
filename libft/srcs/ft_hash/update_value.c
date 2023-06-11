@@ -18,10 +18,10 @@ void	update_content_of_key(t_hash *hash, char *key, void *content)
 		elem = (t_elem *)node->content;
 		if (ft_streq(elem->key, key))
 		{
-			free(key);
+			// free(key);
 			// todo: del func
-			free(node->content);
-			node->content = content;
+			// free(node->content);
+			elem->content = content;
 			return ;
 		}
 		node = node->next;
