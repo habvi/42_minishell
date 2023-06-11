@@ -41,6 +41,7 @@ bool		find_key(t_hash *hash, const char *key);
 /* get value */
 
 /* update value */
+void		update_content_of_key(t_hash *hash, char *key, void *content);
 
 /* del key */
 

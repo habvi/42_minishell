@@ -43,17 +43,24 @@ int	set_to_table(t_hash *hash, char *key, void *content)
 
 	if (!key)
 		return (HASH_SUCCESS);
-	//todo:rehash
-	elem = create_hash_elem(key, content);
-	if (!elem)
-		return (HASH_ERROR);
-	hash_val = generate_fnv_hash_64((unsigned char *)key, hash->table_size);
-	if (add_elem_to_table(hash, elem, hash_val) == HASH_ERROR)
+	if (find_key(hash, key))
+		update_content_of_key(hash, key, content);
+	else
 	{
-		free(elem);
-		// free key, content ??
-		return (HASH_ERROR);
+		elem = create_hash_elem(key, content);
+		if (!elem)
+			return (HASH_ERROR);
+		hash_val = generate_fnv_hash_64((unsigned char *)key, hash->table_size);
+		if (add_elem_to_table(hash, elem, hash_val) == HASH_ERROR)
+		{
+			free(key);
+			// todo: del func
+			free(content);
+			free(elem);
+			return (HASH_ERROR);
+		}
+		hash->key_count++;
 	}
-	hash->key_count++;
+	//todo:rehash
 	return (HASH_SUCCESS);
 }
