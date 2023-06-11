@@ -14,7 +14,6 @@
 
 void	clear_hash_table(t_hash **hash)
 {
-	(void)hash;
 	size_t	idx;
 
 	if (!hash || !*hash)
