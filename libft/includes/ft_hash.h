@@ -19,7 +19,7 @@ typedef struct s_hash_table
 typedef struct s_hash_element
 {
 	char	*key;
-	char	*value;
+	void	*content;
 }	t_elem;
 
 /* hash value */
@@ -33,7 +33,7 @@ t_hash		*create_hash_table(uint64_t size);
 /* add key */
 // add key-value pairs to table and return 0. On error, return (-1)
 // if hash_value conflicts, add with the chain method
-int			add_to_table(t_hash *hash, const char *elem_key, const char *elem_val);
+int			add_to_table(t_hash *hash, char *elem_key, void *elem_val);
 
 /* find key */
 
@@ -44,7 +44,7 @@ int			add_to_table(t_hash *hash, const char *elem_key, const char *elem_val);
 /* del key */
 
 /* clear table */
-void		clear_hash_elem(t_elem **elem);
+void		clear_hash_elem(t_elem **elem, void (*del) (void *))
 void		clear_hash_table(t_hash **hash);
 
 /* display hash table */

@@ -1,30 +1,18 @@
 #include <stdlib.h>
 #include "ft_deque.h"
 #include "ft_hash.h"
-#include "ft_string.h"
 
 // if malloc error, return NULL
 // todo: perror?
-static t_elem	*create_hash_elem(const char *key, const char *value)
+static t_elem	*create_hash_elem(char *key, void *content)
 {
 	t_elem	*elem;
 
 	elem = (t_elem *)malloc(sizeof(t_elem));
 	if (!elem)
 		return (NULL);
-	elem->key = ft_strdup(key);
-	if (!elem->key)
-	{
-		free(elem);
-		return (NULL);
-	}
-	elem->value = ft_strdup(value);
-	if (!elem->value)
-	{
-		free(elem->key);
-		free(elem);
-		return (NULL);
-	}
+	elem->key = key;
+	elem->content = content;
 	return (elem);
 }
 
@@ -47,21 +35,23 @@ static int	add_elem_to_table(t_hash *hash, t_elem *elem, uint64_t hash_val)
 
 // if malloc error, return HASH_ERROR
 // hash not freed in func
-int	add_to_table(t_hash *hash, const char *elem_key, const char *elem_val)
+// 'key' cannot be null, 'value' can accept null
+int	add_to_table(t_hash *hash, char *key, void *content)
 {
 	uint64_t	hash_val;
 	t_elem		*elem;
 
-	if (!elem_key)
+	if (!key)
 		return (HASH_SUCCESS);
 	//todo:rehash
-	elem = create_hash_elem(elem_key, elem_val);
+	elem = create_hash_elem(key, content);
 	if (!elem)
 		return (HASH_ERROR);
-	hash_val = generate_fnv_hash_64((unsigned char *)elem_key, hash->table_size);
+	hash_val = generate_fnv_hash_64((unsigned char *)key, hash->table_size);
 	if (add_elem_to_table(hash, elem, hash_val) == HASH_ERROR)
 	{
-		//free key,value
+		free(elem);
+		// free key, content ??
 		return (HASH_ERROR);
 	}
 	hash->key_count++;
