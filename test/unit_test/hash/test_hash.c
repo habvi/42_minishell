@@ -5,10 +5,6 @@
 
 #define COLOR_RED		"\x1b[31m"
 #define COLOR_GREEN		"\x1b[32m"
-#define COLOR_YELLOW	"\x1b[33m"
-#define COLOR_BLUE		"\x1b[34m"
-#define COLOR_MAGENTA	"\x1b[35m"
-#define COLOR_CYAN		"\x1b[36m"
 #define COLOR_RESET		"\x1b[0m"
 
 void	display_elem(void *content)
@@ -18,7 +14,8 @@ void	display_elem(void *content)
 	if (!content)
 		return ;
 	elem = content;
-	ft_dprintf(STDERR_FILENO, "[%s, %s]", elem->key, elem->value);
+	ft_dprintf(STDERR_FILENO, "[\"%s\", \"%s\"]", \
+	elem->key, (char *)elem->content);
 }
 
 static char *get_result_char(int res)
@@ -46,27 +43,56 @@ int	main(void)
 	int	test_no = 0;
 	int	ok = 0;
 	{
-		printf(" ===== hash value =====\n");
+		printf(" ========== hash value ==========\n");
 
 		ok += test_hash_value("example", 0, 0x44ec942469dbbb3d, ++test_no);
 		ok += test_hash_value("abc", 0, 0xd8dcca186bafadcb, ++test_no);
 		ok += test_hash_value("PATH", 0, 0x9751cc7e14924228, ++test_no);
 		ok += test_hash_value("42tokyo", 0, 0x264eda1ad1daa90f, ++test_no);
 		ok += test_hash_value("", 0, 0xcbf29ce484222325, ++test_no);
-		printf("\n");
+		printf("\n\n");
 	}
 	{
-		printf(" ===== hash table =====\n");
+		printf(" ========== hash table (except rehash) ==========\n");
 
-		t_hash	*hash = create_hash_table(1);
-
+		t_hash	*hash = create_hash_table(100);
 		display_hash_table(hash, display_elem);
-		printf("\n");
+
+		add_to_table(hash, "test_key", "test_value");
+		add_to_table(hash, "pien", ";p");
+		add_to_table(hash, "PATH", "/bin:/usr/bin:etc");
+		display_hash_table(hash, display_elem);
+
+		add_to_table(hash, "empty string", "");
+		display_hash_table(hash, display_elem);
+
+		add_to_table(hash, "empty value", NULL);
+		display_hash_table(hash, display_elem);
+
+		add_to_table(hash, "PATHa", "/bin:/usr/bin:etc");
+		add_to_table(hash, "PATH1", "/bin:/usr/bin:etc1");
+		display_hash_table(hash, display_elem);
+
+		add_to_table(hash, "abc", "abc1");
+		add_to_table(hash, "abc", "abc2");
+		add_to_table(hash, "abc", "abc3");
+		add_to_table(hash, "abc", "abc4");
+		add_to_table(hash, "abc", "abc5");
+		display_hash_table(hash, display_elem);
+
+		clear_hash_table(&hash);
+
+		printf("\n\n");
+	}
+	{
+		printf(" ===== hash table (use rehash) =====\n");
+
+		printf("\n\n");
 	}
 
-
-	printf("############################################\n");
-	printf(" TEST RESULT :: OK %d/ ALL %d     %s\n", ok, test_no, test_no == ok ? "\x1b[32mALL OK :)\x1b[0m" : "\x1b[31mNG :X\x1b[0m");
+	printf("\n############################################\n");
+	printf(" TEST RESULT :: OK %d/ ALL %d     %s\n", \
+			ok, test_no, test_no == ok ? COLOR_GREEN"ALL OK :)"COLOR_RESET : COLOR_RED"NG :X"COLOR_RESET);
 	printf("############################################\n\n");
 
 	if (test_no != ok)

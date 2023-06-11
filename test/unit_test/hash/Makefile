@@ -12,8 +12,7 @@ INCLUDES	=	-I$(LIBFT_DIR)/includes
 
 all		: $(NAME)
 
-$(NAME)	: $(OBJS)
-	@make -C $(LIBFT_DIR)
+$(NAME)	: $(OBJS) $(LIBFT)
 	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^ $(LIBFT)
 
 $(OBJS)	: $(SRCS)
@@ -27,9 +26,14 @@ fclean	: clean
 	$(RM) $(NAME)
 	@make fclean -C $(LIBFT_DIR)
 
+$(LIBFT): FORCE
+	$(MAKE) -C $(LIBFT_DIR)
+
+FORCE	:
+
 re		: fclean all
 
 run		: all
 	./$(NAME)
 
-.PHONY	: all clean fclean re run
+.PHONY	: all clean fclean re run FORCE
