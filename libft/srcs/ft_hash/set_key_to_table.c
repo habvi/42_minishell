@@ -36,7 +36,7 @@ static int	add_elem_to_table(t_hash *hash, t_elem *elem, uint64_t hash_val)
 // if malloc error, return HASH_ERROR
 // hash not freed in func
 // 'key' cannot be null, 'value' can accept null
-int	add_to_table(t_hash *hash, char *key, void *content)
+int	set_to_table(t_hash *hash, char *key, void *content)
 {
 	uint64_t	hash_val;
 	t_elem		*elem;
