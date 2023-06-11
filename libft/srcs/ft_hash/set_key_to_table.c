@@ -16,6 +16,7 @@ static t_elem	*create_hash_elem(char *key, void *content)
 	return (elem);
 }
 
+// if deque_node_new malloc error, remain head t_deque(-> free clear_hash_table)
 static int	add_elem_to_table(t_hash *hash, t_elem *elem)
 {
 	uint64_t		hash_val;
