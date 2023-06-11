@@ -36,7 +36,7 @@ t_hash		*create_hash_table(uint64_t size);
 int			set_to_table(t_hash *hash, char *key, void *content);
 
 /* find key */
-bool		find_key(t_hash *hash, const char *key);
+t_deque_node	*find_key(t_hash *hash, const char *key);
 
 /* get value */
 

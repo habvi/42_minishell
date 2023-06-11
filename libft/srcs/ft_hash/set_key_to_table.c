@@ -42,12 +42,14 @@ static int	add_elem_to_table(t_hash *hash, t_elem *elem)
 // 'key' cannot be null, 'value' can accept null
 int	set_to_table(t_hash *hash, char *key, void *content)
 {
-	t_elem	*elem;
+	t_elem			*elem;
+	t_deque_node	*target_node;
 
 	if (!key)
 		return (HASH_SUCCESS);
-	if (find_key(hash, key))
-		update_content_of_key(hash, key, content);
+	target_node = find_key(hash, key);
+	if (target_node)
+		update_content_of_key(&key, content, target_node);
 	else
 	{
 		elem = create_hash_elem(key, content);
