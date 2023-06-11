@@ -56,6 +56,7 @@ int	set_to_table(t_hash *hash, char *key, void *content)
 		//todo:rehash
 		if (add_elem_to_table(hash, elem) == HASH_ERROR)
 		{
+			// clear_hash_elem
 			free(key);
 			// todo: del func
 			free(content);
