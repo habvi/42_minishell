@@ -65,26 +65,26 @@ int	main(void)
 		t_hash	*hash = create_hash_table(100);
 		display_hash_table(hash, display_elem);
 
-		add_to_table(hash, "test_key", "test_value");
-		add_to_table(hash, "pien", ";p");
-		add_to_table(hash, "PATH", "/bin:/usr/bin:etc");
+		set_to_table(hash, "test_key", "test_value");
+		set_to_table(hash, "pien", ";p");
+		set_to_table(hash, "PATH", "/bin:/usr/bin:etc");
 		display_table_info(hash);
 
-		add_to_table(hash, "empty string", "");
+		set_to_table(hash, "empty string", "");
 		display_table_info(hash);
 
-		add_to_table(hash, "empty value", NULL);
+		set_to_table(hash, "empty value", NULL);
 		display_table_info(hash);
 
-		add_to_table(hash, "PATHa", "/bin:/usr/bin:etc");
-		add_to_table(hash, "PATH1", "/bin:/usr/bin:etc1");
+		set_to_table(hash, "PATHa", "/bin:/usr/bin:etc");
+		set_to_table(hash, "PATH1", "/bin:/usr/bin:etc1");
 		display_table_info(hash);
 
-		add_to_table(hash, "abc", "abc1");
-		add_to_table(hash, "abc", "abc2");
-		add_to_table(hash, "abc", "abc3");
-		add_to_table(hash, "abc", "abc4");
-		add_to_table(hash, "abc", "abc5");
+		set_to_table(hash, "abc", "abc1");
+		set_to_table(hash, "abc", "abc2");
+		set_to_table(hash, "abc", "abc3");
+		set_to_table(hash, "abc", "abc4");
+		set_to_table(hash, "abc", "abc5");
 		display_table_info(hash);
 
 		clear_hash_table(&hash);
