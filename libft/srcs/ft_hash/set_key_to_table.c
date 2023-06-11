@@ -60,8 +60,7 @@ int	set_to_table(t_hash *hash, char *key, void *content)
 		{
 			// clear_hash_elem
 			free(key);
-			// todo: del func
-			free(content);
+			free(content); // todo: del func
 			free(elem);
 			return (HASH_ERROR);
 		}
