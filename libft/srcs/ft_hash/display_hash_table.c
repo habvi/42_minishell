@@ -37,5 +37,5 @@ void	display_hash_table(t_hash *hash, void (*display)(void *))
 			print_table_elem(hash->table[idx], display);
 		idx++;
 	}
-	ft_dprintf(STDERR_FILENO, "           }\n");
+	ft_dprintf(STDERR_FILENO, "           }\n\n");
 }
