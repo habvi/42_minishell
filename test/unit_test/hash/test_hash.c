@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "ft_hash.h"
 #include "ft_dprintf.h"
+#include "ft_string.h"
 
 #define COLOR_RED		"\x1b[31m"
 #define COLOR_GREEN		"\x1b[32m"
@@ -45,6 +46,18 @@ int	test_hash_value(char *key, uint64_t mod, uint64_t expected, int no)
 	return (1);
 }
 
+static void	set_to_table_by_allocated_strs(t_hash *hash, const char *s1, const char *s2)
+{
+	char	*s1_dup = NULL;
+	char	*s2_dup = NULL;
+
+	if (s1)
+		s1_dup = ft_strdup(s1);
+	if (s2)
+		s2_dup = ft_strdup(s2);
+	set_to_table(hash, s1_dup, s2_dup);
+}
+
 int	main(void)
 {
 	int	test_no = 0;
@@ -65,26 +78,26 @@ int	main(void)
 		t_hash	*hash = create_hash_table(100);
 		display_hash_table(hash, display_elem);
 
-		set_to_table(hash, "test_key", "test_value");
-		set_to_table(hash, "pien", ";p");
-		set_to_table(hash, "PATH", "/bin:/usr/bin:etc");
+		set_to_table_by_allocated_strs(hash, "test_key", "test_value");
+		set_to_table_by_allocated_strs(hash, "pien", ";p");
+		set_to_table_by_allocated_strs(hash, "PATH", "/bin:/usr/bin:etc");
 		display_table_info(hash);
 
-		set_to_table(hash, "empty string", "");
+		set_to_table_by_allocated_strs(hash, "empty string", "");
 		display_table_info(hash);
 
-		set_to_table(hash, "empty value", NULL);
+		set_to_table_by_allocated_strs(hash, "empty value", NULL);
 		display_table_info(hash);
 
-		set_to_table(hash, "PATHa", "/bin:/usr/bin:etc");
-		set_to_table(hash, "PATH1", "/bin:/usr/bin:etc1");
+		set_to_table_by_allocated_strs(hash, "PATHa", "/bin:/usr/bin:etc");
+		set_to_table_by_allocated_strs(hash, "PATH1", "/bin:/usr/bin:etc1");
 		display_table_info(hash);
 
-		set_to_table(hash, "abc", "abc1");
-		set_to_table(hash, "abc", "abc2");
-		set_to_table(hash, "abc", "abc3");
-		set_to_table(hash, "abc", "abc4");
-		set_to_table(hash, "abc", "abc5");
+		set_to_table_by_allocated_strs(hash, "abc", "abc1");
+		set_to_table_by_allocated_strs(hash, "abc", "abc2");
+		set_to_table_by_allocated_strs(hash, "abc", "abc3");
+		set_to_table_by_allocated_strs(hash, "abc", "abc4");
+		set_to_table_by_allocated_strs(hash, "abc", "abc5");
 		display_table_info(hash);
 
 		clear_hash_table(&hash);
