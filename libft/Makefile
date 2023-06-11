@@ -27,6 +27,19 @@ DEQUE_SRC	:=	$(DEQUE_DIR)/dq_add_back.c \
 				$(DEQUE_DIR)/dq_set_node.c
 
 #--------------------------------------------
+# ft_hash
+#--------------------------------------------
+HASH_DIR	:=	ft_hash
+HASH_SRC	:=	$(HASH_DIR)/add_key_to_table.c \
+				$(HASH_DIR)/clear_hash_table.c \
+				$(HASH_DIR)/create_hash_table.c \
+				$(HASH_DIR)/delete_key_from_table.c \
+				$(HASH_DIR)/display_hash_table.c \
+				$(HASH_DIR)/generate_hash.c \
+				$(HASH_DIR)/rehash_table.c \
+				$(HASH_DIR)/update_value.c
+
+#--------------------------------------------
 # ft_lib
 #--------------------------------------------
 LIB_DIR		:=	ft_lib
@@ -163,7 +176,8 @@ OBJS		:=	$(DEQUE_SRC:%.c=$(OBJS_DIR)/%.o) \
 				$(PUT_SRC:%.c=$(OBJS_DIR)/%.o) \
 				$(STRING_SRC:%.c=$(OBJS_DIR)/%.o) \
 				$(FT_DPRINTF_SRC:%.c=$(OBJS_DIR)/%.o) \
-				$(SYS_SRC:%.c=$(OBJS_DIR)/%.o)
+				$(SYS_SRC:%.c=$(OBJS_DIR)/%.o) \
+				$(HASH_SRC:%.c=$(OBJS_DIR)/%.o)
 
 #--------------------------------------------
 INCLUDES_DIR	:=	includes
