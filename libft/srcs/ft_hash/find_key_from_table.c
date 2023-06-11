@@ -6,6 +6,8 @@ static bool	is_key_in_deque(t_deque_node *node, const char *key)
 {
 	t_elem	*elem;
 
+	if (!node || !key)
+		return (NULL);
 	while (node)
 	{
 		elem = (t_elem *)node->content;
