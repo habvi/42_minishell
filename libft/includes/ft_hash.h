@@ -1,6 +1,7 @@
 #ifndef FT_HASH_H
-#define FT_HASH_H
+# define FT_HASH_H
 
+# include <stdbool.h>
 # include <stddef.h>
 # include <stdint.h>
 
@@ -25,7 +26,6 @@ typedef struct s_hash_element
 /* hash value */
 uint64_t	generate_fnv_hash_64(const unsigned char *key, uint64_t hash_mod);
 
-
 /* generate hash table */
 // return a pointer to the hash table. On error, return NULL
 t_hash		*create_hash_table(uint64_t size);
@@ -33,9 +33,10 @@ t_hash		*create_hash_table(uint64_t size);
 /* add key */
 // add key-value pairs to table and return 0. On error, return (-1)
 // if hash_value conflicts, add with the chain method
-int			add_to_table(t_hash *hash, char *elem_key, void *elem_val);
+int			set_to_table(t_hash *hash, char *key, void *content);
 
 /* find key */
+bool		find_key(t_hash *hash, const char *key);
 
 /* get value */
 
