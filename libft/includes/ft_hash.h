@@ -8,7 +8,8 @@
 # define HASH_SUCCESS	0
 # define HASH_ERROR		(-1)
 
-typedef struct s_deque	t_deque;
+typedef struct s_deque_node	t_deque_node;
+typedef struct s_deque		t_deque;
 
 typedef struct s_hash_table
 {
