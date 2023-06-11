@@ -47,7 +47,7 @@ void		update_content_of_key(t_hash *hash, char *key, void *content);
 
 /* clear table */
 void		del(void *content);
-void		clear_hash_elem(t_elem **elem, void (*del)(void *))
+void		clear_hash_elem(t_elem **elem, void (*del)(void *));
 void		clear_hash_table(t_hash **hash);
 
 /* display hash table */
