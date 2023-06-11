@@ -18,6 +18,13 @@ void	display_elem(void *content)
 	elem->key, (char *)elem->content);
 }
 
+void	display_table_info(t_hash *hash)
+{
+	printf("table size:%zu\n", hash->table_size);
+	printf("key count :%zu\n", hash->key_count);
+	display_hash_table(hash, display_elem);
+}
+
 static char *get_result_char(int res)
 {
 	if (res)
@@ -61,24 +68,24 @@ int	main(void)
 		add_to_table(hash, "test_key", "test_value");
 		add_to_table(hash, "pien", ";p");
 		add_to_table(hash, "PATH", "/bin:/usr/bin:etc");
-		display_hash_table(hash, display_elem);
+		display_table_info(hash);
 
 		add_to_table(hash, "empty string", "");
-		display_hash_table(hash, display_elem);
+		display_table_info(hash);
 
 		add_to_table(hash, "empty value", NULL);
-		display_hash_table(hash, display_elem);
+		display_table_info(hash);
 
 		add_to_table(hash, "PATHa", "/bin:/usr/bin:etc");
 		add_to_table(hash, "PATH1", "/bin:/usr/bin:etc1");
-		display_hash_table(hash, display_elem);
+		display_table_info(hash);
 
 		add_to_table(hash, "abc", "abc1");
 		add_to_table(hash, "abc", "abc2");
 		add_to_table(hash, "abc", "abc3");
 		add_to_table(hash, "abc", "abc4");
 		add_to_table(hash, "abc", "abc5");
-		display_hash_table(hash, display_elem);
+		display_table_info(hash);
 
 		clear_hash_table(&hash);
 
@@ -87,11 +94,14 @@ int	main(void)
 	{
 		printf(" ===== hash table (use rehash) =====\n");
 
+		t_hash	*hash = create_hash_table(1);
+		display_table_info(hash);
+		clear_hash_table(&hash);
 		printf("\n\n");
 	}
 
 	printf("\n############################################\n");
-	printf(" TEST RESULT :: OK %d/ ALL %d     %s\n", \
+	printf(" TEST RESULT :: OK %d / ALL %d     %s\n", \
 			ok, test_no, test_no == ok ? COLOR_GREEN"ALL OK :)"COLOR_RESET : COLOR_RED"NG :X"COLOR_RESET);
 	printf("############################################\n\n");
 
