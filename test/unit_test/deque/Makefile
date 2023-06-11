@@ -11,7 +11,7 @@ INCLUDES	:=	-I$(LIBFT_DIR)/$(INCLUDES_DIR)/
 DEPS		:=	$(OBJS:.o=.d)
 
 CC			:=	cc
-CFLAGS		:=	-Wall -Wextra -Werror -MMD -MP
+CFLAGS		:=	-Wall -Wextra -Werror -MMD -MP -g -fsanitize=address -fsanitize=undefined
 MKDIR		:=	mkdir -p
 
 NAME		:=	a.out
