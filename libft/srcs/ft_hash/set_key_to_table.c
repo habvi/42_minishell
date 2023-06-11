@@ -16,10 +16,12 @@ static t_elem	*create_hash_elem(char *key, void *content)
 	return (elem);
 }
 
-static int	add_elem_to_table(t_hash *hash, t_elem *elem, uint64_t hash_val)
+static int	add_elem_to_table(t_hash *hash, t_elem *elem)
 {
+	uint64_t		hash_val;
 	t_deque_node	*node;
 
+	hash_val = generate_fnv_hash_64((unsigned char *)elem->key, hash->table_size);
 	if (!hash->table[hash_val])
 	{
 		hash->table[hash_val] = deque_new();
@@ -38,8 +40,7 @@ static int	add_elem_to_table(t_hash *hash, t_elem *elem, uint64_t hash_val)
 // 'key' cannot be null, 'value' can accept null
 int	set_to_table(t_hash *hash, char *key, void *content)
 {
-	uint64_t	hash_val;
-	t_elem		*elem;
+	t_elem	*elem;
 
 	if (!key)
 		return (HASH_SUCCESS);
@@ -51,8 +52,7 @@ int	set_to_table(t_hash *hash, char *key, void *content)
 		if (!elem)
 			return (HASH_ERROR);
 		//todo:rehash
-		hash_val = generate_fnv_hash_64((unsigned char *)key, hash->table_size);
-		if (add_elem_to_table(hash, elem, hash_val) == HASH_ERROR)
+		if (add_elem_to_table(hash, elem) == HASH_ERROR)
 		{
 			free(key);
 			// todo: del func
