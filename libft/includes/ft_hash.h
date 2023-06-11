@@ -50,9 +50,9 @@ void			update_content_of_key(char **key, \
 /* del key */
 
 /* clear table */
-void		del(void *content);
-void		clear_hash_elem(t_elem **elem, void (*del)(void *));
-void		clear_hash_table(t_hash **hash);
+void			del(void *content);
+void			clear_hash_elem(t_elem **elem, void (*del)(void *));
+void			clear_hash_table(t_hash **hash);
 
 /* display hash table */
 void			display_hash_table(t_hash *hash, void (*display)(void *));
