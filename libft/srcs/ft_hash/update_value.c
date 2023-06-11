@@ -10,10 +10,9 @@ void	update_content_of_key(char **key, \
 {
 	t_elem	*elem;
 
-	(void)key;
-	// free(*key);
-	// *key = NULL;
+	free(*key);
+	*key = NULL;
 	elem = (t_elem *)target_node->content;
-	// free(elem->content);
+	free(elem->content);
 	elem->content = content;
 }
