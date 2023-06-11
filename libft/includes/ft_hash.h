@@ -44,7 +44,7 @@ int			add_to_table(t_hash *hash, char *elem_key, void *elem_val);
 /* del key */
 
 /* clear table */
-void		clear_hash_elem(t_elem **elem, void (*del) (void *))
+//void		clear_hash_elem(t_elem **elem, void (*del)(void *))
 void		clear_hash_table(t_hash **hash);
 
 /* display hash table */
