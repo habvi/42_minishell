@@ -25,8 +25,7 @@ typedef struct s_hash_element
 }	t_elem;
 
 /* hash value */
-uint64_t		generate_fnv_hash_64(const unsigned char *key, \
-										uint64_t hash_mod);
+uint64_t		gen_fnv_hash(const unsigned char *key, uint64_t hash_mod);
 
 /* generate hash table */
 // return a pointer to the hash table. On error, return NULL

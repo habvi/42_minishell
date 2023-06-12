@@ -22,8 +22,7 @@ static int	add_elem_to_table(t_hash *hash, t_elem *elem)
 	uint64_t		hash_val;
 	t_deque_node	*node;
 
-	hash_val = generate_fnv_hash_64((unsigned char *)elem->key, \
-									hash->table_size);
+	hash_val = gen_fnv_hash((unsigned char *)elem->key, hash->table_size);
 	if (!hash->table[hash_val])
 	{
 		hash->table[hash_val] = deque_new();

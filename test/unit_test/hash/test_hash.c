@@ -35,7 +35,7 @@ static char *get_result_char(int res)
 
 int	test_hash_value(char *key, uint64_t mod, uint64_t expected, int no)
 {
-	uint64_t	hash = generate_fnv_hash_64((const unsigned char *)key, mod);
+	uint64_t	hash =  gen_fnv_hash((const unsigned char *)key, mod);
 	printf("[%02d] %s\n", no, get_result_char(hash == expected));
 	printf("     key       :\"%s\"\n", key);
 	printf("     hash      :%lu\n", hash);
