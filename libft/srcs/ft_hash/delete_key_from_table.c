@@ -4,7 +4,7 @@
 #include "ft_mem.h"
 
 void	delete_key_from_table(t_hash *hash, \
-								const char *key, 
+								const char *key,
 								void (*del_content)(void *))
 {
 	t_deque_node	*target_node;
