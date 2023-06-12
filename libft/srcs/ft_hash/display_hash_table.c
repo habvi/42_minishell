@@ -35,7 +35,7 @@ void	display_hash_table(t_hash *hash, void (*display)(void *))
 	idx = 0;
 	while (hash && idx < hash->table_size)
 	{
-		if (hash->table[idx])
+		if (hash->table[idx] && hash->table[idx]->size)
 			print_table_elem(hash->table[idx], display);
 		idx++;
 	}
