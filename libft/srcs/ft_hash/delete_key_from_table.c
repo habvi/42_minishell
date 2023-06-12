@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include "ft_deque.h"
 #include "ft_hash.h"
-#include "ft_mem.h"
 
 void	delete_key_from_table(t_hash *hash, \
 								const char *key,
