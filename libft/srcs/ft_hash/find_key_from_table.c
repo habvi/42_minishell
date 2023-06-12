@@ -25,7 +25,7 @@ t_deque_node	*find_key(t_hash *hash, const char *key)
 
 	if (!hash || !key)
 		return (NULL);
-	hash_val = gen_fnv_hash((unsigned char *)key, hash->table_size);
+	hash_val = gen_fnv_hash((const unsigned char *)key, hash->table_size);
 	if (!hash->table[hash_val])
 		return (NULL);
 	if (!hash->table[hash_val]->size)
