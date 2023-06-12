@@ -49,7 +49,7 @@ int	set_to_table(t_hash *hash, char *key, void *content)
 		return (HASH_SUCCESS);
 	target_node = find_key(hash, key);
 	if (target_node)
-		update_content_of_key(&key, content, target_node);
+		update_content_of_key(target_node, &key, content);
 	else
 	{
 		elem = create_hash_elem(key, content);
