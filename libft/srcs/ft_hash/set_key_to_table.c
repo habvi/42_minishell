@@ -46,8 +46,8 @@ static int	add_to_table(t_hash *hash, \
 							void *content, \
 							void (*del_content)(void *))
 {
-	t_elem			*elem;
-	uint64_t		hash_val;
+	t_elem		*elem;
+	uint64_t	hash_val;
 
 	if (is_need_rehash(hash) && rehash_table(hash) == HASH_ERROR)
 		return (HASH_ERROR); // free hash by user
