@@ -1,5 +1,5 @@
+#include <stddef.h>
 #include <stdint.h>
-#include "ft_mem.h"
 
 static uint64_t	modulo_hash_mod(uint64_t hash, uint64_t hash_mod)
 {

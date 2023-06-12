@@ -14,8 +14,7 @@ void	clear_hash_elem(t_elem **elem, void (*del_content)(void *))
 }
 
 // todo: use func pointer?
-static void	tmp_deque_clear_node(t_deque_node **node, \
-									void (*del_content)(void *))
+void	tmp_deque_clear_node(t_deque_node **node, void (*del_content)(void *))
 {
 	t_elem	*elem;
 

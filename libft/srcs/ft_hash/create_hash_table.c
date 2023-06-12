@@ -1,8 +1,6 @@
 #include <stdlib.h>
-#include "ft_deque.h"
 #include "ft_hash.h"
 #include "ft_mem.h"
-#include "ft_string.h"
 
 t_hash	*create_hash_table(uint64_t size)
 {
