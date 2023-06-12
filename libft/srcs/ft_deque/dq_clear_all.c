@@ -9,6 +9,7 @@ void	deque_clear_all(t_deque **deque)
 	if (deque_is_empty(*deque))
 	{
 		free(*deque);
+		*deque = NULL;
 		return ;
 	}
 	node = (*deque)->node;

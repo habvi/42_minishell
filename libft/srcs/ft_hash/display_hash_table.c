@@ -13,6 +13,8 @@ static void	print_table_elem(t_deque *deque, void (*display)(void *))
 {
 	t_deque_node	*node;
 
+	if (!deque)
+		return ;
 	node = deque->node;
 	while (node)
 	{

@@ -2,33 +2,35 @@
 #include "ft_hash.h"
 #include "ft_string.h"
 
-static bool	is_key_in_deque(t_deque_node *node, const char *key)
+static t_deque_node	*find_key_in_deque(t_deque_node *node, const char *key)
 {
 	t_elem	*elem;
 
+	if (!node || !key)
+		return (NULL);
 	while (node)
 	{
 		elem = (t_elem *)node->content;
 		if (ft_streq(elem->key, key))
-			return (true);
+			return (node);
 		node = node->next;
 	}
-	return (false);
+	return (NULL);
 }
 
-// return true if key is in table
-bool	find_key(t_hash *hash, const char *key)
+// if key is in table return t_deque_node's addr, else NULL
+t_deque_node	*find_key(t_hash *hash, const char *key)
 {
-	uint64_t	hash_val;
-	bool		result;
+	uint64_t		hash_val;
+	t_deque_node	*result;
 
 	if (!hash || !key)
-		return (false);
+		return (NULL);
 	hash_val = generate_fnv_hash_64((unsigned char *)key, hash->table_size);
 	if (!hash->table[hash_val])
-		return (false);
+		return (NULL);
 	if (!hash->table[hash_val]->size)
-		return (false);
-	result = is_key_in_deque(hash->table[hash_val]->node, key);
+		return (NULL);
+	result = find_key_in_deque(hash->table[hash_val]->node, key);
 	return (result);
 }
