@@ -56,6 +56,7 @@ static void	tmp_deque_clear_all(t_deque **deque)
 	ft_free(*deque);
 }
 
+// hash->table not use ft_free
 void	clear_hash_table(t_hash **hash)
 {
 	size_t	idx;
@@ -72,6 +73,7 @@ void	clear_hash_table(t_hash **hash)
 		}
 		idx++;
 	}
-	ft_free(*(*hash)->table);
+	free((*hash)->table);
+	(*hash)->table = NULL;
 	ft_free(*hash);
 }
