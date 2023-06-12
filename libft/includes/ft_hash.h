@@ -52,6 +52,9 @@ void			update_content_of_key(char **key, \
 										void (*del_content)(void *));
 
 /* del key */
+void			delete_key_from_table(t_hash *hash, \
+										const char *key, \
+										void (*del_content)(void *));
 
 /* clear table */
 void			clear_hash_elem(t_elem **elem, void (*del_content)(void *));
