@@ -3,6 +3,10 @@
 
 # include <stddef.h>
 
+/* free */
+void	*ft_free(void *ptr);
+void	*free_2d_array(char ***ptr);
+
 void	ft_bzero(void *s, size_t n);
 void	*ft_memchr(const void *s, int c, size_t n);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);

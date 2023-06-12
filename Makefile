@@ -88,7 +88,7 @@ sani	:
 	make re SANI=1
 
 .PHONY	: norm
-norm	: all
+norm	:
 	python3 ./test/integration_test/norm.py
 
 

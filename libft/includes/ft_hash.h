@@ -25,8 +25,7 @@ typedef struct s_hash_element
 }	t_elem;
 
 /* hash value */
-uint64_t		generate_fnv_hash_64(const unsigned char *key, \
-										uint64_t hash_mod);
+uint64_t		gen_fnv_hash(const unsigned char *key, uint64_t hash_mod);
 
 /* generate hash table */
 // return a pointer to the hash table. On error, return NULL
@@ -43,9 +42,9 @@ t_deque_node	*find_key(t_hash *hash, const char *key);
 /* get value */
 
 /* update value */
-void			update_content_of_key(char **key, \
-										void *content, \
-										t_deque_node *target_node);
+void			update_content_of_key(t_deque_node *target_node, \
+										char **key, \
+										void *content);
 
 /* del key */
 
