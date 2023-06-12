@@ -5,8 +5,9 @@
 # include <stddef.h>
 # include <stdint.h>
 
-# define HASH_SUCCESS	0
-# define HASH_ERROR		(-1)
+# define HASH_SUCCESS			0
+# define HASH_ERROR				(-1)
+# define LOAD_FACTOR_LIMIT_PCT	80
 
 typedef struct s_deque_node	t_deque_node;
 typedef struct s_deque		t_deque;
@@ -59,5 +60,9 @@ void			clear_hash_table(t_hash **hash, void (*del_content)(void *));
 
 /* display hash table */
 void			display_hash_table(t_hash *hash, void (*display)(void *));
+
+/* rehash */
+bool			is_need_rehash(t_hash *hash);
+int				rehash_table(t_hash *hash);
 
 #endif //FT_HASH_H
