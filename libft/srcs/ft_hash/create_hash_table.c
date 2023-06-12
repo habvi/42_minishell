@@ -16,7 +16,6 @@ t_hash	*create_hash_table(uint64_t size)
 	if (!hash->table)
 	{
 		free(hash);
-		hash = NULL;
 		return (NULL);
 	}
 	return (hash);
