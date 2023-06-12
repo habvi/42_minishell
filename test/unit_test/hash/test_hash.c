@@ -8,7 +8,7 @@
 #define COLOR_GREEN		"\x1b[32m"
 #define COLOR_RESET		"\x1b[0m"
 
-void	display_elem(void *content)
+static void	display_elem(void *content)
 {
 	t_elem	*elem;
 
@@ -19,7 +19,7 @@ void	display_elem(void *content)
 	elem->key, (char *)elem->content);
 }
 
-void	display_table_info(t_hash *hash)
+static void	display_table_info(t_hash *hash)
 {
 	printf("table size:%zu\n", hash->table_size);
 	printf("key count :%zu\n", hash->key_count);
@@ -33,7 +33,7 @@ static char *get_result_char(int res)
 	return (COLOR_RED"NG"COLOR_RESET);
 }
 
-int	test_hash_value(char *key, uint64_t mod, uint64_t expected, int no)
+static int	test_hash_value(char *key, uint64_t mod, uint64_t expected, int no)
 {
 	uint64_t	hash = generate_fnv_hash_64((const unsigned char *)key, mod);
 	printf("[%02d] %s\n", no, get_result_char(hash == expected));
@@ -42,6 +42,25 @@ int	test_hash_value(char *key, uint64_t mod, uint64_t expected, int no)
 	printf("     expected  :%lu\n", expected);
 
 	if (hash != expected)
+		return (0);
+	return (1);
+}
+
+static int	test_get_value(t_hash *hash, char *key, char *expected_val, int no)
+{
+	char	*value = (char *)get_value_from_table(hash, key);
+	int		res;
+
+	if (!value && !expected_val)
+		res =  true;
+	else
+		res = ft_streq(value, expected_val);
+	printf("[%02d] %s\n", no, get_result_char(res));
+	printf("     key       :\"%s\"\n", key);
+	printf("     value     :\"%s\"\n", value);
+	printf("     expected  :\"%s\"\n", expected_val);
+
+	if (!res)
 		return (0);
 	return (1);
 }
@@ -63,7 +82,7 @@ int	main(void)
 	int	test_no = 0;
 	int	ok = 0;
 	{
-		printf(" ========== hash value ==========\n");
+		printf("\n ========== hash value ==========\n");
 
 		ok += test_hash_value("example", 0, 0x44ec942469dbbb3d, ++test_no);
 		ok += test_hash_value("abc", 0, 0xd8dcca186bafadcb, ++test_no);
@@ -73,7 +92,7 @@ int	main(void)
 		printf("\n\n");
 	}
 	{
-		printf(" ========== hash table (except rehash) ==========\n");
+		printf("\n ========== hash table (except rehash) ==========\n");
 
 		t_hash	*hash = create_hash_table(100);
 		display_hash_table(hash, display_elem);
@@ -105,10 +124,47 @@ int	main(void)
 		printf("\n\n");
 	}
 	{
-		printf(" ===== hash table (use rehash) =====\n");
+		printf("\n ===== hash table (use rehash) =====\n");
 
 		t_hash	*hash = create_hash_table(1);
 		display_table_info(hash);
+		clear_hash_table(&hash);
+		printf("\n\n");
+	}
+	{
+		printf("\n ===== find key =====\n");
+
+		t_hash	*hash = create_hash_table(100);
+
+		set_to_table_by_allocated_strs(hash, "abc", "value of abc");
+		set_to_table_by_allocated_strs(hash, "abc1", "value of abc1");
+		set_to_table_by_allocated_strs(hash, "abc1", "value of abc2");
+		set_to_table_by_allocated_strs(hash, "ABC", "value of ABC");
+		set_to_table_by_allocated_strs(hash, "12345", "123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890");
+		set_to_table_by_allocated_strs(hash, "12345", "12345678901234567890123456789012345678901234567890123456789012345678901234567890");
+		set_to_table_by_allocated_strs(hash, "12345", "123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890");
+		set_to_table_by_allocated_strs(hash, "test", "");
+		set_to_table_by_allocated_strs(hash, "null", NULL);
+		display_table_info(hash);
+
+		printf("\n   ----- key exists in the table -----\n");
+		ok += test_get_value(hash, "abc", "value of abc", ++test_no);
+		ok += test_get_value(hash, "abc1", "value of abc2", ++test_no);
+		ok += test_get_value(hash, "test", "", ++test_no);
+		ok += test_get_value(hash, "null", NULL, ++test_no);
+		ok += test_get_value(hash, "12345", "123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890", ++test_no);
+
+		printf("\n   ----- key not found -----\n");
+		ok += test_get_value(hash, "nothing", NULL, ++test_no);
+		ok += test_get_value(hash, "", NULL, ++test_no);
+		ok += test_get_value(hash, "abC", NULL, ++test_no);
+		ok += test_get_value(hash, "abc2", NULL, ++test_no);
+		ok += test_get_value(hash, "", NULL, ++test_no);
+		ok += test_get_value(hash,  "42Tokyo", NULL, ++test_no);
+
+		printf("\n   ----- after del key -----\n");
+		// todo:implement del key
+
 		clear_hash_table(&hash);
 		printf("\n\n");
 	}

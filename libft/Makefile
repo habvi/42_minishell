@@ -37,6 +37,7 @@ HASH_SRC	:=	$(HASH_DIR)/clear_hash_table.c \
 				$(HASH_DIR)/display_hash_table.c \
 				$(HASH_DIR)/find_key_from_table.c \
 				$(HASH_DIR)/generate_hash.c \
+				$(HASH_DIR)/get_value_from_table.c \
 				$(HASH_DIR)/rehash_table.c \
 				$(HASH_DIR)/set_key_to_table.c \
 				$(HASH_DIR)/update_value.c

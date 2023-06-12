@@ -41,6 +41,7 @@ int				set_to_table(t_hash *hash, char *key, void *content);
 t_deque_node	*find_key(t_hash *hash, const char *key);
 
 /* get value */
+void			*get_value_from_table(t_hash *hash, const char *key);
 
 /* update value */
 void			update_content_of_key(char **key, \
