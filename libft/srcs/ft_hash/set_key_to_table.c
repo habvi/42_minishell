@@ -39,7 +39,9 @@ static int	add_elem_to_table(t_hash *hash, t_elem *elem)
 // if malloc error, return HASH_ERROR
 // hash not freed in func
 // 'key' cannot be null, 'value' can accept null
-int	set_to_table(t_hash *hash, char *key, void *content)
+int	set_to_table(t_hash *hash, char *key, \
+					void *content, \
+					void (*del_content)(void *))
 {
 	t_elem			*elem;
 	t_deque_node	*target_node;
@@ -48,7 +50,7 @@ int	set_to_table(t_hash *hash, char *key, void *content)
 		return (HASH_SUCCESS);
 	target_node = find_key(hash, key);
 	if (target_node)
-		update_content_of_key(target_node, &key, content);
+		update_content_of_key(&key, content, target_node, del_content);
 	else
 	{
 		elem = create_hash_elem(key, content);
@@ -57,7 +59,7 @@ int	set_to_table(t_hash *hash, char *key, void *content)
 		//todo:rehash
 		if (add_elem_to_table(hash, elem) == HASH_ERROR)
 		{
-			clear_hash_elem(&elem, del);
+			clear_hash_elem(&elem, del_content);
 			return (HASH_ERROR);
 		}
 		hash->key_count++;
