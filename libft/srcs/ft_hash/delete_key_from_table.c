@@ -19,6 +19,5 @@ void	delete_key_from_table(t_hash *hash, \
 	head = hash->table[hash_val];
 	deque_pop_selected_node(head, target_node);
 	tmp_deque_clear_node(&target_node, del_content);
-	head->size--;
 	hash->key_count--;
 }
