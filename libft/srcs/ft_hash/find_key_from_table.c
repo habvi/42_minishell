@@ -18,11 +18,10 @@ static t_deque_node	*find_key_in_deque(t_deque_node *node, const char *key)
 	return (NULL);
 }
 
-// if key is in table return t_deque_node's addr, else NULL
 t_deque_node	*find_key(t_hash *hash, const char *key)
 {
 	uint64_t		hash_val;
-	t_deque_node	*result;
+	t_deque_node	*addr;
 
 	if (!hash || !key)
 		return (NULL);
@@ -31,6 +30,6 @@ t_deque_node	*find_key(t_hash *hash, const char *key)
 		return (NULL);
 	if (!hash->table[hash_val]->size)
 		return (NULL);
-	result = find_key_in_deque(hash->table[hash_val]->node, key);
-	return (result);
+	addr = find_key_in_deque(hash->table[hash_val]->node, key);
+	return (addr);
 }
