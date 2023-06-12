@@ -1,54 +1,45 @@
 #include <stdlib.h>
 #include "ft_deque.h"
 #include "ft_hash.h"
+#include "ft_mem.h"
 
-void	del(void *content)
-{
-	free(content);
-}
-
-void	clear_hash_elem(t_elem **elem, void (*del)(void *))
+void	clear_hash_elem(t_elem **elem, void (*del_content)(void *))
 {
 	if (!elem || !*elem)
 		return ;
-	free((*elem)->key);
-	(*elem)->key = NULL;
-	del((*elem)->content);
+	ft_free((*elem)->key);
+	del_content((*elem)->content);
 	(*elem)->content = NULL;
-	free(*elem);
-	*elem = NULL;
+	ft_free(*elem);
 }
 
 // todo: use func pointer?
-static void	tmp_deque_clear_node(t_deque_node **node)
+static void	tmp_deque_clear_node(t_deque_node **node, \
+									void (*del_content)(void *))
 {
 	t_elem	*elem;
 
 	if (!*node)
 		return ;
 	elem = (*node)->content;
-	free(elem->key);
-	elem->key = NULL;
-	free(elem->content);
+	ft_free(elem->key);
+	del_content(elem->content);
 	elem->content = NULL;
-	free(elem);
-	elem = NULL;
+	ft_free(elem);
 	(*node)->next = NULL;
 	(*node)->prev = NULL;
-	free(*node);
-	*node = NULL;
+	ft_free(*node);
 }
 
 // todo: use func pointer?
-static void	tmp_deque_clear_all(t_deque **deque)
+static void	tmp_deque_clear_all(t_deque **deque, void (*del_content)(void *))
 {
 	t_deque_node	*node;
 	t_deque_node	*tmp;
 
 	if (deque_is_empty(*deque))
 	{
-		free(*deque);
-		*deque = NULL;
+		ft_free(*deque);
 		return ;
 	}
 	node = (*deque)->node;
@@ -56,13 +47,12 @@ static void	tmp_deque_clear_all(t_deque **deque)
 	{
 		tmp = node;
 		node = node->next;
-		tmp_deque_clear_node(&tmp);
+		tmp_deque_clear_node(&tmp, del_content);
 	}
-	free(*deque);
-	*deque = NULL;
+	ft_free(*deque);
 }
 
-void	clear_hash_table(t_hash **hash)
+void	clear_hash_table(t_hash **hash, void (*del_content)(void *))
 {
 	size_t	idx;
 
@@ -74,12 +64,11 @@ void	clear_hash_table(t_hash **hash)
 		if ((*hash)->table[idx])
 		{
 			// deque_clear_all(&(*hash)->table[idx]); // TODO: clear_hash_elem
-			tmp_deque_clear_all(&(*hash)->table[idx]);
+			tmp_deque_clear_all(&(*hash)->table[idx], del_content);
 		}
 		idx++;
 	}
 	free((*hash)->table);
 	(*hash)->table = NULL;
-	free(*hash);
-	*hash = NULL;
+	ft_free(*hash);
 }

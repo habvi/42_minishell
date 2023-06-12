@@ -80,6 +80,7 @@ MATH_SRC	:=	$(MATH_DIR)/ft_max.c \
 MEM_DIR		:=	ft_mem
 MEM_SRC		:=	$(MEM_DIR)/ft_bzero.c \
 				$(MEM_DIR)/ft_calloc.c \
+				$(MEM_DIR)/ft_free.c \
 				$(MEM_DIR)/ft_memchr.c \
 				$(MEM_DIR)/ft_memcmp.c \
 				$(MEM_DIR)/ft_memcpy.c \
@@ -99,8 +100,7 @@ PUT_SRC		:=	$(PUT_DIR)/ft_putchar_fd.c \
 # ft_string
 #--------------------------------------------
 STRING_DIR	:=	ft_string
-STRING_SRC	:=	$(STRING_DIR)/ft_free.c \
-				$(STRING_DIR)/ft_split.c \
+STRING_SRC	:=	$(STRING_DIR)/ft_split.c \
 				$(STRING_DIR)/ft_strchr.c \
 				$(STRING_DIR)/ft_strdup.c \
 				$(STRING_DIR)/ft_streq.c \

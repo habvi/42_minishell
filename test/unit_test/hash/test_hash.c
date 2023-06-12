@@ -35,7 +35,7 @@ static char *get_result_char(int res)
 
 static int	test_hash_value(char *key, uint64_t mod, uint64_t expected, int no)
 {
-	uint64_t	hash = generate_fnv_hash_64((const unsigned char *)key, mod);
+	uint64_t	hash =  gen_fnv_hash((const unsigned char *)key, mod);
 	printf("[%02d] %s\n", no, get_result_char(hash == expected));
 	printf("     key       :\"%s\"\n", key);
 	printf("     hash      :%lu\n", hash);
@@ -65,6 +65,14 @@ static int	test_get_value(t_hash *hash, char *key, char *expected_val, int no)
 	return (1);
 }
 
+void	del_elem_content_test(void *content)
+{
+	char	*value;
+
+	value = (char *)content;
+	free(value);
+}
+
 static void	set_to_table_by_allocated_strs(t_hash *hash, const char *s1, const char *s2)
 {
 	char	*s1_dup = NULL;
@@ -74,7 +82,7 @@ static void	set_to_table_by_allocated_strs(t_hash *hash, const char *s1, const c
 		s1_dup = ft_strdup(s1);
 	if (s2)
 		s2_dup = ft_strdup(s2);
-	set_to_table(hash, s1_dup, s2_dup);
+	set_to_table(hash, s1_dup, s2_dup, del_elem_content_test);
 }
 
 int	main(void)
@@ -119,7 +127,7 @@ int	main(void)
 		set_to_table_by_allocated_strs(hash, "abc", "abc5");
 		display_table_info(hash);
 
-		clear_hash_table(&hash);
+		clear_hash_table(&hash, del_elem_content_test);
 
 		printf("\n\n");
 	}
@@ -128,7 +136,7 @@ int	main(void)
 
 		t_hash	*hash = create_hash_table(1);
 		display_table_info(hash);
-		clear_hash_table(&hash);
+		clear_hash_table(&hash, del_elem_content_test);
 		printf("\n\n");
 	}
 	{
@@ -165,7 +173,7 @@ int	main(void)
 		printf("\n   ----- after del key -----\n");
 		// todo:implement del key
 
-		clear_hash_table(&hash);
+		clear_hash_table(&hash, del_elem_content_test);
 		printf("\n\n");
 	}
 
