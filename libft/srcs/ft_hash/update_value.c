@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include "ft_deque.h"
 #include "ft_hash.h"
+#include "ft_string.h"
 
 // key exist in hash
 // free(key, pre-content), update new content
@@ -10,8 +11,7 @@ void	update_content_of_key(t_deque_node *target_node, \
 {
 	t_elem	*elem;
 
-	free(*key);
-	*key = NULL;
+	ft_free(*key);
 	elem = (t_elem *)target_node->content;
 	free(elem->content);
 	elem->content = content;

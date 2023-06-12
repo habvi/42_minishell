@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include "ft_deque.h"
 #include "ft_hash.h"
+#include "ft_string.h"
 
 void	del(void *content)
 {
@@ -11,12 +12,10 @@ void	clear_hash_elem(t_elem **elem, void (*del)(void *))
 {
 	if (!elem || !*elem)
 		return ;
-	free((*elem)->key);
-	(*elem)->key = NULL;
+	ft_free((*elem)->key);
 	del((*elem)->content);
 	(*elem)->content = NULL;
-	free(*elem);
-	*elem = NULL;
+	ft_free(*elem);
 }
 
 // todo: use func pointer?
@@ -27,16 +26,13 @@ static void	tmp_deque_clear_node(t_deque_node **node)
 	if (!*node)
 		return ;
 	elem = (*node)->content;
-	free(elem->key);
-	elem->key = NULL;
+	ft_free(elem->key);
 	free(elem->content);
 	elem->content = NULL;
-	free(elem);
-	elem = NULL;
+	ft_free(elem);
 	(*node)->next = NULL;
 	(*node)->prev = NULL;
-	free(*node);
-	*node = NULL;
+	ft_free(*node);
 }
 
 // todo: use func pointer?
@@ -47,8 +43,7 @@ static void	tmp_deque_clear_all(t_deque **deque)
 
 	if (deque_is_empty(*deque))
 	{
-		free(*deque);
-		*deque = NULL;
+		ft_free(*deque);
 		return ;
 	}
 	node = (*deque)->node;
@@ -58,8 +53,7 @@ static void	tmp_deque_clear_all(t_deque **deque)
 		node = node->next;
 		tmp_deque_clear_node(&tmp);
 	}
-	free(*deque);
-	*deque = NULL;
+	ft_free(*deque);
 }
 
 void	clear_hash_table(t_hash **hash)
@@ -78,8 +72,6 @@ void	clear_hash_table(t_hash **hash)
 		}
 		idx++;
 	}
-	free((*hash)->table);
-	(*hash)->table = NULL;
-	free(*hash);
-	*hash = NULL;
+	ft_free(*(*hash)->table);
+	ft_free(*hash);
 }

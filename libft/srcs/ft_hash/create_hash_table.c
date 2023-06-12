@@ -2,6 +2,7 @@
 #include "ft_deque.h"
 #include "ft_hash.h"
 #include "ft_mem.h"
+#include "ft_string.h"
 
 t_hash	*create_hash_table(uint64_t size)
 {
@@ -15,7 +16,7 @@ t_hash	*create_hash_table(uint64_t size)
 	hash->table = (t_deque **)ft_calloc(hash->table_size, sizeof(t_deque *));
 	if (!hash->table)
 	{
-		free(hash);
+		ft_free(hash);
 		return (NULL);
 	}
 	return (hash);
