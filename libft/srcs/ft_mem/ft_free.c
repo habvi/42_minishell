@@ -2,15 +2,15 @@
 
 static void	*ft_free_sub(void **ptr)
 {
-    free(*ptr);
-    *ptr = NULL;
+	free(*ptr);
+	*ptr = NULL;
 	return (NULL);
 }
 
 void	*ft_free(void *ptr)
 {
-    if (!ptr)
-      return (NULL);
+	if (!ptr)
+		return (NULL);
 	return (ft_free_sub(&ptr));
 }
 
