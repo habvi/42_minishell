@@ -4,7 +4,8 @@
 # include <stdbool.h>
 # include <stddef.h>
 
-/* 2d array */
+/* free */
+void	*ft_free(void *ptr);
 void	*free_2d_array(char ***ptr);
 
 /* compare */
