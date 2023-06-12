@@ -4,10 +4,6 @@
 # include <stdbool.h>
 # include <stddef.h>
 
-/* free */
-void	*ft_free(void *ptr);
-void	*free_2d_array(char ***ptr);
-
 /* compare */
 char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);

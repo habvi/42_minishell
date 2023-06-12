@@ -1,5 +1,4 @@
 #include <stdlib.h>
-#include "ft_string.h"
 
 static void	*ft_free_sub(void **ptr)
 {
