@@ -68,7 +68,8 @@ static int	add_to_table(t_hash *hash, \
 // if malloc error, return HASH_ERROR
 // hash not freed in func
 // 'key' cannot be null, 'value' can accept null
-int	set_to_table(t_hash *hash, char *key, \
+int	set_to_table(t_hash *hash, \
+					char *key, \
 					void *content, \
 					void (*del_content)(void *))
 {
