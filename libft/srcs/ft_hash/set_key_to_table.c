@@ -3,6 +3,7 @@
 #include "ft_sys.h"
 
 // if malloc error, return NULL
+// key != NULL
 static t_elem	*create_hash_elem(char *key, void *content)
 {
 	t_elem	*elem;
@@ -15,18 +16,19 @@ static t_elem	*create_hash_elem(char *key, void *content)
 	return (elem);
 }
 
+// hash != NULL
 static int	alloc_hash_val_index_of_table(t_hash *hash, uint64_t hash_val)
 {
+	if (hash->table[hash_val])
+		return (HASH_SUCCESS);
+	hash->table[hash_val] = deque_new();
 	if (!hash->table[hash_val])
-	{
-		hash->table[hash_val] = deque_new();
-		if (!hash->table[hash_val])
-			return (HASH_ERROR);
-	}
+		return (HASH_ERROR);
 	return (HASH_SUCCESS);
 }
 
 // if deque_node_new malloc error, remain head t_deque(-> free clear_hash_table)
+// hash != NULL, elem != NULL
 static int	add_elem_to_table(t_hash *hash, t_elem *elem, uint64_t hash_val)
 {
 	t_deque_node	*node;
@@ -38,6 +40,7 @@ static int	add_elem_to_table(t_hash *hash, t_elem *elem, uint64_t hash_val)
 	return (HASH_SUCCESS);
 }
 
+// hash != NULL, key != NULL
 static int	add_to_table(t_hash *hash, \
 							char *key, \
 							void *content, \
@@ -71,8 +74,8 @@ int	set_to_table(t_hash *hash, char *key, \
 {
 	t_deque_node	*target_node;
 
-	if (!key)
-		return (HASH_SUCCESS);
+	if (!hash || !key)
+		return (HASH_ERROR);
 	target_node = find_key(hash, key);
 	if (target_node)
 		update_content_of_key(&key, content, target_node, del_content);
