@@ -75,7 +75,7 @@ static void	del_elem_content_test(void *content)
 
 static void	test_delete_key_from_table(t_hash *hash, const char *key)
 {
-	delete_key_from_table(hash, key, del_elem_content_test);
+	delete_key_from_table(hash, key);
 }
 
 static void	set_to_table_by_allocated_strs(t_hash *hash, const char *s1, const char *s2)
@@ -132,7 +132,7 @@ int	main(void)
 		set_to_table_by_allocated_strs(hash, "abc", "abc5");
 		display_table_info(hash);
 
-		clear_hash_table(&hash, del_elem_content_test);
+		clear_hash_table(&hash);
 
 		printf("\n\n");
 	}
@@ -141,7 +141,7 @@ int	main(void)
 
 		t_hash	*hash = create_hash_table(1);
 		display_table_info(hash);
-		clear_hash_table(&hash, del_elem_content_test);
+		clear_hash_table(&hash);
 		printf("\n\n");
 	}
 	{
@@ -186,7 +186,7 @@ int	main(void)
 		test_delete_key_from_table(hash, "not_exist_key");
 		display_table_info(hash);
 
-		clear_hash_table(&hash, del_elem_content_test);
+		clear_hash_table(&hash);
 		printf("\n\n");
 	}
 

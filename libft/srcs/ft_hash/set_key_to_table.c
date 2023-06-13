@@ -3,7 +3,9 @@
 #include "ft_sys.h"
 
 // if malloc error, return NULL
-static t_elem	*create_hash_elem(char *key, void *content)
+static t_elem	*create_hash_elem(char *key, \
+									void *content, \
+									void (*del_content)(void *))
 {
 	t_elem	*elem;
 
@@ -12,6 +14,7 @@ static t_elem	*create_hash_elem(char *key, void *content)
 		return (NULL);
 	elem->key = key;
 	elem->content = content;
+	elem->del_content = del_content;
 	return (elem);
 }
 
@@ -49,16 +52,16 @@ int	set_to_table(t_hash *hash, char *key, \
 		return (HASH_SUCCESS);
 	target_node = find_key(hash, key);
 	if (target_node)
-		update_content_of_key(&key, content, target_node, del_content);
+		update_content_of_key(&key, content, target_node);
 	else
 	{
-		elem = create_hash_elem(key, content);
+		elem = create_hash_elem(key, content, del_content);
 		if (!elem)
 			return (HASH_ERROR);
 		//todo:rehash
 		if (add_elem_to_table(hash, elem) == HASH_ERROR)
 		{
-			clear_hash_elem(&elem, del_content);
+			clear_hash_elem(&elem);
 			return (HASH_ERROR);
 		}
 		hash->key_count++;

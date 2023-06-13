@@ -22,6 +22,7 @@ typedef struct s_hash_element
 {
 	char	*key;
 	void	*content;
+	void	(*del_content)(void *);
 }	t_elem;
 
 /* hash value */
@@ -48,19 +49,16 @@ void			*get_value_from_table(t_hash *hash, const char *key);
 /* update value */
 void			update_content_of_key(char **key, \
 										void *content, \
-										t_deque_node *target_node, \
-										void (*del_content)(void *));
+										t_deque_node *target_node);
 
 /* del key */
 void			delete_key_from_table(t_hash *hash, \
-										const char *key, \
-										void (*del_content)(void *));
+										const char *key);
 
 /* clear table */
-void			clear_hash_elem(t_elem **elem, void (*del_content)(void *));
-void			tmp_deque_clear_node(t_deque_node **node, \
-										void (*del_content)(void *));
-void			clear_hash_table(t_hash **hash, void (*del_content)(void *));
+void			clear_hash_elem(t_elem **elem);
+void			tmp_deque_clear_node(t_deque_node **node);
+void			clear_hash_table(t_hash **hash);
 
 /* display hash table */
 void			display_hash_table(t_hash *hash, void (*display)(void *));
