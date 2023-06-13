@@ -61,7 +61,8 @@ int	set_to_table(t_hash *hash, char *key, \
 		//todo:rehash
 		if (add_elem_to_table(hash, elem) == HASH_ERROR)
 		{
-			clear_hash_elem(&elem);
+			del_hash_elem(elem);
+//			clear_hash_elem(&elem);
 			return (HASH_ERROR);
 		}
 		hash->key_count++;
