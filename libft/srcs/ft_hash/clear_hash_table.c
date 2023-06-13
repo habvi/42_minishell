@@ -3,6 +3,18 @@
 #include "ft_hash.h"
 #include "ft_mem.h"
 
+static void	del_hash_elem(void *content)
+{
+	t_elem	*elem;
+
+	if (!content)
+		return ;
+	elem = (t_elem *)content;
+	ft_free(elem->key);
+	elem->del_content(elem->content);
+	ft_free(elem);
+}
+
 void	clear_hash_elem(t_elem **elem)
 {
 	if (!elem || !*elem)
