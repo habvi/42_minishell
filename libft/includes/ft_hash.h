@@ -17,6 +17,7 @@ typedef struct s_hash_table
 	size_t	table_size;
 	size_t	key_count;
 	t_deque	**table;
+	void	(*del_value)(void *);
 }	t_hash;
 
 typedef struct s_hash_element
@@ -30,7 +31,7 @@ uint64_t		gen_fnv_hash(const unsigned char *key, uint64_t hash_mod);
 
 /* generate hash table */
 // return a pointer to the hash table. On error, return NULL
-t_hash			*create_hash_table(uint64_t size);
+t_hash			*create_hash_table(uint64_t size, void (*del_value)(void *));
 
 /* add key */
 // add key-value pairs to table and return 0. On error, return (-1)
