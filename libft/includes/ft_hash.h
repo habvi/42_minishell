@@ -56,8 +56,11 @@ void			hs_delete_key(t_hash *hash, const char *key);
 /* clear table */
 void			hs_clear_elem(t_elem **elem, void (*del_value)(void *));
 void			hs_clear_deque_node(t_deque_node **node, \
-										void (*del_value)(void *));
-void			hs_clear_table(t_hash **hash);
+									void (*del_value)(void *));
+void			hs_clear_table(t_deque **table, \
+								const size_t size, \
+								void (*del_value)(void *));
+void			hs_clear(t_hash **hash);
 
 /* display hash table */
 void			hs_display(t_hash *hash, void (*display)(void *));
