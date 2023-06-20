@@ -13,25 +13,20 @@ void	clear_hash_elem(t_elem **elem, void (*del_value)(void *))
 	ft_free(*elem);
 }
 
-// todo: use func pointer?
-void	tmp_deque_clear_node(t_deque_node **node, void (*del_value)(void *))
+void	hash_deque_clear_node(t_deque_node **node, void (*del_value)(void *))
 {
 	t_elem	*elem;
 
 	if (!*node)
 		return ;
 	elem = (*node)->content;
-	ft_free(elem->key);
-	del_value(elem->content);
-	elem->content = NULL;
-	ft_free(elem);
+	clear_hash_elem(&elem, del_value);
 	(*node)->next = NULL;
 	(*node)->prev = NULL;
 	ft_free(*node);
 }
 
-// todo: use func pointer?
-static void	tmp_deque_clear_all(t_deque **deque, void (*del_value)(void *))
+static void	hash_deque_clear_all(t_deque **deque, void (*del_value)(void *))
 {
 	t_deque_node	*node;
 	t_deque_node	*tmp;
@@ -39,6 +34,7 @@ static void	tmp_deque_clear_all(t_deque **deque, void (*del_value)(void *))
 	if (deque_is_empty(*deque))
 	{
 		ft_free(*deque);
+		*deque = NULL;
 		return ;
 	}
 	node = (*deque)->node;
@@ -46,9 +42,10 @@ static void	tmp_deque_clear_all(t_deque **deque, void (*del_value)(void *))
 	{
 		tmp = node;
 		node = node->next;
-		tmp_deque_clear_node(&tmp, del_value);
+		hash_deque_clear_node(&tmp, del_value);
 	}
 	ft_free(*deque);
+	*deque = NULL;
 }
 
 void	clear_hash_table(t_hash **hash)
@@ -61,10 +58,7 @@ void	clear_hash_table(t_hash **hash)
 	while (idx < (*hash)->table_size)
 	{
 		if ((*hash)->table[idx])
-		{
-			// deque_clear_all(&(*hash)->table[idx]); // TODO: clear_hash_elem
-			tmp_deque_clear_all(&(*hash)->table[idx], (*hash)->del_value);
-		}
+			hash_deque_clear_all(&(*hash)->table[idx], (*hash)->del_value);
 		idx++;
 	}
 	free((*hash)->table);
