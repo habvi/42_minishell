@@ -132,7 +132,7 @@ int	main(void)
 		set_to_table_by_allocated_strs(hash, "abc", "abc5");
 		display_table_info(hash);
 
-		hs_clear_table(&hash);
+		hs_clear(&hash);
 
 		printf("\n\n");
 	}
@@ -141,7 +141,7 @@ int	main(void)
 
 		t_hash	*hash = hs_create_table(1, del_elem_content_test);
 		display_table_info(hash);
-		hs_clear_table(&hash);
+		hs_clear(&hash);
 		printf("\n\n");
 	}
 	{
@@ -186,7 +186,7 @@ int	main(void)
 		test_hs_delete_key(hash, "not_exist_key");
 		display_table_info(hash);
 
-		hs_clear_table(&hash);
+		hs_clear(&hash);
 		printf("\n\n");
 	}
 
