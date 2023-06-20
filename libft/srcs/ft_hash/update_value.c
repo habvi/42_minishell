@@ -7,12 +7,12 @@
 void	update_content_of_key(char **key, \
 								void *content, \
 								t_deque_node *target_node, \
-								void (*del_content)(void *))
+								void (*del_value)(void *))
 {
 	t_elem	*elem;
 
 	ft_free(*key);
 	elem = (t_elem *)target_node->content;
-	del_content(elem->content);
+	del_value(elem->content);
 	elem->content = content;
 }

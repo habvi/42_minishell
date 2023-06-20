@@ -41,10 +41,7 @@ static int	add_elem_to_table(t_hash *hash, t_elem *elem, uint64_t hash_val)
 }
 
 // hash != NULL, key != NULL
-static int	add_to_table(t_hash *hash, \
-							char *key, \
-							void *content, \
-							void (*del_content)(void *))
+static int	add_to_table(t_hash *hash, char *key, void *content)
 {
 	t_elem		*elem;
 	uint64_t	hash_val;
@@ -59,7 +56,7 @@ static int	add_to_table(t_hash *hash, \
 		return (HASH_ERROR);
 	if (add_elem_to_table(hash, elem, hash_val) == HASH_ERROR)
 	{
-		clear_hash_elem(&elem, del_content);
+		clear_hash_elem(&elem, hash->del_value);
 		return (HASH_ERROR);
 	}
 	return (HASH_SUCCESS);
@@ -68,10 +65,7 @@ static int	add_to_table(t_hash *hash, \
 // if malloc error, return HASH_ERROR
 // hash not freed in func
 // 'key' cannot be null, 'value' can accept null
-int	set_to_table(t_hash *hash, \
-					char *key, \
-					void *content, \
-					void (*del_content)(void *))
+int	set_to_table(t_hash *hash, char *key, void *content)
 {
 	t_deque_node	*target_node;
 
@@ -79,10 +73,10 @@ int	set_to_table(t_hash *hash, \
 		return (HASH_ERROR);
 	target_node = find_key(hash, key);
 	if (target_node)
-		update_content_of_key(&key, content, target_node, del_content);
+		update_content_of_key(&key, content, target_node, hash->del_value);
 	else
 	{
-		if (add_to_table(hash, key, content, del_content) == HASH_ERROR)
+		if (add_to_table(hash, key, content) == HASH_ERROR)
 			return (HASH_ERROR);
 		hash->key_count++;
 	}

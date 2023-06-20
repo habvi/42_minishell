@@ -36,10 +36,7 @@ t_hash			*create_hash_table(uint64_t size, void (*del_value)(void *));
 /* add key */
 // add key-value pairs to table and return 0. On error, return (-1)
 // if hash_value conflicts, add with the chain method
-int				set_to_table(t_hash *hash, \
-								char *key, \
-								void *content, \
-								void (*del_content)(void *));
+int				set_to_table(t_hash *hash, char *key, void *content);
 
 /* find key */
 t_deque_node	*find_key(t_hash *hash, const char *key);
@@ -51,18 +48,16 @@ void			*get_value_from_table(t_hash *hash, const char *key);
 void			update_content_of_key(char **key, \
 										void *content, \
 										t_deque_node *target_node, \
-										void (*del_content)(void *));
+										void (*del_value)(void *));
 
 /* del key */
-void			delete_key_from_table(t_hash *hash, \
-										const char *key, \
-										void (*del_content)(void *));
+void			delete_key_from_table(t_hash *hash, const char *key);
 
 /* clear table */
-void			clear_hash_elem(t_elem **elem, void (*del_content)(void *));
+void			clear_hash_elem(t_elem **elem, void (*del_value)(void *));
 void			tmp_deque_clear_node(t_deque_node **node, \
-										void (*del_content)(void *));
-void			clear_hash_table(t_hash **hash, void (*del_content)(void *));
+										void (*del_value)(void *));
+void			clear_hash_table(t_hash **hash);
 
 /* display hash table */
 void			display_hash_table(t_hash *hash, void (*display)(void *));
