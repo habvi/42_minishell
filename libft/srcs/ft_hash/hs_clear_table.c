@@ -48,20 +48,28 @@ static void	hash_clear_deque_all(t_deque **deque, void (*del_value)(void *))
 	*deque = NULL;
 }
 
-void	hs_clear_table(t_hash **hash)
+void	hs_clear_table(t_deque **table, \
+						const size_t size, \
+						void (*del_value)(void *))
 {
 	size_t	idx;
 
-	if (!hash || !*hash)
+	if (!table || !del_value)
 		return ;
 	idx = 0;
-	while (idx < (*hash)->table_size)
+	while (idx < size)
 	{
-		if ((*hash)->table[idx])
-			hash_clear_deque_all(&(*hash)->table[idx], (*hash)->del_value);
+		if (table[idx])
+			hash_clear_deque_all(&table[idx], del_value);
 		idx++;
 	}
-	free((*hash)->table);
-	(*hash)->table = NULL;
+	free(table);
+}
+
+void	hs_clear(t_hash **hash)
+{
+	if (!hash || !*hash)
+		return ;
+	hs_clear_table((*hash)->table, (*hash)->table_size, (*hash)->del_value);
 	ft_free(*hash);
 }

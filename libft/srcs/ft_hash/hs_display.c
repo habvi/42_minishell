@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "ft_deque.h"
 #include "ft_hash.h"
 #include "ft_dprintf.h"
