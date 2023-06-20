@@ -1,7 +1,7 @@
 #include "minishell.h"
 #include "ms_exec.h"
 #include "ft_deque.h"
-#include "ft_string.h"
+#include "ft_mem.h"
 #include "ft_sys.h"
 
 static int	exec_builtin_in_parent_proc(t_command cmd, \

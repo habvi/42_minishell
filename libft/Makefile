@@ -23,8 +23,24 @@ DEQUE_SRC	:=	$(DEQUE_DIR)/dq_add_back.c \
 				$(DEQUE_DIR)/dq_node_new.c \
 				$(DEQUE_DIR)/dq_pop_back.c \
 				$(DEQUE_DIR)/dq_pop_front.c \
+				$(DEQUE_DIR)/dq_pop_selected_node.c \
 				$(DEQUE_DIR)/dq_print.c \
 				$(DEQUE_DIR)/dq_set_node.c
+
+#--------------------------------------------
+# ft_hash
+#--------------------------------------------
+HASH_DIR	:=	ft_hash
+HASH_SRC	:=	$(HASH_DIR)/hs_clear_table.c \
+				$(HASH_DIR)/hs_create_table.c \
+				$(HASH_DIR)/hs_delete_key.c \
+				$(HASH_DIR)/hs_display.c \
+				$(HASH_DIR)/hs_find_key.c \
+				$(HASH_DIR)/hs_gen_fnv.c \
+				$(HASH_DIR)/hs_get_value.c \
+				$(HASH_DIR)/hs_rehash_table.c \
+				$(HASH_DIR)/hs_set_key.c \
+				$(HASH_DIR)/hs_update_value.c
 
 #--------------------------------------------
 # ft_lib
@@ -64,6 +80,7 @@ MATH_SRC	:=	$(MATH_DIR)/ft_max.c \
 MEM_DIR		:=	ft_mem
 MEM_SRC		:=	$(MEM_DIR)/ft_bzero.c \
 				$(MEM_DIR)/ft_calloc.c \
+				$(MEM_DIR)/ft_free.c \
 				$(MEM_DIR)/ft_memchr.c \
 				$(MEM_DIR)/ft_memcmp.c \
 				$(MEM_DIR)/ft_memcpy.c \
@@ -83,8 +100,7 @@ PUT_SRC		:=	$(PUT_DIR)/ft_putchar_fd.c \
 # ft_string
 #--------------------------------------------
 STRING_DIR	:=	ft_string
-STRING_SRC	:=	$(STRING_DIR)/ft_free.c \
-				$(STRING_DIR)/ft_split.c \
+STRING_SRC	:=	$(STRING_DIR)/ft_split.c \
 				$(STRING_DIR)/ft_strchr.c \
 				$(STRING_DIR)/ft_strdup.c \
 				$(STRING_DIR)/ft_streq.c \
@@ -163,7 +179,8 @@ OBJS		:=	$(DEQUE_SRC:%.c=$(OBJS_DIR)/%.o) \
 				$(PUT_SRC:%.c=$(OBJS_DIR)/%.o) \
 				$(STRING_SRC:%.c=$(OBJS_DIR)/%.o) \
 				$(FT_DPRINTF_SRC:%.c=$(OBJS_DIR)/%.o) \
-				$(SYS_SRC:%.c=$(OBJS_DIR)/%.o)
+				$(SYS_SRC:%.c=$(OBJS_DIR)/%.o) \
+				$(HASH_SRC:%.c=$(OBJS_DIR)/%.o)
 
 #--------------------------------------------
 INCLUDES_DIR	:=	includes
