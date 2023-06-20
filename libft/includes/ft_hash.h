@@ -27,7 +27,7 @@ typedef struct s_hash_element
 }	t_elem;
 
 /* hash value */
-uint64_t		hs_gen_fnv(const unsigned char *key, uint64_t hash_mod);
+uint64_t		hs_gen_fnv(const unsigned char *key, const size_t hash_mod);
 
 /* generate hash table */
 // return a pointer to the hash table. On error, return NULL
@@ -37,7 +37,7 @@ t_hash			*hs_create_table(uint64_t size, void (*del_value)(void *));
 // add key-value pairs to table and return 0. On error, return (-1)
 // if hash_value conflicts, add with the chain method
 int				hs_set_key(t_hash *hash, char *key, void *value);
-int				alloc_deque_head(t_deque **table, uint64_t hash_val);
+int				alloc_deque_head(t_deque **table, const uint64_t hash_val);
 
 /* find key */
 t_deque_node	*hs_find_key(t_hash *hash, const char *key);
