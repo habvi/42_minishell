@@ -3,16 +3,16 @@
 #include "ft_mem.h"
 
 // key exist in hash
-// free(key, pre-content), update new content
+// free(key, pre-value), update new value
 void	hs_update_value(char **key, \
-								void *content, \
-								t_deque_node *target_node, \
-								void (*del_value)(void *))
+						void *value, \
+						t_deque_node *target_node, \
+						void (*del_value)(void *))
 {
 	t_elem	*elem;
 
 	ft_free(*key);
 	elem = (t_elem *)target_node->content;
-	del_value(elem->content);
-	elem->content = content;
+	del_value(elem->value);
+	elem->value = value;
 }

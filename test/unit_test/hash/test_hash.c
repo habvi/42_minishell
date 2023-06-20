@@ -16,7 +16,7 @@ static void	display_elem(void *content)
 		return ;
 	elem = content;
 	ft_dprintf(STDERR_FILENO, "[\"%s\", \"%s\"]", \
-	elem->key, (char *)elem->content);
+	elem->key, (char *)elem->value);
 }
 
 static void	display_table_info(t_hash *hash)

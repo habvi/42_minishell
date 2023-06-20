@@ -8,8 +8,8 @@ void	hs_clear_elem(t_elem **elem, void (*del_value)(void *))
 	if (!elem || !*elem)
 		return ;
 	ft_free((*elem)->key);
-	del_value((*elem)->content);
-	(*elem)->content = NULL;
+	del_value((*elem)->value);
+	(*elem)->value = NULL;
 	ft_free(*elem);
 }
 
@@ -19,7 +19,7 @@ void	hs_clear_deque_node(t_deque_node **node, void (*del_value)(void *))
 
 	if (!*node)
 		return ;
-	elem = (*node)->content;
+	elem = (t_elem *)(*node)->content;
 	hs_clear_elem(&elem, del_value);
 	(*node)->next = NULL;
 	(*node)->prev = NULL;

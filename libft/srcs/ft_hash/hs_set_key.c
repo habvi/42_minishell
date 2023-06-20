@@ -4,7 +4,7 @@
 
 // if malloc error, return NULL
 // key != NULL
-static t_elem	*create_hash_elem(char *key, void *content)
+static t_elem	*create_hash_elem(char *key, void *value)
 {
 	t_elem	*elem;
 
@@ -12,7 +12,7 @@ static t_elem	*create_hash_elem(char *key, void *content)
 	if (!elem)
 		return (NULL);
 	elem->key = key;
-	elem->content = content;
+	elem->value = value;
 	return (elem);
 }
 
@@ -41,7 +41,7 @@ static int	add_elem_to_table(t_hash *hash, t_elem *elem, uint64_t hash_val)
 }
 
 // hash != NULL, key != NULL
-static int	add_to_table(t_hash *hash, char *key, void *content)
+static int	add_to_table(t_hash *hash, char *key, void *value)
 {
 	t_elem		*elem;
 	uint64_t	hash_val;
@@ -51,7 +51,7 @@ static int	add_to_table(t_hash *hash, char *key, void *content)
 	hash_val = hs_gen_fnv((const unsigned char *)key, hash->table_size);
 	if (alloc_deque_head(hash, hash_val) == HASH_ERROR)
 		return (HASH_ERROR);
-	elem = create_hash_elem(key, content);
+	elem = create_hash_elem(key, value);
 	if (!elem)
 		return (HASH_ERROR);
 	if (add_elem_to_table(hash, elem, hash_val) == HASH_ERROR)
@@ -65,7 +65,7 @@ static int	add_to_table(t_hash *hash, char *key, void *content)
 // if malloc error, return HASH_ERROR
 // hash not freed in func
 // 'key' cannot be null, 'value' can accept null
-int	hs_set_key(t_hash *hash, char *key, void *content)
+int	hs_set_key(t_hash *hash, char *key, void *value)
 {
 	t_deque_node	*target_node;
 
@@ -73,10 +73,10 @@ int	hs_set_key(t_hash *hash, char *key, void *content)
 		return (HASH_ERROR);
 	target_node = hs_find_key(hash, key);
 	if (target_node)
-		hs_update_value(&key, content, target_node, hash->del_value);
+		hs_update_value(&key, value, target_node, hash->del_value);
 	else
 	{
-		if (add_to_table(hash, key, content) == HASH_ERROR)
+		if (add_to_table(hash, key, value) == HASH_ERROR)
 			return (HASH_ERROR);
 		hash->key_count++;
 	}

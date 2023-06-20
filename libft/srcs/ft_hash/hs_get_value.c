@@ -1,8 +1,8 @@
 #include "ft_hash.h"
 #include "ft_deque.h"
 
-// if 'key' found in table, return ptr of 'content',
-// otherwise, returns NULL, but content may be NULL
+// if 'key' found in table, return ptr of 'value',
+// otherwise, returns NULL, but value may be NULL
 void	*hs_get_value(t_hash *hash, const char *key)
 {
 	t_deque_node	*node;
@@ -13,6 +13,6 @@ void	*hs_get_value(t_hash *hash, const char *key)
 	node = hs_find_key(hash, key);
 	if (!node)
 		return (NULL);
-	elem = node->content;
-	return (elem->content);
+	elem = (t_elem *)node->content;
+	return (elem->value);
 }
