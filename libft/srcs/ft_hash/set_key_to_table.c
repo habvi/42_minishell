@@ -3,6 +3,7 @@
 #include "ft_sys.h"
 
 // if malloc error, return NULL
+// key != NULL
 static t_elem	*create_hash_elem(char *key, void *content)
 {
 	t_elem	*elem;
@@ -15,19 +16,23 @@ static t_elem	*create_hash_elem(char *key, void *content)
 	return (elem);
 }
 
-// if deque_node_new malloc error, remain head t_deque(-> free clear_hash_table)
-static int	add_elem_to_table(t_hash *hash, t_elem *elem)
+// hash != NULL
+static int	alloc_deque_head(t_hash *hash, uint64_t hash_val)
 {
-	uint64_t		hash_val;
+	if (hash->table[hash_val])
+		return (HASH_SUCCESS);
+	hash->table[hash_val] = deque_new();
+	if (!hash->table[hash_val])
+		return (HASH_ERROR);
+	return (HASH_SUCCESS);
+}
+
+// if deque_node_new malloc error, remain head t_deque(-> free clear_hash_table)
+// hash != NULL, elem != NULL
+static int	add_elem_to_table(t_hash *hash, t_elem *elem, uint64_t hash_val)
+{
 	t_deque_node	*node;
 
-	hash_val = gen_fnv_hash((const unsigned char *)elem->key, hash->table_size);
-	if (!hash->table[hash_val])
-	{
-		hash->table[hash_val] = deque_new();
-		if (!hash->table[hash_val])
-			return (HASH_ERROR);
-	}
 	node = deque_node_new(elem);
 	if (!node)
 		return (HASH_ERROR);
@@ -35,32 +40,50 @@ static int	add_elem_to_table(t_hash *hash, t_elem *elem)
 	return (HASH_SUCCESS);
 }
 
+// hash != NULL, key != NULL
+static int	add_to_table(t_hash *hash, \
+							char *key, \
+							void *content, \
+							void (*del_content)(void *))
+{
+	t_elem		*elem;
+	uint64_t	hash_val;
+
+	if (is_need_rehash(hash) && rehash_table(hash) == HASH_ERROR)
+		return (HASH_ERROR); // free hash by user
+	hash_val = gen_fnv_hash((const unsigned char *)key, hash->table_size);
+	if (alloc_deque_head(hash, hash_val) == HASH_ERROR)
+		return (HASH_ERROR);
+	elem = create_hash_elem(key, content);
+	if (!elem)
+		return (HASH_ERROR);
+	if (add_elem_to_table(hash, elem, hash_val) == HASH_ERROR)
+	{
+		clear_hash_elem(&elem, del_content);
+		return (HASH_ERROR);
+	}
+	return (HASH_SUCCESS);
+}
+
 // if malloc error, return HASH_ERROR
 // hash not freed in func
 // 'key' cannot be null, 'value' can accept null
-int	set_to_table(t_hash *hash, char *key, \
+int	set_to_table(t_hash *hash, \
+					char *key, \
 					void *content, \
 					void (*del_content)(void *))
 {
-	t_elem			*elem;
 	t_deque_node	*target_node;
 
-	if (!key)
-		return (HASH_SUCCESS);
+	if (!hash || !key)
+		return (HASH_ERROR);
 	target_node = find_key(hash, key);
 	if (target_node)
 		update_content_of_key(&key, content, target_node, del_content);
 	else
 	{
-		elem = create_hash_elem(key, content);
-		if (!elem)
+		if (add_to_table(hash, key, content, del_content) == HASH_ERROR)
 			return (HASH_ERROR);
-		//todo:rehash
-		if (add_elem_to_table(hash, elem) == HASH_ERROR)
-		{
-			clear_hash_elem(&elem, del_content);
-			return (HASH_ERROR);
-		}
 		hash->key_count++;
 	}
 	return (HASH_SUCCESS);
