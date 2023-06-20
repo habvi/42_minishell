@@ -18,14 +18,14 @@ static t_deque_node	*find_key_in_deque(t_deque_node *node, const char *key)
 	return (NULL);
 }
 
-t_deque_node	*find_key(t_hash *hash, const char *key)
+t_deque_node	*hs_find_key(t_hash *hash, const char *key)
 {
 	uint64_t		hash_val;
 	t_deque_node	*addr;
 
 	if (!hash || !key)
 		return (NULL);
-	hash_val = gen_fnv_hash((const unsigned char *)key, hash->table_size);
+	hash_val = hs_gen_fnv((const unsigned char *)key, hash->table_size);
 	if (!hash->table[hash_val])
 		return (NULL);
 	if (!hash->table[hash_val]->size)

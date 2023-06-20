@@ -2,7 +2,7 @@
 #include "ft_hash.h"
 #include "ft_mem.h"
 
-t_hash	*create_hash_table(uint64_t size, void (*del_value)(void *))
+t_hash	*hs_create_table(uint64_t size, void (*del_value)(void *))
 {
 	t_hash	*hash;
 

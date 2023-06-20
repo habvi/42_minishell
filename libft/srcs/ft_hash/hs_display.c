@@ -27,7 +27,7 @@ static void	print_table_elem(t_deque *deque, void (*display)(void *))
 	}
 }
 
-void	display_hash_table(t_hash *hash, void (*display)(void *))
+void	hs_display(t_hash *hash, void (*display)(void *))
 {
 	size_t	idx;
 

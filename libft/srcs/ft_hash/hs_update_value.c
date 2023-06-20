@@ -4,7 +4,7 @@
 
 // key exist in hash
 // free(key, pre-content), update new content
-void	update_content_of_key(char **key, \
+void	hs_update_value(char **key, \
 								void *content, \
 								t_deque_node *target_node, \
 								void (*del_value)(void *))

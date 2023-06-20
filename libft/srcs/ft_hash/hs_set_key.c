@@ -27,7 +27,7 @@ static int	alloc_deque_head(t_hash *hash, uint64_t hash_val)
 	return (HASH_SUCCESS);
 }
 
-// if deque_node_new malloc error, remain head t_deque(-> free clear_hash_table)
+// if deque_node_new malloc error, remain head t_deque(-> free hs_clear_table)
 // hash != NULL, elem != NULL
 static int	add_elem_to_table(t_hash *hash, t_elem *elem, uint64_t hash_val)
 {
@@ -46,9 +46,9 @@ static int	add_to_table(t_hash *hash, char *key, void *content)
 	t_elem		*elem;
 	uint64_t	hash_val;
 
-	if (is_need_rehash(hash) && rehash_table(hash) == HASH_ERROR)
+	if (is_need_rehash(hash) && hs_rehash_table(hash) == HASH_ERROR)
 		return (HASH_ERROR); // free hash by user
-	hash_val = gen_fnv_hash((const unsigned char *)key, hash->table_size);
+	hash_val = hs_gen_fnv((const unsigned char *)key, hash->table_size);
 	if (alloc_deque_head(hash, hash_val) == HASH_ERROR)
 		return (HASH_ERROR);
 	elem = create_hash_elem(key, content);
@@ -56,7 +56,7 @@ static int	add_to_table(t_hash *hash, char *key, void *content)
 		return (HASH_ERROR);
 	if (add_elem_to_table(hash, elem, hash_val) == HASH_ERROR)
 	{
-		clear_hash_elem(&elem, hash->del_value);
+		hs_clear_elem(&elem, hash->del_value);
 		return (HASH_ERROR);
 	}
 	return (HASH_SUCCESS);
@@ -65,15 +65,15 @@ static int	add_to_table(t_hash *hash, char *key, void *content)
 // if malloc error, return HASH_ERROR
 // hash not freed in func
 // 'key' cannot be null, 'value' can accept null
-int	set_to_table(t_hash *hash, char *key, void *content)
+int	hs_set_key(t_hash *hash, char *key, void *content)
 {
 	t_deque_node	*target_node;
 
 	if (!hash || !key)
 		return (HASH_ERROR);
-	target_node = find_key(hash, key);
+	target_node = hs_find_key(hash, key);
 	if (target_node)
-		update_content_of_key(&key, content, target_node, hash->del_value);
+		hs_update_value(&key, content, target_node, hash->del_value);
 	else
 	{
 		if (add_to_table(hash, key, content) == HASH_ERROR)

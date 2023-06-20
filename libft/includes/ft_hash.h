@@ -27,43 +27,43 @@ typedef struct s_hash_element
 }	t_elem;
 
 /* hash value */
-uint64_t		gen_fnv_hash(const unsigned char *key, uint64_t hash_mod);
+uint64_t		hs_gen_fnv(const unsigned char *key, uint64_t hash_mod);
 
 /* generate hash table */
 // return a pointer to the hash table. On error, return NULL
-t_hash			*create_hash_table(uint64_t size, void (*del_value)(void *));
+t_hash			*hs_create_table(uint64_t size, void (*del_value)(void *));
 
 /* add key */
 // add key-value pairs to table and return 0. On error, return (-1)
 // if hash_value conflicts, add with the chain method
-int				set_to_table(t_hash *hash, char *key, void *content);
+int				hs_set_key(t_hash *hash, char *key, void *content);
 
 /* find key */
-t_deque_node	*find_key(t_hash *hash, const char *key);
+t_deque_node	*hs_find_key(t_hash *hash, const char *key);
 
 /* get value */
-void			*get_value_from_table(t_hash *hash, const char *key);
+void			*hs_get_value(t_hash *hash, const char *key);
 
 /* update value */
-void			update_content_of_key(char **key, \
+void			hs_update_value(char **key, \
 										void *content, \
 										t_deque_node *target_node, \
 										void (*del_value)(void *));
 
 /* del key */
-void			delete_key_from_table(t_hash *hash, const char *key);
+void			hs_delete_key(t_hash *hash, const char *key);
 
 /* clear table */
-void			clear_hash_elem(t_elem **elem, void (*del_value)(void *));
-void			hash_deque_clear_node(t_deque_node **node, \
+void			hs_clear_elem(t_elem **elem, void (*del_value)(void *));
+void			hs_clear_deque_node(t_deque_node **node, \
 										void (*del_value)(void *));
-void			clear_hash_table(t_hash **hash);
+void			hs_clear_table(t_hash **hash);
 
 /* display hash table */
-void			display_hash_table(t_hash *hash, void (*display)(void *));
+void			hs_display(t_hash *hash, void (*display)(void *));
 
 /* rehash */
 bool			is_need_rehash(t_hash *hash);
-int				rehash_table(t_hash *hash);
+int				hs_rehash_table(t_hash *hash);
 
 #endif //FT_HASH_H

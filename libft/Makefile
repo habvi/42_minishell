@@ -31,16 +31,16 @@ DEQUE_SRC	:=	$(DEQUE_DIR)/dq_add_back.c \
 # ft_hash
 #--------------------------------------------
 HASH_DIR	:=	ft_hash
-HASH_SRC	:=	$(HASH_DIR)/clear_hash_table.c \
-				$(HASH_DIR)/create_hash_table.c \
-				$(HASH_DIR)/delete_key_from_table.c \
-				$(HASH_DIR)/display_hash_table.c \
-				$(HASH_DIR)/find_key_from_table.c \
-				$(HASH_DIR)/generate_hash.c \
-				$(HASH_DIR)/get_value_from_table.c \
-				$(HASH_DIR)/rehash_table.c \
-				$(HASH_DIR)/set_key_to_table.c \
-				$(HASH_DIR)/update_value.c
+HASH_SRC	:=	$(HASH_DIR)/hs_clear_table.c \
+				$(HASH_DIR)/hs_create_table.c \
+				$(HASH_DIR)/hs_delete_key.c \
+				$(HASH_DIR)/hs_display.c \
+				$(HASH_DIR)/hs_find_key.c \
+				$(HASH_DIR)/hs_gen_fnv.c \
+				$(HASH_DIR)/hs_get_value.c \
+				$(HASH_DIR)/hs_rehash_table.c \
+				$(HASH_DIR)/hs_set_key.c \
+				$(HASH_DIR)/hs_update_value.c
 
 #--------------------------------------------
 # ft_lib

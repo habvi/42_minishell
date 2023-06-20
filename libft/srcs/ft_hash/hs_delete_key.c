@@ -2,7 +2,7 @@
 #include "ft_deque.h"
 #include "ft_hash.h"
 
-void	delete_key_from_table(t_hash *hash, const char *key)
+void	hs_delete_key(t_hash *hash, const char *key)
 {
 	t_deque_node	*target_node;
 	uint64_t		hash_val;
@@ -10,12 +10,12 @@ void	delete_key_from_table(t_hash *hash, const char *key)
 
 	if (!hash || !key)
 		return ;
-	target_node = find_key(hash, key);
+	target_node = hs_find_key(hash, key);
 	if (!target_node)
 		return ;
-	hash_val = gen_fnv_hash((const unsigned char *)key, hash->table_size);
+	hash_val = hs_gen_fnv((const unsigned char *)key, hash->table_size);
 	head = hash->table[hash_val];
 	deque_pop_selected_node(head, target_node);
-	hash_deque_clear_node(&target_node, hash->del_value);
+	hs_clear_deque_node(&target_node, hash->del_value);
 	hash->key_count--;
 }

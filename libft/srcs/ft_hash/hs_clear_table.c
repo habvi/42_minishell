@@ -3,7 +3,7 @@
 #include "ft_hash.h"
 #include "ft_mem.h"
 
-void	clear_hash_elem(t_elem **elem, void (*del_value)(void *))
+void	hs_clear_elem(t_elem **elem, void (*del_value)(void *))
 {
 	if (!elem || !*elem)
 		return ;
@@ -13,20 +13,20 @@ void	clear_hash_elem(t_elem **elem, void (*del_value)(void *))
 	ft_free(*elem);
 }
 
-void	hash_deque_clear_node(t_deque_node **node, void (*del_value)(void *))
+void	hs_clear_deque_node(t_deque_node **node, void (*del_value)(void *))
 {
 	t_elem	*elem;
 
 	if (!*node)
 		return ;
 	elem = (*node)->content;
-	clear_hash_elem(&elem, del_value);
+	hs_clear_elem(&elem, del_value);
 	(*node)->next = NULL;
 	(*node)->prev = NULL;
 	ft_free(*node);
 }
 
-static void	hash_deque_clear_all(t_deque **deque, void (*del_value)(void *))
+static void	hash_clear_deque_all(t_deque **deque, void (*del_value)(void *))
 {
 	t_deque_node	*node;
 	t_deque_node	*tmp;
@@ -42,13 +42,13 @@ static void	hash_deque_clear_all(t_deque **deque, void (*del_value)(void *))
 	{
 		tmp = node;
 		node = node->next;
-		hash_deque_clear_node(&tmp, del_value);
+		hs_clear_deque_node(&tmp, del_value);
 	}
 	ft_free(*deque);
 	*deque = NULL;
 }
 
-void	clear_hash_table(t_hash **hash)
+void	hs_clear_table(t_hash **hash)
 {
 	size_t	idx;
 
@@ -58,7 +58,7 @@ void	clear_hash_table(t_hash **hash)
 	while (idx < (*hash)->table_size)
 	{
 		if ((*hash)->table[idx])
-			hash_deque_clear_all(&(*hash)->table[idx], (*hash)->del_value);
+			hash_clear_deque_all(&(*hash)->table[idx], (*hash)->del_value);
 		idx++;
 	}
 	free((*hash)->table);
