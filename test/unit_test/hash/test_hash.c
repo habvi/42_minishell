@@ -75,7 +75,7 @@ static void	del_elem_content_test(void *content)
 
 static void	test_delete_key_from_table(t_hash *hash, const char *key)
 {
-	delete_key_from_table(hash, key, del_elem_content_test);
+	delete_key_from_table(hash, key);
 }
 
 static void	set_to_table_by_allocated_strs(t_hash *hash, const char *s1, const char *s2)
@@ -87,7 +87,7 @@ static void	set_to_table_by_allocated_strs(t_hash *hash, const char *s1, const c
 		s1_dup = ft_strdup(s1);
 	if (s2)
 		s2_dup = ft_strdup(s2);
-	set_to_table(hash, s1_dup, s2_dup, del_elem_content_test);
+	set_to_table(hash, s1_dup, s2_dup);
 }
 
 int	main(void)
@@ -107,7 +107,7 @@ int	main(void)
 	{
 		printf("\n ========== hash table (except rehash) ==========\n");
 
-		t_hash	*hash = create_hash_table(100);
+		t_hash	*hash = create_hash_table(100, del_elem_content_test);
 		display_hash_table(hash, display_elem);
 
 		set_to_table_by_allocated_strs(hash, "test_key", "test_value");
@@ -132,22 +132,22 @@ int	main(void)
 		set_to_table_by_allocated_strs(hash, "abc", "abc5");
 		display_table_info(hash);
 
-		clear_hash_table(&hash, del_elem_content_test);
+		clear_hash_table(&hash);
 
 		printf("\n\n");
 	}
 	{
 		printf("\n ===== hash table (use rehash) =====\n");
 
-		t_hash	*hash = create_hash_table(1);
+		t_hash	*hash = create_hash_table(1, del_elem_content_test);
 		display_table_info(hash);
-		clear_hash_table(&hash, del_elem_content_test);
+		clear_hash_table(&hash);
 		printf("\n\n");
 	}
 	{
 		printf("\n ===== find key =====\n");
 
-		t_hash	*hash = create_hash_table(100);
+		t_hash	*hash = create_hash_table(100, del_elem_content_test);
 
 		set_to_table_by_allocated_strs(hash, "abc", "value of abc");
 		set_to_table_by_allocated_strs(hash, "abc1", "value of abc1");
@@ -186,7 +186,7 @@ int	main(void)
 		test_delete_key_from_table(hash, "not_exist_key");
 		display_table_info(hash);
 
-		clear_hash_table(&hash, del_elem_content_test);
+		clear_hash_table(&hash);
 		printf("\n\n");
 	}
 
