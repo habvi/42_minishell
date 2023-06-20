@@ -55,40 +55,25 @@ static int	rehash_all_to_new_table(t_hash *hash, t_deque ***new_table)
 	return (HASH_SUCCESS);
 }
 
-static void	clear_hash_table_only(t_hash *hash)
-{
-	size_t	idx;
-
-	if (!hash)
-		return ;
-	idx = 0;
-	while (idx < hash->table_size)
-	{
-		if (hash->table[idx])
-			deque_clear_all(&hash->table[idx], hash->del_value);
-		idx++;
-	}
-	ft_free(hash->table);
-}
-
 int	hs_rehash_table(t_hash *hash)
 {
 	t_deque	**new_table;
+	size_t	new_table_size;
 
 	if (!hash)
 		return (HASH_ERROR);
-	hash->table_size *= 2;
-	new_table = (t_deque **)ft_calloc(hash->table_size, sizeof(t_deque *));
+	// overflow check
+	new_table_size = hash->table_size * 2;
+	new_table = (t_deque **)ft_calloc(new_table_size, sizeof(t_deque *));
 	if (!new_table)
 		return (HASH_ERROR);
-	// just move t_deque_node. after moved, pre-table[i] remains NULL or t_deque
 	if (rehash_all_to_new_table(hash, &new_table) == HASH_ERROR)
 	{
-		ft_free(new_table);
+		hs_clear_table(new_table, new_table_size, hash->del_value);
 		return (HASH_ERROR);
 	}
-	// clear pre-table[i]'s t_deque. can't use clear_hash_table...(or free hash)
-	clear_hash_table_only(hash);
+	hs_clear_table(hash->table, hash->table_size, hash->del_value);
+	hash->table_size = new_table_size;
 	hash->table = new_table;
 	return (HASH_SUCCESS);
 }
