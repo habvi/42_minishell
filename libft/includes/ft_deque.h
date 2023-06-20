@@ -21,8 +21,6 @@ void			deque_add_first_node(t_deque *deque, t_deque_node *new_node);
 void			deque_add_front(t_deque *deque, t_deque_node *new_node);
 
 /* clear */
-//void			deque_clear_all(t_deque **deque);
-//void			deque_clear_node(t_deque_node **node);
 void			deque_clear_all(t_deque **deque, void (*del)(void *));
 void			deque_clear_node(t_deque_node **node, void (*del)(void *));
 
