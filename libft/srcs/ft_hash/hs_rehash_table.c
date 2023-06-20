@@ -10,6 +10,13 @@ bool	is_need_rehash(t_hash *hash)
 	return (ratio >= LOAD_FACTOR_LIMIT_PCT);
 }
 
+static size_t	get_new_table_size(const size_t table_size)
+{
+	if (table_size > SIZE_MAX / 2)
+		return (table_size);
+	return (table_size * 2);
+}
+
 // deque != NULL
 static int	move_elem_to_new(t_deque *deque, \
 							t_deque **new_table, \
@@ -60,13 +67,11 @@ static int	move_all_elem_to_new(t_hash *hash, \
 
 int	hs_rehash_table(t_hash *hash)
 {
-	t_deque	**new_table;
-	size_t	new_table_size;
+	const size_t	new_table_size = get_new_table_size(hash->table_size);
+	t_deque			**new_table;
 
 	if (!hash)
 		return (HASH_ERROR);
-	// overflow check
-	new_table_size = hash->table_size * 2;
 	new_table = (t_deque **)ft_calloc(new_table_size, sizeof(t_deque *));
 	if (!new_table)
 		return (HASH_ERROR);
