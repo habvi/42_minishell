@@ -2,53 +2,56 @@
 #include "ft_hash.h"
 #include "ft_mem.h"
 
-// rehash
-//  size *= 2
-
+// hash != NULL
 bool	is_need_rehash(t_hash *hash)
 {
-	if (!hash)
-		return (false);
-	return (true);
+	const double	ratio = hash->key_count / (double)hash->table_size * 100;
+
+	return (ratio >= LOAD_FACTOR_LIMIT_PCT);
 }
 
-static int	rehash_all_node(t_deque_node *node, \
-							t_deque ***new_table, \
-							size_t hash_mod)
+// deque != NULL
+static int	move_elem_to_new(t_deque *deque, \
+							t_deque **new_table, \
+							const size_t hash_mod)
 {
-	t_elem		*elem;
-	uint64_t	hash_val;
+	t_deque_node	*node;
+	t_elem			*elem;
+	uint64_t		hash_val;
 
-	while (node)
+	while (!deque_is_empty(deque))
 	{
-		// elem != NULL?
+		node = deque_pop_front(deque);
 		elem = (t_elem *)node->content;
 		hash_val = hs_gen_fnv((const unsigned char *)elem->key, hash_mod);
-		//todo:only move&add to (*new_table)[hash_val]. can't use set_to_table..
-		(void)hash_val;
-		(void)new_table;
-		node = node->next;
+		if (alloc_deque_head(new_table, hash_val) == HASH_ERROR)
+		{
+			deque_add_back(deque, node);
+			return (HASH_ERROR);
+		}
+		deque_add_back(new_table[hash_val], node);
 	}
 	return (HASH_SUCCESS);
 }
 
-static int	rehash_all_to_new_table(t_hash *hash, t_deque ***new_table)
+static int	move_all_elem_to_new(t_hash *hash, \
+								t_deque **new_table, \
+								const size_t new_table_size)
 {
-	size_t			i;
-	t_deque_node	*head_node;
+	size_t	i;
 
 	i = 0;
 	while (i < hash->table_size)
 	{
-		if (hash->table[i] && hash->table[i]->size)
+		if (!hash->table[i] || !hash->table[i]->size)
 		{
-			head_node = hash->table[i]->node;
-			if (rehash_all_node(head_node, new_table, hash->table_size) \
-																== HASH_ERROR)
-			{
-				//todo:free all new_table
-				return (HASH_ERROR);
-			}
+			i++;
+			continue ;
+		}
+		if (move_elem_to_new(hash->table[i], new_table, new_table_size) \
+															== HASH_ERROR)
+		{
+			return (HASH_ERROR);
 		}
 		i++;
 	}
@@ -67,7 +70,7 @@ int	hs_rehash_table(t_hash *hash)
 	new_table = (t_deque **)ft_calloc(new_table_size, sizeof(t_deque *));
 	if (!new_table)
 		return (HASH_ERROR);
-	if (rehash_all_to_new_table(hash, &new_table) == HASH_ERROR)
+	if (move_all_elem_to_new(hash, new_table, new_table_size) == HASH_ERROR)
 	{
 		hs_clear_table(new_table, new_table_size, hash->del_value);
 		return (HASH_ERROR);
