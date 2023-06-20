@@ -1,6 +1,5 @@
 #include <stdlib.h>
 #include "minishell.h"
-#include "ms_builtin.h"
 #include "ms_exec.h"
 #include "ft_deque.h"
 #include "ft_dprintf.h"
@@ -11,7 +10,7 @@ static int	execute_builtin_command(t_command *cmd, t_params *params)
 	int			exec_status;
 
 	exec_status = call_builtin_command(command, params);
-	deque_clear_all(&cmd->head_command);
+	deque_clear_all(&cmd->head_command, free);
 	return (exec_status);
 }
 
@@ -25,7 +24,7 @@ static int	execute_external_command(t_command *cmd, char **environ)
 	{
 		ft_dprintf(STDERR_FILENO, "%s: %s: %s\n", \
 					SHELL_NAME, command[0], ERROR_MSG_CMD_NOT_FOUND);
-		deque_clear_all(&cmd->head_command);
+		deque_clear_all(&cmd->head_command, free);
 	}
 	return (EXIT_CODE_NO_SUCH_FILE);
 }

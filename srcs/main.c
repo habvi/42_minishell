@@ -24,7 +24,7 @@ int	main(void)
 			return (EXIT_FAILURE);
 		// parse()
 		params.status = execute_command(command, &params);
-		deque_clear_all(&command);
+		deque_clear_all(&command, free);
 		if (params.status == PROCESS_ERROR)
 			return (EXIT_FAILURE);
 	}

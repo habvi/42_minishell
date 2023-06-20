@@ -2,10 +2,14 @@
 #include "ft_hash.h"
 #include "ft_mem.h"
 
-t_hash	*create_hash_table(uint64_t size)
+t_hash	*hs_create_table(uint64_t size, void (*del_value)(void *))
 {
 	t_hash	*hash;
 
+	if (!del_value)
+		return (NULL);
+	if (!size)
+		size++;
 	hash = (t_hash *)malloc(sizeof(t_hash));
 	if (!hash)
 		return (NULL);
@@ -17,5 +21,6 @@ t_hash	*create_hash_table(uint64_t size)
 		ft_free(hash);
 		return (NULL);
 	}
+	hash->del_value = del_value;
 	return (hash);
 }

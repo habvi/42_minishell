@@ -11,7 +11,7 @@ bool	is_need_rehash(t_hash *hash)
 	return (true);
 }
 
-int	rehash_table(t_hash *hash)
+int	hs_rehash_table(t_hash *hash)
 {
 	(void)hash;
 
