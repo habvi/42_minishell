@@ -17,7 +17,7 @@ static t_elem	*create_hash_elem(char *key, void *content)
 }
 
 // hash != NULL
-static int	alloc_hash_val_index_of_table(t_hash *hash, uint64_t hash_val)
+static int	alloc_deque_head(t_hash *hash, uint64_t hash_val)
 {
 	if (hash->table[hash_val])
 		return (HASH_SUCCESS);
@@ -52,7 +52,7 @@ static int	add_to_table(t_hash *hash, \
 	if (is_need_rehash(hash) && rehash_table(hash) == HASH_ERROR)
 		return (HASH_ERROR); // free hash by user
 	hash_val = gen_fnv_hash((const unsigned char *)key, hash->table_size);
-	if (alloc_hash_val_index_of_table(hash, hash_val) == HASH_ERROR)
+	if (alloc_deque_head(hash, hash_val) == HASH_ERROR)
 		return (HASH_ERROR);
 	elem = create_hash_elem(key, content);
 	if (!elem)
