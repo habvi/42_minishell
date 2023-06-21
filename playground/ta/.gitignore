@@ -6,3 +6,4 @@
 !*.md
 !parser_test/
 !chdir/
+!env/
