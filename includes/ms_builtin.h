@@ -46,6 +46,7 @@ int		ft_env(char *const *argv, t_params *params);
 int		ft_exit(char *const *command, t_params *params);
 int		ft_unset(char *const *argv, t_params *params);
 
+bool	is_valid_key(const char *word);
 bool	str_to_legal_number(const char *str, long *result);
 
 #endif //MS_BUILTIN_H
