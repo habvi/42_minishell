@@ -6,12 +6,12 @@ CFLAGS		=	-Wall -Wextra -Werror -g -fsanitize=address -fsanitize=undefined
 SRCS		=	test_exit.c \
 				./../../../srcs/builtin/ft_exit.c \
 				./../../../srcs/builtin/str_to_legal_number.c \
-				./../../../srcs/exec/count_commands.c
+				./../../../srcs/utils/count_array.c
 
 OBJS		=	test_exit.o \
 				ft_exit.o \
 				str_to_legal_number.o \
-				count_commands.o
+				count_array.o
 
 
 LIBFT_DIR	=	./../../../libft

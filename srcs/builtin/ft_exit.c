@@ -13,7 +13,7 @@ static t_exit_arg	validate_argument(char *const *argv)
 	size_t	argc;
 	bool	is_legal_num;
 
-	argc = count_commands(argv);
+	argc = count_argv(argv);
 	if (argc == EXIT_ONLY_CMD_CNT)
 		return (EXIT_VALID_ARG);
 	is_legal_num = str_to_legal_number(argv[EXIT_ARG_IDX], &long_num);
