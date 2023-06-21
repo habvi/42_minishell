@@ -12,7 +12,12 @@ static void	del_env_val(void *value)
 
 static void	set_func(t_env *env)
 {
-	// todo
+	env->set = set;
+	env->append = append;
+	env->get_value = get_value;
+	env->unset = unset;
+	env->print_env = print_env;
+	env->print_export = print_export;
 }
 
 static int	get_environ(t_env *env)
