@@ -55,6 +55,7 @@ char	*input_line(void);
 void	init_params(t_params *params);
 
 /* environment */
+t_env	*init_environ(void);
 char	*env_get_value(t_env *env, char *key);
 void	env_print(t_env *env);
 void	env_print_detail(t_env *env);

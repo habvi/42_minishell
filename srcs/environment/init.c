@@ -2,6 +2,11 @@
 #include "ft_hash.h"
 #include "ft_mem.h"
 
+// erase
+#include "ft_string.h"
+#include "ft_dprintf.h"
+#include <stdlib.h>
+
 static void	del_env_val(void *value)
 {
 	char	*val;
@@ -25,9 +30,25 @@ static int	get_environ(t_env *env)
 	extern char	**environ;
 
 	// todo
-	(void)env;
 	(void)environ;
+	// erase
+	hs_set_key(env->hash, ft_strdup("key_1"), ft_strdup("val_1"));
+	hs_set_key(env->hash, ft_strdup("key_2"), ft_strdup("val_2"));
+	hs_set_key(env->hash, ft_strdup("key_3"), ft_strdup("val_3"));
+	hs_set_key(env->hash, ft_strdup("key_4"), ft_strdup("val_4"));
 	return (SUCCESS);
+}
+
+// erase
+static void	display_elem(void *content)
+{
+	t_elem	*elem;
+
+	if (!content)
+		return ;
+	elem = content;
+	ft_dprintf(STDERR_FILENO, "[\"%s\", \"%s\"]", \
+	elem->key, (char *)elem->value);
 }
 
 static int	set_hash(t_env *env)
@@ -43,15 +64,19 @@ static int	set_hash(t_env *env)
 		hs_clear(&env->hash);
 		return (FAILURE);
 	}
+	hs_display(env->hash, display_elem); // erase
 	return (SUCCESS);
 }
 
-int	init_environ(t_env *env)
+t_env	*init_environ(void)
 {
+	t_env	*env;
+
+	env = (t_env *)malloc(sizeof(t_env));
+	if (!env)
+		return (NULL);
 	set_func(env);
-
 	if (set_hash(env) == FAILURE)
-		return (FAILURE);
-
-	return (SUCCESS);
+		return (NULL);
+	return (env);
 }
