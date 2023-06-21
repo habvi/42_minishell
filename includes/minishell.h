@@ -60,6 +60,6 @@ void	env_print(t_env *env);
 void	env_print_detail(t_env *env);
 int		env_set(t_env *env, char *key, char *value);
 int		env_append(t_env *env, char *key, char *value);
-int		env_unset(t_env *env, char *key);
+void    env_unset(t_env *env, const char *key);
 
 #endif //MINISHELL_H
