@@ -23,6 +23,9 @@
 # define NON_NUMERIC_ARG_STATUS	2
 # define TOO_MANY_ARG_STATUS	1
 
+# define NOT_A_VALID_IDENTIFIER	1
+# define INVALID_OPTION			2
+
 # define BYTE_MASK				(0xFF)
 
 # define ERROR_MSG_TOO_MANY_ARG	"too many arguments"
@@ -41,6 +44,7 @@ typedef enum e_exit_argument
 int		ft_echo(char *const *command);
 int		ft_env(char *const *argv, t_params *params);
 int		ft_exit(char *const *command, t_params *params);
+int		ft_unset(char *const *argv, t_params *params);
 
 bool	str_to_legal_number(const char *str, long *result);
 
