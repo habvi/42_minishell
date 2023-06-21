@@ -59,6 +59,7 @@ static int	add_to_table(t_hash *hash, char *key, void *value)
 		hs_clear_elem(&elem, hash->del_value);
 		return (HASH_ERROR);
 	}
+	hash->key_count++;
 	return (HASH_SUCCESS);
 }
 
@@ -78,7 +79,6 @@ int	hs_set_key(t_hash *hash, char *key, void *value)
 	{
 		if (add_to_table(hash, key, value) == HASH_ERROR)
 			return (HASH_ERROR);
-		hash->key_count++;
 	}
 	return (HASH_SUCCESS);
 }
