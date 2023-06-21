@@ -17,7 +17,7 @@ static t_elem	*create_hash_elem(char *key, void *value)
 }
 
 // hash != NULL
-int	alloc_deque_head(t_deque **table, uint64_t hash_val)
+int	hs_alloc_deque_head(t_deque **table, uint64_t hash_val)
 {
 	if (table[hash_val])
 		return (HASH_SUCCESS);
@@ -41,7 +41,7 @@ static int	add_elem_to_table(t_hash *hash, t_elem *elem, uint64_t hash_val)
 }
 
 // hash != NULL, key != NULL
-static int	add_to_table(t_hash *hash, char *key, void *value)
+int	hs_add_to_table(t_hash *hash, char *key, void *value)
 {
 	t_elem		*elem;
 	uint64_t	hash_val;
@@ -49,7 +49,7 @@ static int	add_to_table(t_hash *hash, char *key, void *value)
 	if (is_need_rehash(hash) && hs_rehash_table(hash) == HASH_ERROR)
 		return (HASH_ERROR); // free hash by user
 	hash_val = hs_gen_fnv((const unsigned char *)key, hash->table_size);
-	if (alloc_deque_head(hash->table, hash_val) == HASH_ERROR)
+	if (hs_alloc_deque_head(hash->table, hash_val) == HASH_ERROR)
 		return (HASH_ERROR);
 	elem = create_hash_elem(key, value);
 	if (!elem)
@@ -77,7 +77,7 @@ int	hs_set_key(t_hash *hash, char *key, void *value)
 		hs_update_value(&key, value, target_node, hash->del_value);
 	else
 	{
-		if (add_to_table(hash, key, value) == HASH_ERROR)
+		if (hs_add_to_table(hash, key, value) == HASH_ERROR)
 			return (HASH_ERROR);
 	}
 	return (HASH_SUCCESS);
