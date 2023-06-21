@@ -15,7 +15,6 @@ SRCS		+=	$(BUILTIN_DIR)/ft_echo.c \
 				$(BUILTIN_DIR)/ft_env.c \
 				$(BUILTIN_DIR)/ft_exit.c \
 				$(BUILTIN_DIR)/ft_unset.c \
-				$(BUILTIN_DIR)/is_valid_key.c \
 				$(BUILTIN_DIR)/str_to_legal_number.c
 
 ENVIRONMENT	:=	environment
@@ -33,7 +32,6 @@ SRCS		+=	$(EXEC_DIR)/call_builtin_command.c \
 				$(EXEC_DIR)/check_command.c \
 				$(EXEC_DIR)/child_pipes.c \
 				$(EXEC_DIR)/child_process.c \
-				$(EXEC_DIR)/count_commands.c \
 				$(EXEC_DIR)/exec.c \
 				$(EXEC_DIR)/get_exec_command.c \
 				$(EXEC_DIR)/init.c \
@@ -46,6 +44,10 @@ SRCS		+=	$(INPUT_DIR)/input.c
 
 TOKEN_DIR	:=	tokenize
 SRCS		+=	$(TOKEN_DIR)/tokenize.c
+
+UTILS_DIR	:=	utils
+SRCS		+=	$(UTILS_DIR)/count_array.c \
+				$(UTILS_DIR)/is_valid_key.c
 
 OBJS_DIR	:=	objs
 OBJS		:=	$(SRCS:%.c=$(OBJS_DIR)/%.o)

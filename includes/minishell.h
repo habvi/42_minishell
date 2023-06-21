@@ -2,6 +2,7 @@
 # define MINISHELL_H
 
 # include <stdbool.h>
+# include <stddef.h>
 
 # define EXECVE_ERROR	(-1)
 # define FORK_ERROR		(-1)
@@ -62,5 +63,10 @@ void	env_print_detail(t_env *env);
 int		env_set(t_env *env, char *key, char *value);
 int		env_append(t_env *env, char *key, char *value);
 void	env_unset(t_env *env, const char *key);
+
+/* utils */
+size_t	count_commands(char *const *commands);
+size_t	count_argv(char *const *argc);
+bool	is_valid_key(const char *word);
 
 #endif //MINISHELL_H

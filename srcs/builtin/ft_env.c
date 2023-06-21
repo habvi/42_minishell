@@ -5,7 +5,7 @@
 // {"env", "arg1", "arg2", ..., NULL};
 int	ft_env(char *const *argv, t_params *params)
 {
-	const size_t	argc = count_argc(argv);
+	const size_t	argc = count_argv(argv);
 
 	if (argc != 1)
 	{

@@ -17,7 +17,7 @@ size_t	count_commands(char *const *commands)
 	return (count_array_elem(commands));
 }
 
-size_t	count_argc(char *const *argc)
+size_t	count_argv(char *const *argv)
 {
-	return (count_array_elem(argc));
+	return (count_array_elem(argv));
 }

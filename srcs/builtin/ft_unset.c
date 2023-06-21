@@ -10,7 +10,7 @@ static bool	is_option(const char *word)
 
 int	ft_unset(char *const *argv, t_params *params)
 {
-	const size_t	argc = count_argc(argv);
+	const size_t	argc = count_argv(argv);
 	size_t			i;
 	int				status;
 
