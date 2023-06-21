@@ -34,7 +34,7 @@ struct s_env
 {
 	t_hash	*hash;
 
-	int		(*set)(t_env *env, const char *key, const char *value);		// export key=value
+	int		(*set)(t_env *env, char *key, char *value);		// export key=value
 	int		(*append)(t_env *env, char *key, char *value);	// export key+=value
 	char	*(*get_value)(t_env *env, char *key);			//
 	void	(*unset)(t_env *env, const char *key);				// unset key
@@ -58,7 +58,7 @@ void	init_params(t_params *params);
 char	*env_get_value(t_env *env, char *key);
 void	env_print(t_env *env);
 void	env_print_detail(t_env *env);
-int		env_set(t_env *env, const char *key, const char *value);
+int		env_set(t_env *env, char *key, char *value);
 int		env_append(t_env *env, char *key, char *value);
 void	env_unset(t_env *env, const char *key);
 

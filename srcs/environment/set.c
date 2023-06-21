@@ -1,28 +1,21 @@
 #include "minishell.h"
 #include "ft_hash.h"
-#include "ft_mem.h"
-#include "ft_string.h"
 
-// strdup key, value
-int	env_set(t_env *env, const char *key, const char *value)
+int	env_set(t_env *env, char *key, char *value)
 {
-	char	*dup_key;
-	char	*dup_value;
+	t_deque_node	*target_node;
 
-	dup_key = ft_strdup(key);
-	if (!dup_key)
-		return (FAILURE);
-	dup_value = ft_strdup(value);
-	if (!dup_value)
+	target_node = hs_find_key(env->hash, key);
+	if (target_node)
 	{
-		ft_free(dup_key);
-		return (FAILURE);
+		if (!value)
+			return (SUCCESS);
+		hs_update_value(&key, value, target_node, env->hash->del_value);
 	}
-	if (hs_set_key(env->hash, dup_key, dup_value) == HASH_ERROR)
+	else
 	{
-		ft_free(dup_key);
-		ft_free(dup_value);
-		return (FAILURE);
+		if (hs_add_to_table(env->hash, key, value) == HASH_ERROR)
+			return (FAILURE);
 	}
 	return (SUCCESS);
 }
