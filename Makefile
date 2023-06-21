@@ -16,7 +16,11 @@ SRCS		+=	$(BUILTIN_DIR)/ft_echo.c \
 				$(BUILTIN_DIR)/str_to_legal_number.c
 
 ENVIRONMENT	:=	environment
-SRCS		+=	$(ENVIRONMENT)/init.c
+SRCS		+=	$(ENVIRONMENT)/get_value.c \
+				$(ENVIRONMENT)/init.c \
+				$(ENVIRONMENT)/print.c \
+				$(ENVIRONMENT)/set.c \
+				$(ENVIRONMENT)/unset.c
 
 DEBUG_DIR	:=	debug
 SRCS		+=	$(DEBUG_DIR)/put.c
