@@ -28,12 +28,12 @@ static bool	is_n_option(const char *str)
 	return (true);
 }
 
-static void	skip_option_part(char *const *cmds, size_t *idx, bool *is_valid_op)
+static void	skip_option_part(char *const *argv, size_t *idx, bool *is_valid_op)
 {
 	*is_valid_op = false;
-	if (!cmds)
+	if (!argv)
 		return ;
-	while (cmds[*idx] && is_n_option(cmds[*idx]))
+	while (argv[*idx] && is_n_option(argv[*idx]))
 		*idx += 1;
 	*is_valid_op = *idx > 1;
 }
@@ -52,16 +52,16 @@ static void	put_strings(char *const *strs)
 	}
 }
 
-// cmds != NULL
-// cmds[0] == "echo"
-int	ft_echo(char *const *cmds)
+// argv != NULL
+// argv[0] == "echo"
+int	ft_echo(char *const *argv)
 {
 	size_t	idx;
 	bool	is_n_op_validate;
 
 	idx = 1;
-	skip_option_part(cmds, &idx, &is_n_op_validate);
-	put_strings(&cmds[idx]);
+	skip_option_part(argv, &idx, &is_n_op_validate);
+	put_strings(&argv[idx]);
 	if (!is_n_op_validate)
 		ft_dprintf(STDOUT_FILENO, "\n");
 	return (EXIT_SUCCESS);

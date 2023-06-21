@@ -41,9 +41,9 @@ typedef enum e_exit_argument
 	RETURN_TOO_MANY_NUMERIC_ARG,
 }	t_exit_arg;
 
-int		ft_echo(char *const *command);
+int		ft_echo(char *const *argv);
 int		ft_env(char *const *argv, t_params *params);
-int		ft_exit(char *const *command, t_params *params);
+int		ft_exit(char *const *argv, t_params *params);
 int		ft_unset(char *const *argv, t_params *params);
 
 bool	is_valid_key(const char *word);

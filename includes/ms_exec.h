@@ -29,7 +29,7 @@ typedef struct s_fd {
 }	t_fd;
 
 /* call_builtin_command */
-int				call_builtin_command(char *const *command, t_params *params);
+int				call_builtin_command(char *const *argv, t_params *params);
 
 /* check_command */
 bool			is_first_command(int prev_fd);
