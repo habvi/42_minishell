@@ -1,5 +1,6 @@
 #include "minishell.h"
 #include "ft_hash.h"
+#include "ft_string.h"
 
 // return value of key
 // if key not found or value is NULL, returns empty string ...?

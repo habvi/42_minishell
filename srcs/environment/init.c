@@ -25,7 +25,8 @@ static int	get_environ(t_env *env)
 	extern char	**environ;
 
 	// todo
-
+	(void)env;
+	(void)environ;
 	return (SUCCESS);
 }
 

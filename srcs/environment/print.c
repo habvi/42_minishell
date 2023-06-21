@@ -6,6 +6,7 @@
 //   `key=value\n`
 void	env_print(t_env *env)
 {
+	(void)env;
 }
 
 // print key-value-pairs to stdout
@@ -13,4 +14,5 @@ void	env_print(t_env *env)
 //   `declare -x key="value\n`
 void	env_print_detail(t_env *env)
 {
+	(void)env;
 }
