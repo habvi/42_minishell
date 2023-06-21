@@ -11,17 +11,34 @@
 # define FATAL_ERROR	(-1)
 # define UNREACHABLE	FATAL_ERROR
 
+# define ENV_LIST_SIZE	256
+
 # define SHELL_NAME		"minishell"
 # define PROMPT_NAME	"minishell "
 
-// add: hash
+typedef struct s_env		t_env;
+typedef struct s_hash_table	t_hash;
+
 typedef struct s_params
 {
-	char	**env;
+	t_env	*env;
 	bool	is_interactive;
 	char	*pwd;
 	int		status;
 }	t_params;
+
+struct s_env
+{
+	t_hash	*hash;
+
+	int		(*set)(t_env *env, char *key, char *value);	// export key=value
+	int		(*append)(t_env *env, char *key, char *value);	// export key+=value
+	char	*(*get_value)(t_env *env, char *key);			//
+	int		(*unset)(t_env *env, char *key);				// unset key
+
+	void	(*print_env)(t_env *env);		// env
+	void	(*print_export)(t_env *env);	// export
+};
 
 // temporarily here ...
 /* debug */
@@ -33,5 +50,7 @@ char	*input_line(void);
 
 /* init */
 void	init_params(t_params *params);
+
+/* environment */
 
 #endif //MINISHELL_H
