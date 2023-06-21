@@ -11,6 +11,9 @@
 # define FATAL_ERROR	(-1)
 # define UNREACHABLE	FATAL_ERROR
 
+# define SUCCESS		0
+# define FAILURE		1
+
 # define ENV_LIST_SIZE	256
 
 # define SHELL_NAME		"minishell"
