@@ -44,6 +44,7 @@ void			child_process(t_command *cmd, \
 
 /* count_commands */
 size_t			count_commands(char *const *commands);
+size_t			count_argc(char *const *argc);
 
 /* exec */
 int				execute_command(t_deque *dq_cmd, t_params *params);
