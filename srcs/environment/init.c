@@ -12,12 +12,12 @@ static void	del_env_val(void *value)
 
 static void	set_func(t_env *env)
 {
-	env->set = set;
-	env->append = append;
-	env->get_value = get_value;
-	env->unset = unset;
-	env->print_env = print_env;
-	env->print_export = print_export;
+	env->set = env_set;
+	env->append = env_append;
+	env->get_value = env_get_value;
+	env->unset = env_unset;
+	env->print = env_print;
+	env->print_detail = env_print_detail;
 }
 
 static int	get_environ(t_env *env)

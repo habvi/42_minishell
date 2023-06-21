@@ -34,13 +34,13 @@ struct s_env
 {
 	t_hash	*hash;
 
-	int		(*set)(t_env *env, char *key, char *value);	// export key=value
+	int		(*set)(t_env *env, char *key, char *value);		// export key=value
 	int		(*append)(t_env *env, char *key, char *value);	// export key+=value
 	char	*(*get_value)(t_env *env, char *key);			//
 	int		(*unset)(t_env *env, char *key);				// unset key
 
-	void	(*print_env)(t_env *env);		// env
-	void	(*print_export)(t_env *env);	// export
+	void	(*print)(t_env *env);			// env
+	void	(*print_detail)(t_env *env);	// export
 };
 
 // temporarily here ...
@@ -55,5 +55,11 @@ char	*input_line(void);
 void	init_params(t_params *params);
 
 /* environment */
+char	*env_get_value(t_env *env, char *key);
+void	env_print(t_env *env);
+void	env_print_detail(t_env *env);
+int		env_set(t_env *env, char *key, char *value);
+int		env_append(t_env *env, char *key, char *value);
+int		env_unset(t_env *env, char *key);
 
 #endif //MINISHELL_H
