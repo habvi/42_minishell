@@ -1,4 +1,3 @@
-#include <stdlib.h>
 #include "minishell.h"
 #include "ms_builtin.h"
 #include "ms_exec.h"
@@ -13,6 +12,6 @@ int	ft_env(char *const *argv, t_params *params)
 		// todo : error handring
 		return (FAILURE);
 	}
-	params->env->print;
+	params->env->print(params->env);
 	return (SUCCESS);
 }
