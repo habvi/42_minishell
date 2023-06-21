@@ -17,7 +17,7 @@ static t_elem	*create_hash_elem(char *key, void *value)
 }
 
 // hash != NULL
-int	alloc_deque_head(t_deque **table, const uint64_t hash_val)
+int	alloc_deque_head(t_deque **table, const size_t hash_val)
 {
 	if (table[hash_val])
 		return (HASH_SUCCESS);
@@ -31,7 +31,7 @@ int	alloc_deque_head(t_deque **table, const uint64_t hash_val)
 // hash != NULL, elem != NULL
 static int	add_elem_to_table(t_hash *hash, \
 								t_elem *elem, \
-								const uint64_t hash_val)
+								const size_t hash_val)
 {
 	t_deque_node	*node;
 
@@ -45,8 +45,8 @@ static int	add_elem_to_table(t_hash *hash, \
 // hash != NULL, key != NULL
 static int	add_to_table(t_hash *hash, char *key, void *value)
 {
-	t_elem		*elem;
-	uint64_t	hash_val;
+	t_elem	*elem;
+	size_t	hash_val;
 
 	if (is_need_rehash(hash) && hs_rehash_table(hash) == HASH_ERROR)
 		return (HASH_ERROR); // free hash by user

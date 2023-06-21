@@ -9,7 +9,7 @@ static uint64_t	modulo_hash_mod(uint64_t hash, const size_t hash_mod)
 }
 
 // return hash value
-uint64_t	hs_gen_fnv(const unsigned char *key, const size_t hash_mod)
+size_t	hs_gen_fnv(const unsigned char *key, const size_t hash_mod)
 {
 	static const uint64_t	prime = 1099511628211LLU;
 	static const uint64_t	offset = 14695981039346656037LLU;
@@ -28,5 +28,5 @@ uint64_t	hs_gen_fnv(const unsigned char *key, const size_t hash_mod)
 		idx++;
 	}
 	hash = modulo_hash_mod(hash, hash_mod);
-	return (hash);
+	return ((size_t)hash);
 }

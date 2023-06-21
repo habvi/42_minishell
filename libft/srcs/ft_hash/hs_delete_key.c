@@ -4,7 +4,7 @@
 void	hs_delete_key(t_hash *hash, const char *key)
 {
 	t_deque_node	*target_node;
-	uint64_t		hash_val;
+	size_t			hash_val;
 	t_deque			*head;
 
 	if (!hash || !key)
