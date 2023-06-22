@@ -3,6 +3,16 @@
 #include "ms_exec.h"
 #include "ms_tokenize.h"
 #include "ft_deque.h"
+#include "ft_hash.h"
+#include "ft_mem.h"
+
+// todo: tmp
+static int	free_env_ret_val(t_env *env, int val)
+{
+	hs_clear(&env->hash);
+	ft_free(env);
+	return (val);
+}
 
 int	main(void)
 {
@@ -20,12 +30,11 @@ int	main(void)
 		command = tokenize(line);
 		free(line);
 		if (!command)
-			return (EXIT_FAILURE);
-		// parse()
+			return (free_env_ret_val(params.env, EXIT_FAILURE));
 		params.status = execute_command(command, &params);
 		deque_clear_all(&command, free);
 		if (params.status == PROCESS_ERROR)
-			return (EXIT_FAILURE);
+			return (free_env_ret_val(params.env, EXIT_FAILURE));
 	}
-	return (params.status);
+	return (free_env_ret_val(params.env, params.status));
 }
