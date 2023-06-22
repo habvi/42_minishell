@@ -9,11 +9,11 @@
 # define WAIT_ERROR		(-1)
 # define PIPE_ERROR		(-1)
 # define PROCESS_ERROR	(-1)
-# define FATAL_ERROR	(-1)
-# define UNREACHABLE	FATAL_ERROR
+# define UNREACHABLE	(-1)
 
 # define SUCCESS		0
 # define FAILURE		1
+# define CONTINUE		2
 
 # define ENV_LIST_SIZE	256
 
@@ -61,16 +61,22 @@ char	*input_line(void);
 void	init_params(t_params *params);
 
 /* environment */
+int		dup_env_key(const char *const arg, char **key, size_t *len);
+int		dup_env_value(const char *const arg, char **value);
 t_env	*init_environ(void);
 char	*env_get_value(t_env *env, char *key);
 void	env_print(t_env *env);
 void	env_print_detail(t_env *env);
 int		env_set(t_env *env, char *key, char *value, t_env_op op);
 void	env_unset(t_env *env, const char *key);
+int		separate_env_variables(const char *const arg, \
+								char **key, \
+								char **value, \
+								t_env_op *op);
 
 /* utils */
 // size_t	count_commands(char *const *commands);
-size_t	count_argv(char *const *argc);
+size_t	count_argv(const char *const *argc);
 bool	is_valid_key(const char *word);
 
 #endif //MINISHELL_H
