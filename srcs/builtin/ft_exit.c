@@ -6,7 +6,7 @@
 
 // {"exit", "valid_arg", "invalid_arg1", "invalid_arg2", ..., NULL};
 
-static t_exit_arg	validate_argument(char *const *argv)
+static t_exit_arg	validate_argument(const char *const *argv)
 {
 	long	long_num;
 	size_t	argc;
@@ -84,7 +84,7 @@ static bool	is_exit(t_exit_arg res)
 
 // argv[0] == "exit"
 
-int	ft_exit(char *const *argv, t_params *params)
+int	ft_exit(const char *const *argv, t_params *params)
 {
 	int			status;
 	t_exit_arg	arg_result;

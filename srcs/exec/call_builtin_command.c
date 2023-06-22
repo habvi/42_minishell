@@ -2,10 +2,8 @@
 #include "ms_builtin.h"
 #include "ft_string.h"
 
-int	call_builtin_command(char *const *argv, t_params *params)
+int	call_builtin_command(const char *const *argv, t_params *params)
 {
-	if (!argv)
-		return (FATAL_ERROR);
 	if (ft_streq(argv[0], CMD_ECHO))
 		return (ft_echo(argv));
 //	if (ft_streq(argv[0], CMD_CD))

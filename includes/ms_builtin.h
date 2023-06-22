@@ -31,6 +31,7 @@
 # define ERROR_MSG_TOO_MANY_ARG	"too many arguments"
 # define ERROR_MSG_REQUIRED_NUM	"numeric argument required"
 
+typedef struct s_env		t_env;
 typedef struct s_deque_node	t_deque_node;
 typedef struct s_params		t_params;
 
@@ -41,13 +42,14 @@ typedef enum e_exit_argument
 	RETURN_TOO_MANY_NUMERIC_ARG,
 }	t_exit_arg;
 
-int		ft_echo(char *const *argv);
-int		ft_env(char *const *argv, t_params *params);
-int		ft_exit(char *const *argv, t_params *params);
-int		ft_export(char *const *argv, t_params *params);
-int		ft_unset(char *const *argv, t_params *params);
+int		ft_echo(const char *const *argv);
+int		ft_env(const char *const *argv, t_params *params);
+int		ft_exit(const char *const *argv, t_params *params);
+int		ft_export(const char *const *argv, t_params *params);
+int		ft_unset(const char *const *argv, t_params *params);
 
 bool	is_option(const char *word);
 bool	str_to_legal_number(const char *str, long *result);
+int		export_arg(const char *const arg, t_env *env, int *status);
 
 #endif //MS_BUILTIN_H

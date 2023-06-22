@@ -13,7 +13,8 @@ static int	exec_builtin_in_parent_proc(t_command cmd, \
 
 	cmd.next_command = get_next_command(exec_cmd, &cmd_size);
 	cmd.exec_command = convert_command_to_array(exec_cmd, cmd_size);
-	status = call_builtin_command(cmd.exec_command, params);
+	status = call_builtin_command((const char *const *)cmd.exec_command, \
+									params);
 	free_2d_array(&cmd.exec_command);
 	return (status);
 }

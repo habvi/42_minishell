@@ -2,7 +2,7 @@
 #include "ms_builtin.h"
 #include "ms_exec.h"
 
-static int	unset_args(t_env *env, char *const *args)
+static int	unset_args(t_env *env, const char *const *args)
 {
 	int		status;
 	size_t	i;
@@ -20,7 +20,7 @@ static int	unset_args(t_env *env, char *const *args)
 	return (status);
 }
 
-int	ft_unset(char *const *argv, t_params *params)
+int	ft_unset(const char *const *argv, t_params *params)
 {
 	const size_t	argc = count_argv(argv);
 	int				status;
