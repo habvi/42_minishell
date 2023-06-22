@@ -23,6 +23,12 @@
 typedef struct s_env		t_env;
 typedef struct s_hash_table	t_hash;
 
+typedef enum e_env_op
+{
+	ENV_ADD,
+	ENV_JOIN,
+}	t_env_op;
+
 typedef struct s_params
 {
 	t_env	*env;
