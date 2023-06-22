@@ -20,8 +20,6 @@ static bool	is_n_option(const char *arg)
 		return (false);
 	if (!is_option(arg))
 		return (false);
-	if (arg[1] != ECHO_OPTION)
-		return (false);
 	i = 1;
 	while (arg[i] == ECHO_OPTION)
 		i++;
