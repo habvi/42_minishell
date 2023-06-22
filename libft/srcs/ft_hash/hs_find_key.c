@@ -20,7 +20,7 @@ static t_deque_node	*find_key_in_deque(t_deque_node *node, const char *key)
 
 t_deque_node	*hs_find_key(t_hash *hash, const char *key)
 {
-	uint64_t		hash_val;
+	size_t			hash_val;
 	t_deque_node	*addr;
 
 	if (!hash || !key)
