@@ -7,11 +7,11 @@
 // todo: fatal error
 
 // key=
-static void	env_add(t_env *env, char *key, char *value, t_deque_node *target_node)
+static void	env_add(t_env *env, char *key, char *value, t_deque_node *node)
 {
 	if (!value)
 		return ;
-	hs_update_value(&key, value, target_node, env->hash->del_value);
+	hs_update_value(&key, value, node, env->hash->del_value);
 }
 
 static int	join_new_value(char *pre, char *new, char **joined)
@@ -24,20 +24,20 @@ static int	join_new_value(char *pre, char *new, char **joined)
 
 // key expected `name` -> void ...?
 // key+=
-static int	env_join(t_env *env, char *key, char *new_value, t_deque_node *target_node)
+static int	env_join(t_env *env, char *key, char *new_value, t_deque_node *node)
 {
 	t_elem	*elem;
 	char	*joined_value;
 
-	elem = (t_elem *)target_node->content;
+	elem = (t_elem *)node->content;
 	if (join_new_value(elem->value, new_value, &joined_value) == FAILURE)
 		return (FAILURE);
-	hs_update_value(&key, joined_value, target_node, env->hash->del_value);
+	hs_update_value(&key, joined_value, node, env->hash->del_value);
 	ft_free(new_value);
 	return (SUCCESS);
 }
 
-int env_set(t_env *env, char *key, char *value, t_env_op op)
+int	env_set(t_env *env, char *key, char *value, t_env_op op)
 {
 	t_deque_node	*target_node;
 
