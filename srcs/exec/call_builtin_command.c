@@ -12,8 +12,8 @@ int	call_builtin_command(char *const *argv, t_params *params)
 //		return (true);
 //	if (ft_streq(argv[0], CMD_PWD))
 //		return (true);
-//	if (ft_streq(argv[0], CMD_EXPORT))
-//		return (true);
+	if (ft_streq(argv[0], CMD_EXPORT))
+		return (ft_export(argv, params));
 	if (ft_streq(argv[0], CMD_UNSET))
 		return (ft_unset(argv, params));
 	if (ft_streq(argv[0], CMD_ENV))

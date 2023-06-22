@@ -44,6 +44,7 @@ typedef enum e_exit_argument
 int		ft_echo(char *const *argv);
 int		ft_env(char *const *argv, t_params *params);
 int		ft_exit(char *const *argv, t_params *params);
+int		ft_export(char *const *argv, t_params *params);
 int		ft_unset(char *const *argv, t_params *params);
 
 bool	is_option(const char *word);
