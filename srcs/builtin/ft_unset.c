@@ -2,11 +2,6 @@
 #include "ms_builtin.h"
 #include "ms_exec.h"
 
-static bool	is_option(const char *word)
-{
-	return (word[0] == '-' && word[1]);
-}
-
 int	ft_unset(char *const *argv, t_params *params)
 {
 	const size_t	argc = count_argv(argv);
