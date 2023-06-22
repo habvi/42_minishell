@@ -24,7 +24,7 @@ static int	move_elem_to_new(t_deque *deque, \
 {
 	t_deque_node	*node;
 	t_elem			*elem;
-	uint64_t		hash_val;
+	size_t			hash_val;
 
 	while (!deque_is_empty(deque))
 	{
