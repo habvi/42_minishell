@@ -22,7 +22,7 @@ SRCS		+=	$(BUILTIN_DIR)/ft_echo.c \
 ENVIRONMENT	:=	environment
 SRCS		+=	$(ENVIRONMENT)/dup_env_key.c \
 				$(ENVIRONMENT)/dup_env_value.c \
-				$(ENVIRONMENT)/export_arg.c \
+				$(ENVIRONMENT)/separate_env_variables.c \
 				$(ENVIRONMENT)/get_value.c \
 				$(ENVIRONMENT)/init.c \
 				$(ENVIRONMENT)/print.c \
