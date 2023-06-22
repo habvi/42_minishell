@@ -18,7 +18,6 @@ static void	del_env_val(void *value)
 static void	set_func(t_env *env)
 {
 	env->set = env_set;
-	env->append = env_append;
 	env->get_value = env_get_value;
 	env->unset = env_unset;
 	env->print = env_print;
@@ -31,6 +30,7 @@ static int	get_environ(t_env *env)
 
 	// todo
 	(void)environ;
+	// hs_add_to_table
 	// erase
 	hs_set_key(env->hash, ft_strdup("key_1"), ft_strdup("val_1"));
 	hs_set_key(env->hash, ft_strdup("key_2"), ft_strdup("val_2"));
