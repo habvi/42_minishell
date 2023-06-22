@@ -1,4 +1,3 @@
-#include <stddef.h>
 #include "minishell.h"
 #include "ms_builtin.h"
 #include "ms_exec.h"

@@ -3,7 +3,6 @@
 #include "ms_builtin.h"
 #include "ms_exec.h"
 #include "ft_dprintf.h"
-#include "ft_string.h"
 
 // {"exit", "valid_arg", "invalid_arg1", "invalid_arg2", ..., NULL};
 
