@@ -11,21 +11,21 @@ static bool	is_only_key(const char c)
 // &arg[j] != NULL, len(&arg[j]) >= 0
 // key guaranteed valid
 // &arg[j] : "", "=foo"," or "+=bar"
-static t_env_op	get_env_op(const char *const arg, size_t *j)
+static t_env_op	get_env_op(const char *const arg, size_t *i)
 {
 	t_env_op	op;
 
-	if (is_only_key(arg[*j]))
+	if (is_only_key(arg[*i]))
 		op = ENV_ADD;
-	else if (arg[*j] == '=')
+	else if (arg[*i] == '=')
 	{
 		op = ENV_ADD;
-		*j += 1;
+		*i += 1;
 	}
 	else // +=
 	{
 		op = ENV_JOIN;
-		*j += 2;
+		*i += 2;
 	}
 	return (op);
 }
@@ -66,10 +66,8 @@ int	separate_env_variables(const char *const arg, \
 	if (dup_env_key(arg, key, &i) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
 	result = validate_env_key(*key);
-	if (result == FAILURE)
-		return (free_key_ret_val(*key, FAILURE));
-	if (result == CONTINUE)
-		return (free_key_ret_val(*key, CONTINUE));
+	if (result == FAILURE || result == CONTINUE)
+		return (free_key_ret_val(*key, result));
 	*op = get_env_op(arg, &i);
 	if (dup_env_value(&arg[i], value) == PROCESS_ERROR)
 		return (free_key_ret_val(*key, PROCESS_ERROR));

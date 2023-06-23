@@ -52,6 +52,5 @@ int		ft_unset(const char *const *argv, t_params *params);
 
 bool	is_option(const char *word);
 bool	str_to_legal_number(const char *str, long *result);
-int		export_arg(const char *const arg, t_env *env, int *status);
 
 #endif //MS_BUILTIN_H
