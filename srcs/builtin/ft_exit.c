@@ -5,7 +5,6 @@
 #include "ft_dprintf.h"
 
 // {"exit", "valid_arg", "invalid_arg1", "invalid_arg2", ..., NULL};
-
 static t_exit_arg	validate_argument(const char *const *argv)
 {
 	long	long_num;
@@ -24,9 +23,9 @@ static t_exit_arg	validate_argument(const char *const *argv)
 }
 
 // str_to_legal_number returns true
-static int	get_exit_status(const char *arg, \
-							t_exit_arg res, \
-							int latest_status)
+static uint8_t	get_exit_status(const char *arg, \
+								t_exit_arg res, \
+								int latest_status)
 {
 	long	long_num;
 
@@ -37,7 +36,7 @@ static int	get_exit_status(const char *arg, \
 	if (!arg)
 		return (latest_status);
 	str_to_legal_number(arg, &long_num);
-	return ((int)(long_num & BYTE_MASK));
+	return ((uint8_t)(long_num & BYTE_MASK));
 }
 
 static void	put_exit_err(const char *arg, t_exit_arg res)
@@ -61,17 +60,6 @@ static bool	is_exit(t_exit_arg res)
 	return (true);
 }
 
-//const char	*get_res_char(t_exit_arg res)
-//{
-//	if (res == EXIT_VALID_ARG)
-//		return ("EXIT_VALID_ARG");
-//	if (res == EXIT_NON_NUMERIC_ARG)
-//		return ("EXIT_NON_NUMERIC_ARG");
-//	if (res == RETURN_TOO_MANY_NUMERIC_ARG)
-//		return ("RETURN_TOO_MANY_NUMERIC_ARG");
-//	return ("ERROR");
-//}
-
 //exit [n]
 // Exit the shell, returning a status of n to the shell’s parent.
 // If n is omitted, the exit status is that of the last command executed.
@@ -83,10 +71,9 @@ static bool	is_exit(t_exit_arg res)
 // if exit called from interactive shell, output `exit` to the console.
 
 // argv[0] == "exit"
-
-int	ft_exit(const char *const *argv, t_params *params)
+uint8_t	ft_exit(const char *const *argv, t_params *params)
 {
-	int			status;
+	uint8_t		status;
 	t_exit_arg	arg_result;
 
 	arg_result = validate_argument(argv);
@@ -96,6 +83,5 @@ int	ft_exit(const char *const *argv, t_params *params)
 	put_exit_err(argv[EXIT_ARG_IDX], arg_result);
 	if (!is_exit(arg_result))
 		return (status);
-	exit (status);
+	exit(status);
 }
-// todo: return to main, exit prompt loop and put 'exit\n' to stderr

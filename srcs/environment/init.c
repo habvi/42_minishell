@@ -20,7 +20,7 @@ static void	set_func(t_env *env)
 	env->print_detail = env_print_detail;
 }
 
-static int	get_environ(t_env *env)
+static void	get_environ(t_env *env)
 {
 	extern char	**environ;
 	size_t		i;
@@ -28,27 +28,17 @@ static int	get_environ(t_env *env)
 	i = 0;
 	while (environ[i])
 	{
-		if (declare_arg(environ[i], env, NULL) == PROCESS_ERROR)
-			return (PROCESS_ERROR);
+		declare_arg(environ[i], env, NULL);
 		i++;
 	}
-	return (SUCCESS);
 }
 
-static int	set_hash(t_env *env)
+static void	set_hash(t_env *env)
 {
-	if (!env)
-		return (FAILURE);
 	env->hash = hs_create_table(ENV_LIST_SIZE, del_env_val);
 	if (!env->hash)
-		return (FAILURE);
-
-	if (get_environ(env) == FAILURE)
-	{
-		hs_clear(&env->hash);
-		return (FAILURE);
-	}
-	return (SUCCESS);
+		ft_abort();
+	get_environ(env);
 }
 
 t_env	*init_environ(void)
@@ -57,9 +47,8 @@ t_env	*init_environ(void)
 
 	env = (t_env *)x_malloc(sizeof(t_env));
 	if (!env)
-		return (NULL);
+		ft_abort();
 	set_func(env);
-	if (set_hash(env) == FAILURE)
-		return (NULL);
+	set_hash(env);
 	return (env);
 }

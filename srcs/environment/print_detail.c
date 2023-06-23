@@ -92,16 +92,15 @@ static void	print_elems(t_elem **elems)
 // print key-value-pairs to stdout
 //   include only key
 //   `declare -x key="value\n`
-int	env_print_detail(t_env *env)
+void	env_print_detail(t_env *env)
 {
 	t_elem	**elems;
 
 	elems = (t_elem **)x_malloc(sizeof(t_elem *) * (env->hash->key_count + 1));
 	if (!elems)
-		return (PROCESS_ERROR);
+		ft_abort();
 	set_elem_pointer(elems, env->hash->table, env->hash->table_size);
 	sort_elems_by_key(elems);
 	print_elems(elems);
 	free(elems);
-	return (SUCCESS);
 }
