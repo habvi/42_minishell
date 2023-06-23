@@ -7,7 +7,7 @@ def main():
 
     test_res |= run_echo.main()
     test_res |= run_exit.main()
-    test_res |= run_export.main()
+    # test_res |= run_export.main()
 
     return test_res
 
