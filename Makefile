@@ -25,6 +25,7 @@ SRCS		+=	$(ENVIRONMENT)/dup_env_key.c \
 				$(ENVIRONMENT)/separate_env_variables.c \
 				$(ENVIRONMENT)/get_value.c \
 				$(ENVIRONMENT)/init.c \
+				$(ENVIRONMENT)/print_detail.c \
 				$(ENVIRONMENT)/print.c \
 				$(ENVIRONMENT)/set.c \
 				$(ENVIRONMENT)/unset.c

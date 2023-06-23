@@ -46,7 +46,7 @@ struct s_env
 	void	(*unset)(t_env *env, const char *key);				// unset key
 
 	void	(*print)(t_env *env);			// env
-	void	(*print_detail)(t_env *env);	// export
+	int		(*print_detail)(t_env *env);	// export
 };
 
 // temporarily here ...
@@ -63,16 +63,16 @@ void	init_params(t_params *params);
 /* environment */
 int		dup_env_key(const char *const arg, char **key, size_t *len);
 int		dup_env_value(const char *const arg, char **value);
-t_env	*init_environ(void);
 char	*env_get_value(t_env *env, char *key);
+t_env	*init_environ(void);
+int		env_print_detail(t_env *env);
 void	env_print(t_env *env);
-void	env_print_detail(t_env *env);
-int		env_set(t_env *env, char *key, char *value, t_env_op op);
-void	env_unset(t_env *env, const char *key);
 int		separate_env_variables(const char *const arg, \
 								char **key, \
 								char **value, \
 								t_env_op *op);
+int		env_set(t_env *env, char *key, char *value, t_env_op op);
+void	env_unset(t_env *env, const char *key);
 
 /* utils */
 // size_t	count_commands(char *const *commands);
