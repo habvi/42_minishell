@@ -4,6 +4,7 @@
 # include <stdbool.h>
 # include <stddef.h>
 
+/* return value */
 # define EXECVE_ERROR	(-1)
 # define FORK_ERROR		(-1)
 # define WAIT_ERROR		(-1)
@@ -15,8 +16,13 @@
 # define FAILURE		1
 # define CONTINUE		2
 
+/* size */
 # define ENV_LIST_SIZE	256
 
+/* SIGNAL */
+# define STATUS_SIG_BASE	128
+
+/* string */
 # define SHELL_NAME		"minishell"
 # define PROMPT_NAME	"minishell "
 
@@ -78,6 +84,7 @@ void	env_unset(t_env *env, const char *key);
 /* utils */
 // size_t	count_commands(char *const *commands);
 size_t	count_argv(const char *const *argc);
+void	ft_abort(void);
 bool	is_valid_key(const char *word);
 
 #endif //MINISHELL_H
