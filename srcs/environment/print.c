@@ -41,11 +41,3 @@ void	env_print(t_env *env)
 		idx++;
 	}
 }
-
-// print key-value-pairs to stdout
-//   include only key
-//   `declare -x key="value\n`
-void	env_print_detail(t_env *env)
-{
-	(void)env;
-}
