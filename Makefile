@@ -138,5 +138,9 @@ test_echo	: all
 test_exit	: all
 	python3 ./test/integration_test/run_exit.py
 
+# test builtin export
+.PHONY		: test_export
+test_export	: all
+	python3 ./test/integration_test/run_export.py
 
 -include $(DEPS)
