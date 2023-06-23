@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include "minishell.h"
 #include "ft_deque.h"
 #include "ft_mem.h"
 #include "ft_string.h"
@@ -10,10 +11,10 @@ static void	add_split_str_to_command(t_deque *command, char *split_str)
 
 	str = ft_strdup(split_str);
 	if (!str)
-		exit(EXIT_FAILURE);
+		ft_abort();
 	node = deque_node_new((void *)str);
 	if (!node)
-		exit(EXIT_FAILURE);
+		ft_abort();
 	deque_add_back(command, node);
 }
 
@@ -26,10 +27,10 @@ t_deque	*tokenize(char *line)
 
 	split_str = ft_split(line, ' ');
 	if (!split_str)
-		exit(EXIT_FAILURE);
+		ft_abort();
 	command = deque_new();
 	if (!command)
-		exit(EXIT_FAILURE);
+		ft_abort();
 	i = 0;
 	while (split_str[i])
 	{

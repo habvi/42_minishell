@@ -6,14 +6,6 @@
 #include "ft_hash.h"
 #include "ft_mem.h"
 
-// todo: tmp
-static int	free_env_ret_val(t_env *env, int val)
-{
-	hs_clear(&env->hash);
-	ft_free(env);
-	return (val);
-}
-
 int	main(void)
 {
 	t_params	params;
@@ -29,12 +21,10 @@ int	main(void)
 			break ;
 		command = tokenize(line);
 		free(line);
-		if (!command)
-			return (free_env_ret_val(params.env, EXIT_FAILURE));
-		params.status = execute_command(command, &params);
+		params.status = execute_command(command, &params); //todo
 		deque_clear_all(&command, free);
-		if (params.status == PROCESS_ERROR)
-			return (free_env_ret_val(params.env, EXIT_FAILURE));
 	}
-	return (free_env_ret_val(params.env, params.status));
+	hs_clear(&params.env->hash);
+	ft_free(params.env);
+	return (params.status);
 }
