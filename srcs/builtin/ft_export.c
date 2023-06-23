@@ -10,8 +10,7 @@ static int	declare_all(const char *const *args, t_env *env, int *status)
 	i = 0;
 	while (args[i])
 	{
-		if (declare_arg(args[i], env, status) == PROCESS_ERROR)
-			return (PROCESS_ERROR);
+		*status = declare_arg(args[i], env);
 		i++;
 	}
 	return (SUCCESS);
