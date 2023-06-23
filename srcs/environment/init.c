@@ -1,6 +1,7 @@
 #include "minishell.h"
 #include "ft_hash.h"
 #include "ft_mem.h"
+#include "ft_sys.h"
 
 static void	del_env_val(void *value)
 {
@@ -54,7 +55,7 @@ t_env	*init_environ(void)
 {
 	t_env	*env;
 
-	env = (t_env *)malloc(sizeof(t_env));
+	env = (t_env *)x_malloc(sizeof(t_env));
 	if (!env)
 		return (NULL);
 	set_func(env);
