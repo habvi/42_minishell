@@ -12,33 +12,35 @@
 //  {"echo", "-n" "-nnnnnnm", NULL}
 //                 ^^^^^^^^ NOT OPTION
 
-static bool	is_n_option(const char *str)
+static bool	is_n_option(const char *arg)
 {
 	size_t	i;
 
-	if (!str)
+	if (!arg)
 		return (false);
-	if (str[0] != CMD_OPTION_MARKER || str[1] != ECHO_OPTION)
+	if (!is_option(arg))
 		return (false);
 	i = 1;
-	while (str[i] == ECHO_OPTION)
+	while (arg[i] == ECHO_OPTION)
 		i++;
-	if (str[i])
+	if (arg[i])
 		return (false);
 	return (true);
 }
 
-static void	skip_option_part(char *const *cmds, size_t *idx, bool *is_valid_op)
+static void	skip_option_part(const char *const *argv, \
+								size_t *idx, \
+								bool *is_valid_op)
 {
 	*is_valid_op = false;
-	if (!cmds)
+	if (!argv)
 		return ;
-	while (cmds[*idx] && is_n_option(cmds[*idx]))
+	while (argv[*idx] && is_n_option(argv[*idx]))
 		*idx += 1;
 	*is_valid_op = *idx > 1;
 }
 
-static void	put_strings(char *const *strs)
+static void	put_strings(const char *const *strs)
 {
 	size_t	idx;
 
@@ -52,17 +54,17 @@ static void	put_strings(char *const *strs)
 	}
 }
 
-// cmds != NULL
-// cmds[0] == "echo"
-int	ft_echo(char *const *cmds)
+// argv != NULL
+// argv[0] == "echo"
+int	ft_echo(const char *const *argv)
 {
 	size_t	idx;
-	bool	is_n_op_validate;
+	bool	is_display_newline;
 
 	idx = 1;
-	skip_option_part(cmds, &idx, &is_n_op_validate);
-	put_strings(&cmds[idx]);
-	if (!is_n_op_validate)
+	skip_option_part(argv, &idx, &is_display_newline);
+	put_strings(&argv[idx]);
+	if (!is_display_newline)
 		ft_dprintf(STDOUT_FILENO, "\n");
 	return (EXIT_SUCCESS);
 }

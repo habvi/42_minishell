@@ -29,7 +29,7 @@ typedef struct s_fd {
 }	t_fd;
 
 /* call_builtin_command */
-int				call_builtin_command(char *const *command, t_params *params);
+int				call_builtin_command(const char *const *argv, t_params *params);
 
 /* check_command */
 bool			is_first_command(int prev_fd);
@@ -41,9 +41,6 @@ void			child_process(t_command *cmd, \
 								t_fd *fd, \
 								char **environ, \
 								t_params *params);
-
-/* count_commands */
-size_t			count_commands(char *const *commands);
 
 /* exec */
 int				execute_command(t_deque *dq_cmd, t_params *params);

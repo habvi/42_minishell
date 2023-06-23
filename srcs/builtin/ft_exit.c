@@ -3,20 +3,19 @@
 #include "ms_builtin.h"
 #include "ms_exec.h"
 #include "ft_dprintf.h"
-#include "ft_string.h"
 
 // {"exit", "valid_arg", "invalid_arg1", "invalid_arg2", ..., NULL};
 
-static t_exit_arg	validate_argument(char *const *cmds)
+static t_exit_arg	validate_argument(const char *const *argv)
 {
 	long	long_num;
 	size_t	argc;
 	bool	is_legal_num;
 
-	argc = count_commands(cmds);
+	argc = count_argv(argv);
 	if (argc == EXIT_ONLY_CMD_CNT)
 		return (EXIT_VALID_ARG);
-	is_legal_num = str_to_legal_number(cmds[EXIT_ARG_IDX], &long_num);
+	is_legal_num = str_to_legal_number(argv[EXIT_ARG_IDX], &long_num);
 	if (!is_legal_num)
 		return (EXIT_NON_NUMERIC_ARG);
 	if (argc > VALID_ARG_CNT)
@@ -83,18 +82,18 @@ static bool	is_exit(t_exit_arg res)
 
 // if exit called from interactive shell, output `exit` to the console.
 
-// cmds[0] == "exit"
+// argv[0] == "exit"
 
-int	ft_exit(char *const *cmds, t_params *params)
+int	ft_exit(const char *const *argv, t_params *params)
 {
 	int			status;
 	t_exit_arg	arg_result;
 
-	arg_result = validate_argument(cmds);
-	status = get_exit_status(cmds[EXIT_ARG_IDX], arg_result, params->status);
+	arg_result = validate_argument(argv);
+	status = get_exit_status(argv[EXIT_ARG_IDX], arg_result, params->status);
 	if (params->is_interactive)
 		ft_dprintf(STDERR_FILENO, "%s\n", CMD_EXIT);
-	put_exit_err(cmds[EXIT_ARG_IDX], arg_result);
+	put_exit_err(argv[EXIT_ARG_IDX], arg_result);
 	if (!is_exit(arg_result))
 		return (status);
 	exit (status);

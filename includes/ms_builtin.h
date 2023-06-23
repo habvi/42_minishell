@@ -23,11 +23,19 @@
 # define NON_NUMERIC_ARG_STATUS	2
 # define TOO_MANY_ARG_STATUS	1
 
+# define NOT_A_VALID_IDENTIFIER	1
+# define INVALID_OPTION			2
+
 # define BYTE_MASK				(0xFF)
 
 # define ERROR_MSG_TOO_MANY_ARG	"too many arguments"
 # define ERROR_MSG_REQUIRED_NUM	"numeric argument required"
+# define ERROR_MSG_INVALID_OP	"invalid option"
+# define ERROR_MSG_NOT_VALID_ID	"not a valid identifier"
 
+# define DECLARE_X				"declare -x"
+
+typedef struct s_env		t_env;
 typedef struct s_deque_node	t_deque_node;
 typedef struct s_params		t_params;
 
@@ -38,9 +46,13 @@ typedef enum e_exit_argument
 	RETURN_TOO_MANY_NUMERIC_ARG,
 }	t_exit_arg;
 
-int		ft_echo(char *const *command);
-int		ft_exit(char *const *command, t_params *params);
+int		ft_echo(const char *const *argv);
+int		ft_env(const char *const *argv, t_params *params);
+int		ft_exit(const char *const *argv, t_params *params);
+int		ft_export(const char *const *argv, t_params *params);
+int		ft_unset(const char *const *argv, t_params *params);
 
+bool	is_option(const char *word);
 bool	str_to_legal_number(const char *str, long *result);
 
 #endif //MS_BUILTIN_H

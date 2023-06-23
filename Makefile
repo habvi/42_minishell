@@ -12,8 +12,24 @@ SRCS		:=	init.c \
 
 BUILTIN_DIR	:=	builtin
 SRCS		+=	$(BUILTIN_DIR)/ft_echo.c \
+				$(BUILTIN_DIR)/ft_env.c \
 				$(BUILTIN_DIR)/ft_exit.c \
+				$(BUILTIN_DIR)/ft_export.c \
+				$(BUILTIN_DIR)/ft_unset.c \
+				$(BUILTIN_DIR)/is_option.c \
 				$(BUILTIN_DIR)/str_to_legal_number.c
+
+ENVIRONMENT	:=	environment
+SRCS		+=	$(ENVIRONMENT)/declare_arg.c \
+				$(ENVIRONMENT)/dup_env_key.c \
+				$(ENVIRONMENT)/dup_env_value.c \
+				$(ENVIRONMENT)/separate_env_variables.c \
+				$(ENVIRONMENT)/get_value.c \
+				$(ENVIRONMENT)/init.c \
+				$(ENVIRONMENT)/print_detail.c \
+				$(ENVIRONMENT)/print.c \
+				$(ENVIRONMENT)/set.c \
+				$(ENVIRONMENT)/unset.c
 
 DEBUG_DIR	:=	debug
 SRCS		+=	$(DEBUG_DIR)/put.c
@@ -23,7 +39,6 @@ SRCS		+=	$(EXEC_DIR)/call_builtin_command.c \
 				$(EXEC_DIR)/check_command.c \
 				$(EXEC_DIR)/child_pipes.c \
 				$(EXEC_DIR)/child_process.c \
-				$(EXEC_DIR)/count_commands.c \
 				$(EXEC_DIR)/exec.c \
 				$(EXEC_DIR)/get_exec_command.c \
 				$(EXEC_DIR)/init.c \
@@ -36,6 +51,10 @@ SRCS		+=	$(INPUT_DIR)/input.c
 
 TOKEN_DIR	:=	tokenize
 SRCS		+=	$(TOKEN_DIR)/tokenize.c
+
+UTILS_DIR	:=	utils
+SRCS		+=	$(UTILS_DIR)/count_array.c \
+				$(UTILS_DIR)/is_valid_key.c
 
 OBJS_DIR	:=	objs
 OBJS		:=	$(SRCS:%.c=$(OBJS_DIR)/%.o)
@@ -121,5 +140,9 @@ test_echo	: all
 test_exit	: all
 	python3 ./test/integration_test/run_exit.py
 
+# test builtin export
+.PHONY		: test_export
+test_export	: all
+	python3 ./test/integration_test/run_export.py
 
 -include $(DEPS)

@@ -10,7 +10,11 @@ static bool	set_is_interactive(void)
 
 void	init_params(t_params *params)
 {
-	params->env = NULL;
+	t_env	*env;
+
+	env = init_environ();
+	// todo: error
+	params->env = env;
 	params->is_interactive = set_is_interactive();
 	params->pwd = NULL;
 	params->status = EXIT_SUCCESS;

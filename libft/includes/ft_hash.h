@@ -37,7 +37,8 @@ t_hash			*hs_create_table(size_t size, void (*del_value)(void *));
 // add key-value pairs to table and return 0. On error, return (-1)
 // if hash_value conflicts, add with the chain method
 int				hs_set_key(t_hash *hash, char *key, void *value);
-int				alloc_deque_head(t_deque **table, const size_t hash_val);
+int				hs_alloc_deque_head(t_deque **table, const size_t hash_val);
+int				hs_add_to_table(t_hash *hash, char *key, void *value);
 
 /* find key */
 t_deque_node	*hs_find_key(t_hash *hash, const char *key);

@@ -31,7 +31,7 @@ DEQUE_SRC	:=	$(DEQUE_DIR)/dq_add_back.c \
 # ft_hash
 #--------------------------------------------
 HASH_DIR	:=	ft_hash
-HASH_SRC	:=	$(HASH_DIR)/hs_clear_table.c \
+HASH_SRC	:=	$(HASH_DIR)/hs_clear.c \
 				$(HASH_DIR)/hs_create_table.c \
 				$(HASH_DIR)/hs_delete_key.c \
 				$(HASH_DIR)/hs_display.c \
@@ -101,6 +101,7 @@ PUT_SRC		:=	$(PUT_DIR)/ft_putchar_fd.c \
 #--------------------------------------------
 STRING_DIR	:=	ft_string
 STRING_SRC	:=	$(STRING_DIR)/ft_split.c \
+				$(STRING_DIR)/ft_strcmp.c \
 				$(STRING_DIR)/ft_strchr.c \
 				$(STRING_DIR)/ft_strdup.c \
 				$(STRING_DIR)/ft_streq.c \

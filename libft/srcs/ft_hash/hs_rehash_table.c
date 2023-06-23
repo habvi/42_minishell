@@ -31,7 +31,7 @@ static int	move_elem_to_new(t_deque *deque, \
 		node = deque_pop_front(deque);
 		elem = (t_elem *)node->content;
 		hash_val = hs_gen_fnv((const unsigned char *)elem->key, hash_mod);
-		if (alloc_deque_head(new_table, hash_val) == HASH_ERROR)
+		if (hs_alloc_deque_head(new_table, hash_val) == HASH_ERROR)
 		{
 			deque_add_back(deque, node);
 			return (HASH_ERROR);
