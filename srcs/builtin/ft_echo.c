@@ -28,7 +28,9 @@ static bool	is_n_option(const char *arg)
 	return (true);
 }
 
-static void	skip_option_part(char *const *argv, size_t *idx, bool *is_valid_op)
+static void	skip_option_part(const char *const *argv, \
+								size_t *idx, \
+								bool *is_valid_op)
 {
 	*is_valid_op = false;
 	if (!argv)
@@ -38,7 +40,7 @@ static void	skip_option_part(char *const *argv, size_t *idx, bool *is_valid_op)
 	*is_valid_op = *idx > 1;
 }
 
-static void	put_strings(char *const *strs)
+static void	put_strings(const char *const *strs)
 {
 	size_t	idx;
 
@@ -54,7 +56,7 @@ static void	put_strings(char *const *strs)
 
 // argv != NULL
 // argv[0] == "echo"
-int	ft_echo(char *const *argv)
+int	ft_echo(const char *const *argv)
 {
 	size_t	idx;
 	bool	is_display_newline;

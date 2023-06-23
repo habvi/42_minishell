@@ -6,8 +6,8 @@
 
 static int	execute_builtin_command(t_command *cmd, t_params *params)
 {
-	char *const	*argv = cmd->exec_command;
-	int			exec_status;
+	const char *const	*argv = (const char *const *)cmd->exec_command;
+	int					exec_status;
 
 	exec_status = call_builtin_command(argv, params);
 	deque_clear_all(&cmd->head_command, free);

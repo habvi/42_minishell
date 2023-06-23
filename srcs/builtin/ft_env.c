@@ -3,7 +3,7 @@
 #include "ms_exec.h"
 
 // {"env", "arg1", "arg2", ..., NULL};
-int	ft_env(char *const *argv, t_params *params)
+int	ft_env(const char *const *argv, t_params *params)
 {
 	const size_t	argc = count_argv(argv);
 

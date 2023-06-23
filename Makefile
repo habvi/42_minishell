@@ -14,13 +14,18 @@ BUILTIN_DIR	:=	builtin
 SRCS		+=	$(BUILTIN_DIR)/ft_echo.c \
 				$(BUILTIN_DIR)/ft_env.c \
 				$(BUILTIN_DIR)/ft_exit.c \
+				$(BUILTIN_DIR)/ft_export.c \
 				$(BUILTIN_DIR)/ft_unset.c \
 				$(BUILTIN_DIR)/is_option.c \
 				$(BUILTIN_DIR)/str_to_legal_number.c
 
 ENVIRONMENT	:=	environment
-SRCS		+=	$(ENVIRONMENT)/get_value.c \
+SRCS		+=	$(ENVIRONMENT)/dup_env_key.c \
+				$(ENVIRONMENT)/dup_env_value.c \
+				$(ENVIRONMENT)/separate_env_variables.c \
+				$(ENVIRONMENT)/get_value.c \
 				$(ENVIRONMENT)/init.c \
+				$(ENVIRONMENT)/print_detail.c \
 				$(ENVIRONMENT)/print.c \
 				$(ENVIRONMENT)/set.c \
 				$(ENVIRONMENT)/unset.c
@@ -134,5 +139,9 @@ test_echo	: all
 test_exit	: all
 	python3 ./test/integration_test/run_exit.py
 
+# test builtin export
+.PHONY		: test_export
+test_export	: all
+	python3 ./test/integration_test/run_export.py
 
 -include $(DEPS)

@@ -1,6 +1,6 @@
 #include <unistd.h>
 
-static size_t	count_array_elem(char *const *array)
+static size_t	count_array_elem(const char *const *array)
 {
 	size_t	i;
 
@@ -17,7 +17,7 @@ static size_t	count_array_elem(char *const *array)
 // 	return (count_array_elem(commands));
 // }
 
-size_t	count_argv(char *const *argv)
+size_t	count_argv(const char *const *argv)
 {
 	return (count_array_elem(argv));
 }

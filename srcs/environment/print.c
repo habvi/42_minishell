@@ -18,6 +18,8 @@ static void	env_print_elem(t_deque *deque)
 		elem = (t_elem *)node->content;
 		key = elem->key;
 		value = elem->value;
+		// todo:tmp!!!
+//		ft_dprintf(STDOUT_FILENO, "%s=%s\n", key, value);
 		if (value)
 			ft_dprintf(STDOUT_FILENO, "%s=%s\n", key, value);
 		node = node->next;
@@ -38,12 +40,4 @@ void	env_print(t_env *env)
 			env_print_elem(env->hash->table[idx]);
 		idx++;
 	}
-}
-
-// print key-value-pairs to stdout
-//   include only key
-//   `declare -x key="value\n`
-void	env_print_detail(t_env *env)
-{
-	(void)env;
 }
