@@ -62,7 +62,7 @@ int	separate_env_variables(const char *const arg, \
 	result = validate_env_key(*key);
 	if (result == FAILURE || result == CONTINUE)
 	{
-		ft_free(key);
+		ft_free(*key);
 		return (result);
 	}
 	*op = get_env_op(arg, &i);

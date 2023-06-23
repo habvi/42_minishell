@@ -3,20 +3,19 @@
 #include "ms_builtin.h"
 #include "ft_dprintf.h"
 
-static int	declare_all(const char *const *args, t_env *env, int *status)
+static void	declare_all(const char *const *args, t_env *env, int *status)
 {
 	size_t	i;
 
 	i = 0;
 	while (args[i])
 	{
-		*status = declare_arg(args[i], env);
+		declare_arg(args[i], env, status);
 		i++;
 	}
-	return (SUCCESS);
 }
 
-static int	declare_to_env(const char *const *argv, t_env *env, int *status)
+static void	declare_to_env(const char *const *argv, t_env *env, int *status)
 {
 	if (is_option(argv[1]))
 	{
@@ -28,11 +27,9 @@ static int	declare_to_env(const char *const *argv, t_env *env, int *status)
 					CMD_EXPORT, \
 					CMD_OPTION_MARKER, argv[1][1], \
 					ERROR_MSG_INVALID_OP);
-		return (SUCCESS);
+		return ;
 	}
-	if (declare_all(&argv[1], env, status) == PROCESS_ERROR)
-		return (PROCESS_ERROR);
-	return (SUCCESS);
+	declare_all(&argv[1], env, status);
 }
 
 int	ft_export(const char *const *argv, t_params *params)
@@ -46,8 +43,6 @@ int	ft_export(const char *const *argv, t_params *params)
 		params->env->print_detail(params->env);
 		return (status);
 	}
-	// todo: if status is unsigned, can't express PROCESS_ERROR
-	if (declare_to_env(argv, params->env, &status) == PROCESS_ERROR)
-		return (PROCESS_ERROR);
+	declare_to_env(argv, params->env, &status);
 	return (status);
 }
