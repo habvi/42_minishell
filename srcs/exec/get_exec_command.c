@@ -1,6 +1,7 @@
 #include "minishell.h"
 #include "ft_deque.h"
 #include "ft_string.h"
+#include "ft_mem.h"
 #include "ft_sys.h"
 
 // | command                  -> not handle yet
@@ -17,8 +18,7 @@ t_deque_node	*get_next_command(t_deque_node *cmd, size_t *cmd_size)
 	}
 	if (cmd)
 	{
-		free(cmd->content);
-		cmd->content = NULL;
+		ft_free(cmd->content); // todo: del_elem??
 		cmd = cmd->next;
 	}
 	return (cmd);

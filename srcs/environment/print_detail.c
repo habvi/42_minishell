@@ -102,5 +102,5 @@ void	env_print_detail(t_env *env)
 	set_elem_pointer(elems, env->hash->table, env->hash->table_size);
 	sort_elems_by_key(elems);
 	print_elems(elems);
-	free(elems);
+	ft_free(elems);
 }

@@ -22,7 +22,7 @@ int	main(void)
 		if (!line)
 			break ;
 		command = tokenize(line);
-		free(line);
+		ft_free(line);
 		if (execute_command(command, status, &params) == PROCESS_ERROR)
 			return (EXIT_FAILURE);
 		deque_clear_all(&command, free);
