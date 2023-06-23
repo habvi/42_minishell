@@ -30,6 +30,8 @@
 
 # define ERROR_MSG_TOO_MANY_ARG	"too many arguments"
 # define ERROR_MSG_REQUIRED_NUM	"numeric argument required"
+# define ERROR_MSG_INVALID_OP	"invalid option"
+# define ERROR_MSG_NOT_VALID_ID	"not a valid identifier"
 
 typedef struct s_env		t_env;
 typedef struct s_deque_node	t_deque_node;

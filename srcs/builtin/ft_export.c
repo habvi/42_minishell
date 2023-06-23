@@ -1,6 +1,7 @@
 #include "minishell.h"
 #include "ms_builtin.h"
 #include "ft_mem.h"
+#include "ft_dprintf.h"
 
 static int	declare_arg(const char *const arg, t_env *env, int *status)
 {
@@ -14,8 +15,9 @@ static int	declare_arg(const char *const arg, t_env *env, int *status)
 		return (result);
 	if (result == FAILURE)
 	{
-		*status = NOT_A_VALID_IDENTIFIER; // todo: print error
-		return (result);
+		*status = NOT_A_VALID_IDENTIFIER;
+		ft_dprintf(STDERR_FILENO, "%s: %s: %s: %s\n", \
+			SHELL_NAME, CMD_EXPORT, arg, ERROR_MSG_NOT_VALID_ID); // todo: func
 	}
 	if (result == CONTINUE)
 		return (SUCCESS);
@@ -47,8 +49,15 @@ static int	declare_to_env(const char *const *argv, t_env *env, int *status)
 	*status = SUCCESS;
 	if (is_option(argv[1]))
 	{
-		*status = INVALID_OPTION; // todo:print error
-		return (*status);
+		*status = INVALID_OPTION;
+		// todo: func
+		ft_dprintf(STDERR_FILENO, \
+				"%s: %s: %c%c: %s\n", \
+					SHELL_NAME, \
+					CMD_EXPORT, \
+					CMD_OPTION_MARKER, argv[1][1], \
+					ERROR_MSG_INVALID_OP);
+		return (FAILURE); // todo: not used, FAILURE->SUCCESS...?
 	}
 	if (declare_all(&argv[1], env, status) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
