@@ -20,7 +20,8 @@ SRCS		+=	$(BUILTIN_DIR)/ft_echo.c \
 				$(BUILTIN_DIR)/str_to_legal_number.c
 
 ENVIRONMENT	:=	environment
-SRCS		+=	$(ENVIRONMENT)/dup_env_key.c \
+SRCS		+=	$(ENVIRONMENT)/declare_arg.c \
+				$(ENVIRONMENT)/dup_env_key.c \
 				$(ENVIRONMENT)/dup_env_value.c \
 				$(ENVIRONMENT)/separate_env_variables.c \
 				$(ENVIRONMENT)/get_value.c \

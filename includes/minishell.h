@@ -61,6 +61,7 @@ char	*input_line(void);
 void	init_params(t_params *params);
 
 /* environment */
+int		declare_arg(const char *const arg, t_env *env, int *status);
 int		dup_env_key(const char *const arg, char **key, size_t *len);
 int		dup_env_value(const char *const arg, char **value);
 char	*env_get_value(t_env *env, char *key);
