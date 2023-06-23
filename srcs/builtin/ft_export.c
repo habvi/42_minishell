@@ -2,7 +2,7 @@
 #include "ms_builtin.h"
 #include "ft_mem.h"
 
-int	export_arg(const char *const arg, t_env *env, int *status)
+static int	declare_arg(const char *const arg, t_env *env, int *status)
 {
 	int			result;
 	char		*key;
@@ -28,17 +28,30 @@ int	export_arg(const char *const arg, t_env *env, int *status)
 	return (SUCCESS);
 }
 
-static int	export_all(const char *const *args, t_env *env, int *status)
+static int	declare_all(const char *const *args, t_env *env, int *status)
 {
 	size_t	i;
 
 	i = 0;
 	while (args[i])
 	{
-		if (export_arg(args[i], env, status) == PROCESS_ERROR)
+		if (declare_arg(args[i], env, status) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 		i++;
 	}
+	return (SUCCESS);
+}
+
+static int	declare_to_env(const char *const *argv, t_env *env, int *status)
+{
+	*status = SUCCESS;
+	if (is_option(argv[1]))
+	{
+		*status = INVALID_OPTION; // todo:print error
+		return (*status);
+	}
+	if (declare_all(&argv[1], env, status) == PROCESS_ERROR)
+		return (PROCESS_ERROR);
 	return (SUCCESS);
 }
 
@@ -47,18 +60,14 @@ int	ft_export(const char *const *argv, t_params *params)
 	const size_t	argc = count_argv(argv);
 	int				status;
 
+	status = SUCCESS;
 	if (argc == 1)
 	{
 		params->env->print_detail(params->env);
-		return (SUCCESS);
-	}
-	status = SUCCESS;
-	if (is_option(argv[1]))
-	{
-		status = INVALID_OPTION; // todo:print error
 		return (status);
 	}
-	if (export_all(&argv[1], params->env, &status) == PROCESS_ERROR)
+	// todo: if status is unsigned, can't express PROCESS_ERROR
+	if (declare_to_env(argv, params->env, &status) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
 	return (status);
 }
