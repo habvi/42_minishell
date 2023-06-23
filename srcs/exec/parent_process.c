@@ -1,4 +1,4 @@
-#include <errno.h> // ECHILD
+#include <errno.h>
 #include <sys/wait.h>
 #include "minishell.h"
 #include "ms_exec.h"
