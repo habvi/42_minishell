@@ -10,7 +10,10 @@
 static void	env_add(t_env *env, char *key, char *value, t_deque_node *node)
 {
 	if (!value)
+	{
+		ft_free(key);
 		return ;
+	}
 	hs_update_value(&key, value, node, env->hash->del_value);
 }
 
