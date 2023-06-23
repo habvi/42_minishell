@@ -1,6 +1,16 @@
 #include "minishell.h"
 #include "ft_string.h"
 
+static bool	is_add_operator(const char c)
+{
+	return (c == '=');
+}
+
+static bool	is_join_operator(const char *const sub_s)
+{
+	return (sub_s[0] == '+' && sub_s[1] == '=');
+}
+
 static size_t	get_key_len(const char *const s)
 {
 	size_t	len;
@@ -8,9 +18,9 @@ static size_t	get_key_len(const char *const s)
 	len = 0;
 	while (s[len])
 	{
-		if (s[len] == '=')
+		if (is_add_operator(s[len]))
 			break ;
-		if (s[len] == '+' && s[len + 1] == '=')
+		if (is_join_operator(&s[len]))
 			break ;
 		len++;
 	}
