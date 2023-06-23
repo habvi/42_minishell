@@ -4,5 +4,5 @@
 
 void	ft_abort(void)
 {
-	exit (STATUS_SIG_BASE + SIGABRT);
+	exit(STATUS_SIG_BASE + SIGABRT);
 }

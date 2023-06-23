@@ -42,7 +42,7 @@ void	child_process(t_command *cmd, \
 	if (handle_child_pipes(cmd, fd) == PROCESS_ERROR)
 		exit(EXIT_FAILURE);
 	if (is_command_builtin(argv[0]))
-		exit (execute_builtin_command(cmd, params));
+		exit(execute_builtin_command(cmd, params));
 	else
-		exit (execute_external_command(cmd, environ));
+		exit(execute_external_command(cmd, environ));
 }

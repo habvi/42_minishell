@@ -96,6 +96,6 @@ int	ft_exit(const char *const *argv, t_params *params)
 	put_exit_err(argv[EXIT_ARG_IDX], arg_result);
 	if (!is_exit(arg_result))
 		return (status);
-	exit (status);
+	exit(status);
 }
 // todo: return to main, exit prompt loop and put 'exit\n' to stderr

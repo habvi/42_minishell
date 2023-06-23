@@ -47,7 +47,7 @@ static int	test(const char *const *cmds, int expected_status, int test_no)
 	if (pid == 0)
 	{
 		status = ft_exit(cmds, &params);
-		exit (status);
+		exit(status);
 	}
 	waitpid(pid, &status, 0);
 	ret = WEXITSTATUS(status);
