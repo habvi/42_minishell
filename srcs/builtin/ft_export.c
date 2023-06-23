@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "minishell.h"
 #include "ms_builtin.h"
 #include "ft_mem.h"
@@ -46,7 +47,6 @@ static int	declare_all(const char *const *args, t_env *env, int *status)
 
 static int	declare_to_env(const char *const *argv, t_env *env, int *status)
 {
-	*status = SUCCESS;
 	if (is_option(argv[1]))
 	{
 		*status = INVALID_OPTION;
@@ -57,7 +57,7 @@ static int	declare_to_env(const char *const *argv, t_env *env, int *status)
 					CMD_EXPORT, \
 					CMD_OPTION_MARKER, argv[1][1], \
 					ERROR_MSG_INVALID_OP);
-		return (FAILURE); // todo: not used, FAILURE->SUCCESS...?
+		return (SUCCESS);
 	}
 	if (declare_all(&argv[1], env, status) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
@@ -69,7 +69,7 @@ int	ft_export(const char *const *argv, t_params *params)
 	const size_t	argc = count_argv(argv);
 	int				status;
 
-	status = SUCCESS;
+	status = EXIT_SUCCESS;
 	if (argc == 1)
 	{
 		params->env->print_detail(params->env);
