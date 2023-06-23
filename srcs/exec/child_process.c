@@ -4,17 +4,17 @@
 #include "ft_deque.h"
 #include "ft_dprintf.h"
 
-static int	execute_builtin_command(t_command *cmd, t_params *params)
+static uint8_t	execute_builtin_command(t_command *cmd, t_params *params)
 {
 	const char *const	*argv = (const char *const *)cmd->exec_command;
-	int					exec_status;
+	uint8_t				exec_status;
 
 	exec_status = call_builtin_command(argv, params);
 	deque_clear_all(&cmd->head_command, free);
 	return (exec_status);
 }
 
-static int	execute_external_command(t_command *cmd, char **environ)
+static uint8_t	execute_external_command(t_command *cmd, char **environ)
 {
 	char *const	*argv = cmd->exec_command;
 	int			exec_status;

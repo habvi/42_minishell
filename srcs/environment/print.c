@@ -18,8 +18,6 @@ static void	env_print_elem(t_deque *deque)
 		elem = (t_elem *)node->content;
 		key = elem->key;
 		value = elem->value;
-		// todo:tmp!!!
-//		ft_dprintf(STDOUT_FILENO, "%s=%s\n", key, value);
 		if (value)
 			ft_dprintf(STDOUT_FILENO, "%s=%s\n", key, value);
 		node = node->next;

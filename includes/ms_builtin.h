@@ -2,6 +2,7 @@
 # define MS_BUILTIN_H
 
 # include <stdbool.h>
+# include <stdint.h>
 
 # define CMD_ECHO	"echo"
 # define CMD_CD		"cd"
@@ -46,11 +47,11 @@ typedef enum e_exit_argument
 	RETURN_TOO_MANY_NUMERIC_ARG,
 }	t_exit_arg;
 
-int		ft_echo(const char *const *argv);
-int		ft_env(const char *const *argv, t_params *params);
-int		ft_exit(const char *const *argv, t_params *params);
-int		ft_export(const char *const *argv, t_params *params);
-int		ft_unset(const char *const *argv, t_params *params);
+uint8_t	ft_echo(const char *const *argv);
+uint8_t	ft_env(const char *const *argv, t_params *params);
+uint8_t	ft_exit(const char *const *argv, t_params *params);
+uint8_t	ft_export(const char *const *argv, t_params *params);
+uint8_t	ft_unset(const char *const *argv, t_params *params);
 
 bool	is_option(const char *word);
 bool	str_to_legal_number(const char *str, long *result);

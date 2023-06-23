@@ -1,3 +1,4 @@
+#include "minishell.h"
 #include "ft_deque.h"
 #include "ft_string.h"
 #include "ft_sys.h"
@@ -31,7 +32,7 @@ char	**convert_command_to_array(t_deque_node *cmd, const size_t size)
 
 	command = (char **)x_malloc(sizeof(char *) * (size + 1));
 	if (!command)
-		exit(EXIT_FAILURE);
+		ft_abort();
 	i = 0;
 	while (i < size)
 	{

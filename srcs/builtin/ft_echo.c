@@ -11,7 +11,6 @@
 // invalid
 //  {"echo", "-n" "-nnnnnnm", NULL}
 //                 ^^^^^^^^ NOT OPTION
-
 static bool	is_n_option(const char *arg)
 {
 	size_t	i;
@@ -56,7 +55,7 @@ static void	put_strings(const char *const *strs)
 
 // argv != NULL
 // argv[0] == "echo"
-int	ft_echo(const char *const *argv)
+uint8_t	ft_echo(const char *const *argv)
 {
 	size_t	idx;
 	bool	is_display_newline;

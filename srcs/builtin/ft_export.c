@@ -3,7 +3,7 @@
 #include "ms_builtin.h"
 #include "ft_dprintf.h"
 
-static void	declare_all(const char *const *args, t_env *env, int *status)
+static void	declare_all(const char *const *args, t_env *env, uint8_t *status)
 {
 	size_t	i;
 
@@ -15,7 +15,7 @@ static void	declare_all(const char *const *args, t_env *env, int *status)
 	}
 }
 
-static void	declare_to_env(const char *const *argv, t_env *env, int *status)
+static void	declare_to_env(const char *const *argv, t_env *env, uint8_t *status)
 {
 	if (is_option(argv[1]))
 	{
@@ -32,10 +32,10 @@ static void	declare_to_env(const char *const *argv, t_env *env, int *status)
 	declare_all(&argv[1], env, status);
 }
 
-int	ft_export(const char *const *argv, t_params *params)
+uint8_t	ft_export(const char *const *argv, t_params *params)
 {
 	const size_t	argc = count_argv(argv);
-	int				status;
+	uint8_t			status;
 
 	status = EXIT_SUCCESS;
 	if (argc == 1)

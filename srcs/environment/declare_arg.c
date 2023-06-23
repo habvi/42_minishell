@@ -2,7 +2,7 @@
 #include "ms_builtin.h"
 #include "ft_dprintf.h"
 
-void	declare_arg(const char *const arg, t_env *env, int *status)
+void	declare_arg(const char *const arg, t_env *env, uint8_t *status)
 {
 	int			result;
 	char		*key;

@@ -17,6 +17,6 @@ char	*env_get_value(t_env *env, char *key)
 		value = "";
 	duped_value = ft_strdup(value);
 	if (!duped_value)
-		return (NULL); // todo: hs_clear();
+		ft_abort();
 	return (duped_value);
 }

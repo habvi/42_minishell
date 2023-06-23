@@ -11,8 +11,10 @@ int	main(void)
 	t_params	params;
 	t_deque		*command;
 	char		*line;
+	uint8_t		*status;
 
 	init_params(&params);
+	status = &params.status;
 	command = NULL;
 	while (true)
 	{
@@ -21,10 +23,11 @@ int	main(void)
 			break ;
 		command = tokenize(line);
 		free(line);
-		params.status = execute_command(command, &params); //todo
+		if (execute_command(command, status, &params) == PROCESS_ERROR)
+			return (EXIT_FAILURE);
 		deque_clear_all(&command, free);
 	}
 	hs_clear(&params.env->hash);
 	ft_free(params.env);
-	return (params.status);
+	return (*status);
 }

@@ -3,6 +3,7 @@
 
 # include <stdbool.h>
 # include <stddef.h>
+# include <stdint.h>
 
 /* return value */
 # define EXECVE_ERROR	(-1)
@@ -40,7 +41,7 @@ typedef struct s_params
 	t_env	*env;
 	bool	is_interactive;
 	char	*pwd;
-	int		status;
+	uint8_t	status;
 }	t_params;
 
 struct s_env
@@ -50,9 +51,8 @@ struct s_env
 	char	*(*get_value)(t_env *env, char *key);
 	void	(*set)(t_env *env, char *key, char *value, t_env_op op);
 	void	(*unset)(t_env *env, const char *key);
-
 	void	(*print)(t_env *env);
-	int		(*print_detail)(t_env *env);
+	void	(*print_detail)(t_env *env);
 };
 
 // temporarily here ...
@@ -67,14 +67,14 @@ char	*input_line(void);
 void	init_params(t_params *params);
 
 /* environment */
-void	declare_arg(const char *const arg, t_env *env, int *status);
+void	declare_arg(const char *const arg, t_env *env, uint8_t *status);
 char	*dup_env_key(const char *const arg, size_t *len);
 char	*dup_env_value(const char *const arg);
 char	*env_get_value(t_env *env, char *key);
 t_env	*init_environ(void);
-int		env_print_detail(t_env *env);
+void	env_print_detail(t_env *env);
 void	env_print(t_env *env);
-int		separate_env_variables(const char *const arg, \
+uint8_t	separate_env_variables(const char *const arg, \
 								char **key, \
 								char **value, \
 								t_env_op *op);

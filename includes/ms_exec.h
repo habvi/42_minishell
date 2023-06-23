@@ -2,6 +2,7 @@
 # define MS_EXEC_H
 
 # include <stdbool.h>
+# include <stdint.h>
 # include <unistd.h>
 
 # define CHILD_PID		0
@@ -29,7 +30,7 @@ typedef struct s_fd {
 }	t_fd;
 
 /* call_builtin_command */
-int				call_builtin_command(const char *const *argv, t_params *params);
+uint8_t			call_builtin_command(const char *const *argv, t_params *params);
 
 /* check_command */
 bool			is_first_command(int prev_fd);
@@ -43,7 +44,9 @@ void			child_process(t_command *cmd, \
 								t_params *params);
 
 /* exec */
-int				execute_command(t_deque *dq_cmd, t_params *params);
+int				execute_command(t_deque *dq_cmd, \
+								uint8_t *status, \
+								t_params *params);
 t_deque_node	*get_next_command(t_deque_node *cmd, size_t *cmd_size);
 char			**convert_command_to_array(t_deque_node *cmd, \
 											const size_t size);
@@ -61,6 +64,6 @@ int				handle_parent_pipes(t_command *cmd, t_fd *fd);
 int				parent_process(t_command *cmd, \
 								t_fd *fd, \
 								pid_t pid, \
-								int *last_exit_status);
+								uint8_t *last_status);
 
 #endif //MS_EXEC_H

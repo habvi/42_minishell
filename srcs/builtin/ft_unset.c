@@ -2,28 +2,26 @@
 #include "ms_builtin.h"
 #include "ms_exec.h"
 
-static int	unset_args(t_env *env, const char *const *args)
+static void	unset_args(const char *const *args, t_env *env, uint8_t *status)
 {
-	int		status;
 	size_t	i;
 
-	status = SUCCESS;
+	*status = SUCCESS;
 	i = 0;
 	while (args[i])
 	{
 		if (is_valid_key(args[i]))
 			env->unset(env, args[i]);
 		else
-			status = NOT_A_VALID_IDENTIFIER; // print error
+			*status = NOT_A_VALID_IDENTIFIER; // print error
 		i++;
 	}
-	return (status);
 }
 
-int	ft_unset(const char *const *argv, t_params *params)
+uint8_t	ft_unset(const char *const *argv, t_params *params)
 {
 	const size_t	argc = count_argv(argv);
-	int				status;
+	uint8_t			status;
 
 	if (argc == 1)
 		return (SUCCESS);
@@ -32,6 +30,6 @@ int	ft_unset(const char *const *argv, t_params *params)
 		status = INVALID_OPTION; // print error
 		return (status);
 	}
-	status = unset_args(params->env, &argv[1]);
+	unset_args(&argv[1], params->env, &status);
 	return (status);
 }
