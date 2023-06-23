@@ -10,7 +10,7 @@ static bool	is_only_key(const char c)
 
 // &arg[j] != NULL, len(&arg[j]) >= 0
 // key guaranteed valid
-// &arg[j] : "", "=foo"," or "+=bar"
+// &arg[j] : "", "=", "value", ""=value", "+=", "+=value"
 static t_env_op	get_env_op(const char *const arg, size_t *i)
 {
 	t_env_op	op;
@@ -30,14 +30,9 @@ static t_env_op	get_env_op(const char *const arg, size_t *i)
 	return (op);
 }
 
-// status
-//   0: success
-//   1: error
-//   2: error
-
-//  -1: malloc error
-//  key is `name` ? -> !name -> status=2, return FAILURE
-//      is `_`               -> status=0, return CONTINUE
+//  key is `name` ? -> true : status=0, return SUCCESS(0)
+//                     false: status=2, return FAILURE(1)
+//      is `_`      ->        status=0, return CONTINUE(2)
 static int	validate_env_key(char *key)
 {
 	if (!is_valid_key(key))
@@ -53,8 +48,15 @@ static int	free_key_ret_val(char *key, int ret_val)
 	return (ret_val);
 }
 
-// key=value
-// key, =, value
+// arg           key  value  op(enum)
+// ---------------------------------
+// key=value  -> key  value  =  (ADD)
+// key=       -> key  ""     =  (ADD)
+// key+=value -> key  value  += (JOIN)
+// key+=      -> key  ""     += (JOIN)
+// key        -> key  NULL      (ADD)
+
+//  malloc error -> return PROCESS_ERROR(-1)
 int	separate_env_variables(const char *const arg, \
 							char **key, \
 							char **value, \

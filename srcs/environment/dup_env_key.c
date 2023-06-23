@@ -31,7 +31,7 @@ static size_t	get_key_len(const char *const s)
 // 0123        0       01234
 //    ^len     ^len       ^len
 
-//  malloc error -> return (PROCESS_ERROR)
+//  malloc error -> return PROCESS_ERROR(-1)
 int	dup_env_key(const char *const arg, char **key, size_t *len)
 {
 	*len = get_key_len(arg);
