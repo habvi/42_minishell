@@ -118,6 +118,7 @@ STRING_SRC	:=	$(STRING_DIR)/ft_split.c \
 				$(STRING_DIR)/ft_strnstr.c \
 				$(STRING_DIR)/ft_strrchr.c \
 				$(STRING_DIR)/ft_strtrim.c \
+				$(STRING_DIR)/ft_substr_tail.c \
 				$(STRING_DIR)/ft_substr.c
 
 #--------------------------------------------
