@@ -1,5 +1,5 @@
-#include <stdlib.h>
 #include "ft_deque.h"
+#include "ft_mem.h"
 
 void	deque_clear_all(t_deque **deque, void (*del)(void *))
 {
@@ -8,8 +8,7 @@ void	deque_clear_all(t_deque **deque, void (*del)(void *))
 
 	if (deque_is_empty(*deque))
 	{
-		free(*deque);
-		*deque = NULL;
+		ft_free(*deque);
 		return ;
 	}
 	node = (*deque)->node;
@@ -19,6 +18,5 @@ void	deque_clear_all(t_deque **deque, void (*del)(void *))
 		node = node->next;
 		deque_clear_node(&tmp, del);
 	}
-	free(*deque);
-	*deque = NULL;
+	ft_free(*deque);
 }

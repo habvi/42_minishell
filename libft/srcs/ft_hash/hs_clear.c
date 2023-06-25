@@ -1,4 +1,3 @@
-#include <stdlib.h>
 #include "ft_deque.h"
 #include "ft_hash.h"
 #include "ft_mem.h"
@@ -63,7 +62,7 @@ void	hs_clear_table(t_deque **table, \
 			hash_clear_deque_all(&table[idx], del_value);
 		idx++;
 	}
-	free(table);
+	ft_free(table);
 }
 
 void	hs_clear(t_hash **hash)

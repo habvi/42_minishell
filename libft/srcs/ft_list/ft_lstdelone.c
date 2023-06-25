@@ -1,5 +1,5 @@
 #include "ft_list.h"
-#include <stdlib.h>
+#include "ft_mem.h"
 
 void	ft_lstdelone(t_list *lst, void (*del)(void*))
 {
@@ -7,5 +7,5 @@ void	ft_lstdelone(t_list *lst, void (*del)(void*))
 		return ;
 	if (del)
 		del(lst->content);
-	free(lst);
+	ft_free(lst);
 }

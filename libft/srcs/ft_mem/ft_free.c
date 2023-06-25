@@ -23,11 +23,9 @@ void	*free_2d_array(char ***ptr)
 	i = 0;
 	while ((*ptr)[i])
 	{
-		free((*ptr)[i]);
-		(*ptr)[i] = NULL;
+		ft_free((*ptr)[i]);
 		i++;
 	}
-	free(*ptr);
-	*ptr = NULL;
+	ft_free(*ptr);
 	return (NULL);
 }
