@@ -1,5 +1,6 @@
+#include "ft_ascii.h"
 #include "ft_dprintf_inter.h"
-#include "libft.h"
+#include "ft_sys.h"
 
 static size_t	count_length(size_t num, size_t now)
 {
@@ -13,7 +14,7 @@ static char	*set_to_list_for_p(size_t num, size_t start, size_t len)
 	char	*res;
 	size_t	i;
 
-	res = (char *)malloc(sizeof(char) * (len + 1));
+	res = (char *)x_malloc(sizeof(char) * (len + 1));
 	if (res == NULL)
 		return (NULL);
 	i = 0;
@@ -53,7 +54,7 @@ static char	*set_to_list_for_x(size_t num, size_t len, bool is_upper)
 	size_t	i;
 	char	hex;
 
-	res = (char *)malloc(sizeof(char) * (len + 1));
+	res = (char *)x_malloc(sizeof(char) * (len + 1));
 	if (res == NULL)
 		return (NULL);
 	i = 0;

@@ -1,5 +1,5 @@
 #include "ft_mem.h"
-#include <stdlib.h>
+#include "ft_sys.h"
 
 void	*ft_calloc(size_t count, size_t size)
 {
@@ -11,7 +11,7 @@ void	*ft_calloc(size_t count, size_t size)
 	total = size * count;
 	if (total / size != count)
 		return (NULL);
-	head = (void *)malloc(total);
+	head = (void *)x_malloc(total);
 	if (head == NULL)
 		return (NULL);
 	ft_bzero(head, total);

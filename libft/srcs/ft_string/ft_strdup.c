@@ -1,5 +1,5 @@
 #include "ft_string.h"
-#include <stdlib.h>
+#include "ft_sys.h"
 
 char	*ft_strdup(const char *s)
 {
@@ -9,7 +9,7 @@ char	*ft_strdup(const char *s)
 	if (s == NULL)
 		return (NULL);
 	len_s = ft_strlen(s);
-	dst = (char *)malloc(sizeof(char) * (len_s + 1));
+	dst = (char *)x_malloc(sizeof(char) * (len_s + 1));
 	if (dst == NULL)
 		return (NULL);
 	ft_strlcpy(dst, s, len_s + 1);

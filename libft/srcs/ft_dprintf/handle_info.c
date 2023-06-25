@@ -1,4 +1,5 @@
 #include "ft_dprintf_inter.h"
+#include "ft_mem.h"
 
 void	init_info(t_info_pf *info, const char *format)
 {
@@ -46,8 +47,7 @@ void	clear_fmt_info(t_info_pf *info)
 
 void	free_dup_str(t_info_pf *info)
 {
-	free(info->dup_str);
-	info->dup_str = NULL;
+	ft_free(info->dup_str);
 }
 
 void	put_output(int fd, t_info_pf *info)
@@ -57,11 +57,10 @@ void	put_output(int fd, t_info_pf *info)
 	res = write(fd, info->output, info->index);
 	if (res == ERROR_WRITE || info->total_len + res >= INT_MAX)
 	{
-		free(info->output);
+		ft_free(info->output);
 		info->error = EXIT;
 		return ;
 	}
 	info->total_len += res;
-	free(info->output);
-	info->output = NULL;
+	ft_free(info->output);
 }
