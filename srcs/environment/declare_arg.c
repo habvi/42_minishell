@@ -1,6 +1,4 @@
 #include "minishell.h"
-#include "ms_builtin.h"
-#include "ft_dprintf.h"
 
 int	declare_arg(const char *const arg, t_env *env)
 {
