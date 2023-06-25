@@ -1,6 +1,6 @@
-#include <stdlib.h>
 #include <stdio.h>
 #include "ft_deque.h"
+#include "ft_sys.h"
 
 static t_deque	*init_test()
 {
@@ -8,10 +8,7 @@ static t_deque	*init_test()
 
 	deque = deque_new();
 	if (deque == NULL)
-	{
-		printf("Error: malloc\n");
 		exit(EXIT_FAILURE);
-	}
 	printf("deque_new success\n");
 	debug_deque_print(deque, __func__);
 	return (deque);
@@ -23,10 +20,7 @@ static void	add_front_test(t_deque *deque, char *s)
 
 	new_node = deque_node_new(s);
 	if (new_node == NULL)
-	{
-		printf("Error: malloc\n");
 		exit(EXIT_FAILURE);
-	}
 	deque_add_front(deque, new_node);
 	printf("add_front success\n");
 	debug_deque_print(deque, __func__);
@@ -38,10 +32,7 @@ static void	add_back_test(t_deque *deque)
 
 	new_node = deque_node_new(NULL);
 	if (new_node == NULL)
-	{
-		printf("Error: malloc\n");
 		exit(EXIT_FAILURE);
-	}
 	deque_add_back(deque, new_node);
 	printf("add_back success\n");
 	debug_deque_print(deque, __func__);
@@ -106,7 +97,7 @@ char *get_s(char c)
 {
 	char	*s;
 
-	s =  malloc(2);
+	s =  x_malloc(2);
 	s[0] = c;
 	s[1] = '\0';
 	return (s);

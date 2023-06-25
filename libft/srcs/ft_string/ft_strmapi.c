@@ -1,5 +1,5 @@
 #include "ft_string.h"
-#include <stdlib.h>
+#include "ft_sys.h"
 
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
@@ -12,7 +12,7 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 	if (f == NULL)
 		return (ft_strdup(s));
 	len = ft_strlen(s);
-	res = (char *)malloc(sizeof(char) * (len + 1));
+	res = (char *)x_malloc(sizeof(char) * (len + 1));
 	if (res == NULL)
 		return (NULL);
 	i = 0;

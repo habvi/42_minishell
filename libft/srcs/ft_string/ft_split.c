@@ -1,6 +1,6 @@
-#include <stdlib.h>
 #include "ft_mem.h"
 #include "ft_string.h"
+#include "ft_sys.h"
 
 static size_t	count_words(char const *head, char c)
 {
@@ -63,7 +63,7 @@ char	**ft_split(char const *s, char c)
 	if (s == NULL)
 		return (NULL);
 	len = count_words(s, c);
-	split_strs = (char **)malloc(sizeof(char *) * (len + 1));
+	split_strs = (char **)x_malloc(sizeof(char *) * (len + 1));
 	if (split_strs == NULL)
 		return (NULL);
 	if (!set_split_str(s, c, split_strs))

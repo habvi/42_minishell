@@ -1,4 +1,5 @@
 #include "ft_dprintf_inter.h"
+#include "ft_sys.h"
 
 static size_t	strlen_for_printf(const char *s, t_info_pf *info)
 {
@@ -38,7 +39,7 @@ void	strdup_for_printf(t_info_pf *info, const char *src)
 	len_s = strlen_for_printf(src, info);
 	if (info->error)
 		return ;
-	dst = (char *)malloc(sizeof(char) * (len_s + 1));
+	dst = (char *)x_malloc(sizeof(char) * (len_s + 1));
 	if (dst == NULL)
 	{
 		info->error = ERROR_MALLOC;

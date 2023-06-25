@@ -1,5 +1,6 @@
 #include "ft_dprintf_inter.h"
 #include "libft.h"
+#include "ft_sys.h"
 
 static void	parse_format(t_info_pf *info, va_list *args_list)
 {
@@ -17,7 +18,7 @@ static void	parse_format(t_info_pf *info, va_list *args_list)
 		return ;
 	info->fmt++;
 	set_field_width(info);
-	info->output = (char *)malloc(sizeof(char) * (info->field_width + 1));
+	info->output = (char *)x_malloc(sizeof(char) * (info->field_width + 1));
 	if (info->output == NULL)
 	{
 		info->error = ERROR_MALLOC;

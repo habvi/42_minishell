@@ -1,6 +1,6 @@
-#include "ft_lib.h"
-#include <stdlib.h>
 #include <stdint.h>
+#include "ft_lib.h"
+#include "ft_sys.h"
 
 static void	set_digit_and_power(int n, uint8_t *digit, unsigned int *power)
 {
@@ -20,7 +20,7 @@ static char	*set_to_list(int n, uint8_t digit, unsigned int power)
 	char	*res;
 	size_t	i;
 
-	res = (char *)malloc(sizeof(char) * (digit + 1));
+	res = (char *)x_malloc(sizeof(char) * (digit + 1));
 	if (res == NULL)
 		return (NULL);
 	i = 0;
