@@ -1,6 +1,6 @@
-#include "ft_lib.h"
-#include <stdlib.h>
 #include <limits.h>
+#include "ft_lib.h"
+#include "ft_sys.h"
 
 static size_t	count_length(unsigned int num, size_t now)
 {
@@ -14,7 +14,7 @@ static char	*set_to_list(unsigned int num, size_t len, bool is_minus)
 	char	*res;
 	size_t	i;
 
-	res = (char *)malloc(sizeof(char) * (len + 1));
+	res = (char *)x_malloc(sizeof(char) * (len + 1));
 	if (res == NULL)
 		return (NULL);
 	i = 0;

@@ -44,9 +44,9 @@ int	main(void)
 	ok_cnt += test("Abc123 ", "Abc123 ", ++test_no, true);
 	ok_cnt += test("", "", ++test_no, true);
 	ok_cnt += test("abc\0def", "abc\0DEF", ++test_no, true);
+	ok_cnt += test(NULL, NULL, ++test_no, true);
 
 	printf("\n\n=============== false  expected ===============\n\n");
-	ok_cnt += test(NULL, NULL, ++test_no, false);
 	ok_cnt += test(NULL, "", ++test_no, false);
 	ok_cnt += test("a", NULL, ++test_no, false);
 	ok_cnt += test("abc", "ABC", ++test_no, false);
