@@ -13,6 +13,7 @@
 # define PROCESS_ERROR	(-1)
 # define UNREACHABLE	(-1)
 
+// todo: typedef enum e_result??
 # define SUCCESS		0
 # define FAILURE		1
 # define CONTINUE		2
@@ -67,7 +68,7 @@ char	*input_line(void);
 void	init_params(t_params *params);
 
 /* environment */
-void	declare_arg(const char *const arg, t_env *env, uint8_t *status);
+int		declare_arg(const char *const arg, t_env *env);
 char	*dup_env_key(const char *const arg, size_t *len);
 char	*dup_env_value(const char *const arg);
 char	*env_get_value(t_env *env, char *key);
