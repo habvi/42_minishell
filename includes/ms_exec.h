@@ -44,9 +44,7 @@ void			child_process(t_command *cmd, \
 								t_params *params);
 
 /* exec */
-int				execute_command(t_deque *dq_cmd, \
-								uint8_t *status, \
-								t_params *params);
+int				execute_command(t_deque *dq_cmd, t_params *params);
 t_deque_node	*get_next_command(t_deque_node *cmd, size_t *cmd_size);
 char			**convert_command_to_array(t_deque_node *cmd, \
 											const size_t size);

@@ -46,7 +46,7 @@ static int	dup_process_and_run(t_command *cmd, \
 	return (EXIT_SUCCESS);
 }
 
-int	execute_command(t_deque *dq_cmd, uint8_t *status, t_params *params)
+int	execute_command(t_deque *dq_cmd, t_params *params)
 {
 	t_command		cmd;
 	t_fd			fd;
@@ -70,6 +70,6 @@ int	execute_command(t_deque *dq_cmd, uint8_t *status, t_params *params)
 		free_2d_array(&cmd.exec_command);
 		exec_cmd = cmd.next_command;
 	}
-	*status = last_status;
+	params->status = last_status;
 	return (SUCCESS);
 }
