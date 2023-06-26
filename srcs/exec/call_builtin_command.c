@@ -8,8 +8,8 @@ uint8_t	call_builtin_command(const char *const *argv, t_params *params)
 		return (ft_echo(argv));
 //	if (ft_streq(argv[0], CMD_CD))
 //		return (true);
-//	if (ft_streq(argv[0], CMD_PWD))
-//		return (true);
+	if (ft_streq(argv[0], CMD_PWD))
+		return (ft_pwd(argv, params));
 	if (ft_streq(argv[0], CMD_EXPORT))
 		return (ft_export(argv, params));
 	if (ft_streq(argv[0], CMD_UNSET))

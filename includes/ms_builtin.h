@@ -51,6 +51,7 @@ uint8_t	ft_echo(const char *const *argv);
 uint8_t	ft_env(const char *const *argv, t_params *params);
 uint8_t	ft_exit(const char *const *argv, t_params *params);
 uint8_t	ft_export(const char *const *argv, t_params *params);
+uint8_t	ft_pwd(const char *const *argv, t_params *params);
 uint8_t	ft_unset(const char *const *argv, t_params *params);
 
 bool	is_option(const char *word);
