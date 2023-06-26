@@ -4,19 +4,17 @@
 #include "ft_mem.h"
 #include "ft_sys.h"
 
-static uint8_t	exec_builtin_in_parent_proc(t_command cmd, \
+static void	exec_builtin_in_parent_proc(t_command cmd, \
 										t_deque_node *exec_cmd, \
 										t_params *params)
 {
-	uint8_t	status;
 	size_t	cmd_size;
 
 	cmd.next_command = get_next_command(exec_cmd, &cmd_size);
 	cmd.exec_command = convert_command_to_array(exec_cmd, cmd_size);
-	status = call_builtin_command((const char *const *)cmd.exec_command, \
+	params->status = call_builtin_command((const char *const *)cmd.exec_command, \
 									params);
 	free_2d_array(&cmd.exec_command);
-	return (status);
 }
 
 static int	dup_process_and_run(t_command *cmd, \
@@ -56,10 +54,13 @@ int	execute_command(t_deque *dq_cmd, t_params *params)
 
 	init_cmd(&cmd, dq_cmd);
 	init_fd(&fd);
-	last_status = EXIT_SUCCESS;
 	exec_cmd = dq_cmd->node;
 	if (is_single_builtin(exec_cmd))
-		return (exec_builtin_in_parent_proc(cmd, exec_cmd, params));
+	{
+		exec_builtin_in_parent_proc(cmd, exec_cmd, params);
+		return (SUCCESS);
+	}
+	last_status = EXIT_SUCCESS;
 	while (exec_cmd)
 	{
 		cmd.next_command = get_next_command(exec_cmd, &cmd_size);
