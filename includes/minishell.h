@@ -10,13 +10,8 @@
 # define FORK_ERROR		(-1)
 # define WAIT_ERROR		(-1)
 # define PIPE_ERROR		(-1)
-# define PROCESS_ERROR	(-1)
+// # define PROCESS_ERROR	(-1)
 # define UNREACHABLE	(-1)
-
-// todo: typedef enum e_result??
-# define SUCCESS		0
-# define FAILURE		1
-# define CONTINUE		2
 
 /* size */
 # define ENV_LIST_SIZE	256
@@ -30,6 +25,18 @@
 
 typedef struct s_env		t_env;
 typedef struct s_hash_table	t_hash;
+
+// # define SUCCESS	0
+// # define FAILURE	1
+// # define CONTINUE	2
+
+typedef enum e_result
+{
+	PROCESS_ERROR = -1,
+	SUCCESS = 0,
+	FAILURE = 1,
+	CONTINUE = 2,
+}	t_result;
 
 typedef enum e_env_op
 {

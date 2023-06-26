@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "minishell.h"
 #include "ms_builtin.h"
 #include "ms_exec.h"
@@ -6,12 +7,15 @@
 uint8_t	ft_env(const char *const *argv, t_params *params)
 {
 	const size_t	argc = count_argv(argv);
+	uint8_t			status;
 
+	status = EXIT_SUCCESS;
 	if (argc != 1)
 	{
 		// todo : error handring
-		return (FAILURE);
+		status = INVALID_OPTION; // print error
+		return (status);
 	}
 	params->env->print(params->env);
-	return (SUCCESS);
+	return (status);
 }

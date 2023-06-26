@@ -59,11 +59,13 @@ uint8_t	ft_echo(const char *const *argv)
 {
 	size_t	idx;
 	bool	is_display_newline;
+	uint8_t	status;
 
+	status = EXIT_SUCCESS;
 	idx = 1;
 	skip_option_part(argv, &idx, &is_display_newline);
 	put_strings(&argv[idx]);
 	if (!is_display_newline)
 		ft_dprintf(STDOUT_FILENO, "\n");
-	return (EXIT_SUCCESS);
+	return (status);
 }
