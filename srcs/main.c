@@ -1,3 +1,4 @@
+#include <readline/readline.h>
 #include <stdlib.h>
 #include "minishell.h"
 #include "ms_exec.h"
@@ -27,5 +28,6 @@ int	main(void)
 	}
 	hs_clear(&params.env->hash);
 	ft_free(params.env);
+	rl_clear_history();
 	return (params.status);
 }
