@@ -8,7 +8,7 @@ static void	del_env_val(void *value)
 	char	*val;
 
 	val = value;
-	ft_free(val);
+	ft_free(&val);
 }
 
 static void	set_func(t_env *env)
@@ -20,15 +20,18 @@ static void	set_func(t_env *env)
 	env->print_detail = env_print_detail;
 }
 
+// if init_environ() -> declare_arg() returns FAILURE, nothing happen & skip.
 static void	get_environ(t_env *env)
 {
 	extern char	**environ;
 	size_t		i;
 
 	i = 0;
+	if (!environ)
+		return ;
 	while (environ[i])
 	{
-		declare_arg(environ[i], env, NULL);
+		declare_arg(environ[i], env);
 		i++;
 	}
 }

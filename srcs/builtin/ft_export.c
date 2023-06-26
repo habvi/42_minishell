@@ -5,12 +5,20 @@
 
 static void	declare_all(const char *const *args, t_env *env, uint8_t *status)
 {
-	size_t	i;
+	size_t		i;
+	t_result	result;
 
 	i = 0;
 	while (args[i])
 	{
-		declare_arg(args[i], env, status);
+		result = declare_arg(args[i], env);
+		if (result == FAILURE)
+		{
+			*status = NOT_A_VALID_IDENTIFIER;
+			// todo: func
+			ft_dprintf(STDERR_FILENO, "%s: %s: %s: %s\n", \
+				SHELL_NAME, CMD_EXPORT, args[i], ERROR_MSG_NOT_VALID_ID);
+		}
 		i++;
 	}
 }

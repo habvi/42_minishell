@@ -7,8 +7,10 @@ RL_FLAGS	:=	-lreadline
 MKDIR		:=	mkdir -p
 
 SRCS_DIR	:=	srcs
-SRCS		:=	init.c \
-				main.c
+SRCS		:=	destroy.c \
+				init.c \
+				main.c \
+				repl.c
 
 BUILTIN_DIR	:=	builtin
 SRCS		+=	$(BUILTIN_DIR)/ft_echo.c \

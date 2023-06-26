@@ -33,7 +33,7 @@ static t_env_op	get_env_op(const char *const arg, size_t *i)
 //  key is `name` ? -> true : status=0, return SUCCESS(0)
 //                     false: status=2, return FAILURE(1)
 //      is `_`      ->        status=0, return CONTINUE(2)
-static uint8_t	validate_env_key(char *key)
+static t_result	validate_env_key(char *key)
 {
 	if (!is_valid_key(key))
 		return (FAILURE);
@@ -49,22 +49,22 @@ static uint8_t	validate_env_key(char *key)
 // key+=value -> key  value  += (JOIN)
 // key+=      -> key  ""     += (JOIN)
 // key        -> key  NULL      (ADD)
-uint8_t	separate_env_variables(const char *const arg, \
-								char **key, \
-								char **value, \
-								t_env_op *op)
+t_result	separate_env_variables(const char *const arg, \
+									char **key, \
+									char **value, \
+									t_env_op *op)
 {
-	size_t	i;
-	uint8_t	result;
+	size_t		i;
+	t_result	result;
 
 	*key = dup_env_key(arg, &i);
 	result = validate_env_key(*key);
 	if (result == FAILURE || result == CONTINUE)
 	{
-		ft_free(*key);
+		ft_free(key);
 		return (result);
 	}
 	*op = get_env_op(arg, &i);
 	*value = dup_env_value(&arg[i]);
-	return (SUCCESS);
+	return (result);
 }

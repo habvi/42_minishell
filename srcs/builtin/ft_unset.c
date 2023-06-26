@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "minishell.h"
 #include "ms_builtin.h"
 #include "ms_exec.h"
@@ -6,7 +7,6 @@ static void	unset_args(const char *const *args, t_env *env, uint8_t *status)
 {
 	size_t	i;
 
-	*status = SUCCESS;
 	i = 0;
 	while (args[i])
 	{
@@ -23,8 +23,9 @@ uint8_t	ft_unset(const char *const *argv, t_params *params)
 	const size_t	argc = count_argv(argv);
 	uint8_t			status;
 
+	status = EXIT_SUCCESS;
 	if (argc == 1)
-		return (SUCCESS);
+		return (status);
 	if (is_option(argv[1]))
 	{
 		status = INVALID_OPTION; // print error

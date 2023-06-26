@@ -19,8 +19,9 @@ static uint8_t	execute_external_command(t_command *cmd, char **environ)
 	char *const	*argv = cmd->exec_command;
 	int			exec_status;
 
-	exec_status = execve(argv[0], argv, environ);
-	if (exec_status == EXECVE_ERROR)
+	if (argv[0])
+		exec_status = execve(argv[0], argv, environ);
+	if (!argv[0] || exec_status == EXECVE_ERROR)
 	{
 		ft_dprintf(STDERR_FILENO, "%s: %s: %s\n", \
 					SHELL_NAME, argv[0], ERROR_MSG_CMD_NOT_FOUND);

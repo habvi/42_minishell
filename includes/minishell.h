@@ -6,16 +6,16 @@
 # include <stdint.h>
 
 /* return value */
+# define CLOSE_ERROR	(-1)
+# define DUP_ERROR		(-1) // dup && dup2
 # define EXECVE_ERROR	(-1)
 # define FORK_ERROR		(-1)
-# define WAIT_ERROR		(-1)
+# define OPEN_ERROR		(-1)
 # define PIPE_ERROR		(-1)
-# define PROCESS_ERROR	(-1)
+# define READ_ERROR		(-1)
+# define WAIT_ERROR		(-1)
+// # define PROCESS_ERROR	(-1)
 # define UNREACHABLE	(-1)
-
-# define SUCCESS		0
-# define FAILURE		1
-# define CONTINUE		2
 
 /* size */
 # define ENV_LIST_SIZE	256
@@ -27,8 +27,21 @@
 # define SHELL_NAME		"minishell"
 # define PROMPT_NAME	"minishell "
 
+typedef enum e_result		t_result;
 typedef struct s_env		t_env;
 typedef struct s_hash_table	t_hash;
+
+// # define SUCCESS	0
+// # define FAILURE	1
+// # define CONTINUE	2
+
+typedef enum e_result
+{
+	PROCESS_ERROR = -1,
+	SUCCESS = 0,
+	FAILURE = 1,
+	CONTINUE = 2,
+}	t_result;
 
 typedef enum e_env_op
 {
@@ -57,34 +70,40 @@ struct s_env
 
 // temporarily here ...
 /* debug */
-void	debug_func(const char *func_name, const int line_num);
-void	debug_2d_array(char **array);
-
-/* input */
-char	*input_line(void);
-
-/* init */
-void	init_params(t_params *params);
+void		debug_func(const char *func_name, const int line_num);
+void		debug_2d_array(char **array);
 
 /* environment */
-void	declare_arg(const char *const arg, t_env *env, uint8_t *status);
-char	*dup_env_key(const char *const arg, size_t *len);
-char	*dup_env_value(const char *const arg);
-char	*env_get_value(t_env *env, char *key);
-t_env	*init_environ(void);
-void	env_print_detail(t_env *env);
-void	env_print(t_env *env);
-uint8_t	separate_env_variables(const char *const arg, \
+t_result	declare_arg(const char *const arg, t_env *env);
+char		*dup_env_key(const char *const arg, size_t *len);
+char		*dup_env_value(const char *const arg);
+char		*env_get_value(t_env *env, char *key);
+t_env		*init_environ(void);
+void		env_print_detail(t_env *env);
+void		env_print(t_env *env);
+t_result	separate_env_variables(const char *const arg, \
 								char **key, \
 								char **value, \
 								t_env_op *op);
-void	env_set(t_env *env, char *key, char *value, t_env_op op);
-void	env_unset(t_env *env, const char *key);
+void		env_set(t_env *env, char *key, char *value, t_env_op op);
+void		env_unset(t_env *env, const char *key);
+
+/* destroy */
+void		destroy(t_params params);
+
+/* input */
+char		*input_line(void);
 
 /* utils */
 // size_t	count_commands(char *const *commands);
-size_t	count_argv(const char *const *argc);
-void	ft_abort(void);
-bool	is_valid_key(const char *word);
+size_t		count_argv(const char *const *argc);
+void		ft_abort(void);
+bool		is_valid_key(const char *word);
+
+/* init */
+void		init_params(t_params *params);
+
+/* repl */
+t_result	read_eval_print_loop(t_params *params);
 
 #endif //MINISHELL_H

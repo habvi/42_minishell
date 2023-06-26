@@ -47,7 +47,7 @@ void	clear_fmt_info(t_info_pf *info)
 
 void	free_dup_str(t_info_pf *info)
 {
-	ft_free(info->dup_str);
+	ft_free(&info->dup_str);
 }
 
 void	put_output(int fd, t_info_pf *info)
@@ -57,10 +57,10 @@ void	put_output(int fd, t_info_pf *info)
 	res = write(fd, info->output, info->index);
 	if (res == ERROR_WRITE || info->total_len + res >= INT_MAX)
 	{
-		ft_free(info->output);
+		ft_free(&info->output);
 		info->error = EXIT;
 		return ;
 	}
 	info->total_len += res;
-	ft_free(info->output);
+	ft_free(&info->output);
 }
