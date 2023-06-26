@@ -1,17 +1,12 @@
 #include <stdlib.h>
 
-static void	*ft_free_sub(void **ptr)
-{
-	free(*ptr);
-	*ptr = NULL;
-	return (NULL);
-}
-
-void	*ft_free(void *ptr)
+void	*ft_free(void **ptr)
 {
 	if (!ptr)
 		return (NULL);
-	return (ft_free_sub(&ptr));
+	free(*ptr);
+	*ptr = NULL;
+	return (NULL);
 }
 
 void	*free_2d_array(char ***ptr)
@@ -23,9 +18,9 @@ void	*free_2d_array(char ***ptr)
 	i = 0;
 	while ((*ptr)[i])
 	{
-		ft_free((*ptr)[i]);
+		ft_free((void **)&(*ptr)[i]);
 		i++;
 	}
-	ft_free(*ptr);
+	ft_free((void **)ptr);
 	return (NULL);
 }

@@ -19,7 +19,7 @@ t_result	read_eval_print_loop(t_params *params)
 		if (!line)
 			break ;
 		command = tokenize(line);
-		ft_free(line);
+		ft_free(&line);
 		result = execute_command(command, params);
 		deque_clear_all(&command, free);
 		if (result == PROCESS_ERROR)

@@ -11,7 +11,7 @@ void	hs_update_value(char **key, \
 {
 	t_elem	*elem;
 
-	ft_free(*key);
+	ft_free(key);
 	elem = (t_elem *)target_node->content;
 	del_value(elem->value);
 	elem->value = value;

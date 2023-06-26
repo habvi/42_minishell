@@ -9,5 +9,5 @@ void	deque_clear_node(t_deque_node **node, void (*del)(void *))
 	(*node)->content = NULL;
 	(*node)->next = NULL;
 	(*node)->prev = NULL;
-	ft_free(*node);
+	ft_free(node);
 }

@@ -8,7 +8,7 @@ static void	del_env_val(void *value)
 	char	*val;
 
 	val = value;
-	ft_free(val);
+	ft_free(&val);
 }
 
 static void	set_func(t_env *env)

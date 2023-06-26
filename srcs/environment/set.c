@@ -11,7 +11,7 @@ static void	env_add(t_env *env, char *key, char *value, t_deque_node *node)
 {
 	if (!value)
 	{
-		ft_free(key);
+		ft_free(&key);
 		return ;
 	}
 	hs_update_value(&key, value, node, env->hash->del_value);
@@ -37,7 +37,7 @@ static void	env_join(t_env *env, char *key, char *new_value, t_deque_node *node)
 	elem = (t_elem *)node->content;
 	joined_value = join_new_value(elem->value, new_value);
 	hs_update_value(&key, joined_value, node, env->hash->del_value);
-	ft_free(new_value);
+	ft_free(&new_value);
 }
 
 void	env_set(t_env *env, char *key, char *value, t_env_op op)
