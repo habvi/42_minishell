@@ -5,7 +5,7 @@
 
 static void	declare_all(const char *const *args, t_env *env, uint8_t *status)
 {
-	size_t	i;
+	size_t		i;
 	t_result	result;
 
 	i = 0;

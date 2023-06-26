@@ -12,8 +12,8 @@ static void	exec_builtin_in_parent_proc(t_command cmd, \
 
 	cmd.next_command = get_next_command(exec_cmd, &cmd_size);
 	cmd.exec_command = convert_command_to_array(exec_cmd, cmd_size);
-	params->status = call_builtin_command((const char *const *)cmd.exec_command, \
-									params);
+	params->status = call_builtin_command(\
+		(const char *const *)cmd.exec_command, params);
 	free_2d_array(&cmd.exec_command);
 }
 
@@ -44,22 +44,15 @@ static t_result	dup_process_and_run(t_command *cmd, \
 	return (SUCCESS);
 }
 
-t_result	execute_command(t_deque *dq_cmd, t_params *params)
+t_result	exec_command_iter(t_deque_node *exec_cmd, \
+								t_command cmd, \
+								t_params *params)
 {
-	t_command		cmd;
-	t_fd			fd;
-	uint8_t			last_status;
-	t_deque_node	*exec_cmd;
-	size_t			cmd_size;
+	uint8_t	last_status;
+	size_t	cmd_size;
+	t_fd	fd;
 
-	init_cmd(&cmd, dq_cmd);
 	init_fd(&fd);
-	exec_cmd = dq_cmd->node;
-	if (is_single_builtin(exec_cmd))
-	{
-		exec_builtin_in_parent_proc(cmd, exec_cmd, params);
-		return (SUCCESS);
-	}
 	last_status = EXIT_SUCCESS;
 	while (exec_cmd)
 	{
@@ -72,5 +65,22 @@ t_result	execute_command(t_deque *dq_cmd, t_params *params)
 		exec_cmd = cmd.next_command;
 	}
 	params->status = last_status;
+	return (SUCCESS);
+}
+
+t_result	execute_command(t_deque *dq_cmd, t_params *params)
+{
+	t_command		cmd;
+	t_deque_node	*exec_cmd;
+
+	init_cmd(&cmd, dq_cmd);
+	exec_cmd = dq_cmd->node;
+	if (is_single_builtin(exec_cmd))
+	{
+		exec_builtin_in_parent_proc(cmd, exec_cmd, params);
+		return (SUCCESS);
+	}
+	if (exec_command_iter(exec_cmd, cmd, params) == PROCESS_ERROR)
+		return (PROCESS_ERROR);
 	return (SUCCESS);
 }

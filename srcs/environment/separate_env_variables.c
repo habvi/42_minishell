@@ -50,11 +50,11 @@ static t_result	validate_env_key(char *key)
 // key+=      -> key  ""     += (JOIN)
 // key        -> key  NULL      (ADD)
 t_result	separate_env_variables(const char *const arg, \
-								char **key, \
-								char **value, \
-								t_env_op *op)
+									char **key, \
+									char **value, \
+									t_env_op *op)
 {
-	size_t	i;
+	size_t		i;
 	t_result	result;
 
 	*key = dup_env_key(arg, &i);
