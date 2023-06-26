@@ -4,39 +4,44 @@
 #include "ms_exec.h"
 #include "ft_sys.h"
 
-static int	get_last_command_status(pid_t pid, \
+static t_result	get_last_command_status(pid_t pid, \
 									int *wait_status, \
 									uint8_t *last_status)
 {
 	pid_t	wait_pid;
 
 	wait_pid = x_waitpid(pid, wait_status, 0);
-	if (wait_pid != PROCESS_ERROR && WIFEXITED(*wait_status))
+	if (wait_pid != WAIT_ERROR && WIFEXITED(*wait_status))
 		*last_status = WEXITSTATUS(*wait_status);
 	else
-		return (WAIT_ERROR);
-	return (EXIT_SUCCESS);
+		return (PROCESS_ERROR);
+	return (SUCCESS);
 }
 
 // if wait error, no need for auto perror.
-static int	wait_all_child_process(int wait_status)
+static t_result	wait_all_child_process(int wait_status)
 {
 	while (true)
 	{
+		errno = 0;
 		if (wait(NULL) != WAIT_ERROR)
 			continue ;
 		if (errno == ECHILD && WIFEXITED(wait_status))
-			return (EXIT_SUCCESS);
+			break ;
 		else
 		{
 			perror("wait");
 			return (PROCESS_ERROR);
 		}
 	}
-	return (EXIT_SUCCESS);
+	return (SUCCESS);
 }
 
-int	parent_process(t_command *cmd, t_fd *fd, pid_t pid, uint8_t *last_status)
+//todo fd->fds?
+t_result	parent_process(t_command *cmd, \
+							t_fd *fd, \
+							pid_t pid, \
+							uint8_t *last_status)
 {
 	int	wait_status;
 
@@ -50,5 +55,5 @@ int	parent_process(t_command *cmd, t_fd *fd, pid_t pid, uint8_t *last_status)
 		if (wait_all_child_process(wait_status) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 	}
-	return (EXIT_SUCCESS);
+	return (SUCCESS);
 }

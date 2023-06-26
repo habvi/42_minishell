@@ -6,7 +6,7 @@
 static void	declare_all(const char *const *args, t_env *env, uint8_t *status)
 {
 	size_t	i;
-	int		result;
+	t_result	result;
 
 	i = 0;
 	while (args[i])

@@ -17,7 +17,7 @@ static void	exec_builtin_in_parent_proc(t_command cmd, \
 	free_2d_array(&cmd.exec_command);
 }
 
-static int	dup_process_and_run(t_command *cmd, \
+static t_result	dup_process_and_run(t_command *cmd, \
 								t_fd *fd, \
 								uint8_t *last_status, \
 								t_params *params)
@@ -28,11 +28,11 @@ static int	dup_process_and_run(t_command *cmd, \
 	if (!is_last_command(cmd->next_command))
 	{
 		if (x_pipe(fd->pipefd) == PIPE_ERROR)
-			return (PIPE_ERROR);
+			return (PROCESS_ERROR);
 	}
 	pid = x_fork();
 	if (pid == FORK_ERROR)
-		return (FORK_ERROR);
+		return (PROCESS_ERROR);
 	params->is_interactive = false;
 	if (pid == CHILD_PID)
 		child_process(cmd, fd, environ, params);
@@ -41,10 +41,10 @@ static int	dup_process_and_run(t_command *cmd, \
 		if (parent_process(cmd, fd, pid, last_status) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 	}
-	return (EXIT_SUCCESS);
+	return (SUCCESS);
 }
 
-int	execute_command(t_deque *dq_cmd, t_params *params)
+t_result	execute_command(t_deque *dq_cmd, t_params *params)
 {
 	t_command		cmd;
 	t_fd			fd;

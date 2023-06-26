@@ -1,8 +1,8 @@
 #include "minishell.h"
 
-int	declare_arg(const char *const arg, t_env *env)
+t_result	declare_arg(const char *const arg, t_env *env)
 {
-	int			result;
+	t_result 	result;
 	char		*key;
 	char		*value;
 	t_env_op	op;
@@ -11,5 +11,5 @@ int	declare_arg(const char *const arg, t_env *env)
 	if (result == FAILURE || result == CONTINUE)
 		return (result);
 	env->set(env, key, value, op);
-	return (SUCCESS);
+	return (result);
 }

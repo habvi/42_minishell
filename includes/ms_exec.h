@@ -14,6 +14,7 @@
 # define ERROR_MSG_NO_SUCH_FILE		"No such file or directory"
 # define ERROR_MSG_CMD_NOT_FOUND	"command not found"
 
+typedef enum e_result		t_result;
 typedef struct s_deque_node	t_deque_node;
 typedef struct s_deque		t_deque;
 typedef struct s_params		t_params;
@@ -37,14 +38,14 @@ bool			is_first_command(int prev_fd);
 bool			is_last_command(t_deque_node *next_cmd);
 
 /* child_process */
-int				handle_child_pipes(t_command *cmd, t_fd *fd);
+t_result		handle_child_pipes(t_command *cmd, t_fd *fd);
 void			child_process(t_command *cmd, \
 								t_fd *fd, \
 								char **environ, \
 								t_params *params);
 
 /* exec */
-int				execute_command(t_deque *dq_cmd, t_params *params);
+t_result		execute_command(t_deque *dq_cmd, t_params *params);
 t_deque_node	*get_next_command(t_deque_node *cmd, size_t *cmd_size);
 char			**convert_command_to_array(t_deque_node *cmd, \
 											const size_t size);
@@ -58,8 +59,8 @@ bool			is_command_builtin(const char *cmd);
 bool			is_single_builtin(t_deque_node *cmd);
 
 /* parent */
-int				handle_parent_pipes(t_command *cmd, t_fd *fd);
-int				parent_process(t_command *cmd, \
+t_result 		handle_parent_pipes(t_command *cmd, t_fd *fd);
+t_result 		parent_process(t_command *cmd, \
 								t_fd *fd, \
 								pid_t pid, \
 								uint8_t *last_status);

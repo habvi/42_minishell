@@ -6,10 +6,14 @@
 # include <stdint.h>
 
 /* return value */
+# define CLOSE_ERROR	(-1)
+# define DUP_ERROR		(-1) // dup && dup2
 # define EXECVE_ERROR	(-1)
 # define FORK_ERROR		(-1)
-# define WAIT_ERROR		(-1)
+# define OPEN_ERROR		(-1)
 # define PIPE_ERROR		(-1)
+# define READ_ERROR		(-1)
+# define WAIT_ERROR		(-1)
 // # define PROCESS_ERROR	(-1)
 # define UNREACHABLE	(-1)
 
@@ -23,6 +27,7 @@
 # define SHELL_NAME		"minishell"
 # define PROMPT_NAME	"minishell "
 
+typedef enum e_result		t_result;
 typedef struct s_env		t_env;
 typedef struct s_hash_table	t_hash;
 
@@ -75,14 +80,14 @@ char	*input_line(void);
 void	init_params(t_params *params);
 
 /* environment */
-int		declare_arg(const char *const arg, t_env *env);
+t_result	declare_arg(const char *const arg, t_env *env);
 char	*dup_env_key(const char *const arg, size_t *len);
 char	*dup_env_value(const char *const arg);
 char	*env_get_value(t_env *env, char *key);
 t_env	*init_environ(void);
 void	env_print_detail(t_env *env);
 void	env_print(t_env *env);
-uint8_t	separate_env_variables(const char *const arg, \
+t_result	separate_env_variables(const char *const arg, \
 								char **key, \
 								char **value, \
 								t_env_op *op);
