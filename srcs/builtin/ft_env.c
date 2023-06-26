@@ -6,8 +6,8 @@
 // {"env", "arg1", "arg2", ..., NULL};
 uint8_t	ft_env(const char *const *argv, t_params *params)
 {
-	const size_t	argc = count_argv(argv);
 	uint8_t			status;
+	const size_t	argc = count_argv(argv);
 
 	status = EXIT_SUCCESS;
 	if (argc != 1)

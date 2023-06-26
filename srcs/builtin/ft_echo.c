@@ -57,9 +57,9 @@ static void	put_strings(const char *const *strs)
 // argv[0] == "echo"
 uint8_t	ft_echo(const char *const *argv)
 {
+	uint8_t	status;
 	size_t	idx;
 	bool	is_display_newline;
-	uint8_t	status;
 
 	status = EXIT_SUCCESS;
 	idx = 1;
