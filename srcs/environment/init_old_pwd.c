@@ -5,11 +5,11 @@
 #include "ft_string.h"
 #include "ft_mem.h"
 
-static bool	is_invalid_directory_path(int tmp_errno)
+static bool	is_invalid_directory_path(int tmp_err)
 {
-	if (tmp_errno == 0)
+	if (tmp_err == 0)
 		return (false);
-	if (tmp_errno == EACCES)
+	if (tmp_err == EACCES)
 		return (false);
 	return (true);
 }
@@ -19,14 +19,14 @@ static bool	is_invalid_directory_path(int tmp_errno)
 static void	validate_and_delete_old_pwd(t_env *env)
 {
 	char	*dup_path;
-	int		tmp_errno;
+	int		tmp_err;
 	DIR		*dirp;
 
 	dup_path = env->get_value(env, OLDPWD);
 	errno = 0;
 	dirp = opendir((const char *)dup_path);
-	tmp_errno = errno;
-	if (is_invalid_directory_path(tmp_errno))
+	tmp_err = errno;
+	if (is_invalid_directory_path(tmp_err))
 		env->unset(env, OLDPWD);
 	closedir(dirp);
 	ft_free(&dup_path);
