@@ -14,13 +14,8 @@ bool	is_option(const char *word)
 	return (true);
 }
 
+// `--`
 bool	is_end_of_option(const char *word)
 {
-	const size_t	len = ft_strlen(word);
-
-	if (!word)
-		return (false);
-	if (len != 2)
-		return (false);
-	return (word[0] == CMD_OPTION_MARKER && word[1] == CMD_OPTION_MARKER);
+	return (ft_streq(word, END_OF_CMD_OPTION));
 }

@@ -15,6 +15,7 @@
 # define CMD_OPTION_MARKER	'-'
 # define ECHO_OPTION		'n'
 # define ECHO_SEPARATOR		' '
+# define END_OF_CMD_OPTION	"--"
 
 // todo: naming...
 # define EXIT_ONLY_CMD_CNT		1
