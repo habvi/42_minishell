@@ -27,6 +27,10 @@
 # define SHELL_NAME		"minishell"
 # define PROMPT_NAME	"minishell "
 
+/* pwd */
+# define PWD			"PWD"
+# define OLDPWD			"OLDPWD"
+
 # define SHELL_INIT				"shell-init"
 # define ERROR_MSG_GETCWD		"getcwd: cannot access parent directories"
 # define ERROR_MSG_RETRIEVE_CWD	"error retrieving current directory"
