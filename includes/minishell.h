@@ -92,7 +92,7 @@ char		*env_get_value(t_env *env, char *key);
 t_env		*init_environ(void);
 char		*init_old_pwd(t_env *env);
 char		*init_pwd(t_env *env);
-int			is_key_exist(t_env *env, const char *key);
+int			env_is_key_exist(t_env *env, const char *key);
 void		env_print_detail(t_env *env);
 void		env_print(t_env *env);
 t_result	separate_env_variables(const char *const arg, \

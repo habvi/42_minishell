@@ -13,7 +13,7 @@ static void	del_env_val(void *value)
 
 static void	set_func(t_env *env)
 {
-	env->is_key_exist = is_key_exist;
+	env->is_key_exist = env_is_key_exist;
 	env->get_value = env_get_value;
 	env->set = env_set;
 	env->unset = env_unset;
