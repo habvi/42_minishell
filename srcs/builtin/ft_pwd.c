@@ -29,20 +29,13 @@ static char	*get_pwd(t_params *params)
 uint8_t	ft_pwd(const char *const *argv, t_params *params)
 {
 	uint8_t	status;
+	size_t	i;
 	char	*pwd;
 
 	status = EXIT_SUCCESS;
-	if (is_option(argv[1]))
-	{
-		status = INVALID_OPTION;
-		ft_dprintf(STDERR_FILENO, \
-				"%s: %s: %c%c: %s\n", \
-					SHELL_NAME, \
-					CMD_PWD, \
-					CMD_OPTION_MARKER, argv[1][1], \
-					ERROR_MSG_INVALID_OP);
+	i = 1;
+	if (!is_valid_option(argv, &status, &i))
 		return (status);
-	}
 	pwd = get_pwd(params);
 	if (!pwd)
 		return (EXIT_FAILURE); // todo:tmp

@@ -30,17 +30,8 @@ uint8_t	ft_export(const char *const *argv, t_params *params)
 
 	status = EXIT_SUCCESS;
 	i = 1;
-	if (is_option(argv[i]))
-	{
-		status = INVALID_OPTION;
-		// todo: func
-		ft_dprintf(STDERR_FILENO, "%s: %s: %c%c: %s\n", SHELL_NAME, \
-					CMD_EXPORT, CMD_OPTION_MARKER, argv[i][1], \
-					ERROR_MSG_INVALID_OP);
+	if (!is_valid_option(argv, &status, &i))
 		return (status);
-	}
-	if (is_end_of_option(argv[i]))
-		i++;
 	if (!argv[i])
 	{
 		params->env->print_detail(params->env);

@@ -20,17 +20,13 @@ static void	unset_args(const char *const *args, t_env *env, uint8_t *status)
 
 uint8_t	ft_unset(const char *const *argv, t_params *params)
 {
-	const size_t	argc = count_argv(argv);
-	uint8_t			status;
+	uint8_t	status;
+	size_t	i;
 
 	status = EXIT_SUCCESS;
-	if (argc == 1)
+	i = 1;
+	if (!is_valid_option(argv, &status, &i))
 		return (status);
-	if (is_option(argv[1]))
-	{
-		status = INVALID_OPTION; // print error
-		return (status);
-	}
-	unset_args(&argv[1], params->env, &status);
+	unset_args(&argv[i], params->env, &status);
 	return (status);
 }
