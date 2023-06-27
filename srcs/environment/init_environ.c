@@ -19,6 +19,7 @@ static void	set_func(t_env *env)
 	env->unset = env_unset;
 	env->print = env_print;
 	env->print_detail = env_print_detail;
+	env->clear = env_clear;
 }
 
 // if init_environ() -> declare_arg() returns FAILURE, nothing happen & skip.

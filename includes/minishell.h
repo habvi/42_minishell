@@ -75,6 +75,7 @@ struct s_env
 	void	(*unset)(t_env *env, const char *key);
 	void	(*print)(t_env *env);
 	void	(*print_detail)(t_env *env);
+	void	(*clear)(t_env *env);
 };
 
 // temporarily here ...
@@ -83,6 +84,7 @@ void		debug_func(const char *func_name, const int line_num);
 void		debug_2d_array(char **array);
 
 /* environment */
+void		env_clear(t_env *env);
 t_result	declare_arg(const char *const arg, t_env *env);
 char		*dup_env_key(const char *const arg, size_t *len);
 char		*dup_env_value(const char *const arg);
