@@ -25,7 +25,6 @@ static void	validate_and_delete_old_pwd(t_env *env)
 	dup_path = env->get_value(env, OLDPWD);
 	errno = 0;
 	dirp = opendir((const char *)dup_path);
-	(void)dirp;
 	tmp_errno = errno;
 	if (is_invalid_directory_path(tmp_errno))
 		env->unset(env, OLDPWD);
