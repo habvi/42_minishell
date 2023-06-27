@@ -23,7 +23,7 @@ static char	*get_current_path(int *err)
 		*err = errno;
 		if (*err != ERANGE)
 			break ;
-		size++;
+		size *= 2;
 		path = (char *)ft_realloc(path, size);
 		if (!path)
 			ft_abort();
