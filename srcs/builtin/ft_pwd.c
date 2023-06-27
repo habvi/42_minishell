@@ -16,6 +16,8 @@ static char	*get_pwd(t_params *params)
 	if (params->pwd)
 	{
 		pwd = ft_strdup(params->pwd);
+		if (!pwd)
+			ft_abort();
 		return (pwd);
 	}
 	pwd = get_working_directory(CMD_PWD);
@@ -24,7 +26,6 @@ static char	*get_pwd(t_params *params)
 	return (pwd);
 }
 
-// use getcwd to original error handling.
 uint8_t	ft_pwd(const char *const *argv, t_params *params)
 {
 	uint8_t	status;

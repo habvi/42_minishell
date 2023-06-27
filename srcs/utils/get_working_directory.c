@@ -6,6 +6,7 @@
 #include "ft_dprintf.h"
 #include "ft_sys.h"
 
+// use getcwd to original error handling.
 static char	*get_current_path(int *err)
 {
 	char	*path;
@@ -39,14 +40,12 @@ char	*get_working_directory(char *for_whom)
 
 	cwd = get_current_path(&tmp_err);
 	if (tmp_err)
-		cwd = ft_free(&cwd);
-	if (err)
-		*err = tmp_err;
-	if (!cwd)
 	{
 		ft_dprintf(STDERR_FILENO, \
 		"%s: %s: %s: %s\n", \
 		for_whom, ERROR_MSG_RETRIEVE_CWD, ERROR_MSG_GETCWD, strerror(tmp_err));
+		ft_free(&cwd);
+		return (NULL);
 	}
 	return (cwd);
 }
