@@ -12,14 +12,13 @@
 static char	*get_pwd(t_params *params)
 {
 	char	*pwd;
-	int		tmp_errno;
 
 	if (params->pwd)
 	{
 		pwd = ft_strdup(params->pwd);
 		return (pwd);
 	}
-	pwd = get_workind_directory(&tmp_errno, CMD_PWD);
+	pwd = get_working_directory(CMD_PWD);
 	if (!pwd)
 		return (NULL);
 	return (pwd);

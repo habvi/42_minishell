@@ -102,7 +102,7 @@ char		*input_line(void);
 // size_t	count_commands(char *const *commands);
 size_t		count_argv(const char *const *argc);
 void		ft_abort(void);
-char		*get_workind_directory(int *err, char *for_whom);
+char		*get_working_directory(char *for_whom);
 bool		is_valid_key(const char *word);
 
 /* init */

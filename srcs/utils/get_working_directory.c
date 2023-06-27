@@ -32,7 +32,7 @@ static char	*get_current_path(int *err)
 }
 
 /* ref: get_working_directory() in bash/builtins/common.c L623 */
-char	*get_workind_directory(int *err, char *for_whom)
+char	*get_working_directory(char *for_whom)
 {
 	char	*cwd;
 	int		tmp_err;

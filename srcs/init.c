@@ -15,6 +15,6 @@ void	init_params(t_params *params)
 {
 	params->env = init_environ();
 	params->is_interactive = set_is_interactive();
-	params->pwd = get_workind_directory(NULL, SHELL_INIT);
+	params->pwd = get_working_directory(SHELL_INIT);
 	params->status = EXIT_SUCCESS;
 }
