@@ -27,6 +27,10 @@
 # define SHELL_NAME		"minishell"
 # define PROMPT_NAME	"minishell "
 
+# define SHELL_INIT				"shell-init"
+# define ERROR_MSG_GETCWD		"getcwd: cannot access parent directories"
+# define ERROR_MSG_RETRIEVE_CWD	"error retrieving current directory"
+
 typedef enum e_result		t_result;
 typedef struct s_env		t_env;
 typedef struct s_hash_table	t_hash;
@@ -98,6 +102,7 @@ char		*input_line(void);
 // size_t	count_commands(char *const *commands);
 size_t		count_argv(const char *const *argc);
 void		ft_abort(void);
+char		*get_working_directory(char *for_whom);
 bool		is_valid_key(const char *word);
 
 /* init */

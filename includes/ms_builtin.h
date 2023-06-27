@@ -3,6 +3,7 @@
 
 # include <stdbool.h>
 # include <stdint.h>
+# include <stddef.h>
 
 # define CMD_ECHO	"echo"
 # define CMD_CD		"cd"
@@ -15,6 +16,7 @@
 # define CMD_OPTION_MARKER	'-'
 # define ECHO_OPTION		'n'
 # define ECHO_SEPARATOR		' '
+# define END_OF_CMD_OPTION	"--"
 
 // todo: naming...
 # define EXIT_ONLY_CMD_CNT		1
@@ -36,6 +38,7 @@
 
 # define DECLARE_X				"declare -x"
 
+typedef enum e_result		t_result;
 typedef struct s_env		t_env;
 typedef struct s_deque_node	t_deque_node;
 typedef struct s_params		t_params;
@@ -51,9 +54,12 @@ uint8_t	ft_echo(const char *const *argv);
 uint8_t	ft_env(const char *const *argv, t_params *params);
 uint8_t	ft_exit(const char *const *argv, t_params *params);
 uint8_t	ft_export(const char *const *argv, t_params *params);
+uint8_t	ft_pwd(const char *const *argv, t_params *params);
 uint8_t	ft_unset(const char *const *argv, t_params *params);
 
 bool	is_option(const char *word);
+bool	is_end_of_option(const char *word);
+bool	is_valid_option(const char *const *argv, uint8_t *status, size_t *i);
 bool	str_to_legal_number(const char *str, long *result);
 
 #endif //MS_BUILTIN_H

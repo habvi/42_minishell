@@ -1,5 +1,4 @@
 #include <stddef.h>
-#include "ms_builtin.h"
 #include "ft_ascii.h"
 
 static bool	is_underscore(const char c)

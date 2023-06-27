@@ -17,6 +17,7 @@ SRCS		+=	$(BUILTIN_DIR)/ft_echo.c \
 				$(BUILTIN_DIR)/ft_env.c \
 				$(BUILTIN_DIR)/ft_exit.c \
 				$(BUILTIN_DIR)/ft_export.c \
+				$(BUILTIN_DIR)/ft_pwd.c \
 				$(BUILTIN_DIR)/ft_unset.c \
 				$(BUILTIN_DIR)/is_option.c \
 				$(BUILTIN_DIR)/str_to_legal_number.c
@@ -57,6 +58,7 @@ SRCS		+=	$(TOKEN_DIR)/tokenize.c
 UTILS_DIR	:=	utils
 SRCS		+=	$(UTILS_DIR)/count_array.c \
 				$(UTILS_DIR)/ft_abort.c \
+				$(UTILS_DIR)/get_working_directory.c \
 				$(UTILS_DIR)/is_valid_key.c
 
 OBJS_DIR	:=	objs
@@ -147,5 +149,10 @@ test_exit	: all
 .PHONY		: test_export
 test_export	: all
 	python3 ./test/integration_test/run_export.py
+
+# test builtin pwd
+.PHONY		: test_pwd
+test_pwd	: all
+	python3 ./test/integration_test/run_pwd.py
 
 -include $(DEPS)
