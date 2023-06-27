@@ -58,6 +58,7 @@ typedef struct s_params
 	t_env	*env;
 	bool	is_interactive;
 	char	*pwd;
+	char	*old_pwd;
 	uint8_t	status;
 }	t_params;
 
