@@ -55,6 +55,7 @@ uint8_t	ft_pwd(const char *const *argv, t_params *params);
 uint8_t	ft_unset(const char *const *argv, t_params *params);
 
 bool	is_option(const char *word);
+bool	is_end_of_option(const char *word);
 bool	str_to_legal_number(const char *str, long *result);
 
 #endif //MS_BUILTIN_H
