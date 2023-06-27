@@ -3,6 +3,7 @@
 
 # include <stdbool.h>
 # include <stdint.h>
+# include <stddef.h>
 
 # define CMD_ECHO	"echo"
 # define CMD_CD		"cd"
@@ -37,6 +38,7 @@
 
 # define DECLARE_X				"declare -x"
 
+typedef enum e_result		t_result;
 typedef struct s_env		t_env;
 typedef struct s_deque_node	t_deque_node;
 typedef struct s_params		t_params;
@@ -57,6 +59,7 @@ uint8_t	ft_unset(const char *const *argv, t_params *params);
 
 bool	is_option(const char *word);
 bool	is_end_of_option(const char *word);
+bool	is_valid_option(const char *const *argv, uint8_t *status, size_t *i);
 bool	str_to_legal_number(const char *str, long *result);
 
 #endif //MS_BUILTIN_H
