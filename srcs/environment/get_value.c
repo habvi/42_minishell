@@ -3,20 +3,18 @@
 #include "ft_string.h"
 
 // return value of key
-// if key not found or value is NULL, returns empty string ...?
-
-//  return value need allocate ...?
-//  use case : expansion, etc.
+// if key not found or value is NULL, returns empty string
+// use case : expansion, etc.
 char	*env_get_value(t_env *env, char *key)
 {
 	char	*value;
-	char	*duped_value;
+	char	*dup_value;
 
 	value = hs_get_value(env->hash, key);
 	if (!value)
 		value = "";
-	duped_value = ft_strdup(value);
-	if (!duped_value)
+	dup_value = ft_strdup(value);
+	if (!dup_value)
 		ft_abort();
-	return (duped_value);
+	return (dup_value);
 }
