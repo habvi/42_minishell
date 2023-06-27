@@ -85,7 +85,8 @@ MEM_SRC		:=	$(MEM_DIR)/ft_bzero.c \
 				$(MEM_DIR)/ft_memcmp.c \
 				$(MEM_DIR)/ft_memcpy.c \
 				$(MEM_DIR)/ft_memmove.c \
-				$(MEM_DIR)/ft_memset.c
+				$(MEM_DIR)/ft_memset.c \
+				$(MEM_DIR)/ft_realloc.c
 
 #--------------------------------------------
 # ft_put
