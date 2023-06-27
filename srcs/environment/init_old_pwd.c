@@ -46,9 +46,12 @@ static void	set_only_old_pwd_key(t_env *env)
 
 char	*init_old_pwd(t_env *env)
 {
+	char	*value;
+
 	if (env->is_key_exist(env, OLDPWD))
 		validate_and_delete_old_pwd(env);
 	else
 		set_only_old_pwd_key(env);
-	return (NULL);
+	value = env->get_value(env, OLDPWD);
+	return (value);
 }

@@ -10,6 +10,7 @@ static bool	set_is_interactive(void)
 	return (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO));
 }
 
+// init_environ set also PWD, OLDPWD.
 void	init_params(t_params *params)
 {
 	params->env = init_environ();
