@@ -28,6 +28,8 @@ SRCS		+=	$(ENVIRONMENT)/declare_arg.c \
 				$(ENVIRONMENT)/dup_env_value.c \
 				$(ENVIRONMENT)/separate_env_variables.c \
 				$(ENVIRONMENT)/get_value.c \
+				$(ENVIRONMENT)/init_environ.c \
+				$(ENVIRONMENT)/init_old_pwd.c \
 				$(ENVIRONMENT)/is_key_exist.c \
 				$(ENVIRONMENT)/print_detail.c \
 				$(ENVIRONMENT)/print.c \
