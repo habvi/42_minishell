@@ -58,6 +58,7 @@ SRCS		+=	$(TOKEN_DIR)/tokenize.c
 UTILS_DIR	:=	utils
 SRCS		+=	$(UTILS_DIR)/count_array.c \
 				$(UTILS_DIR)/ft_abort.c \
+				$(UTILS_DIR)/get_working_directory.c \
 				$(UTILS_DIR)/is_valid_key.c
 
 OBJS_DIR	:=	objs
