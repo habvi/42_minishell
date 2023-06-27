@@ -1,9 +1,7 @@
 #include <stdlib.h>
-#include <string.h>
 #include <unistd.h>
 #include "minishell.h"
 #include "ms_builtin.h"
-#include "ft_dprintf.h"
 
 // If an error occurs, will not exit.
 static bool	set_is_interactive(void)

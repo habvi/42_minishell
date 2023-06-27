@@ -1,4 +1,3 @@
-#include <errno.h>
 #include <stdlib.h>
 #include "minishell.h"
 #include "ms_builtin.h"
@@ -8,7 +7,6 @@
 
 // pwd arg1 arg2 arg3 ... -> pwd, $?=0
 // pwd op                 -> invalid op, $?=2
-
 static char	*get_pwd(t_params *params)
 {
 	char	*pwd;
