@@ -150,4 +150,9 @@ test_exit	: all
 test_export	: all
 	python3 ./test/integration_test/run_export.py
 
+# test builtin pwd
+.PHONY		: test_pwd
+test_pwd	: all
+	python3 ./test/integration_test/run_pwd.py
+
 -include $(DEPS)
