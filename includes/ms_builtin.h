@@ -50,6 +50,7 @@ typedef enum e_exit_argument
 	RETURN_TOO_MANY_NUMERIC_ARG,
 }	t_exit_arg;
 
+uint8_t	ft_cd(const char *const *argv, t_context *context);
 uint8_t	ft_echo(const char *const *argv);
 uint8_t	ft_env(const char *const *argv, t_env *env);
 uint8_t	ft_exit(const char *const *argv, t_context *context);

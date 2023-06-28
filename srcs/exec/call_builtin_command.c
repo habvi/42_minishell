@@ -6,8 +6,8 @@ uint8_t	call_builtin_command(const char *const *argv, t_context *context)
 {
 	if (ft_streq(argv[0], CMD_ECHO))
 		return (ft_echo(argv));
-//	if (ft_streq(argv[0], CMD_CD))
-//		return (true);
+	if (ft_streq(argv[0], CMD_CD))
+		return (ft_cd(argv, context));
 	if (ft_streq(argv[0], CMD_PWD))
 		return (ft_pwd(argv, context));
 	if (ft_streq(argv[0], CMD_EXPORT))
