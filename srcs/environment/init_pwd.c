@@ -2,11 +2,10 @@
 #include "ms_builtin.h"
 #include "ft_string.h"
 
-char	*init_pwd(t_env *env)
+void	init_pwd(t_env *env)
 {
 	char	*pwd;
 	char	*dup_key;
-	char	*dup_value;
 
 	pwd = get_working_directory(SHELL_INIT);
 	if (pwd == NULL)
@@ -16,10 +15,8 @@ char	*init_pwd(t_env *env)
 		dup_key = ft_strdup(PWD);
 		if (!dup_key)
 			ft_abort();
-		dup_value = ft_strdup(pwd);
-		if (!dup_value)
+		if (!pwd)
 			ft_abort();
-		env->set(env, dup_key, dup_value, ENV_ADD);
+		env->set(env, dup_key, pwd, ENV_ADD);
 	}
-	return (pwd);
 }

@@ -55,5 +55,7 @@ t_env	*init_environ(void)
 		ft_abort();
 	set_func(env);
 	set_hash(env);
+	init_pwd(env);
+	init_old_pwd(env);
 	return (env);
 }

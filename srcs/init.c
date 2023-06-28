@@ -14,8 +14,8 @@ static bool	set_is_interactive(void)
 void	init_params(t_params *params)
 {
 	params->env = init_environ();
+	params->pwd = params->env->get_value(params->env, PWD);
+	params->old_pwd = params->env->get_value(params->env, OLDPWD);
 	params->is_interactive = set_is_interactive();
-	params->pwd = init_pwd(params->env);
-	params->old_pwd = init_old_pwd(params->env);
 	params->status = EXIT_SUCCESS;
 }
