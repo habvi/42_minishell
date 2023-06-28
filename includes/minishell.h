@@ -110,6 +110,7 @@ size_t		count_argv(const char *const *argc);
 void		ft_abort(void);
 char		*get_working_directory(char *for_whom);
 bool		is_valid_key(const char *word);
+bool		test_opendir(const char *path, int *tmp_err);
 
 /* init */
 void		init_context(t_context *context);
