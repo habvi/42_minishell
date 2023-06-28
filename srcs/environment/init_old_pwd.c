@@ -27,6 +27,8 @@ static void	validate_and_delete_old_pwd(t_env *env)
 	char	*dup_path;
 
 	dup_path = env->get_value(env, KEY_OLDPWD);
+	if (!dup_path)
+		return ;
 	if (!is_valid_old_pwd(dup_path))
 		env->unset(env, KEY_OLDPWD);
 	ft_free(&dup_path);
