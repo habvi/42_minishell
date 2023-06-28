@@ -11,11 +11,14 @@ static bool	set_is_interactive(void)
 }
 
 // init_environ set also PWD, OLDPWD.
-void	init_params(t_params *params)
+void	init_context(t_context *context)
 {
-	params->env = init_environ();
-	params->internal_pwd = params->env->get_value(params->env, KEY_PWD);
-	params->internal_old_pwd = params->env->get_value(params->env, KEY_OLDPWD);
-	params->is_interactive = set_is_interactive();
-	params->status = EXIT_SUCCESS;
+	t_env	*env;
+
+	context->env = init_environ();
+	env = context->env;
+	context->internal_pwd = env->get_value(env, KEY_PWD);
+	context->internal_old_pwd = env->get_value(env, KEY_OLDPWD);
+	context->is_interactive = set_is_interactive();
+	context->status = EXIT_SUCCESS;
 }

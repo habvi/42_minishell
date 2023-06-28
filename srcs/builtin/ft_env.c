@@ -4,10 +4,11 @@
 #include "ms_exec.h"
 
 // {"env", "arg1", "arg2", ..., NULL};
-uint8_t	ft_env(const char *const *argv, t_params *params)
+uint8_t	ft_env(const char *const *argv, t_context *context)
 {
 	uint8_t			status;
 	const size_t	argc = count_argv(argv);
+	t_env			*env;
 
 	status = EXIT_SUCCESS;
 	if (argc != 1)
@@ -16,6 +17,7 @@ uint8_t	ft_env(const char *const *argv, t_params *params)
 		status = INVALID_OPTION; // print error
 		return (status);
 	}
-	params->env->print(params->env);
+	env = context->env;
+	env->print(env);
 	return (status);
 }

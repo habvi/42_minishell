@@ -71,14 +71,14 @@ static bool	is_exit(t_exit_arg res)
 // if exit called from interactive shell, output `exit` to the console.
 
 // argv[0] == "exit"
-uint8_t	ft_exit(const char *const *argv, t_params *params)
+uint8_t	ft_exit(const char *const *argv, t_context *context)
 {
 	uint8_t		status;
 	t_exit_arg	arg_result;
 
 	arg_result = validate_argument(argv);
-	status = get_exit_status(argv[EXIT_ARG_IDX], arg_result, params->status);
-	if (params->is_interactive)
+	status = get_exit_status(argv[EXIT_ARG_IDX], arg_result, context->status);
+	if (context->is_interactive)
 		ft_dprintf(STDERR_FILENO, "%s\n", CMD_EXIT);
 	put_exit_err(argv[EXIT_ARG_IDX], arg_result);
 	if (!is_exit(arg_result))

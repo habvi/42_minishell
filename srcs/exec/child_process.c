@@ -4,12 +4,12 @@
 #include "ft_deque.h"
 #include "ft_dprintf.h"
 
-static uint8_t	execute_builtin_command(t_command *cmd, t_params *params)
+static uint8_t	execute_builtin_command(t_command *cmd, t_context *context)
 {
 	const char *const	*argv = (const char *const *)cmd->exec_command;
 	uint8_t				exec_status;
 
-	exec_status = call_builtin_command(argv, params);
+	exec_status = call_builtin_command(argv, context);
 	deque_clear_all(&cmd->head_command, free);
 	return (exec_status);
 }
@@ -34,7 +34,7 @@ static uint8_t	execute_external_command(t_command *cmd, char **environ)
 void	child_process(t_command *cmd, \
 						t_fd *fd, \
 						char **environ, \
-						t_params *params)
+						t_context *context)
 {
 	char *const	*argv = cmd->exec_command;
 
@@ -43,7 +43,7 @@ void	child_process(t_command *cmd, \
 	if (handle_child_pipes(cmd, fd) == PROCESS_ERROR)
 		exit(EXIT_FAILURE);
 	if (is_command_builtin(argv[0]))
-		exit(execute_builtin_command(cmd, params));
+		exit(execute_builtin_command(cmd, context));
 	else
 		exit(execute_external_command(cmd, environ));
 }

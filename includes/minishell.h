@@ -57,14 +57,14 @@ typedef enum e_env_op
 	ENV_JOIN,
 }	t_env_op;
 
-typedef struct s_params
+typedef struct s_context
 {
 	t_env	*env;
 	bool	is_interactive;
 	char	*internal_pwd;
 	char	*internal_old_pwd;
 	uint8_t	status;
-}	t_params;
+}	t_context;
 
 struct s_env
 {
@@ -99,7 +99,7 @@ void		env_set(t_env *env, char *key, char *value, t_env_op op);
 void		env_unset(t_env *env, const char *key);
 
 /* destroy */
-void		destroy(t_params params);
+void		destroy(t_context context);
 
 /* input */
 char		*input_line(void);
@@ -112,9 +112,9 @@ char		*get_working_directory(char *for_whom);
 bool		is_valid_key(const char *word);
 
 /* init */
-void		init_params(t_params *params);
+void		init_context(t_context *context);
 
 /* repl */
-t_result	read_eval_print_loop(t_params *params);
+t_result	read_eval_print_loop(t_context *context);
 
 #endif //MINISHELL_H

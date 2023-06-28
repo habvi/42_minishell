@@ -41,7 +41,7 @@ static int	test(const char *const *cmds, int expected_status, int test_no)
 	int		ret;
 	int		status;
 	pid_t	pid;
-	t_params	params = {\
+	t_context	context = {\
 		.env = NULL, \
 		.is_interactive = true, \
 		.internal_pwd = NULL, \
@@ -51,7 +51,7 @@ static int	test(const char *const *cmds, int expected_status, int test_no)
 	pid = fork();
 	if (pid == 0)
 	{
-		status = ft_exit(cmds, &params);
+		status = ft_exit(cmds, &context);
 		exit(status);
 	}
 	waitpid(pid, &status, 0);

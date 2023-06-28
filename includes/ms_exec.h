@@ -17,7 +17,7 @@
 typedef enum e_result		t_result;
 typedef struct s_deque_node	t_deque_node;
 typedef struct s_deque		t_deque;
-typedef struct s_params		t_params;
+typedef struct s_context	t_context;
 
 typedef struct s_command {
 	t_deque			*head_command;
@@ -31,7 +31,8 @@ typedef struct s_fd {
 }	t_fd;
 
 /* call_builtin_command */
-uint8_t			call_builtin_command(const char *const *argv, t_params *params);
+uint8_t			call_builtin_command(const char *const *argv, \
+										t_context *context);
 
 /* check_command */
 bool			is_first_command(int prev_fd);
@@ -42,10 +43,10 @@ t_result		handle_child_pipes(t_command *cmd, t_fd *fd);
 void			child_process(t_command *cmd, \
 								t_fd *fd, \
 								char **environ, \
-								t_params *params);
+								t_context *context);
 
 /* exec */
-t_result		execute_command(t_deque *dq_cmd, t_params *params);
+t_result		execute_command(t_deque *dq_cmd, t_context *context);
 t_deque_node	*get_next_command(t_deque_node *cmd, size_t *cmd_size);
 char			**convert_command_to_array(t_deque_node *cmd, \
 											const size_t size);

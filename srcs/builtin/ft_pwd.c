@@ -7,13 +7,13 @@
 
 // pwd arg1 arg2 arg3 ... -> pwd, $?=0
 // pwd op                 -> invalid op, $?=2
-static char	*get_pwd(t_params *params)
+static char	*get_pwd(t_context *context)
 {
 	char	*pwd;
 
-	if (params->internal_pwd)
+	if (context->internal_pwd)
 	{
-		pwd = ft_strdup(params->internal_pwd);
+		pwd = ft_strdup(context->internal_pwd);
 		if (!pwd)
 			ft_abort();
 		return (pwd);
@@ -24,7 +24,7 @@ static char	*get_pwd(t_params *params)
 	return (pwd);
 }
 
-uint8_t	ft_pwd(const char *const *argv, t_params *params)
+uint8_t	ft_pwd(const char *const *argv, t_context *context)
 {
 	uint8_t	status;
 	size_t	i;
@@ -34,7 +34,7 @@ uint8_t	ft_pwd(const char *const *argv, t_params *params)
 	i = 1;
 	if (!is_valid_option(argv, &status, &i))
 		return (status);
-	pwd = get_pwd(params);
+	pwd = get_pwd(context);
 	if (!pwd)
 		return (EXIT_FAILURE); // todo:tmp
 	ft_dprintf(STDOUT_FILENO, "%s\n", pwd);
