@@ -6,7 +6,7 @@ void	destroy(t_params params)
 {
 	params.env->clear(params.env);
 	ft_free(&params.env);
-	ft_free(&params.pwd);
-	ft_free(&params.old_pwd);
+	ft_free(&params.internal_pwd);
+	ft_free(&params.internal_old_pwd);
 	rl_clear_history();
 }

@@ -11,9 +11,9 @@ static char	*get_pwd(t_params *params)
 {
 	char	*pwd;
 
-	if (params->pwd)
+	if (params->internal_pwd)
 	{
-		pwd = ft_strdup(params->pwd);
+		pwd = ft_strdup(params->internal_pwd);
 		if (!pwd)
 			ft_abort();
 		return (pwd);

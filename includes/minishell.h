@@ -28,8 +28,8 @@
 # define PROMPT_NAME	"minishell "
 
 /* pwd */
-# define PWD			"PWD"
-# define OLDPWD			"OLDPWD"
+# define KEY_PWD		"PWD"
+# define KEY_OLDPWD		"OLDPWD"
 
 # define SHELL_INIT				"shell-init"
 # define ERROR_MSG_GETCWD		"getcwd: cannot access parent directories"
@@ -61,8 +61,8 @@ typedef struct s_params
 {
 	t_env	*env;
 	bool	is_interactive;
-	char	*pwd;
-	char	*old_pwd;
+	char	*internal_pwd;
+	char	*internal_old_pwd;
 	uint8_t	status;
 }	t_params;
 
