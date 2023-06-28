@@ -79,6 +79,8 @@ t_result	env_declare_arg(const char *const arg, t_env *env)
 	result = separate_env_variables(arg, &key, &value, &op);
 	if (result == FAILURE || result == CONTINUE)
 		return (result);
-	env->set(env, key, value, op);
+	env_set_dup_key_value(env, key, value, op);
+	ft_free(&key);
+	ft_free(&value);
 	return (result);
 }
