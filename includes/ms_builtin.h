@@ -18,6 +18,9 @@
 # define ECHO_SEPARATOR		' '
 # define END_OF_CMD_OPTION	"--"
 
+# define CD_ARG_HOME		"~"
+# define CD_ARG_OLDPWD		"-"
+
 // todo: naming...
 # define EXIT_ONLY_CMD_CNT		1
 # define EXIT_ARG_IDX			1
@@ -29,12 +32,18 @@
 # define NOT_A_VALID_IDENTIFIER	1
 # define INVALID_OPTION			2
 
+// cd
+# define CD_NOT_SET_STATUS		1
+
 # define BYTE_MASK				(0xFF)
 
 # define ERROR_MSG_TOO_MANY_ARG	"too many arguments"
 # define ERROR_MSG_REQUIRED_NUM	"numeric argument required"
 # define ERROR_MSG_INVALID_OP	"invalid option"
 # define ERROR_MSG_NOT_VALID_ID	"not a valid identifier"
+
+# define ERROR_MSG_NOT_SET		"not set"
+# define ERROR_MSG_PERMISSION	"Permission denied"
 
 # define DECLARE_X				"declare -x"
 
