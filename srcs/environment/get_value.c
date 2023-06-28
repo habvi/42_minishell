@@ -3,7 +3,7 @@
 #include "ft_string.h"
 
 // return value of key
-// if key not found or value is NULL, returns empty string
+// if key not found or value is NULL, returns NULL
 // use case : expansion, etc.
 char	*env_get_value(t_env *env, const char *key)
 {
@@ -12,7 +12,7 @@ char	*env_get_value(t_env *env, const char *key)
 
 	value = hs_get_value(env->hash, key);
 	if (!value)
-		value = "";
+		return (NULL);
 	dup_value = ft_strdup(value);
 	if (!dup_value)
 		ft_abort();
