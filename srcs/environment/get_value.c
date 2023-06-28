@@ -5,7 +5,7 @@
 // return value of key
 // if key not found or value is NULL, returns empty string
 // use case : expansion, etc.
-char	*env_get_value(t_env *env, char *key)
+char	*env_get_value(t_env *env, const char *key)
 {
 	char	*value;
 	char	*dup_value;
