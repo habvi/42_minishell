@@ -18,7 +18,7 @@ static void	unset_args(const char *const *args, t_env *env, uint8_t *status)
 	}
 }
 
-uint8_t	ft_unset(const char *const *argv, t_context *context)
+uint8_t	ft_unset(const char *const *argv, t_env *env)
 {
 	uint8_t	status;
 	size_t	i;
@@ -27,6 +27,6 @@ uint8_t	ft_unset(const char *const *argv, t_context *context)
 	i = 1;
 	if (!is_valid_option(argv, &status, &i))
 		return (status);
-	unset_args(&argv[i], context->env, &status);
+	unset_args(&argv[i], env, &status);
 	return (status);
 }
