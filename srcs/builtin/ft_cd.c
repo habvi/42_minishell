@@ -1,10 +1,21 @@
-#include <errno.h>
 #include <stdlib.h>
+#include <string.h>
 #include "minishell.h"
 #include "ms_builtin.h"
 #include "ft_dprintf.h"
 #include "ft_string.h"
 #include "ft_mem.h"
+
+static char	*get_value_for_cd(t_env *env, const char *key)
+{
+	char	*value;
+
+	if (env->is_key_exist(env, key))
+		value = env->get_value(env, key);
+	else
+		value = NULL;
+	return (value);
+}
 
 // "~"  -> HOME
 // "-"  -> OLDPWD
@@ -13,10 +24,10 @@ static char	*set_path_by_arg(const char *arg, t_env *env)
 {
 	char	*path;
 
-	if (ft_streq(arg, CD_ARG_HOME)) // ~  			// NULL
-		path = env->get_value(env, KEY_HOME);
+	if (ft_streq(arg, CD_ARG_HOME)) // ~  		// NULL
+		path = get_value_for_cd(env, KEY_HOME);
 	else if (ft_streq(arg, CD_ARG_OLDPWD)) // -  	// NULL
-		path = env->get_value(env, KEY_OLDPWD);
+		path = get_value_for_cd(env, KEY_OLDPWD);
 	else
 	{
 		path = ft_strdup(arg);
@@ -35,7 +46,7 @@ static char	*set_cd_path(const char *arg, t_env *env)
 	char	*path;
 
 	if (!arg)
-		path = env->get_value(env, KEY_HOME); // NULL
+		path = get_value_for_cd(env, KEY_HOME);
 	else
 		path = set_path_by_arg(arg, env);
 	return (path);
@@ -61,29 +72,26 @@ static void	print_err_set_status(const char *arg, \
 									int tmp_err, \
 									uint8_t *status)
 {
-	char	*err_str;
+	const char	*err_arg;
+	const char	*err_msg;
 
 	if (!path)
 	{
-		if (!arg || ft_streq(arg, KEY_HOME))
-			err_str = KEY_HOME;
+		if (!arg || ft_streq(arg, KEY_HOME) || ft_streq(arg, CD_ARG_HOME))
+			err_arg = KEY_HOME;
 		else
-			err_str = KEY_OLDPWD;
+			err_arg = KEY_OLDPWD;
+		err_msg = ERROR_MSG_NOT_SET;
 		ft_dprintf(STDERR_FILENO, "%s: %s: %s %s\n", \
-				SHELL_NAME, CMD_CD, err_str, ERROR_MSG_NOT_SET);
-		*status = CD_NOT_SET_STATUS;
-	}
-	else if (tmp_err == EACCES)
-	{
-		ft_dprintf(STDERR_FILENO, "%s: %s: %s %s\n", \
-				SHELL_NAME, CMD_CD, arg, ERROR_MSG_PERMISSION);
-		*status = 2;
+				SHELL_NAME, CMD_CD, err_arg, err_msg);
 	}
 	else
 	{
-		ft_dprintf(STDERR_FILENO, "%s: %s: %s %s\n", \
-				SHELL_NAME, CMD_CD, arg, "other error");
-		*status = 3;
+		err_arg = arg;
+		err_msg = strerror(tmp_err);
+		ft_dprintf(STDERR_FILENO, "%s: %s: %s: %s\n", \
+				SHELL_NAME, CMD_CD, err_arg, err_msg);
+		*status = CD_ERROR_STATUS;
 	}
 }
 

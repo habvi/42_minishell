@@ -34,6 +34,7 @@
 
 // cd
 # define CD_NOT_SET_STATUS		1
+# define CD_ERROR_STATUS		1
 
 # define BYTE_MASK				(0xFF)
 
@@ -44,6 +45,8 @@
 
 # define ERROR_MSG_NOT_SET		"not set"
 # define ERROR_MSG_PERMISSION	"Permission denied"
+# define ERROR_MSG_NOT_A_DIR	"Not a directory"
+# define ERROR_MSG_NO_SUCH_FILE	"No such file or directory"
 
 # define DECLARE_X				"declare -x"
 

@@ -71,7 +71,7 @@ struct s_env
 {
 	t_hash	*hash;
 	int		(*is_key_exist)(t_env *env, const char *key);
-	char	*(*get_value)(t_env *env, char *key);
+	char	*(*get_value)(t_env *env, const char *key);
 	void	(*set)(t_env *env, char *key, char *value, t_env_op op);
 	void	(*unset)(t_env *env, const char *key);
 	void	(*print)(t_env *env);
@@ -89,7 +89,7 @@ void		env_clear(t_env *env);
 t_result	env_declare_arg(const char *const arg, t_env *env);
 char		*dup_env_key(const char *const arg, size_t *len);
 char		*dup_env_value(const char *const arg);
-char		*env_get_value(t_env *env, char *key);
+char		*env_get_value(t_env *env, const char *key);
 t_env		*init_environ(void);
 void		init_old_pwd(t_env *env);
 void		init_pwd(t_env *env);
