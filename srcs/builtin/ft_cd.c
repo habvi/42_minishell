@@ -15,6 +15,7 @@ static bool	is_valid_cd_path(char *path, int *tmp_err)
 	return (true);
 }
 
+// todo: chdir, env->set pre-PWD+now-PWD? (., ..)
 static void	move_to_valid_path(char *path, t_context *context)
 {
 	(void)path;
@@ -47,23 +48,6 @@ static void	print_err_set_status(const char *arg, \
 				SHELL_NAME, CMD_CD, err_arg, err_msg);
 		*status = CD_ERROR_STATUS;
 	}
-}
-
-void	env_set_dup_key_value(t_env *env, \
-								const char *key, \
-								const char *value, \
-								t_env_op op)
-{
-	char	*dup_key;
-	char	*dup_value;
-
-	dup_key = ft_strdup(key);
-	if (!dup_key)
-		ft_abort();
-	dup_value = ft_strdup(value);
-	if (!dup_value)
-		ft_abort();
-	env->set(env, dup_key, dup_value, op);
 }
 
 static void	update_pwd(char *path, t_context *context)
