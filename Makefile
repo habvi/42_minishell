@@ -8,6 +8,7 @@ MKDIR		:=	mkdir -p
 
 SRCS_DIR	:=	srcs
 SRCS		:=	destroy.c \
+				error_msg.c \
 				init.c \
 				main.c \
 				repl.c
