@@ -85,7 +85,7 @@ void		debug_2d_array(char **array);
 
 /* environment */
 void		env_clear(t_env *env);
-t_result	declare_arg(const char *const arg, t_env *env);
+t_result	env_declare_arg(const char *const arg, t_env *env);
 char		*dup_env_key(const char *const arg, size_t *len);
 char		*dup_env_value(const char *const arg);
 char		*env_get_value(t_env *env, char *key);

@@ -22,7 +22,6 @@ static void	set_func(t_env *env)
 	env->clear = env_clear;
 }
 
-// if init_environ() -> declare_arg() returns FAILURE, nothing happen & skip.
 static void	get_environ(t_env *env)
 {
 	extern char	**environ;
@@ -33,7 +32,7 @@ static void	get_environ(t_env *env)
 		return ;
 	while (environ[i])
 	{
-		declare_arg(environ[i], env);
+		env_declare_arg(environ[i], env);
 		i++;
 	}
 }
