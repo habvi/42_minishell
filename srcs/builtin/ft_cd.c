@@ -6,52 +6,6 @@
 #include "ft_string.h"
 #include "ft_mem.h"
 
-static char	*get_value_for_cd(t_env *env, const char *key)
-{
-	char	*value;
-
-	if (env->is_key_exist(env, key))
-		value = env->get_value(env, key);
-	else
-		value = NULL;
-	return (value);
-}
-
-// "~"  -> HOME
-// "-"  -> OLDPWD
-// else -> arg
-static char	*set_path_by_arg(const char *arg, t_env *env)
-{
-	char	*path;
-
-	if (ft_streq(arg, CD_ARG_HOME)) // ~  		// NULL
-		path = get_value_for_cd(env, KEY_HOME);
-	else if (ft_streq(arg, CD_ARG_OLDPWD)) // -  	// NULL
-		path = get_value_for_cd(env, KEY_OLDPWD);
-	else
-	{
-		path = ft_strdup(arg);
-		if (!path)
-			ft_abort();
-	}
-	return (path);
-}
-
-//  arg                       bash                         minishell
-// unset HOME; cd <no arg>   path=NULL; HOME not set
-// unset HOME; cd ~          getpath from /etc/passwd   (tmp) same as <no arg>
-// -> unset OLD ;cd -        path=NULL; OLDPWD not set
-static char	*set_cd_path(const char *arg, t_env *env)
-{
-	char	*path;
-
-	if (!arg)
-		path = get_value_for_cd(env, KEY_HOME);
-	else
-		path = set_path_by_arg(arg, env);
-	return (path);
-}
-
 static bool	is_valid_cd_path(char *path, int *tmp_err)
 {
 	if (!path)
@@ -61,7 +15,7 @@ static bool	is_valid_cd_path(char *path, int *tmp_err)
 	return (true);
 }
 
-static void	cd_to_valid_path(char *path, t_context *context)
+static void	move_to_valid_path(char *path, t_context *context)
 {
 	(void)path;
 	(void)context;
@@ -95,6 +49,37 @@ static void	print_err_set_status(const char *arg, \
 	}
 }
 
+void	env_set_dup_key_value(t_env *env, \
+								const char *key, \
+								const char *value, \
+								t_env_op op)
+{
+	char	*dup_key;
+	char	*dup_value;
+
+	dup_key = ft_strdup(key);
+	if (!dup_key)
+		ft_abort();
+	dup_value = ft_strdup(value);
+	if (!dup_value)
+		ft_abort();
+	env->set(env, dup_key, dup_value, op);
+}
+
+static void	update_pwd(char *path, t_context *context)
+{
+	t_env	*env;
+
+	ft_free(&context->internal_old_pwd);
+	context->internal_old_pwd = context->internal_pwd;
+	context->internal_pwd = path;
+	env = context->env;
+	if (env->is_key_exist(env, KEY_PWD))
+		env_set_dup_key_value(env, KEY_PWD, context->internal_pwd, ENV_ADD);
+	if (env->is_key_exist(env, KEY_OLDPWD))
+		env_set_dup_key_value(env, KEY_OLDPWD, context->internal_old_pwd, ENV_ADD);
+}
+
 // arg
 // NULL   : home
 // -      : OLDPWD
@@ -107,18 +92,16 @@ static void	change_directory(const char *arg, \
 	char	*path;
 	int		tmp_err;
 
-	path = set_cd_path(arg, context->env);
+	path = cd_set_path(arg, context->env);
 	if (!is_valid_cd_path(path, &tmp_err))
 	{
 		print_err_set_status(arg, path, tmp_err, status);
 		ft_free(&path);
 		return ;
 	}
-	cd_to_valid_path(path, context);
+	move_to_valid_path(path, context);
 	// cd success
-	free(context->internal_old_pwd);
-	context->internal_old_pwd = context->internal_pwd;
-	context->internal_pwd = path;
+	update_pwd(path, context);
 }
 
 uint8_t	ft_cd(const char *const *argv, t_context *context)
