@@ -1,17 +1,23 @@
-#include <dirent.h>
 #include <errno.h>
 #include "minishell.h"
 #include "ms_builtin.h"
 #include "ft_mem.h"
 #include "ft_string.h"
 
-static bool	is_invalid_directory_path(int tmp_err)
+static bool	is_permission_denied(int tmp_err)
 {
-	if (tmp_err == 0)
-		return (false);
-	if (tmp_err == EACCES)
-		return (false);
-	return (true);
+	return (tmp_err == EACCES);
+}
+
+static bool	is_valid_old_pwd(const char *path)
+{
+	int		tmp_err;
+
+	if (test_opendir(path, &tmp_err))
+		return (true);
+	if (is_permission_denied(tmp_err))
+		return (true);
+	return (false);
 }
 
 // search path && is invalid directory
@@ -19,16 +25,10 @@ static bool	is_invalid_directory_path(int tmp_err)
 static void	validate_and_delete_old_pwd(t_env *env)
 {
 	char	*dup_path;
-	int		tmp_err;
-	DIR		*dirp;
 
 	dup_path = env->get_value(env, KEY_OLDPWD);
-	errno = 0;
-	dirp = opendir((const char *)dup_path);
-	tmp_err = errno;
-	if (is_invalid_directory_path(tmp_err))
+	if (!is_valid_old_pwd(dup_path))
 		env->unset(env, KEY_OLDPWD);
-	closedir(dirp);
 	ft_free(&dup_path);
 }
 
