@@ -27,7 +27,6 @@ SRCS		+=	$(ENVIRONMENT)/clear.c \
 				$(ENVIRONMENT)/declare_arg.c \
 				$(ENVIRONMENT)/dup_env_key.c \
 				$(ENVIRONMENT)/dup_env_value.c \
-				$(ENVIRONMENT)/separate_env_variables.c \
 				$(ENVIRONMENT)/get_value.c \
 				$(ENVIRONMENT)/init_environ.c \
 				$(ENVIRONMENT)/init_old_pwd.c \

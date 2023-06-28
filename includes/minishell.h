@@ -95,10 +95,6 @@ void		init_pwd(t_env *env);
 int			env_is_key_exist(t_env *env, const char *key);
 void		env_print_detail(t_env *env);
 void		env_print(t_env *env);
-t_result	separate_env_variables(const char *const arg, \
-								char **key, \
-								char **value, \
-								t_env_op *op);
 void		env_set(t_env *env, char *key, char *value, t_env_op op);
 void		env_unset(t_env *env, const char *key);
 
