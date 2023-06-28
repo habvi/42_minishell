@@ -13,15 +13,15 @@ static void	del_env_val(void *value)
 
 static void	set_func(t_env *env)
 {
-	env->is_key_exist = is_key_exist;
+	env->is_key_exist = env_is_key_exist;
 	env->get_value = env_get_value;
 	env->set = env_set;
 	env->unset = env_unset;
 	env->print = env_print;
 	env->print_detail = env_print_detail;
+	env->clear = env_clear;
 }
 
-// if init_environ() -> declare_arg() returns FAILURE, nothing happen & skip.
 static void	get_environ(t_env *env)
 {
 	extern char	**environ;
@@ -32,7 +32,7 @@ static void	get_environ(t_env *env)
 		return ;
 	while (environ[i])
 	{
-		declare_arg(environ[i], env);
+		env_declare_arg(environ[i], env);
 		i++;
 	}
 }
@@ -54,5 +54,7 @@ t_env	*init_environ(void)
 		ft_abort();
 	set_func(env);
 	set_hash(env);
+	init_pwd(env);
+	init_old_pwd(env);
 	return (env);
 }

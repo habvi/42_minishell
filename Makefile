@@ -23,10 +23,10 @@ SRCS		+=	$(BUILTIN_DIR)/ft_echo.c \
 				$(BUILTIN_DIR)/str_to_legal_number.c
 
 ENVIRONMENT	:=	environment
-SRCS		+=	$(ENVIRONMENT)/declare_arg.c \
+SRCS		+=	$(ENVIRONMENT)/clear.c \
+				$(ENVIRONMENT)/declare_arg.c \
 				$(ENVIRONMENT)/dup_env_key.c \
 				$(ENVIRONMENT)/dup_env_value.c \
-				$(ENVIRONMENT)/separate_env_variables.c \
 				$(ENVIRONMENT)/get_value.c \
 				$(ENVIRONMENT)/init_environ.c \
 				$(ENVIRONMENT)/init_old_pwd.c \

@@ -3,9 +3,9 @@
 #include "ft_deque.h"
 #include "ft_dprintf.h"
 #include "ft_hash.h"
+#include "ft_mem.h"
 #include "ft_string.h"
 #include "ft_sys.h"
-#include "ft_mem.h"
 
 static void	set_elem_pointer(t_elem **elems, \
 								t_deque **table, \

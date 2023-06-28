@@ -2,7 +2,7 @@
 #include "ft_deque.h"
 #include "ft_hash.h"
 
-int	is_key_exist(t_env *env, const char *key)
+int	env_is_key_exist(t_env *env, const char *key)
 {
 	t_deque_node	*node;
 

@@ -10,11 +10,15 @@ static bool	set_is_interactive(void)
 	return (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO));
 }
 
-void	init_params(t_params *params)
+// init_environ set also PWD, OLDPWD.
+void	init_context(t_context *context)
 {
-	params->env = init_environ();
-	params->is_interactive = set_is_interactive();
-	init_pwd(&params->pwd, params->env);
-	init_old_pwd(params);
-	params->status = EXIT_SUCCESS;
+	t_env	*env;
+
+	context->env = init_environ();
+	env = context->env;
+	context->internal_pwd = env->get_value(env, KEY_PWD);
+	context->internal_old_pwd = env->get_value(env, KEY_OLDPWD);
+	context->is_interactive = set_is_interactive();
+	context->status = EXIT_SUCCESS;
 }

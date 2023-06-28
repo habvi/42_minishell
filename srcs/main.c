@@ -3,13 +3,13 @@
 
 int	main(void)
 {
-	t_params	params;
+	t_context	context;
 	t_result	result;
 
-	init_params(&params);
-	result = read_eval_print_loop(&params);
-	destroy(params);
+	init_context(&context);
+	result = read_eval_print_loop(&context);
+	destroy(context);
 	if (result == PROCESS_ERROR)
 		return (EXIT_FAILURE);
-	return (params.status);
+	return (context.status);
 }

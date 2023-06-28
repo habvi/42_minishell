@@ -41,7 +41,7 @@
 typedef enum e_result		t_result;
 typedef struct s_env		t_env;
 typedef struct s_deque_node	t_deque_node;
-typedef struct s_params		t_params;
+typedef struct s_context	t_context;
 
 typedef enum e_exit_argument
 {
@@ -51,11 +51,11 @@ typedef enum e_exit_argument
 }	t_exit_arg;
 
 uint8_t	ft_echo(const char *const *argv);
-uint8_t	ft_env(const char *const *argv, t_params *params);
-uint8_t	ft_exit(const char *const *argv, t_params *params);
-uint8_t	ft_export(const char *const *argv, t_params *params);
-uint8_t	ft_pwd(const char *const *argv, t_params *params);
-uint8_t	ft_unset(const char *const *argv, t_params *params);
+uint8_t	ft_env(const char *const *argv, t_env *env);
+uint8_t	ft_exit(const char *const *argv, t_context *context);
+uint8_t	ft_export(const char *const *argv, t_env *env);
+uint8_t	ft_pwd(const char *const *argv, t_context *context);
+uint8_t	ft_unset(const char *const *argv, t_env *env);
 
 bool	is_option(const char *word);
 bool	is_end_of_option(const char *word);

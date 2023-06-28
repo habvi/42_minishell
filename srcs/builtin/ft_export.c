@@ -11,7 +11,7 @@ static void	declare_all(const char *const *args, t_env *env, uint8_t *status)
 	i = 0;
 	while (args[i])
 	{
-		result = declare_arg(args[i], env);
+		result = env_declare_arg(args[i], env);
 		if (result == FAILURE)
 		{
 			*status = NOT_A_VALID_IDENTIFIER;
@@ -23,7 +23,7 @@ static void	declare_all(const char *const *args, t_env *env, uint8_t *status)
 	}
 }
 
-uint8_t	ft_export(const char *const *argv, t_params *params)
+uint8_t	ft_export(const char *const *argv, t_env *env)
 {
 	uint8_t	status;
 	size_t	i;
@@ -34,9 +34,9 @@ uint8_t	ft_export(const char *const *argv, t_params *params)
 		return (status);
 	if (!argv[i])
 	{
-		params->env->print_detail(params->env);
+		env->print_detail(env);
 		return (status);
 	}
-	declare_all(&argv[i], params->env, &status);
+	declare_all(&argv[i], env, &status);
 	return (status);
 }

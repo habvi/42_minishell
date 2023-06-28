@@ -28,8 +28,8 @@
 # define PROMPT_NAME	"minishell "
 
 /* pwd */
-# define PWD			"PWD"
-# define OLDPWD			"OLDPWD"
+# define KEY_PWD		"PWD"
+# define KEY_OLDPWD		"OLDPWD"
 
 # define SHELL_INIT				"shell-init"
 # define ERROR_MSG_GETCWD		"getcwd: cannot access parent directories"
@@ -57,14 +57,14 @@ typedef enum e_env_op
 	ENV_JOIN,
 }	t_env_op;
 
-typedef struct s_params
+typedef struct s_context
 {
 	t_env	*env;
 	bool	is_interactive;
-	char	*pwd;
-	char	*old_pwd;
+	char	*internal_pwd;
+	char	*internal_old_pwd;
 	uint8_t	status;
-}	t_params;
+}	t_context;
 
 struct s_env
 {
@@ -75,6 +75,7 @@ struct s_env
 	void	(*unset)(t_env *env, const char *key);
 	void	(*print)(t_env *env);
 	void	(*print_detail)(t_env *env);
+	void	(*clear)(t_env *env);
 };
 
 // temporarily here ...
@@ -83,25 +84,22 @@ void		debug_func(const char *func_name, const int line_num);
 void		debug_2d_array(char **array);
 
 /* environment */
-t_result	declare_arg(const char *const arg, t_env *env);
+void		env_clear(t_env *env);
+t_result	env_declare_arg(const char *const arg, t_env *env);
 char		*dup_env_key(const char *const arg, size_t *len);
 char		*dup_env_value(const char *const arg);
 char		*env_get_value(t_env *env, char *key);
 t_env		*init_environ(void);
-void		init_old_pwd(t_params *params);
-void		init_pwd(char **pwd, t_env *env);
-int			is_key_exist(t_env *env, const char *key);
+void		init_old_pwd(t_env *env);
+void		init_pwd(t_env *env);
+int			env_is_key_exist(t_env *env, const char *key);
 void		env_print_detail(t_env *env);
 void		env_print(t_env *env);
-t_result	separate_env_variables(const char *const arg, \
-								char **key, \
-								char **value, \
-								t_env_op *op);
 void		env_set(t_env *env, char *key, char *value, t_env_op op);
 void		env_unset(t_env *env, const char *key);
 
 /* destroy */
-void		destroy(t_params params);
+void		destroy(t_context context);
 
 /* input */
 char		*input_line(void);
@@ -114,9 +112,9 @@ char		*get_working_directory(char *for_whom);
 bool		is_valid_key(const char *word);
 
 /* init */
-void		init_params(t_params *params);
+void		init_context(t_context *context);
 
 /* repl */
-t_result	read_eval_print_loop(t_params *params);
+t_result	read_eval_print_loop(t_context *context);
 
 #endif //MINISHELL_H

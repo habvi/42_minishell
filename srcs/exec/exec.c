@@ -6,21 +6,21 @@
 
 static void	exec_builtin_in_parent_proc(t_command cmd, \
 										t_deque_node *exec_cmd, \
-										t_params *params)
+										t_context *context)
 {
 	size_t	cmd_size;
 
 	cmd.next_command = get_next_command(exec_cmd, &cmd_size);
 	cmd.exec_command = convert_command_to_array(exec_cmd, cmd_size);
-	params->status = call_builtin_command(\
-		(const char *const *)cmd.exec_command, params);
+	context->status = call_builtin_command(\
+		(const char *const *)cmd.exec_command, context);
 	free_2d_array(&cmd.exec_command);
 }
 
 static t_result	dup_process_and_run(t_command *cmd, \
 								t_fd *fd, \
 								uint8_t *last_status, \
-								t_params *params)
+								t_context *context)
 {
 	extern char	**environ;
 	pid_t		pid;
@@ -33,9 +33,9 @@ static t_result	dup_process_and_run(t_command *cmd, \
 	pid = x_fork();
 	if (pid == FORK_ERROR)
 		return (PROCESS_ERROR);
-	params->is_interactive = false;
+	context->is_interactive = false;
 	if (pid == CHILD_PID)
-		child_process(cmd, fd, environ, params);
+		child_process(cmd, fd, environ, context);
 	else
 	{
 		if (parent_process(cmd, fd, pid, last_status) == PROCESS_ERROR)
@@ -46,7 +46,7 @@ static t_result	dup_process_and_run(t_command *cmd, \
 
 t_result	exec_command_iter(t_deque_node *exec_cmd, \
 								t_command cmd, \
-								t_params *params)
+								t_context *context)
 {
 	uint8_t	last_status;
 	size_t	cmd_size;
@@ -58,17 +58,17 @@ t_result	exec_command_iter(t_deque_node *exec_cmd, \
 	{
 		cmd.next_command = get_next_command(exec_cmd, &cmd_size);
 		cmd.exec_command = convert_command_to_array(exec_cmd, cmd_size);
-		if (dup_process_and_run(&cmd, &fd, &last_status, params) \
+		if (dup_process_and_run(&cmd, &fd, &last_status, context) \
 															== PROCESS_ERROR)
 			return (PROCESS_ERROR);
 		free_2d_array(&cmd.exec_command);
 		exec_cmd = cmd.next_command;
 	}
-	params->status = last_status;
+	context->status = last_status;
 	return (SUCCESS);
 }
 
-t_result	execute_command(t_deque *dq_cmd, t_params *params)
+t_result	execute_command(t_deque *dq_cmd, t_context *context)
 {
 	t_command		cmd;
 	t_deque_node	*exec_cmd;
@@ -77,10 +77,10 @@ t_result	execute_command(t_deque *dq_cmd, t_params *params)
 	exec_cmd = dq_cmd->node;
 	if (is_single_builtin(exec_cmd))
 	{
-		exec_builtin_in_parent_proc(cmd, exec_cmd, params);
+		exec_builtin_in_parent_proc(cmd, exec_cmd, context);
 		return (SUCCESS);
 	}
-	if (exec_command_iter(exec_cmd, cmd, params) == PROCESS_ERROR)
+	if (exec_command_iter(exec_cmd, cmd, context) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
 	return (SUCCESS);
 }

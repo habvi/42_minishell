@@ -5,7 +5,7 @@
 #include "ft_deque.h"
 #include "ft_mem.h"
 
-t_result	read_eval_print_loop(t_params *params)
+t_result	read_eval_print_loop(t_context *context)
 {
 	t_deque		*command;
 	t_result	result;
@@ -20,7 +20,7 @@ t_result	read_eval_print_loop(t_params *params)
 			break ;
 		command = tokenize(line);
 		ft_free(&line);
-		result = execute_command(command, params);
+		result = execute_command(command, context);
 		deque_clear_all(&command, free);
 		if (result == PROCESS_ERROR)
 			break ;
