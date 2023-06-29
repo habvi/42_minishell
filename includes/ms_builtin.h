@@ -65,13 +65,13 @@ typedef enum e_exit_argument
 	RETURN_TOO_MANY_NUMERIC_ARG,
 }	t_exit_arg;
 
-uint8_t	ft_cd(const char *const *argv, t_context *context);
-uint8_t	ft_echo(const char *const *argv);
-uint8_t	ft_env(const char *const *argv, t_env *env);
-uint8_t	ft_exit(const char *const *argv, t_context *context);
-uint8_t	ft_export(const char *const *argv, t_env *env);
-uint8_t	ft_pwd(const char *const *argv, t_context *context);
-uint8_t	ft_unset(const char *const *argv, t_env *env);
+uint8_t		ft_cd(const char *const *argv, t_context *context);
+uint8_t		ft_echo(const char *const *argv);
+uint8_t		ft_env(const char *const *argv, t_env *env);
+uint8_t		ft_exit(const char *const *argv, t_context *context);
+uint8_t		ft_export(const char *const *argv, t_env *env);
+uint8_t		ft_pwd(const char *const *argv, t_context *context);
+uint8_t		ft_unset(const char *const *argv, t_env *env);
 
 // cd
 t_result	cd_change_dir_to_valid_path(const char *path, \
@@ -79,9 +79,11 @@ t_result	cd_change_dir_to_valid_path(const char *path, \
 										uint8_t *status);
 char		*cd_set_path(const char *arg, t_env *env);
 
-bool	is_option(const char *word);
-bool	is_end_of_option(const char *word);
-bool	is_valid_option(const char *const *argv, uint8_t *status, size_t *i);
-bool	str_to_legal_number(const char *str, long *result);
+bool		is_option(const char *word);
+bool		is_end_of_option(const char *word);
+bool		is_valid_option(const char *const *argv, \
+							uint8_t *status, \
+							size_t *i);
+bool		str_to_legal_number(const char *str, long *result);
 
 #endif //MS_BUILTIN_H
