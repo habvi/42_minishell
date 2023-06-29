@@ -23,13 +23,13 @@ static void	declare_all(const char *const *args, t_context *context, uint8_t *st
 	}
 }
 
-uint8_t	ft_export(const char *const *argv, t_context *content)
+uint8_t	ft_export(const char *const *argv, t_context *context)
 {
 	t_env	*env;
 	uint8_t	status;
 	size_t	i;
 
-	env = content->env;
+	env = context->env;
 	status = EXIT_SUCCESS;
 	i = 1;
 	if (!is_valid_option(argv, &status, &i))
@@ -39,6 +39,6 @@ uint8_t	ft_export(const char *const *argv, t_context *content)
 		env->print_detail(env);
 		return (status);
 	}
-	declare_all(&argv[i], content, &status);
+	declare_all(&argv[i], context, &status);
 	return (status);
 }
