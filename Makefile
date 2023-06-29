@@ -138,6 +138,11 @@ test_all	: all
 test_pipe	: all
 	python3 ./test/integration_test/run_pipe.py
 
+# test builtin cd
+.PHONY		: test_cd
+test_cd		: all
+	python3 ./test/integration_test/run_cd.py
+
 # test builtin echo
 .PHONY		: test_echo
 test_echo	: all
