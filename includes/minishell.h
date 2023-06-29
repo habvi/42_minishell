@@ -14,7 +14,6 @@
 # define PIPE_ERROR		(-1)
 # define READ_ERROR		(-1)
 # define WAIT_ERROR		(-1)
-// # define PROCESS_ERROR	(-1)
 # define UNREACHABLE	(-1)
 
 /* size */
@@ -27,7 +26,7 @@
 # define SHELL_NAME		"minishell"
 # define PROMPT_NAME	"minishell "
 
-/* pwd */
+/* env */
 # define KEY_PWD		"PWD"
 # define KEY_OLDPWD		"OLDPWD"
 # define KEY_HOME		"HOME"
@@ -42,10 +41,6 @@
 typedef enum e_result		t_result;
 typedef struct s_env		t_env;
 typedef struct s_hash_table	t_hash;
-
-// # define SUCCESS	0
-// # define FAILURE	1
-// # define CONTINUE	2
 
 typedef enum e_result
 {
