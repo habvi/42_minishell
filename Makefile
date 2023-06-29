@@ -40,7 +40,8 @@ SRCS		+=	$(ENVIRONMENT)/clear.c \
 				$(ENVIRONMENT)/print.c \
 				$(ENVIRONMENT)/set.c \
 				$(ENVIRONMENT)/set_dup_key_value.c \
-				$(ENVIRONMENT)/unset.c
+				$(ENVIRONMENT)/unset.c \
+				$(ENVIRONMENT)/update_pwd_by_internal.c
 
 DEBUG_DIR	:=	debug
 SRCS		+=	$(DEBUG_DIR)/put.c

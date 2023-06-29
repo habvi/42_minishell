@@ -100,6 +100,9 @@ void		env_set_dup_key_value(t_env *env, \
 									t_env_op op);
 void		env_set(t_env *env, char *key, char *value, t_env_op op);
 void		env_unset(t_env *env, const char *key);
+char		*update_pwd_by_internal(const char *key, \
+									char *value, \
+									t_context *context);
 
 /* destroy */
 void		destroy(t_context context);
