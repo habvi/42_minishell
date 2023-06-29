@@ -74,7 +74,10 @@ uint8_t	ft_pwd(const char *const *argv, t_context *context);
 uint8_t	ft_unset(const char *const *argv, t_env *env);
 
 // cd
-char	*cd_set_path(const char *arg, t_env *env);
+t_result	cd_change_dir_to_valid_path(const char *path, \
+										const char *pwd, \
+										uint8_t *status);
+char		*cd_set_path(const char *arg, t_env *env);
 
 bool	is_option(const char *word);
 bool	is_end_of_option(const char *word);
