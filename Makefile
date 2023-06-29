@@ -38,6 +38,7 @@ SRCS		+=	$(ENVIRONMENT)/clear.c \
 				$(ENVIRONMENT)/print_detail.c \
 				$(ENVIRONMENT)/print.c \
 				$(ENVIRONMENT)/set.c \
+				$(ENVIRONMENT)/set_dup_key_value.c \
 				$(ENVIRONMENT)/unset.c
 
 DEBUG_DIR	:=	debug

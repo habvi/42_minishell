@@ -2,7 +2,6 @@
 #include "minishell.h"
 #include "ms_builtin.h"
 #include "ft_mem.h"
-#include "ft_string.h"
 
 static bool	is_permission_denied(int tmp_err)
 {
@@ -38,12 +37,7 @@ static void	validate_and_delete_old_pwd(t_env *env)
 // value=NULL
 static void	set_only_old_pwd_key(t_env *env)
 {
-	char	*dup_key;
-
-	dup_key = ft_strdup(KEY_OLDPWD);
-	if (!dup_key)
-		ft_abort();
-	env->set(env, dup_key, NULL, ENV_ADD);
+	env_set_dup_key_value(env, KEY_OLDPWD, NULL, ENV_ADD);
 }
 
 void	init_old_pwd(t_env *env)
