@@ -59,9 +59,9 @@ typedef enum e_env_op
 typedef struct s_context
 {
 	t_env	*env;
+	char	*internal_pwd;		// same as shell val, but can't unset
+	char	*internal_old_pwd;	// can unset it
 	bool	is_interactive;
-	char	*internal_pwd;
-	char	*internal_old_pwd;
 	uint8_t	status;
 }	t_context;
 
@@ -84,11 +84,12 @@ void		debug_2d_array(char **array);
 
 /* environment */
 void		env_clear(t_env *env);
-t_result	env_declare_arg(const char *const arg, t_env *env);
+t_result	env_declare_arg(const char *const arg, t_context *context);
+t_result	env_init_declare_arg(const char *const arg, t_context *context);
 char		*dup_env_key(const char *const arg, size_t *len);
 char		*dup_env_value(const char *const arg);
 char		*env_get_value(t_env *env, const char *key);
-t_env		*init_environ(void);
+t_env		*init_environ(t_context *context);
 void		init_old_pwd(t_env *env);
 void		init_pwd(t_env *env);
 int			env_is_key_exist(t_env *env, const char *key);

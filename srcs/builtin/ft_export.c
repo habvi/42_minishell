@@ -3,7 +3,7 @@
 #include "ms_builtin.h"
 #include "ft_dprintf.h"
 
-static void	declare_all(const char *const *args, t_env *env, uint8_t *status)
+static void	declare_all(const char *const *args, t_context *context, uint8_t *status)
 {
 	size_t		i;
 	t_result	result;
@@ -11,7 +11,7 @@ static void	declare_all(const char *const *args, t_env *env, uint8_t *status)
 	i = 0;
 	while (args[i])
 	{
-		result = env_declare_arg(args[i], env);
+		result = env_declare_arg(args[i], context);
 		if (result == FAILURE)
 		{
 			*status = NOT_A_VALID_IDENTIFIER;
@@ -23,11 +23,13 @@ static void	declare_all(const char *const *args, t_env *env, uint8_t *status)
 	}
 }
 
-uint8_t	ft_export(const char *const *argv, t_env *env)
+uint8_t	ft_export(const char *const *argv, t_context *content)
 {
+	t_env	*env;
 	uint8_t	status;
 	size_t	i;
 
+	env = content->env;
 	status = EXIT_SUCCESS;
 	i = 1;
 	if (!is_valid_option(argv, &status, &i))
@@ -37,6 +39,6 @@ uint8_t	ft_export(const char *const *argv, t_env *env)
 		env->print_detail(env);
 		return (status);
 	}
-	declare_all(&argv[i], env, &status);
+	declare_all(&argv[i], content, &status);
 	return (status);
 }

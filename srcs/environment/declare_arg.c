@@ -69,7 +69,7 @@ static t_result	separate_env_variables(const char *const arg, \
 	return (result);
 }
 
-t_result	env_declare_arg(const char *const arg, t_env *env)
+t_result	env_declare_arg(const char *const arg, t_context *context)
 {
 	t_result	result;
 	char		*key;
@@ -79,7 +79,24 @@ t_result	env_declare_arg(const char *const arg, t_env *env)
 	result = separate_env_variables(arg, &key, &value, &op);
 	if (result == FAILURE || result == CONTINUE)
 		return (result);
-	env_set_dup_key_value(env, key, value, op);
+//	value = update_pwd_by_internal(key, value, context);
+	env_set_dup_key_value(context->env, key, value, op);
+	ft_free(&key);
+	ft_free(&value);
+	return (result);
+}
+
+t_result	env_init_declare_arg(const char *const arg, t_context *context)
+{
+	t_result	result;
+	char		*key;
+	char		*value;
+	t_env_op	op;
+
+	result = separate_env_variables(arg, &key, &value, &op);
+	if (result == FAILURE || result == CONTINUE)
+		return (result);
+	env_set_dup_key_value(context->env, key, value, op);
 	ft_free(&key);
 	ft_free(&value);
 	return (result);

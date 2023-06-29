@@ -69,9 +69,9 @@ uint8_t		ft_cd(const char *const *argv, t_context *context);
 uint8_t		ft_echo(const char *const *argv);
 uint8_t		ft_env(const char *const *argv, t_env *env);
 uint8_t		ft_exit(const char *const *argv, t_context *context);
-uint8_t		ft_export(const char *const *argv, t_env *env);
+uint8_t		ft_export(const char *const *argv, t_context *context);
 uint8_t		ft_pwd(const char *const *argv, t_context *context);
-uint8_t		ft_unset(const char *const *argv, t_env *env);
+uint8_t		ft_unset(const char *const *argv, t_context *context);
 
 // cd
 t_result	cd_change_dir_to_valid_path(const char *path, \

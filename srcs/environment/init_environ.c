@@ -22,7 +22,7 @@ static void	set_func(t_env *env)
 	env->clear = env_clear;
 }
 
-static void	get_environ(t_env *env)
+static void	set_environ_to_hash(t_context *context)
 {
 	extern char	**environ;
 	size_t		i;
@@ -32,28 +32,32 @@ static void	get_environ(t_env *env)
 		return ;
 	while (environ[i])
 	{
-		env_declare_arg(environ[i], env);
+		env_init_declare_arg(environ[i], context);
 		i++;
 	}
 }
 
-static void	set_hash(t_env *env)
+static void	set_env_default_hash(t_context *context)
 {
+	t_env	*env;
+
+	env = context->env;
 	env->hash = hs_create_table(ENV_LIST_SIZE, del_env_val);
 	if (!env->hash)
 		ft_abort();
-	get_environ(env);
+	set_environ_to_hash(context);
 }
 
-t_env	*init_environ(void)
+t_env	*init_environ(t_context *context)
 {
 	t_env	*env;
 
 	env = (t_env *)x_malloc(sizeof(t_env));
 	if (!env)
 		ft_abort();
+	context->env = env;
 	set_func(env);
-	set_hash(env);
+	set_env_default_hash(context);
 	init_pwd(env);
 	init_old_pwd(env);
 	return (env);
