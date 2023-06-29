@@ -32,6 +32,9 @@
 # define KEY_OLDPWD		"OLDPWD"
 # define KEY_HOME		"HOME"
 
+/* path */
+# define ABSOLUTE_PATH_HEAD	'/'
+
 # define SHELL_INIT				"shell-init"
 # define ERROR_MSG_GETCWD		"getcwd: cannot access parent directories"
 # define ERROR_MSG_RETRIEVE_CWD	"error retrieving current directory"

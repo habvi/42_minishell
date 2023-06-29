@@ -21,6 +21,9 @@
 # define CD_ARG_HOME		"~"
 # define CD_ARG_OLDPWD		"-"
 
+/* return value */
+# define CHDIR_ERROR			(-1)
+
 // todo: naming...
 # define EXIT_ONLY_CMD_CNT		1
 # define EXIT_ARG_IDX			1
