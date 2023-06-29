@@ -11,7 +11,7 @@ static char	*get_pwd(t_context *context)
 {
 	char	*pwd;
 
-	if (context->internal_pwd)
+	if (context->internal_pwd) // for mac and rm $PWD
 	{
 		pwd = ft_strdup(context->internal_pwd);
 		if (!pwd)

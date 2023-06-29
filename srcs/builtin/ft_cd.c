@@ -49,16 +49,24 @@ static void	cd_update_pwd(char *path, t_context *context)
 	char	*pwd_value;
 	char	*old_pwd_value;
 
+	env = context->env;
+	ft_dprintf(2, "1 - pwd(i):%s, old(i):%s, PWD(h):%s, OLD(h):%s\n\n", \
+	context->internal_pwd, context->internal_old_pwd, \
+	env->get_value(env, KEY_PWD), env->get_value(env, KEY_OLDPWD));
+
 	ft_free(&context->internal_old_pwd);
 	context->internal_old_pwd = context->internal_pwd;
 	context->internal_pwd = path;
-	env = context->env;
 	pwd_value = context->internal_pwd;
-	old_pwd_value = context->internal_old_pwd;
+	old_pwd_value = env->get_value(env, KEY_PWD);
+//	old_pwd_value = context->internal_old_pwd;
 	if (env->is_key_exist(env, KEY_PWD))
 		env_set_dup_key_value(env, KEY_PWD, pwd_value, ENV_ADD);
 	if (env->is_key_exist(env, KEY_OLDPWD))
 		env_set_dup_key_value(env, KEY_OLDPWD, old_pwd_value, ENV_ADD);
+	ft_dprintf(2, "2 - pwd(i):%s, old(i):%s, PWD(h):%s, OLD(h):%s\n\n", \
+	context->internal_pwd, context->internal_old_pwd, \
+	env->get_value(env, KEY_PWD), env->get_value(env, KEY_OLDPWD));
 }
 
 // arg
