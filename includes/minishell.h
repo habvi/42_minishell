@@ -99,6 +99,10 @@ void		env_set_dup_key_value(t_env *env, \
 									const char *key, \
 									const char *value, \
 									t_env_op op);
+void		env_set_dup_key_value_allow_null(t_env *env, \
+												const char *key, \
+												const char *value, \
+												t_env_op op);
 void		env_set(t_env *env, char *key, char *value, t_env_op op);
 void		env_unset(t_env *env, const char *key);
 char		*swap_pwd_value(char *value, const char *new_value);
