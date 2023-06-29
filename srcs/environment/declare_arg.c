@@ -79,10 +79,15 @@ t_result	env_declare_arg(const char *const arg, t_context *context)
 	result = separate_env_variables(arg, &key, &value, &op);
 	if (result == FAILURE || result == CONTINUE)
 		return (result);
-//	value = update_pwd_by_internal(key, value, context);
-	env_set_dup_key_value(context->env, key, value, op);
-	ft_free(&key);
-	ft_free(&value);
+	env_set_dup_key_value(env, key, value, op);
+
+	// if (ft_streq(key, KEY_PWD))
+	// 	value = swap_pwd_value(value, context->internal_pwd);
+	// if (ft_streq(key, KEY_OLDPWD))
+	// 	value = swap_pwd_value(value, context->internal_old_pwd);
+	// env_set_dup_key_value(context->env, key, value, op);
+	// ft_free(&key);
+	// ft_free(&value);
 	return (result);
 }
 
