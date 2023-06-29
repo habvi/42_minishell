@@ -53,15 +53,19 @@ static void	print_err_set_status(const char *arg, \
 static void	update_pwd(char *path, t_context *context)
 {
 	t_env	*env;
+	char	*pwd_value;
+	char	*old_pwd_value;
 
 	ft_free(&context->internal_old_pwd);
 	context->internal_old_pwd = context->internal_pwd;
 	context->internal_pwd = path;
 	env = context->env;
+	pwd_value = context->internal_pwd;
+	old_pwd_value = context->internal_old_pwd;
 	if (env->is_key_exist(env, KEY_PWD))
-		env_set_dup_key_value(env, KEY_PWD, context->internal_pwd, ENV_ADD);
+		env_set_dup_key_value(env, KEY_PWD, pwd_value, ENV_ADD);
 	if (env->is_key_exist(env, KEY_OLDPWD))
-		env_set_dup_key_value(env, KEY_OLDPWD, context->internal_old_pwd, ENV_ADD);
+		env_set_dup_key_value(env, KEY_OLDPWD, old_pwd_value, ENV_ADD);
 }
 
 // arg

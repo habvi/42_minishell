@@ -2,6 +2,7 @@
 #include "ft_string.h"
 #include "ft_mem.h"
 
+// key : valid key
 void	env_set_dup_key_value(t_env *env, \
 								const char *key, \
 								const char *value, \
@@ -10,13 +11,9 @@ void	env_set_dup_key_value(t_env *env, \
 	char	*dup_key;
 	char	*dup_value;
 
-	dup_key = NULL;
-	if (key)
-	{
-		dup_key = ft_strdup(key);
-		if (!dup_key)
-			ft_abort();
-	}
+	dup_key = ft_strdup(key);
+	if (!dup_key)
+		ft_abort();
 	dup_value = NULL;
 	if (value)
 	{
