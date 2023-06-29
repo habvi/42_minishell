@@ -5,7 +5,7 @@
 #include "ft_string.h"
 #include "ft_mem.h"
 
-static bool	is_absolute_path(const char *path)
+bool	is_absolute_path(const char *path)
 {
 	return (path[0] == ABSOLUTE_PATH_HEAD);
 }
@@ -20,13 +20,36 @@ static t_result	exec_chdir(const char *path, uint8_t *status)
 	return (SUCCESS);
 }
 
-static char	*join_pwd_and_relative(const char *pwd, const char *relative_path)
+static bool	is_tail_slash(const char *path)
 {
+	const size_t	size = ft_strlen(path);
+
+	if (!path)
+		return (false);
+	return (path[size - 1] == '/');
+}
+
+// make absolute_path
+char	*join_pwd_and_relative(const char *pwd, const char *relative_path)
+{
+	char	*tmp;
 	char	*absolute_path;
 
-	absolute_path = ft_strjoin(pwd, relative_path);
-	if (!absolute_path)
-		ft_abort();
+	if (is_tail_slash(pwd))
+	{
+		absolute_path = ft_strjoin(pwd, relative_path);
+		if (!absolute_path)
+			ft_abort();
+	}
+	else
+	{
+		tmp = ft_strjoin(pwd, "/");
+		if (!tmp)
+			ft_abort();
+		absolute_path = ft_strjoin(tmp, relative_path);
+		if (!absolute_path)
+			ft_abort();
+	}
 	return (absolute_path);
 }
 

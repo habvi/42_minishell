@@ -2,7 +2,7 @@
 #include "ft_mem.h"
 #include "ft_string.h"
 
-static char	*swap_pwd_value(char *value, const char *new_value)
+char	*swap_pwd_value(char *value, const char *new_value)
 {
 	char	*dup_value;
 

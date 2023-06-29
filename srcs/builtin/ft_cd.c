@@ -81,6 +81,7 @@ static void	change_directory(const char *arg, \
 	char		*path;
 	int			tmp_err;
 	t_result	result;
+	char		*absolute_path;
 
 	path = cd_set_path(arg, context->env);
 	if (!is_valid_cd_path(path, &tmp_err))
@@ -95,10 +96,15 @@ static void	change_directory(const char *arg, \
 		ft_free(&path);
 		return ;
 	}
-	// -> absolute path
-	ft_free(&path);
-	path = get_working_directory("cd");
-	cd_update_pwd(path, context);
+	// path -> absolute path
+	if (is_absolute_path(path))
+		absolute_path = path;
+	else
+	{
+		absolute_path = join_pwd_and_relative(context->internal_pwd, path);
+		ft_free(&path);
+	}
+	cd_update_pwd(absolute_path, context);
 }
 
 uint8_t	ft_cd(const char *const *argv, t_context *context)

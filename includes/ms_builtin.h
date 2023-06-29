@@ -74,6 +74,8 @@ uint8_t		ft_pwd(const char *const *argv, t_context *context);
 uint8_t		ft_unset(const char *const *argv, t_context *context);
 
 // cd
+bool		is_absolute_path(const char *path);
+char		*join_pwd_and_relative(const char *pwd, const char *relative_path);
 t_result	cd_change_dir_to_valid_path(const char *path, \
 										const char *pwd, \
 										uint8_t *status);
