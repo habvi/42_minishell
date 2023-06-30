@@ -48,6 +48,7 @@ typedef enum e_result
 
 typedef enum e_var_attr
 {
+	VAR_NONE,
 	VAR_ENV,
 	VAR_SHELL,
 }	t_var_attr;
@@ -103,6 +104,7 @@ char		*dup_env_value(const char *const arg);
 char		*ft_strdup_abort(const char *str);
 void		dup_key_info_pair(const char *key, const t_var_info *info, char **dup_key, t_var_info **dup_info);
 char		*env_get_value(t_env *env, char *key);
+t_var_attr	env_get_attribute(t_env *env, char *key);
 int			env_is_key_exist(t_env *env, const char *key);
 
 void		env_add(t_env *env, const char *key, const t_var_info *info);
