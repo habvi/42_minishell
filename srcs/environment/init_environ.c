@@ -11,6 +11,18 @@ static void	del_env_val(void *value)
 	ft_free(&val);
 }
 
+void	del_var_info(void **var_info)
+{
+	t_var_info	*info;
+
+	if (!var_info || !*var_info)
+		return ;
+	info = (t_var_info *)*var_info;
+	ft_free(&info->value);
+	ft_free(&info);
+	*var_info = NULL;
+}
+
 static void	set_func(t_env *env)
 {
 	env->is_key_exist = env_is_key_exist;
@@ -39,12 +51,13 @@ static void	get_environ(t_env *env)
 
 static void	set_hash(t_env *env)
 {
-	env->hash = hs_create_table(ENV_LIST_SIZE, del_env_val);
+	env->hash = hs_create_table(ENV_LIST_SIZE, del_var_info);
 	if (!env->hash)
 		ft_abort();
 	get_environ(env);
 }
 
+// todo: pwd -> PWD etc
 t_env	*init_environ(t_context *context)
 {
 	t_env	*env;

@@ -2,6 +2,7 @@
 #include "ms_builtin.h"
 #include "ft_mem.h"
 #include "ft_string.h"
+#include "ft_sys.h"
 
 static bool	is_only_key(const char c)
 {
@@ -49,6 +50,7 @@ static t_result	validate_env_key(char *key)
 // key+=value -> key  value  += (JOIN)
 // key+=      -> key  ""     += (JOIN)
 // key        -> key  NULL      (ADD)
+
 static t_result	separate_env_variables(const char *const arg, \
 										char **key, \
 										char **value, \
@@ -69,16 +71,40 @@ static t_result	separate_env_variables(const char *const arg, \
 	return (result);
 }
 
-t_result	env_declare_arg(const char *const arg, t_env *env)
+// all malloc ?
+// key=value -> key, = ,value, attr
+t_var_info	*env_create_var_info(const char *value, t_var_attr attr)
+{
+	t_var_info	*info;
+
+	info = (t_var_info *)x_malloc(sizeof(t_var_info));
+	if (!info)
+		ft_abort();
+	info->value = value;
+	info->attr = attr;
+	return (info);
+}
+
+// arg: key=value
+t_result	env_declare_arg(const char *const arg, t_env *env, t_var_attr attr)
 {
 	t_result	result;
 	char		*key;
 	char		*value;
+	t_var_info	*var_info;
 	t_env_op	op;
 
 	result = separate_env_variables(arg, &key, &value, &op);
 	if (result == FAILURE || result == CONTINUE)
 		return (result);
-	env->set(env, key, value, op);
+	var_info = env_create_var_info(value, attr); // todo: value, attr -> t_var_info
+	env->set(env, key, var_info, op);
 	return (result);
 }
+
+// k, v, attr, env, op
+// if (op == ADD)
+//   env->add
+// else
+//   env->join
+//

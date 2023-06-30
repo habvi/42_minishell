@@ -72,12 +72,17 @@ typedef struct s_context
 	uint8_t	status;
 }	t_context;
 
+// key - var_info paris
 struct s_env
 {
 	t_hash	*hash;
 	int		(*is_key_exist)(t_env *env, const char *key);
 	char	*(*get_value)(t_env *env, char *key);
 	void	(*set)(t_env *env, char *key, char *value, t_env_op op);
+
+	void	(*add)(t_env *env, const char *key, const t_var_info *info);
+	void	(*join)(t_env *env, const char *key, const t_var_info *var_info);
+
 	void	(*unset)(t_env *env, const char *key);
 	void	(*print)(t_env *env);
 	void	(*print_detail)(t_env *env);
@@ -91,6 +96,7 @@ void		debug_2d_array(char **array);
 
 /* environment */
 void		env_clear(t_env *env);
+t_var_info	*env_create_var_info(char *value, t_var_attr attr);
 t_result	env_declare_arg(const char *const arg, t_env *env);
 char		*dup_env_key(const char *const arg, size_t *len);
 char		*dup_env_value(const char *const arg);
@@ -101,8 +107,15 @@ void		init_pwd(t_env *env);
 int			env_is_key_exist(t_env *env, const char *key);
 void		env_print_detail(t_env *env);
 void		env_print(t_env *env);
-void		env_set(t_env *env, char *key, char *value, t_env_op op);
+//void		env_set(t_env *env, char *key, char *value, t_env_op op);
+
+void		env_add(t_env *env, const char *key, const t_var_info *info);
+void		env_create_info_add(t_env *env, const char *key, const char *value, t_var_attr attr);
+void		env_join(t_env *env, const char *key, const t_var_info *var_info);
+void		env_create_info_join(t_env *env, const char *key, const char *value, t_var_attr attr);
+
 void		env_unset(t_env *env, const char *key);
+void		del_var_info(void *var_info);
 
 /* destroy */
 void		destroy(t_context context);
