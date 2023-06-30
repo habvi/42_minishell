@@ -7,12 +7,16 @@
 // use case : expansion, etc.
 char	*env_get_value(t_env *env, char *key)
 {
-	char	*value;
-	char	*dup_value;
+	t_var_info	*var_info;
+	char		*value;
+	char		*dup_value;
 
-	value = hs_get_value(env->hash, key);
+	var_info = (t_var_info *)hs_get_value(env->hash, key);
+	if (!var_info)
+		return (NULL);
+	value = var_info->value;
 	if (!value)
-		value = "";
+		return (NULL);
 	dup_value = ft_strdup(value);
 	if (!dup_value)
 		ft_abort();
