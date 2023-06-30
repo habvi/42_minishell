@@ -2,6 +2,7 @@
 #include "ft_deque.h"
 #include "ft_hash.h"
 #include "ft_mem.h"
+#include "ft_string.h"
 
 static char	*join_new_value(char *pre, char *new)
 {
@@ -26,7 +27,7 @@ static void	env_join_value_update(t_env *env, char *key, t_var_info *var_info, t
 	info = (t_var_info *)elem->value;
 	joined_value = join_new_value(info->value, var_info->value); // s1 + s2
 	hs_update_value(&key, joined_value, node, env->hash->del_hash_value);
-	del_var_info(&var_info);
+	del_var_info((void **)&var_info);
 }
 
 // allocate dup_key, dup_info
@@ -54,5 +55,5 @@ void	env_create_info_join(t_env *env, const char *key, const char *value, t_var_
 
 	info = env_create_var_info(value, attr);
 	env_join(env, key, info);
-	del_var_info(&info);
+	del_var_info((void **)&info);
 }

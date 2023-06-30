@@ -116,7 +116,7 @@ void		env_join(t_env *env, const char *key, const t_var_info *var_info);
 void		env_create_info_join(t_env *env, const char *key, const char *value, t_var_attr attr);
 
 void		env_unset(t_env *env, const char *key);
-void		del_var_info(void *var_info);
+void		del_var_info(void **var_info);
 
 /* destroy */
 void		destroy(t_context context);

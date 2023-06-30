@@ -34,5 +34,5 @@ void	env_create_info_add(t_env *env, const char *key, const char *value, t_var_a
 
 	info = env_create_var_info(value, attr);
 	env_add(env, key, info);
-	del_var_info(&info);
+	del_var_info((void **)&info);
 }

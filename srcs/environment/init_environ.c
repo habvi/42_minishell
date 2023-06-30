@@ -3,14 +3,6 @@
 #include "ft_mem.h"
 #include "ft_sys.h"
 
-static void	del_env_val(void *value)
-{
-	char	*val;
-
-	val = value;
-	ft_free(&val);
-}
-
 void	del_var_info(void **var_info)
 {
 	t_var_info	*info;

@@ -76,7 +76,6 @@ static t_result	separate_env_variables(const char *const arg, \
 t_var_info	*env_create_var_info(const char *value, t_var_attr attr)
 {
 	t_var_info	*info;
-	char		*dup_value;
 
 	info = (t_var_info *)x_malloc(sizeof(t_var_info));
 	if (!info)
@@ -105,7 +104,7 @@ t_result	env_declare_arg(const char *const arg, t_env *env, t_var_attr attr)
 		env->join(env, key, var_info);
 	ft_free(&key);
 	ft_free(&value);
-	del_var_info(&var_info);
+	del_var_info((void **)&var_info);
 	return (result);
 }
 
