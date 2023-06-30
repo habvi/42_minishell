@@ -45,7 +45,6 @@ static int	test(const char *const *cmds, int expected_status, int test_no)
 		.env = NULL, \
 		.is_interactive = true, \
 		.internal_pwd = NULL, \
-		.internal_old_pwd = NULL, \
 		.status = 0};
 
 	pid = fork();

@@ -14,7 +14,6 @@
 # define PIPE_ERROR		(-1)
 # define READ_ERROR		(-1)
 # define WAIT_ERROR		(-1)
-// # define PROCESS_ERROR	(-1)
 # define UNREACHABLE	(-1)
 
 /* size */
@@ -39,10 +38,6 @@ typedef enum e_result		t_result;
 typedef struct s_env		t_env;
 typedef struct s_hash_table	t_hash;
 
-// # define SUCCESS	0
-// # define FAILURE	1
-// # define CONTINUE	2
-
 typedef enum e_result
 {
 	PROCESS_ERROR = -1,
@@ -51,18 +46,29 @@ typedef enum e_result
 	CONTINUE = 2,
 }	t_result;
 
+typedef enum e_var_attr
+{
+	VAR_ENV,
+	VAR_SHELL,
+}	t_var_attr;
+
 typedef enum e_env_op
 {
 	ENV_ADD,
 	ENV_JOIN,
 }	t_env_op;
 
+typedef struct s_variable
+{
+	char		*value;
+	t_var_attr	attr;
+}	t_var_info;
+
 typedef struct s_context
 {
 	t_env	*env;
 	bool	is_interactive;
 	char	*internal_pwd;
-	char	*internal_old_pwd;
 	uint8_t	status;
 }	t_context;
 
@@ -89,7 +95,7 @@ t_result	env_declare_arg(const char *const arg, t_env *env);
 char		*dup_env_key(const char *const arg, size_t *len);
 char		*dup_env_value(const char *const arg);
 char		*env_get_value(t_env *env, char *key);
-t_env		*init_environ(void);
+t_env		*init_environ(t_context *context);
 void		init_old_pwd(t_env *env);
 void		init_pwd(t_env *env);
 int			env_is_key_exist(t_env *env, const char *key);

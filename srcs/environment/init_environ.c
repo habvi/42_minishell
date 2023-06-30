@@ -45,10 +45,11 @@ static void	set_hash(t_env *env)
 	get_environ(env);
 }
 
-t_env	*init_environ(void)
+t_env	*init_environ(t_context *context)
 {
 	t_env	*env;
 
+	(void)context;
 	env = (t_env *)x_malloc(sizeof(t_env));
 	if (!env)
 		ft_abort();
