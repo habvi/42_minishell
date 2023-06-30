@@ -59,8 +59,8 @@ typedef enum e_env_op
 typedef struct s_context
 {
 	t_env	*env;
-	char	*internal_pwd;		// same as shell val, but can't unset
-	char	*internal_old_pwd;	// can unset it
+	char	*internal_pwd;		// internal shell var, can unset
+	char	*internal_old_pwd;	// internal shell var, can unset
 	bool	is_interactive;
 	uint8_t	status;
 }	t_context;
