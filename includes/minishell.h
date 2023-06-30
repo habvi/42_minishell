@@ -104,7 +104,8 @@ t_env		*init_environ(t_context *context);
 void		init_old_pwd(t_env *env);
 void		init_pwd(t_env *env);
 int			env_is_key_exist(t_env *env, const char *key);
-void		env_print_detail(t_env *env);
+//void		env_print_detail(t_env *env);
+void		env_print_detail(t_env *env, t_var_attr attr);
 void		env_print(t_env *env);
 
 void		env_add(t_env *env, const char *key, const t_var_info *info);

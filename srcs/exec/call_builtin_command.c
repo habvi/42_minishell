@@ -2,6 +2,7 @@
 #include "ms_builtin.h"
 #include "ft_string.h"
 
+//todo: sort
 uint8_t	call_builtin_command(const char *const *argv, t_context *context)
 {
 	if (ft_streq(argv[0], CMD_ECHO))
@@ -10,6 +11,8 @@ uint8_t	call_builtin_command(const char *const *argv, t_context *context)
 //		return (true);
 	if (ft_streq(argv[0], CMD_PWD))
 		return (ft_pwd(argv, context));
+	if (ft_streq(argv[0], CMD_SET))
+		return (ft_set(argv, context->env));
 	if (ft_streq(argv[0], CMD_EXPORT))
 		return (ft_export(argv, context->env));
 	if (ft_streq(argv[0], CMD_UNSET))
