@@ -31,13 +31,13 @@ SRCS		+=	$(ENVIRONMENT)/add.c \
 				$(ENVIRONMENT)/dup_env_value.c \
 				$(ENVIRONMENT)/dup_key_info_pair.c \
 				$(ENVIRONMENT)/get_value.c \
-				$(ENVIRONMENT)/init_environ.c \
-				$(ENVIRONMENT)/init_old_pwd.c \
-				$(ENVIRONMENT)/init_pwd.c \
 				$(ENVIRONMENT)/is_key_exist.c \
 				$(ENVIRONMENT)/join.c \
 				$(ENVIRONMENT)/print_detail.c \
 				$(ENVIRONMENT)/print.c \
+				$(ENVIRONMENT)/set_default_environ.c \
+				$(ENVIRONMENT)/set_default_old_pwd.c \
+				$(ENVIRONMENT)/set_default_pwd.c \
 				$(ENVIRONMENT)/unset.c
 
 DEBUG_DIR	:=	debug

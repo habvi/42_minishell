@@ -42,7 +42,7 @@ static void	get_environ(t_env *env)
 	}
 }
 
-static void	set_hash(t_env *env)
+static void	set_env_default_hash(t_env *env)
 {
 	env->hash = hs_create_table(ENV_LIST_SIZE, del_var_info);
 	if (!env->hash)
@@ -50,18 +50,17 @@ static void	set_hash(t_env *env)
 	get_environ(env);
 }
 
-// todo: pwd -> PWD etc
-t_env	*init_environ(t_context *context)
+t_env	*set_default_environ(t_context *context)
 {
 	t_env	*env;
 
-	(void)context;
 	env = (t_env *)x_malloc(sizeof(t_env));
 	if (!env)
 		ft_abort();
+	context->env = env;
 	set_func(env);
-	set_hash(env);
-	init_pwd(env);
-	init_old_pwd(env);
+	set_env_default_hash(context->env);
+	set_default_pwd(env);
+	set_default_old_pwd(env); // todo
 	return (env);
 }

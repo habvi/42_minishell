@@ -18,12 +18,12 @@ static bool	set_is_interactive(void)
 	return (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO));
 }
 
-// init_environ set also PWD, OLDPWD.
+// set_default_environ set also PWD, OLDPWD.
 static void	set_context_default_value(t_context *context)
 {
 	t_env	*env;
 
-	context->env = init_environ(context);
+	context->env = set_default_environ(context);
 	env = context->env;
 	context->internal_pwd = env->get_value(env, KEY_PWD);
 	context->is_interactive = set_is_interactive();

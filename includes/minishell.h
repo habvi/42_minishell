@@ -92,7 +92,10 @@ void		debug_func(const char *func_name, const int line_num);
 void		debug_2d_array(char **array);
 
 /* environment */
-void		env_clear(t_env *env);
+t_env		*set_default_environ(t_context *context);
+void		set_default_old_pwd(t_env *env);
+void		set_default_pwd(t_env *env);
+
 t_var_info	*env_create_var_info(const char *value, t_var_attr attr);
 t_result	env_declare_arg(const char *const arg, t_env *env, t_var_attr attr);
 char		*dup_env_key(const char *const arg, size_t *len);
@@ -100,21 +103,19 @@ char		*dup_env_value(const char *const arg);
 char		*ft_strdup_abort(const char *str);
 void		dup_key_info_pair(const char *key, const t_var_info *info, char **dup_key, t_var_info **dup_info);
 char		*env_get_value(t_env *env, char *key);
-t_env		*init_environ(t_context *context);
-void		init_old_pwd(t_env *env);
-void		init_pwd(t_env *env);
 int			env_is_key_exist(t_env *env, const char *key);
-//void		env_print_detail(t_env *env);
-void		env_print_detail(t_env *env, t_var_attr attr);
-void		env_print(t_env *env);
 
 void		env_add(t_env *env, const char *key, const t_var_info *info);
 void		env_create_info_add(t_env *env, const char *key, const char *value, t_var_attr attr);
 void		env_join(t_env *env, const char *key, const t_var_info *var_info);
 void		env_create_info_join(t_env *env, const char *key, const char *value, t_var_attr attr);
 
+void		env_print_detail(t_env *env, t_var_attr attr);
+void		env_print(t_env *env);
+
 void		env_unset(t_env *env, const char *key);
 void		del_var_info(void **var_info);
+void		env_clear(t_env *env);
 
 /* destroy */
 void		destroy(t_context context);

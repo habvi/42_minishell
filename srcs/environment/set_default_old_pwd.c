@@ -44,7 +44,7 @@
 // 	env->add(env, dup_key, NULL);
 // }
 
-void	init_old_pwd(t_env *env)
+void	set_default_old_pwd(t_env *env)
 {
 	(void)env;
 	// if (env->is_key_exist(env, KEY_OLDPWD))

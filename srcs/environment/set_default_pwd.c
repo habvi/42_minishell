@@ -3,7 +3,7 @@
 #include "ft_mem.h"
 #include "ft_string.h"
 
-void	init_pwd(t_env *env)
+void	set_default_pwd(t_env *env)
 {
 	char	*pwd_path;
 
