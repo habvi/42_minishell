@@ -2,11 +2,11 @@
 #include "ft_mem.h"
 #include "ft_sys.h"
 
-t_hash	*hs_create_table(size_t size, void (*del_value)(void *))
+t_hash	*hs_create_table(size_t size, void (*del_hash_value)(void **))
 {
 	t_hash	*hash;
 
-	if (!del_value)
+	if (!del_hash_value)
 		return (NULL);
 	if (!size)
 		size++;
@@ -21,6 +21,6 @@ t_hash	*hs_create_table(size_t size, void (*del_value)(void *))
 		ft_free(&hash);
 		return (NULL);
 	}
-	hash->del_value = del_value;
+	hash->del_hash_value = del_hash_value;
 	return (hash);
 }
