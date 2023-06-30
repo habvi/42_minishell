@@ -99,6 +99,10 @@ void		env_set_dup_key_value(t_env *env, \
 									const char *key, \
 									const char *value, \
 									t_env_op op);
+void		env_set_pwd_dup_key_value(t_context *context, \
+									const char *key, \
+									char **value, \
+									t_env_op op);
 t_result	env_separate_key_value(const char *const arg, \
 									char **key, \
 									char **value, \

@@ -20,12 +20,18 @@ char	*update_pwd_by_internal(const char *key, \
 								char *value, \
 								t_context *context)
 {
+	t_env	*env;
 	char	*new_value;
 
+	env = context->env;
 	if (ft_streq(key, KEY_PWD))
 		new_value = swap_pwd_value(value, context->internal_pwd);
 	else if (ft_streq(key, KEY_OLDPWD))
+	{
+		if (env->is_key_exist(env, KEY_OLDPWD)) //todo: sep and move
+			env->unset(env, KEY_OLDPWD);
 		new_value = swap_pwd_value(value, context->internal_old_pwd);
+	}
 	else
 		new_value = value;
 	return (new_value);

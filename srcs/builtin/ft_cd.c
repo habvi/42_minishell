@@ -46,27 +46,21 @@ static void	print_err_set_status(const char *arg, \
 static void	cd_update_pwd(char *path, t_context *context)
 {
 	t_env	*env;
-	char	*pwd_value;
-	char	*old_pwd_value;
+	char	*new_pwd;
+	char	*new_old_pwd;
 
 	env = context->env;
-	ft_dprintf(2, "1 - pwd(i):%s, old(i):%s, PWD(h):%s, OLD(h):%s\n\n", \
-	context->internal_pwd, context->internal_old_pwd, \
-	env->get_value(env, KEY_PWD), env->get_value(env, KEY_OLDPWD));
-
 	ft_free(&context->internal_old_pwd);
 	context->internal_old_pwd = context->internal_pwd;
 	context->internal_pwd = path;
-	pwd_value = context->internal_pwd;
-	old_pwd_value = env->get_value(env, KEY_PWD);
-//	old_pwd_value = context->internal_old_pwd;
+	new_pwd = ft_strdup(context->internal_pwd);
+	new_old_pwd = env->get_value(env, KEY_PWD);
+//	ft_dprintf(2, "new_old:%s\n", new_old_pwd);// can't OLDPWD=NULL...
 	if (env->is_key_exist(env, KEY_PWD))
-		env_set_dup_key_value(env, KEY_PWD, pwd_value, ENV_ADD);
+		env_set_pwd_dup_key_value(context, KEY_PWD, &new_pwd, ENV_ADD);
 	if (env->is_key_exist(env, KEY_OLDPWD))
-		env_set_dup_key_value(env, KEY_OLDPWD, old_pwd_value, ENV_ADD);
-	ft_dprintf(2, "2 - pwd(i):%s, old(i):%s, PWD(h):%s, OLD(h):%s\n\n", \
-	context->internal_pwd, context->internal_old_pwd, \
-	env->get_value(env, KEY_PWD), env->get_value(env, KEY_OLDPWD));
+		env_set_pwd_dup_key_value(context, KEY_OLDPWD, &new_old_pwd, ENV_ADD);
+	ft_free(&new_old_pwd);
 }
 
 // arg
