@@ -2,6 +2,7 @@
 #include "ft_deque.h"
 #include "ft_string.h"
 
+// todo: sort
 //echo, cd, pwd, export, unset, env, exit
 bool	is_command_builtin(const char *cmd)
 {
@@ -12,6 +13,8 @@ bool	is_command_builtin(const char *cmd)
 	if (ft_streq(cmd, CMD_CD))
 		return (true);
 	if (ft_streq(cmd, CMD_PWD))
+		return (true);
+	if (ft_streq(cmd, CMD_SET))
 		return (true);
 	if (ft_streq(cmd, CMD_EXPORT))
 		return (true);

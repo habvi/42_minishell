@@ -77,10 +77,10 @@ int	hs_rehash_table(t_hash *hash)
 		return (HASH_ERROR);
 	if (move_all_elem_to_new(hash, new_table, new_table_size) == HASH_ERROR)
 	{
-		hs_clear_table(new_table, new_table_size, hash->del_value);
+		hs_clear_table(new_table, new_table_size, hash->del_hash_value);
 		return (HASH_ERROR);
 	}
-	hs_clear_table(hash->table, hash->table_size, hash->del_value);
+	hs_clear_table(hash->table, hash->table_size, hash->del_hash_value);
 	hash->table_size = new_table_size;
 	hash->table = new_table;
 	return (HASH_SUCCESS);

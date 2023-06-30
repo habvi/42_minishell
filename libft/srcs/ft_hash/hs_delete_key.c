@@ -15,6 +15,6 @@ void	hs_delete_key(t_hash *hash, const char *key)
 	hash_val = hs_gen_fnv((const unsigned char *)key, hash->table_size);
 	head = hash->table[hash_val];
 	deque_pop_selected_node(head, target_node);
-	hs_clear_deque_node(&target_node, hash->del_value);
+	hs_clear_deque_node(&target_node, hash->del_hash_value);
 	hash->key_count--;
 }

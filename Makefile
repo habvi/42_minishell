@@ -18,23 +18,28 @@ SRCS		+=	$(BUILTIN_DIR)/ft_echo.c \
 				$(BUILTIN_DIR)/ft_exit.c \
 				$(BUILTIN_DIR)/ft_export.c \
 				$(BUILTIN_DIR)/ft_pwd.c \
+				$(BUILTIN_DIR)/ft_set.c \
 				$(BUILTIN_DIR)/ft_unset.c \
 				$(BUILTIN_DIR)/is_option.c \
 				$(BUILTIN_DIR)/str_to_legal_number.c
 
 ENVIRONMENT	:=	environment
-SRCS		+=	$(ENVIRONMENT)/clear.c \
+SRCS		+=	$(ENVIRONMENT)/add.c \
+				$(ENVIRONMENT)/clear.c \
 				$(ENVIRONMENT)/declare_arg.c \
 				$(ENVIRONMENT)/dup_env_key.c \
 				$(ENVIRONMENT)/dup_env_value.c \
-				$(ENVIRONMENT)/get_value.c \
-				$(ENVIRONMENT)/init_environ.c \
-				$(ENVIRONMENT)/init_old_pwd.c \
-				$(ENVIRONMENT)/init_pwd.c \
+				$(ENVIRONMENT)/env_dup_key_info_pair.c \
+				$(ENVIRONMENT)/env_separate_variables.c \
+				$(ENVIRONMENT)/env_sort_elems.c \
+				$(ENVIRONMENT)/get_var_info.c \
 				$(ENVIRONMENT)/is_key_exist.c \
+				$(ENVIRONMENT)/join.c \
 				$(ENVIRONMENT)/print_detail.c \
 				$(ENVIRONMENT)/print.c \
-				$(ENVIRONMENT)/set.c \
+				$(ENVIRONMENT)/set_default_environ.c \
+				$(ENVIRONMENT)/set_default_old_pwd.c \
+				$(ENVIRONMENT)/set_default_pwd.c \
 				$(ENVIRONMENT)/unset.c
 
 DEBUG_DIR	:=	debug
@@ -62,7 +67,8 @@ UTILS_DIR	:=	utils
 SRCS		+=	$(UTILS_DIR)/count_array.c \
 				$(UTILS_DIR)/ft_abort.c \
 				$(UTILS_DIR)/get_working_directory.c \
-				$(UTILS_DIR)/is_valid_key.c
+				$(UTILS_DIR)/is_valid_key.c \
+				$(UTILS_DIR)/test_opendir.c
 
 OBJS_DIR	:=	objs
 OBJS		:=	$(SRCS:%.c=$(OBJS_DIR)/%.o)

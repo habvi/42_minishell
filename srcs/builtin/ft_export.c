@@ -3,6 +3,7 @@
 #include "ms_builtin.h"
 #include "ft_dprintf.h"
 
+// export declare VAR_ENV
 static void	declare_all(const char *const *args, t_env *env, uint8_t *status)
 {
 	size_t		i;
@@ -11,7 +12,7 @@ static void	declare_all(const char *const *args, t_env *env, uint8_t *status)
 	i = 0;
 	while (args[i])
 	{
-		result = env_declare_arg(args[i], env);
+		result = env_declare_arg(args[i], env, VAR_ENV);
 		if (result == FAILURE)
 		{
 			*status = NOT_A_VALID_IDENTIFIER;
@@ -34,7 +35,7 @@ uint8_t	ft_export(const char *const *argv, t_env *env)
 		return (status);
 	if (!argv[i])
 	{
-		env->print_detail(env);
+		env->print_detail(env, VAR_ENV);
 		return (status);
 	}
 	declare_all(&argv[i], env, &status);

@@ -65,12 +65,15 @@ static int	test_get_value(t_hash *hash, char *key, char *expected_val, int no)
 	return (1);
 }
 
-static void	del_elem_content_test(void *content)
+static void	del_elem_content_test(void **content)
 {
 	char	*value;
 
-	value = (char *)content;
+	if (!content)
+		return ;
+	value = (char *)*content;
 	free(value);
+	*content = NULL;
 }
 
 static void	test_hs_delete_key(t_hash *hash, const char *key)

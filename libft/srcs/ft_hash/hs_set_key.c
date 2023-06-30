@@ -58,7 +58,7 @@ int	hs_add_to_table(t_hash *hash, char *key, void *value)
 		return (HASH_ERROR);
 	if (add_elem_to_table(hash, elem, hash_val) == HASH_ERROR)
 	{
-		hs_clear_elem(&elem, hash->del_value);
+		hs_clear_elem(&elem, hash->del_hash_value);
 		return (HASH_ERROR);
 	}
 	hash->key_count++;
@@ -76,7 +76,7 @@ int	hs_set_key(t_hash *hash, char *key, void *value)
 		return (HASH_ERROR);
 	target_node = hs_find_key(hash, key);
 	if (target_node)
-		hs_update_value(&key, value, target_node, hash->del_value);
+		hs_update_value(&key, value, target_node, hash->del_hash_value);
 	else
 	{
 		if (hs_add_to_table(hash, key, value) == HASH_ERROR)
