@@ -76,11 +76,12 @@ static t_result	separate_env_variables(const char *const arg, \
 t_var_info	*env_create_var_info(const char *value, t_var_attr attr)
 {
 	t_var_info	*info;
+	char		*dup_value;
 
 	info = (t_var_info *)x_malloc(sizeof(t_var_info));
 	if (!info)
 		ft_abort();
-	info->value = value;
+	info->value = ft_strdup_abort(value);
 	info->attr = attr;
 	return (info);
 }
@@ -97,8 +98,14 @@ t_result	env_declare_arg(const char *const arg, t_env *env, t_var_attr attr)
 	result = separate_env_variables(arg, &key, &value, &op);
 	if (result == FAILURE || result == CONTINUE)
 		return (result);
-	var_info = env_create_var_info(value, attr); // todo: value, attr -> t_var_info
-	env->set(env, key, var_info, op);
+	var_info = env_create_var_info(value, attr);
+	if (op == ENV_ADD)
+		env->add(env, key, var_info);
+	else if (op == ENV_JOIN)
+		env->join(env, key, var_info);
+	ft_free(&key);
+	ft_free(&value);
+	del_var_info(&var_info);
 	return (result);
 }
 

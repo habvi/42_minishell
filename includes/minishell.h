@@ -100,6 +100,7 @@ t_var_info	*env_create_var_info(char *value, t_var_attr attr);
 t_result	env_declare_arg(const char *const arg, t_env *env);
 char		*dup_env_key(const char *const arg, size_t *len);
 char		*dup_env_value(const char *const arg);
+void		dup_key_info_pair(const char *key, const t_var_info *info, char **dup_key, t_var_info **dup_info);
 char		*env_get_value(t_env *env, char *key);
 t_env		*init_environ(t_context *context);
 void		init_old_pwd(t_env *env);
