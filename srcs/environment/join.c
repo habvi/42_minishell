@@ -15,7 +15,10 @@ static char	*join_new_value(char *pre, char *new)
 }
 
 // call from only export -> attr is VAR_ENV
-static void	env_join_value_update(t_env *env, char *key, t_var_info *var_info, t_deque_node *node)
+static void	env_join_value_update(t_env *env, \
+									char *key, \
+									t_var_info *var_info, \
+									t_deque_node *node)
 {
 	t_elem		*elem;
 	t_var_info	*info;
@@ -38,7 +41,7 @@ void	env_join(t_env *env, const char *key, const t_var_info *var_info)
 	char			*dup_key;
 	t_var_info		*dup_info;
 
-	dup_key_info_pair(key, var_info, &dup_key, &dup_info);
+	env_dup_key_info_pair(key, var_info, &dup_key, &dup_info);
 	target_node = hs_find_key(env->hash, dup_key);
 	if (target_node)
 		env_join_value_update(env, dup_key, dup_info, target_node);
@@ -49,8 +52,10 @@ void	env_join(t_env *env, const char *key, const t_var_info *var_info)
 	}
 }
 
-//
-void	env_create_info_join(t_env *env, const char *key, const char *value, t_var_attr attr)
+void	env_create_info_join(t_env *env, \
+								const char *key, \
+								const char *value, \
+								t_var_attr attr)
 {
 	t_var_info	*info;
 

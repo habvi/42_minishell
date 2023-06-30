@@ -32,7 +32,10 @@ static t_var_info	*dup_var_info(const t_var_info *info)
 	return (dup_info);
 }
 
-void	dup_key_info_pair(const char *key, const t_var_info *info, char **dup_key, t_var_info **dup_info)
+void	env_dup_key_info_pair(const char *key, \
+							const t_var_info *info, \
+							char **dup_key, \
+							t_var_info **dup_info)
 {
 	*dup_key = ft_strdup_abort(key);
 	*dup_info = dup_var_info(info);

@@ -29,7 +29,9 @@ SRCS		+=	$(ENVIRONMENT)/add.c \
 				$(ENVIRONMENT)/declare_arg.c \
 				$(ENVIRONMENT)/dup_env_key.c \
 				$(ENVIRONMENT)/dup_env_value.c \
-				$(ENVIRONMENT)/dup_key_info_pair.c \
+				$(ENVIRONMENT)/env_dup_key_info_pair.c \
+				$(ENVIRONMENT)/env_separate_variables.c \
+				$(ENVIRONMENT)/env_sort_elems.c \
 				$(ENVIRONMENT)/get_var_info.c \
 				$(ENVIRONMENT)/is_key_exist.c \
 				$(ENVIRONMENT)/join.c \

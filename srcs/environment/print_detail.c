@@ -7,7 +7,10 @@
 #include "ft_string.h"
 #include "ft_sys.h"
 
-static void	set_env_variable_elem(t_deque_node *node, t_elem **elems, size_t *j, t_var_attr attr)
+static void	set_env_variable_elem(t_deque_node *node, \
+									t_elem **elems, \
+									size_t *j, \
+									t_var_attr attr)
 {
 	t_elem		*elem;
 	t_var_info	*var_info;
@@ -46,40 +49,6 @@ static void	set_elem_pointer(t_elem **elems, \
 		i++;
 	}
 	elems[j] = NULL;
-}
-
-static void	swap_elems(t_elem **elems, const size_t i, const size_t j)
-{
-	t_elem	*tmp;
-
-	tmp = elems[i];
-	elems[i] = elems[j];
-	elems[j] = tmp;
-}
-
-// sort to ascending
-// i <-> j
-static void	sort_elems_by_key(t_elem **elems)
-{
-	size_t	i;
-	size_t	j;
-	char	*key_i;
-	char	*key_j;
-
-	i = 0;
-	while (elems[i])
-	{
-		j = i;
-		while (elems[j])
-		{
-			key_i = elems[i]->key;
-			key_j = elems[j]->key;
-			if (i != j && ft_strcmp(key_i, key_j) > 0)
-				swap_elems(elems, i, j);
-			j++;
-		}
-		i++;
-	}
 }
 
 // declare -x KEY="VALUE"

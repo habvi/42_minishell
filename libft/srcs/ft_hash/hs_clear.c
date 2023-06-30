@@ -11,7 +11,8 @@ void	hs_clear_elem(t_elem **elem, void (*del_hash_value)(void **))
 	ft_free(elem);
 }
 
-void	hs_clear_deque_node(t_deque_node **node, void (*del_hash_value)(void **))
+void	hs_clear_deque_node(t_deque_node **node, \
+							void (*del_hash_value)(void **))
 {
 	t_elem	*elem;
 
@@ -24,7 +25,8 @@ void	hs_clear_deque_node(t_deque_node **node, void (*del_hash_value)(void **))
 	ft_free(node);
 }
 
-static void	hash_clear_deque_all(t_deque **deque, void (*del_hash_value)(void **))
+static void	hash_clear_deque_all(t_deque **deque, \
+									void (*del_hash_value)(void **))
 {
 	t_deque_node	*node;
 	t_deque_node	*tmp;
@@ -68,6 +70,8 @@ void	hs_clear(t_hash **hash)
 {
 	if (!hash || !*hash)
 		return ;
-	hs_clear_table((*hash)->table, (*hash)->table_size, (*hash)->del_hash_value);
+	hs_clear_table((*hash)->table, \
+					(*hash)->table_size, \
+					(*hash)->del_hash_value);
 	ft_free(hash);
 }
