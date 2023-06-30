@@ -38,7 +38,6 @@ static char	*update_pwd_by_internal(const char *key, \
 	return (new_value);
 }
 
-
 // key : valid key
 void	env_set_pwd_dup_key_value(t_context *context, \
 									const char *key, \
