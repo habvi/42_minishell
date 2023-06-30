@@ -23,18 +23,20 @@ SRCS		+=	$(BUILTIN_DIR)/ft_echo.c \
 				$(BUILTIN_DIR)/str_to_legal_number.c
 
 ENVIRONMENT	:=	environment
-SRCS		+=	$(ENVIRONMENT)/clear.c \
+SRCS		+=	$(ENVIRONMENT)/add.c \
+				$(ENVIRONMENT)/clear.c \
 				$(ENVIRONMENT)/declare_arg.c \
 				$(ENVIRONMENT)/dup_env_key.c \
 				$(ENVIRONMENT)/dup_env_value.c \
+				$(ENVIRONMENT)/dup_key_info_pair.c \
 				$(ENVIRONMENT)/get_value.c \
 				$(ENVIRONMENT)/init_environ.c \
 				$(ENVIRONMENT)/init_old_pwd.c \
 				$(ENVIRONMENT)/init_pwd.c \
 				$(ENVIRONMENT)/is_key_exist.c \
+				$(ENVIRONMENT)/join.c \
 				$(ENVIRONMENT)/print_detail.c \
 				$(ENVIRONMENT)/print.c \
-				$(ENVIRONMENT)/set.c \
 				$(ENVIRONMENT)/unset.c
 
 DEBUG_DIR	:=	debug

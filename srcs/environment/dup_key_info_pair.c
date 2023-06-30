@@ -10,7 +10,7 @@ char	*ft_strdup_abort(const char *str)
 	char	*dup;
 
 	dup = ft_strdup(str);
-	if (!*dup)
+	if (!dup)
 		ft_abort();
 	return (dup);
 }

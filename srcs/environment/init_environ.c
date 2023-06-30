@@ -19,7 +19,8 @@ static void	set_func(t_env *env)
 {
 	env->is_key_exist = env_is_key_exist;
 	env->get_value = env_get_value;
-	env->set = env_set;
+	env->add = env_add;
+	env->join = env_join;
 	env->unset = env_unset;
 	env->print = env_print;
 	env->print_detail = env_print_detail;
@@ -36,7 +37,7 @@ static void	get_environ(t_env *env)
 		return ;
 	while (environ[i])
 	{
-		env_declare_arg(environ[i], env);
+		env_declare_arg(environ[i], env, VAR_ENV);
 		i++;
 	}
 }

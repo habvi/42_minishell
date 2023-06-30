@@ -78,11 +78,8 @@ struct s_env
 	t_hash	*hash;
 	int		(*is_key_exist)(t_env *env, const char *key);
 	char	*(*get_value)(t_env *env, char *key);
-	void	(*set)(t_env *env, char *key, char *value, t_env_op op);
-
 	void	(*add)(t_env *env, const char *key, const t_var_info *info);
 	void	(*join)(t_env *env, const char *key, const t_var_info *var_info);
-
 	void	(*unset)(t_env *env, const char *key);
 	void	(*print)(t_env *env);
 	void	(*print_detail)(t_env *env);
@@ -96,10 +93,11 @@ void		debug_2d_array(char **array);
 
 /* environment */
 void		env_clear(t_env *env);
-t_var_info	*env_create_var_info(char *value, t_var_attr attr);
-t_result	env_declare_arg(const char *const arg, t_env *env);
+t_var_info	*env_create_var_info(const char *value, t_var_attr attr);
+t_result	env_declare_arg(const char *const arg, t_env *env, t_var_attr attr);
 char		*dup_env_key(const char *const arg, size_t *len);
 char		*dup_env_value(const char *const arg);
+char		*ft_strdup_abort(const char *str);
 void		dup_key_info_pair(const char *key, const t_var_info *info, char **dup_key, t_var_info **dup_info);
 char		*env_get_value(t_env *env, char *key);
 t_env		*init_environ(t_context *context);
@@ -108,7 +106,6 @@ void		init_pwd(t_env *env);
 int			env_is_key_exist(t_env *env, const char *key);
 void		env_print_detail(t_env *env);
 void		env_print(t_env *env);
-//void		env_set(t_env *env, char *key, char *value, t_env_op op);
 
 void		env_add(t_env *env, const char *key, const t_var_info *info);
 void		env_create_info_add(t_env *env, const char *key, const char *value, t_var_attr attr);
