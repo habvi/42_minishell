@@ -13,13 +13,13 @@ static char	*get_pwd(t_context *context)
 
 	(void)context;
 	pwd = get_working_directory(CMD_PWD);
-//	if (!pwd && context->internal_pwd) // for mac and rm $PWD
-//	{
-//		pwd = ft_strdup(context->internal_pwd);
-//		if (!pwd)
-//			ft_abort();
-//		return (pwd);
-//	}
+	if (!pwd && context->internal_pwd) // for mac and rm $PWD
+	{
+		pwd = ft_strdup(context->internal_pwd);
+		if (!pwd)
+			ft_abort();
+		return (pwd);
+	}
 	return (pwd);
 }
 
