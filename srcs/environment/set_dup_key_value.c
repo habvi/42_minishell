@@ -2,10 +2,42 @@
 #include "ft_string.h"
 #include "ft_mem.h"
 
-bool	is_key_pwd_oldpwd(const char *key)
+static char	*swap_pwd_value(char *value, const char *new_value)
 {
-	return (ft_streq(key, KEY_PWD) || ft_streq(key, KEY_OLDPWD));
+	char	*dup_value;
+
+	ft_free(&value);
+	if (!new_value)
+		return (NULL);
+	dup_value = ft_strdup(new_value);
+	if (!dup_value)
+		ft_abort();
+	return (dup_value);
 }
+
+// if (key == PWD/OLDPWD && value == NULL)
+// -> get value from internal
+static char	*update_pwd_by_internal(const char *key, \
+									char *value, \
+									t_context *context)
+{
+	t_env	*env;
+	char	*new_value;
+
+	env = context->env;
+	if (ft_streq(key, KEY_PWD) && !value)
+		new_value = swap_pwd_value(value, context->internal_pwd);
+	else if (ft_streq(key, KEY_OLDPWD))
+	{
+		if (env->is_key_exist(env, KEY_OLDPWD) && !value) //todo: sep and move
+			env->unset(env, KEY_OLDPWD);
+		new_value = swap_pwd_value(value, context->internal_old_pwd);
+	}
+	else
+		new_value = value;
+	return (new_value);
+}
+
 
 // key : valid key
 void	env_set_pwd_dup_key_value(t_context *context, \

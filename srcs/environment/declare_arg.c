@@ -1,6 +1,12 @@
 #include "minishell.h"
 #include "ms_builtin.h"
+#include "ft_string.h"
 #include "ft_mem.h"
+
+static bool	is_key_pwd_oldpwd(const char *key)
+{
+	return (ft_streq(key, KEY_PWD) || ft_streq(key, KEY_OLDPWD));
+}
 
 t_result	env_declare_arg(const char *const arg, t_context *context)
 {
