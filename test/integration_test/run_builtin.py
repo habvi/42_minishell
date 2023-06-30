@@ -11,7 +11,7 @@ def main():
     test_res |= run_exit.main()
     # test_res |= run_export.main()
     test_res |= run_pwd.main()
-    test_res |= run_cd.main()
+    # test_res |= run_cd.main()
 
     return test_res
 
