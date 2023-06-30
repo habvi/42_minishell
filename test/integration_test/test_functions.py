@@ -100,6 +100,8 @@ def run_cmd_with_valgrind(stdin=None, cmd=None):
 def run_minishell_with_valgrind(stdin, cmd):
     res_minishell = run_cmd_with_valgrind(stdin, cmd)
     print(f'cmd:[{stdin}]', end='\n')
+    if res_minishell is None:
+        return None
     if res_minishell.stderr:
         is_leak, leak_bytes = get_leak_res(res_minishell.stderr)
         print(f' minishell leaks : {leak_bytes} bytes')
@@ -109,6 +111,8 @@ def run_minishell_with_valgrind(stdin, cmd):
 
 def run_bash_with_valgrind(stdin, cmd):
     res_bash = run_cmd_with_valgrind(stdin, cmd)
+    if res_bash is None:
+        return None
     if res_bash.stderr:
         is_leak, leak_bytes = get_leak_res(res_bash.stderr)
         print(f' bash leaks      : {leak_bytes} bytes')
@@ -224,14 +228,16 @@ def run_shell(name, stdin, cmd, prompt_pfx, err_pfx):
         print("]")
         print(f' status : {res[STATUS]}')
         print(f' exited : {res[IS_EXITED]}')
+        print()
         res[STDERR] = errors
         return res
     return None
 
 
-def run_both(stdin):
+def run_both(test_no, stdin):
     print_cmd = get_cmd_string_for_output(stdin)
-    print(f'input cmd:[{print_cmd}]', end='\n')
+    print(f'{"-" * 50} TEST NO.{test_no} {"-" * 50} ', end='\n')
+    print(f' input cmd:[{print_cmd}]', end='\n')
     res_minishell = run_shell("minishell",
                               stdin,
                               PATH_MINISHELL,
@@ -336,10 +342,12 @@ def output_test(test_input_list):
     ok = 0
     ko = 0
     val = [test_num, ok, ko]
+    test_no = 1
 
     for stdin in test_input_list:
-        m_res, b_res = run_both(stdin)
+        m_res, b_res = run_both(test_no, stdin)
         put_result(val, m_res, b_res)
+        test_no += 1
 
     return put_total_result(val)
 
