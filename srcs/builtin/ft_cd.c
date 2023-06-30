@@ -53,14 +53,19 @@ static void	cd_update_pwd(char *path, t_context *context)
 	ft_free(&context->internal_old_pwd);
 	context->internal_old_pwd = context->internal_pwd;
 	context->internal_pwd = path;
-	new_pwd = ft_strdup(context->internal_pwd);
-	new_old_pwd = env->get_value(env, KEY_PWD);
 //	ft_dprintf(2, "new_old:%s\n", new_old_pwd);// can't OLDPWD=NULL...
 	if (env->is_key_exist(env, KEY_PWD))
+	{
+		new_pwd = ft_strdup(context->internal_pwd);
 		env_set_pwd_dup_key_value(context, KEY_PWD, &new_pwd, ENV_ADD);
+		ft_free(&new_pwd);
+	}
 	if (env->is_key_exist(env, KEY_OLDPWD))
+	{
+		new_old_pwd = env->get_value(env, KEY_PWD);
 		env_set_pwd_dup_key_value(context, KEY_OLDPWD, &new_old_pwd, ENV_ADD);
-	ft_free(&new_old_pwd);
+		ft_free(&new_old_pwd);
+	}
 }
 
 // arg
