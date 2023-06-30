@@ -9,6 +9,8 @@ char	*ft_strdup_abort(const char *str)
 {
 	char	*dup;
 
+	if (!str)
+		return (NULL);
 	dup = ft_strdup(str);
 	if (!dup)
 		ft_abort();

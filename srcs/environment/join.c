@@ -14,20 +14,21 @@ static char	*join_new_value(char *pre, char *new)
 	return (joined);
 }
 
-// key expected `name` -> void ...?
-// key+=
-// todo: attr -x + --
+// call from only export -> attr is VAR_ENV
 static void	env_join_value_update(t_env *env, char *key, t_var_info *var_info, t_deque_node *node)
 {
 	t_elem		*elem;
 	t_var_info	*info;
+	t_var_info	*new_info;
 	char		*joined_value;
 
 	elem = (t_elem *)node->content;
 	info = (t_var_info *)elem->value;
-	joined_value = join_new_value(info->value, var_info->value); // s1 + s2
-	hs_update_value(&key, joined_value, node, env->hash->del_hash_value);
+	joined_value = join_new_value(info->value, var_info->value);
+	new_info = env_create_var_info(joined_value, VAR_ENV);
+	hs_update_value(&key, new_info, node, env->hash->del_hash_value);
 	del_var_info((void **)&var_info);
+	ft_free(&joined_value);
 }
 
 // allocate dup_key, dup_info
