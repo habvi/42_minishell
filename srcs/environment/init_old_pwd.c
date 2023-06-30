@@ -40,7 +40,7 @@ static void	set_only_old_pwd_key(t_env *env)
 	env_set_dup_key_value(env, KEY_OLDPWD, NULL, ENV_ADD);
 }
 
-void	init_old_pwd(t_env *env)
+void	set_default_old_pwd(t_env *env)
 {
 	if (env->is_key_exist(env, KEY_OLDPWD))
 		validate_and_delete_old_pwd(env);

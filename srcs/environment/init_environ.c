@@ -48,6 +48,8 @@ static void	set_env_default_hash(t_context *context)
 	set_environ_to_hash(context);
 }
 
+// in init, PWD reference getcwd()
+//          OLDPWD reference environ
 t_env	*init_environ(t_context *context)
 {
 	t_env	*env;
@@ -58,7 +60,7 @@ t_env	*init_environ(t_context *context)
 	context->env = env;
 	set_func(env);
 	set_env_default_hash(context);
-	init_pwd(env);
-	init_old_pwd(env);
+	set_default_pwd(env);
+	set_default_old_pwd(env);
 	return (env);
 }

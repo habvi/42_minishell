@@ -2,7 +2,7 @@
 #include "ms_builtin.h"
 #include "ft_mem.h"
 
-void	init_pwd(t_env *env)
+void	set_default_pwd(t_env *env)
 {
 	char	*pwd_path;
 
