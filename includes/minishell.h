@@ -82,7 +82,7 @@ struct s_env
 	void	(*join)(t_env *env, const char *key, const t_var_info *var_info);
 	void	(*unset)(t_env *env, const char *key);
 	void	(*print)(t_env *env);
-	void	(*print_detail)(t_env *env);
+	void	(*print_detail)(t_env *env, t_var_attr attr);
 	void	(*clear)(t_env *env);
 };
 

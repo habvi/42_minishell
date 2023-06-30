@@ -7,7 +7,7 @@
 #include "ft_string.h"
 #include "ft_sys.h"
 
-static void	set_env_variable_elem(t_deque_node *node, t_elem **elems, size_t *j)
+static void	set_env_variable_elem(t_deque_node *node, t_elem **elems, size_t *j, t_var_attr attr)
 {
 	t_elem		*elem;
 	t_var_info	*var_info;
@@ -16,7 +16,7 @@ static void	set_env_variable_elem(t_deque_node *node, t_elem **elems, size_t *j)
 	{
 		elem = (t_elem *)node->content;
 		var_info = (t_var_info *)elem->value;
-		if (var_info->attr == VAR_ENV)
+		if (var_info->attr == attr)
 		{
 			elems[*j] = elem;
 			(*j)++;
@@ -27,7 +27,8 @@ static void	set_env_variable_elem(t_deque_node *node, t_elem **elems, size_t *j)
 
 static void	set_elem_pointer(t_elem **elems, \
 								t_deque **table, \
-								const size_t table_size)
+								const size_t table_size,
+								t_var_attr attr)
 {
 	size_t	i;
 	size_t	j;
@@ -41,7 +42,7 @@ static void	set_elem_pointer(t_elem **elems, \
 			i++;
 			continue ;
 		}
-		set_env_variable_elem(table[i]->node, elems, &j);
+		set_env_variable_elem(table[i]->node, elems, &j, attr);
 		i++;
 	}
 	elems[j] = NULL;
@@ -83,7 +84,7 @@ static void	sort_elems_by_key(t_elem **elems)
 
 // declare -x KEY="VALUE"
 // declare -x KEY"
-static void	print_elems(t_elem **elems)
+static void	print_elems(t_elem **elems, const char *declare)
 {
 	size_t		i;
 	t_var_info	*var_info;
@@ -93,11 +94,11 @@ static void	print_elems(t_elem **elems)
 	{
 		var_info = (t_var_info *)elems[i]->value;
 		if (var_info->value)
-			ft_dprintf(STDOUT_FILENO, "%s %s=\"%s\"\n", \
-				DECLARE_X, elems[i]->key, var_info->value);
+			ft_dprintf(STDOUT_FILENO, "%s%s %s=\"%s\"\n", \
+				declare, elems[i]->key, var_info->value);
 		else
-			ft_dprintf(STDOUT_FILENO, "%s %s\n", \
-				DECLARE_X, elems[i]->key);
+			ft_dprintf(STDOUT_FILENO, "%s%s %s\n", \
+				declare, elems[i]->key);
 		i++;
 	}
 }
@@ -105,15 +106,26 @@ static void	print_elems(t_elem **elems)
 // print key-value-pairs to stdout
 //   include only key
 //   `declare -x key="value\n`
-void	env_print_detail(t_env *env)
+static void	env_sort_print(t_env *env, t_var_attr attr, const char *declare)
 {
 	t_elem	**elems;
 
 	elems = (t_elem **)x_malloc(sizeof(t_elem *) * (env->hash->key_count + 1));
 	if (!elems)
 		ft_abort();
-	set_elem_pointer(elems, env->hash->table, env->hash->table_size);
+	set_elem_pointer(elems, env->hash->table, env->hash->table_size, attr);
 	sort_elems_by_key(elems);
-	print_elems(elems);
+	print_elems(elems, declare);
 	ft_free(&elems);
+}
+
+void	env_print_detail(t_env *env, t_var_attr attr)
+{
+	char	*declare;
+
+	if (attr == VAR_ENV)
+		declare = DECLARE_ENV;
+	else if (attr == VAR_SHELL)
+		declare = DECLARE_SHELL;
+	env_sort_print(env, attr, declare);
 }
