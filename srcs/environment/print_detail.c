@@ -7,13 +7,30 @@
 #include "ft_string.h"
 #include "ft_sys.h"
 
+static void	set_env_variable_elem(t_deque_node *node, t_elem **elems, size_t *j)
+{
+	t_elem		*elem;
+	t_var_info	*var_info;
+
+	while (node)
+	{
+		elem = (t_elem *)node->content;
+		var_info = (t_var_info *)elem->value;
+		if (var_info->attr == VAR_ENV)
+		{
+			elems[*j] = elem;
+			(*j)++;
+		}
+		node = node->next;
+	}
+}
+
 static void	set_elem_pointer(t_elem **elems, \
 								t_deque **table, \
 								const size_t table_size)
 {
-	size_t			i;
-	size_t			j;
-	t_deque_node	*node;
+	size_t	i;
+	size_t	j;
 
 	i = 0;
 	j = 0;
@@ -24,13 +41,7 @@ static void	set_elem_pointer(t_elem **elems, \
 			i++;
 			continue ;
 		}
-		node = table[i]->node;
-		while (node)
-		{
-			elems[j] = (t_elem *)node->content;
-			j++;
-			node = node->next;
-		}
+		set_env_variable_elem(table[i]->node, elems, &j);
 		i++;
 	}
 	elems[j] = NULL;
@@ -74,14 +85,16 @@ static void	sort_elems_by_key(t_elem **elems)
 // declare -x KEY"
 static void	print_elems(t_elem **elems)
 {
-	size_t	i;
+	size_t		i;
+	t_var_info	*var_info;
 
 	i = 0;
 	while (elems[i])
 	{
-		if (elems[i]->value)
+		var_info = (t_var_info *)elems[i]->value;
+		if (var_info->value)
 			ft_dprintf(STDOUT_FILENO, "%s %s=\"%s\"\n", \
-				DECLARE_X, elems[i]->key, elems[i]->value);
+				DECLARE_X, elems[i]->key, var_info->value);
 		else
 			ft_dprintf(STDOUT_FILENO, "%s %s\n", \
 				DECLARE_X, elems[i]->key);

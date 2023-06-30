@@ -2,7 +2,6 @@
 #include "ft_hash.h"
 #include "ft_mem.h"
 
-#include <stdio.h>
 void	hs_clear_elem(t_elem **elem, void (*del_hash_value)(void **))
 {
 	if (!elem || !*elem)
