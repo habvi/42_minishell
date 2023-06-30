@@ -94,10 +94,10 @@ static void	print_elems(t_elem **elems, const char *declare)
 	{
 		var_info = (t_var_info *)elems[i]->value;
 		if (var_info->value)
-			ft_dprintf(STDOUT_FILENO, "%s%s %s=\"%s\"\n", \
+			ft_dprintf(STDOUT_FILENO, "%s %s=\"%s\"\n", \
 				declare, elems[i]->key, var_info->value);
 		else
-			ft_dprintf(STDOUT_FILENO, "%s%s %s\n", \
+			ft_dprintf(STDOUT_FILENO, "%s %s\n", \
 				declare, elems[i]->key);
 		i++;
 	}
