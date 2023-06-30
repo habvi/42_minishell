@@ -3,7 +3,9 @@
 #include "ms_builtin.h"
 #include "ft_dprintf.h"
 
-static void	declare_all(const char *const *args, t_context *context, uint8_t *status)
+static void	declare_all(const char *const *args, \
+						t_context *context, \
+						uint8_t *status)
 {
 	size_t		i;
 	t_result	result;
