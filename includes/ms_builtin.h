@@ -16,9 +16,9 @@
 # define CMD_EXIT	"exit"
 
 /* option */
-# define CMD_OPTION_MARKER	'-'
+# define CMD_OPTION_MARKER				'-'
 # define ECHO_OPTION_DISPLAY_NEWLINE	'n'
-# define DECLARE_OPTION	'p'
+# define DECLARE_OPTION_DISPLAY_ATTR	'p'
 
 # define ECHO_SEPARATOR		' '
 # define END_OF_CMD_OPTION	"--"
