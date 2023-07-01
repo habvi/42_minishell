@@ -12,6 +12,7 @@
 /* var key */
 # define KEY_PWD		"PWD"
 # define KEY_OLDPWD		"OLDPWD"
+# define KEY_HOME		"HOME"
 
 typedef enum e_env_op			t_env_op;
 typedef enum e_result			t_result;

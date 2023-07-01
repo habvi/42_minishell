@@ -19,6 +19,10 @@
 # define ECHO_SEPARATOR		' '
 # define END_OF_CMD_OPTION	"--"
 
+# define CD_ARG_HOME		"~"
+# define CD_ARG_OLDPWD		"-"
+# define ABSOLUTE_PATH_HEAD	'/'
+
 // todo: naming...
 # define EXIT_ONLY_CMD_CNT		1
 # define EXIT_ARG_IDX			1
@@ -70,5 +74,11 @@ bool	is_option(const char *word);
 bool	is_end_of_option(const char *word);
 bool	is_valid_option(const char *const *argv, uint8_t *status, size_t *i);
 bool	str_to_legal_number(const char *str, long *result);
+
+
+t_result	cd_change_dir_to_valid_path(const char *path, \
+										const char *pwd, \
+										uint8_t *status);
+char		*cd_set_path(const char *arg, t_var *var);
 
 #endif //MS_BUILTIN_H

@@ -6,6 +6,7 @@
 # include <stdint.h>
 
 /* return value */
+# define CHDIR_ERROR	(-1)
 # define CLOSE_ERROR	(-1)
 # define DUP_ERROR		(-1) // dup && dup2
 # define EXECVE_ERROR	(-1)
