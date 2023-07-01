@@ -38,9 +38,6 @@
 # define ERROR_MSG_INVALID_OP	"invalid option"
 # define ERROR_MSG_NOT_VALID_ID	"not a valid identifier"
 
-# define DECLARE_ENV			"declare -x"
-# define DECLARE_SHELL			"declare --"
-
 typedef enum e_result		t_result;
 typedef struct s_env		t_env;
 typedef struct s_deque_node	t_deque_node;
