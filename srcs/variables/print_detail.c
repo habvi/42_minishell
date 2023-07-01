@@ -83,14 +83,14 @@ static void	print_elems(t_elem **elems)
 // print key-value-pairs to stdout
 //   include only key
 //   `declare -x key="value\n`
-void	env_print_detail(t_env *env, t_var_attr attr)
+void	env_print_detail(t_var *var, t_var_attr attr)
 {
 	t_elem	**elems;
 
-	elems = (t_elem **)x_malloc(sizeof(t_elem *) * (env->hash->key_count + 1));
+	elems = (t_elem **)x_malloc(sizeof(t_elem *) * (var->hash->key_count + 1));
 	if (!elems)
 		ft_abort();
-	set_elem_pointer(elems, env->hash->table, env->hash->table_size, attr);
+	set_elem_pointer(elems, var->hash->table, var->hash->table_size, attr);
 	sort_elems_by_key(elems);
 	print_elems(elems);
 	ft_free(&elems);

@@ -10,19 +10,19 @@
 
 # define LIST_SIZE	65536
 
-typedef struct s_env t_env;
+typedef struct s_var t_var;
 
-struct s_env
+struct s_var
 {
 	t_hash	*hash;
 
-	int		(*set) (t_env *env, char *key, char *value);	// export
-	int		(*append) (t_env *env, char *key, char *value);	// export
-	char	*(*get) (t_env *env, char *key);				// expansion
-	int		(*unset) (t_env *env, char *key);				// unset
+	int		(*set) (t_var *env, char *key, char *value);	// export
+	int		(*append) (t_var *env, char *key, char *value);	// export
+	char	*(*get) (t_var *env, char *key);				// expansion
+	int		(*unset) (t_var *env, char *key);				// unset
 
-	void	(*list) (t_env *env);	// env
-	void	(*list_all) (t_env *env);	// export
+	void	(*list) (t_var *env);	// env
+	void	(*list_all) (t_var *env);	// export
 	void	(*del_value) (void *);
 };
 

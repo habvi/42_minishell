@@ -42,7 +42,7 @@ static int	test(const char *const *cmds, int expected_status, int test_no)
 	int		status;
 	pid_t	pid;
 	t_context	context = {\
-		.env = NULL, \
+		.var = NULL, \
 		.is_interactive = true, \
 		.internal_pwd = NULL, \
 		.status = 0};

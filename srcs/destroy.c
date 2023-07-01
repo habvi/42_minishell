@@ -5,8 +5,8 @@
 
 void	destroy(t_context context)
 {
-	context.env->clear(context.env);
-	ft_free(&context.env);
+	context.var->clear(context.var);
+	ft_free(&context.var);
 	ft_free(&context.internal_pwd);
 	rl_clear_history();
 }

@@ -2,7 +2,7 @@
 #include "ms_var.h"
 #include "ft_hash.h"
 
-void	env_clear(t_env *env)
+void	env_clear(t_var *var)
 {
-	hs_clear(&env->hash);
+	hs_clear(&var->hash);
 }

@@ -30,7 +30,7 @@
 # define ERROR_MSG_GETCWD		"getcwd: cannot access parent directories"
 # define ERROR_MSG_RETRIEVE_CWD	"error retrieving current directory"
 
-typedef struct s_env	t_env;
+typedef struct s_var	t_var;
 
 typedef enum e_result
 {
@@ -42,7 +42,7 @@ typedef enum e_result
 
 typedef struct s_context
 {
-	t_env	*env;
+	t_var	*var;
 	bool	is_interactive;
 	char	*internal_pwd;
 	uint8_t	status;

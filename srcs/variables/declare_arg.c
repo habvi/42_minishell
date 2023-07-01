@@ -2,7 +2,6 @@
 #include "ms_builtin.h"
 #include "ms_var.h"
 #include "ft_mem.h"
-#include "ft_string.h"
 #include "ft_sys.h"
 
 // all malloc
@@ -19,15 +18,15 @@ t_var_info	*env_create_var_info(const char *value, t_var_attr attr)
 	return (info);
 }
 
-static void	set_key_info_pair(t_env *env, \
+static void	set_key_info_pair(t_var *var, \
 								const char *key, \
 								const t_var_info *var_info, \
 								const t_env_op op)
 {
 	if (op == ENV_ADD)
-		env->add(env, key, var_info);
+		var->add(var, key, var_info);
 	else if (op == ENV_JOIN)
-		env->join(env, key, var_info);
+		var->join(var, key, var_info);
 }
 
 static void	clear_key_value_info(char *key, char *value, t_var_info *var_info)
@@ -38,7 +37,7 @@ static void	clear_key_value_info(char *key, char *value, t_var_info *var_info)
 }
 
 // arg: key=value
-t_result	env_declare_arg(const char *const arg, t_env *env, t_var_attr attr)
+t_result	env_declare_arg(const char *const arg, t_var *var, t_var_attr attr)
 {
 	t_result	result;
 	char		*key;
@@ -50,7 +49,7 @@ t_result	env_declare_arg(const char *const arg, t_env *env, t_var_attr attr)
 	if (result == FAILURE || result == CONTINUE)
 		return (result);
 	var_info = env_create_var_info(value, attr);
-	set_key_info_pair(env, key, var_info, op);
+	set_key_info_pair(var, key, var_info, op);
 	clear_key_value_info(key, value, var_info);
 	return (result);
 }

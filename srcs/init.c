@@ -6,7 +6,7 @@
 
 static void	set_context_initial_value(t_context *context)
 {
-	context->env = NULL;
+	context->var = NULL;
 	context->internal_pwd = NULL;
 	context->is_interactive = false;
 	context->status = EXIT_SUCCESS;
@@ -21,11 +21,11 @@ static bool	set_is_interactive(void)
 // set_default_environ set also PWD, OLDPWD.
 static void	set_context_default_value(t_context *context)
 {
-	t_env	*env;
+	t_var	*var;
 
-	context->env = set_default_environ(context);
-	env = context->env;
-	context->internal_pwd = env->get_value(env, KEY_PWD);
+	context->var = set_default_environ(context);
+	var = context->var;
+	context->internal_pwd = var->get_value(var, KEY_PWD);
 	context->is_interactive = set_is_interactive();
 	context->status = EXIT_SUCCESS;
 }
