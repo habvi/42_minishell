@@ -14,7 +14,7 @@ bool	is_command_builtin(const char *cmd)
 		return (true);
 	if (ft_streq(cmd, CMD_PWD))
 		return (true);
-	if (ft_streq(cmd, CMD_SET))
+	if (ft_streq(cmd, CMD_DECLARE))
 		return (true);
 	if (ft_streq(cmd, CMD_EXPORT))
 		return (true);

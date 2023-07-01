@@ -58,7 +58,7 @@ typedef enum e_var_attr
 	VAR_NONE = 0b00,
 	VAR_ENV = 0b01,
 	VAR_SHELL = 0b10,
-	VAR_DECLARE = 0b11,
+	VAR_ALL = 0b11,
 }	t_var_attr;
 
 typedef enum e_env_op
