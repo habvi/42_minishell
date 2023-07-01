@@ -70,7 +70,8 @@ SRCS		+=	$(UTILS_DIR)/count_array.c \
 				$(UTILS_DIR)/ft_abort.c \
 				$(UTILS_DIR)/get_working_directory.c \
 				$(UTILS_DIR)/is_valid_key.c \
-				$(UTILS_DIR)/test_opendir.c
+				$(UTILS_DIR)/test_opendir.c \
+				$(UTILS_DIR)/x_ft_strdup.c
 
 OBJS_DIR	:=	objs
 OBJS		:=	$(SRCS:%.c=$(OBJS_DIR)/%.o)
