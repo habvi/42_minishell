@@ -5,15 +5,14 @@
 # include <stdint.h>
 # include <stddef.h>
 
-// todo: sort & indent
-# define CMD_ECHO	"echo"
-# define CMD_CD		"cd"
-# define CMD_PWD	"pwd"
+# define CMD_CD			"cd"
 # define CMD_DECLARE	"declare"
-# define CMD_EXPORT	"export"
-# define CMD_UNSET	"unset"
-# define CMD_ENV	"env"
-# define CMD_EXIT	"exit"
+# define CMD_ECHO		"echo"
+# define CMD_ENV		"env"
+# define CMD_EXIT		"exit"
+# define CMD_EXPORT		"export"
+# define CMD_PWD		"pwd"
+# define CMD_UNSET		"unset"
 
 # define CMD_OPTION_MARKER	'-'
 # define ECHO_OPTION		'n'
