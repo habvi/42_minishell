@@ -30,6 +30,12 @@
 # define KEY_PWD		"PWD"
 # define KEY_OLDPWD		"OLDPWD"
 
+/* declare */
+# define DECLARE		"declare"
+# define ATTR_NONE		""
+# define ATTR_ENV		"-x"
+# define ATTR_SHELL		"--"
+
 # define SHELL_INIT				"shell-init"
 # define ERROR_MSG_GETCWD		"getcwd: cannot access parent directories"
 # define ERROR_MSG_RETRIEVE_CWD	"error retrieving current directory"
@@ -49,9 +55,10 @@ typedef enum e_result
 
 typedef enum e_var_attr
 {
-	VAR_NONE,
-	VAR_ENV,
-	VAR_SHELL,
+	VAR_NONE = 0b00,
+	VAR_ENV = 0b01,
+	VAR_SHELL = 0b10,
+	VAR_ALL = 0b11,
 }	t_var_attr;
 
 typedef enum e_env_op

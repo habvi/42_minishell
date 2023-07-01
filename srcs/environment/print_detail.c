@@ -19,7 +19,7 @@ static void	set_env_variable_elem(t_deque_node *node, \
 	{
 		elem = (t_elem *)node->content;
 		var_info = (t_var_info *)elem->value;
-		if (var_info->attr == attr)
+		if (var_info->attr & attr)
 		{
 			elems[*j] = elem;
 			(*j)++;
@@ -51,23 +51,32 @@ static void	set_elem_pointer(t_elem **elems, \
 	elems[j] = NULL;
 }
 
+static char	*get_print_attr(t_var_attr attr)
+{
+	if (attr & VAR_ENV)
+		return (ATTR_ENV);
+	if (attr & VAR_SHELL)
+		return (ATTR_SHELL);
+	return (ATTR_NONE);
+}
+
 // declare -x KEY="VALUE"
 // declare -x KEY"
-static void	print_elems(t_elem **elems, const char *declare)
+static void	print_elems(t_elem **elems)
 {
 	size_t		i;
 	t_var_info	*var_info;
+	char		*attr;
 
 	i = 0;
 	while (elems[i])
 	{
 		var_info = (t_var_info *)elems[i]->value;
+		attr = get_print_attr(var_info->attr);
+		ft_dprintf(STDOUT_FILENO, "%s %s %s", DECLARE, attr, elems[i]->key);
 		if (var_info->value)
-			ft_dprintf(STDOUT_FILENO, "%s %s=\"%s\"\n", \
-				declare, elems[i]->key, var_info->value);
-		else
-			ft_dprintf(STDOUT_FILENO, "%s %s\n", \
-				declare, elems[i]->key);
+			ft_dprintf(STDOUT_FILENO, "=\"%s\"", var_info->value);
+		ft_dprintf(STDOUT_FILENO, "\n");
 		i++;
 	}
 }
@@ -75,7 +84,7 @@ static void	print_elems(t_elem **elems, const char *declare)
 // print key-value-pairs to stdout
 //   include only key
 //   `declare -x key="value\n`
-static void	env_sort_print(t_env *env, t_var_attr attr, const char *declare)
+void	env_print_detail(t_env *env, t_var_attr attr)
 {
 	t_elem	**elems;
 
@@ -84,17 +93,6 @@ static void	env_sort_print(t_env *env, t_var_attr attr, const char *declare)
 		ft_abort();
 	set_elem_pointer(elems, env->hash->table, env->hash->table_size, attr);
 	sort_elems_by_key(elems);
-	print_elems(elems, declare);
+	print_elems(elems);
 	ft_free(&elems);
-}
-
-void	env_print_detail(t_env *env, t_var_attr attr)
-{
-	char	*declare;
-
-	if (attr == VAR_ENV)
-		declare = DECLARE_ENV;
-	else if (attr == VAR_SHELL)
-		declare = DECLARE_SHELL;
-	env_sort_print(env, attr, declare);
 }

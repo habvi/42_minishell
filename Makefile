@@ -13,12 +13,12 @@ SRCS		:=	destroy.c \
 				repl.c
 
 BUILTIN_DIR	:=	builtin
-SRCS		+=	$(BUILTIN_DIR)/ft_echo.c \
+SRCS		+=	$(BUILTIN_DIR)/ft_declare.c \
+				$(BUILTIN_DIR)/ft_echo.c \
 				$(BUILTIN_DIR)/ft_env.c \
 				$(BUILTIN_DIR)/ft_exit.c \
 				$(BUILTIN_DIR)/ft_export.c \
 				$(BUILTIN_DIR)/ft_pwd.c \
-				$(BUILTIN_DIR)/ft_set.c \
 				$(BUILTIN_DIR)/ft_unset.c \
 				$(BUILTIN_DIR)/is_option.c \
 				$(BUILTIN_DIR)/str_to_legal_number.c

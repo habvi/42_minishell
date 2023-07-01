@@ -5,11 +5,11 @@
 # include <stdint.h>
 # include <stddef.h>
 
-// todo: sort
+// todo: sort & indent
 # define CMD_ECHO	"echo"
 # define CMD_CD		"cd"
 # define CMD_PWD	"pwd"
-# define CMD_SET	"set"
+# define CMD_DECLARE	"declare"
 # define CMD_EXPORT	"export"
 # define CMD_UNSET	"unset"
 # define CMD_ENV	"env"
@@ -38,9 +38,6 @@
 # define ERROR_MSG_INVALID_OP	"invalid option"
 # define ERROR_MSG_NOT_VALID_ID	"not a valid identifier"
 
-# define DECLARE_ENV			"declare -x"
-# define DECLARE_SHELL			"declare --"
-
 typedef enum e_result		t_result;
 typedef struct s_env		t_env;
 typedef struct s_deque_node	t_deque_node;
@@ -58,7 +55,7 @@ uint8_t	ft_env(const char *const *argv, t_env *env);
 uint8_t	ft_exit(const char *const *argv, t_context *context);
 uint8_t	ft_export(const char *const *argv, t_env *env);
 uint8_t	ft_pwd(const char *const *argv, t_context *context);
-uint8_t	ft_set(const char *const *argv, t_env *env);
+uint8_t	ft_declare(const char *const *argv, t_env *env);
 uint8_t	ft_unset(const char *const *argv, t_env *env);
 
 bool	is_option(const char *word);
