@@ -6,13 +6,13 @@
 
 void	del_var_info(void **var_info)
 {
-	t_var_info	*info;
+	t_var_info	*tmp_info;
 
 	if (!var_info || !*var_info)
 		return ;
-	info = (t_var_info *)*var_info;
-	ft_free(&info->value);
-	ft_free(&info);
+	tmp_info = (t_var_info *)*var_info;
+	ft_free(&tmp_info->value);
+	ft_free(&tmp_info);
 	*var_info = NULL;
 }
 

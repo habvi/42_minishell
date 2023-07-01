@@ -22,13 +22,13 @@ static void	env_join_value_update(t_var *var, \
 									t_deque_node *node)
 {
 	t_elem		*elem;
-	t_var_info	*info;
+	t_var_info	*tmp_info;
 	t_var_info	*new_info;
 	char		*joined_value;
 
 	elem = (t_elem *)node->content;
-	info = (t_var_info *)elem->value;
-	joined_value = join_new_value(info->value, var_info->value);
+	tmp_info = (t_var_info *)elem->value;
+	joined_value = join_new_value(tmp_info->value, var_info->value);
 	new_info = var_create_var_info(joined_value, VAR_ENV);
 	hs_update_value(&key, new_info, node, var->hash->del_hash_value);
 	del_var_info((void **)&var_info);
@@ -58,9 +58,9 @@ void	env_create_info_join(t_var *var, \
 								const char *value, \
 								t_var_attr attr)
 {
-	t_var_info	*info;
+	t_var_info	*var_info;
 
-	info = var_create_var_info(value, attr);
-	env_join(var, key, info);
-	del_var_info((void **)&info);
+	var_info = var_create_var_info(value, attr);
+	env_join(var, key, var_info);
+	del_var_info((void **)&var_info);
 }
