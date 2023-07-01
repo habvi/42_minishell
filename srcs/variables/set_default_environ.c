@@ -22,6 +22,7 @@ static void	set_func(t_var *var)
 	var->get_value = var_get_value;
 	var->add = var_add;
 	var->unset = var_unset;
+	var->update_attr = update_attr;
 	var->print_detail = var_print_detail;
 	var->clear = var_clear;
 	var->env_join = env_join;
