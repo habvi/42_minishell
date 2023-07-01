@@ -16,6 +16,6 @@ uint8_t	ft_env(const char *const *argv, t_var *var)
 		status = INVALID_OPTION; // print error
 		return (status);
 	}
-	var->print(var);
+	var->env_print(var);
 	return (status);
 }

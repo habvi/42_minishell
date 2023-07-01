@@ -5,13 +5,13 @@
 #include "ft_mem.h"
 
 // allocate dup_key, dup_info
-void	env_add(t_var *var, const char *key, const t_var_info *info)
+void	var_add(t_var *var, const char *key, const t_var_info *info)
 {
 	t_deque_node	*target;
 	char			*dup_key;
 	t_var_info		*dup_info;
 
-	env_dup_key_info_pair(key, info, &dup_key, &dup_info);
+	var_dup_key_info_pair(key, info, &dup_key, &dup_info);
 	target = hs_find_key(var->hash, dup_key);
 	if (target)
 	{
@@ -29,14 +29,14 @@ void	env_add(t_var *var, const char *key, const t_var_info *info)
 	}
 }
 
-void	env_create_info_add(t_var *var, \
+void	var_create_info_add(t_var *var, \
 							const char *key, \
 							const char *value, \
 							t_var_attr attr)
 {
 	t_var_info	*info;
 
-	info = env_create_var_info(value, attr);
-	env_add(var, key, info);
+	info = var_create_var_info(value, attr);
+	var_add(var, key, info);
 	del_var_info((void **)&info);
 }

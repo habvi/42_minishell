@@ -13,7 +13,7 @@ static void	swap_elems(t_elem **elems, const size_t i, const size_t j)
 
 // sort to ascending
 // i <-> j
-void	sort_elems_by_key(t_elem **elems)
+void	var_sort_elems_by_key(t_elem **elems)
 {
 	size_t	i;
 	size_t	j;

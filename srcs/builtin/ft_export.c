@@ -13,7 +13,7 @@ static void	declare_all(const char *const *args, t_var *var, uint8_t *status)
 	i = 0;
 	while (args[i])
 	{
-		result = env_declare_arg(args[i], var, VAR_ENV);
+		result = var_declare_arg(args[i], var, VAR_ENV);
 		if (result == FAILURE)
 		{
 			*status = NOT_A_VALID_IDENTIFIER;

@@ -11,7 +11,7 @@ void	set_default_pwd(t_var *var)
 		var->unset(var, KEY_PWD);
 	else
 	{
-		env_create_info_add(var, KEY_PWD, pwd_path, VAR_ENV);
+		var_create_info_add(var, KEY_PWD, pwd_path, VAR_ENV);
 		ft_free(&pwd_path);
 	}
 	return ;

@@ -23,24 +23,25 @@ SRCS		+=	$(BUILTIN_DIR)/ft_declare.c \
 				$(BUILTIN_DIR)/is_option.c \
 				$(BUILTIN_DIR)/str_to_legal_number.c
 
-ENVIRONMENT	:=	variables
-SRCS		+=	$(ENVIRONMENT)/add.c \
-				$(ENVIRONMENT)/clear.c \
-				$(ENVIRONMENT)/declare_arg.c \
-				$(ENVIRONMENT)/dup_env_key.c \
-				$(ENVIRONMENT)/dup_env_value.c \
-				$(ENVIRONMENT)/env_dup_key_info_pair.c \
-				$(ENVIRONMENT)/env_separate_variables.c \
-				$(ENVIRONMENT)/env_sort_elems.c \
-				$(ENVIRONMENT)/get_var_info.c \
-				$(ENVIRONMENT)/is_key_exist.c \
-				$(ENVIRONMENT)/join.c \
-				$(ENVIRONMENT)/print_detail.c \
-				$(ENVIRONMENT)/print.c \
-				$(ENVIRONMENT)/set_default_environ.c \
-				$(ENVIRONMENT)/set_default_old_pwd.c \
-				$(ENVIRONMENT)/set_default_pwd.c \
-				$(ENVIRONMENT)/unset.c
+VAR_DIR		:=	variables
+ENVIRON_DIR	:=	environ
+SRCS		+=	$(VAR_DIR)/$(ENVIRON_DIR)/dup_env_key.c \
+				$(VAR_DIR)/$(ENVIRON_DIR)/dup_env_value.c \
+				$(VAR_DIR)/$(ENVIRON_DIR)/env_separate_variables.c \
+				$(VAR_DIR)/$(ENVIRON_DIR)/join.c \
+				$(VAR_DIR)/$(ENVIRON_DIR)/print.c \
+				$(VAR_DIR)/add.c \
+				$(VAR_DIR)/clear.c \
+				$(VAR_DIR)/declare_arg.c \
+				$(VAR_DIR)/get_var_info.c \
+				$(VAR_DIR)/is_key_exist.c \
+				$(VAR_DIR)/print_detail.c \
+				$(VAR_DIR)/set_default_environ.c \
+				$(VAR_DIR)/set_default_old_pwd.c \
+				$(VAR_DIR)/set_default_pwd.c \
+				$(VAR_DIR)/unset.c \
+				$(VAR_DIR)/var_dup_key_info_pair.c \
+				$(VAR_DIR)/var_sort_elems.c
 
 DEBUG_DIR	:=	debug
 SRCS		+=	$(DEBUG_DIR)/put.c

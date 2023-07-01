@@ -15,7 +15,7 @@ char	*ft_strdup_abort(const char *str)
 	return (dup);
 }
 
-// todo env_?
+// todo var_?
 static t_var_info	*dup_var_info(const t_var_info *info)
 {
 	t_var_info	*dup_info;
@@ -30,7 +30,7 @@ static t_var_info	*dup_var_info(const t_var_info *info)
 	return (dup_info);
 }
 
-void	env_dup_key_info_pair(const char *key, \
+void	var_dup_key_info_pair(const char *key, \
 							const t_var_info *info, \
 							char **dup_key, \
 							t_var_info **dup_info)

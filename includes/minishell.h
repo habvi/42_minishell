@@ -17,7 +17,7 @@
 # define UNREACHABLE	(-1)
 
 /* size */
-# define ENV_LIST_SIZE	256
+# define VAR_LIST_SIZE	256
 
 /* SIGNAL */
 # define STATUS_SIG_BASE	128

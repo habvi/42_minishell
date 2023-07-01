@@ -18,14 +18,14 @@ void	del_var_info(void **var_info)
 
 static void	set_func(t_var *var)
 {
-	var->is_key_exist = env_is_key_exist;
-	var->get_value = env_get_value;
-	var->add = env_add;
-	var->join = env_join;
-	var->unset = env_unset;
-	var->print = env_print;
-	var->print_detail = env_print_detail;
-	var->clear = env_clear;
+	var->is_key_exist = var_is_key_exist;
+	var->get_value = var_get_value;
+	var->add = var_add;
+	var->unset = var_unset;
+	var->print_detail = var_print_detail;
+	var->clear = var_clear;
+	var->env_join = env_join;
+	var->env_print = env_print;
 }
 
 static void	get_environ(t_var *var)
@@ -38,14 +38,14 @@ static void	get_environ(t_var *var)
 		return ;
 	while (environ[i])
 	{
-		env_declare_arg(environ[i], var, VAR_ENV);
+		var_declare_arg(environ[i], var, VAR_ENV);
 		i++;
 	}
 }
 
 static void	set_env_default_hash(t_var *var)
 {
-	var->hash = hs_create_table(ENV_LIST_SIZE, del_var_info);
+	var->hash = hs_create_table(VAR_LIST_SIZE, del_var_info);
 	if (!var->hash)
 		ft_abort();
 	get_environ(var);
