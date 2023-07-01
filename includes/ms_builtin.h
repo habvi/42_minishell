@@ -15,8 +15,11 @@
 # define CMD_ENV	"env"
 # define CMD_EXIT	"exit"
 
+/* option */
 # define CMD_OPTION_MARKER	'-'
-# define ECHO_OPTION		'n'
+# define ECHO_OPTION_DISPLAY_NEWLINE	'n'
+# define DECLARE_OPTION	'p'
+
 # define ECHO_SEPARATOR		' '
 # define END_OF_CMD_OPTION	"--"
 
@@ -67,8 +70,13 @@ uint8_t	ft_declare(const char *const *argv, t_var *var);
 uint8_t	ft_unset(const char *const *argv, t_var *var);
 
 bool	is_option(const char *word);
+bool	is_arg_option(const char *arg, char option);
 bool	is_end_of_option(const char *word);
 bool	is_valid_option(const char *const *argv, uint8_t *status, size_t *i);
+void	skip_option_part(const char *const *argv, \
+							size_t *idx, \
+							bool *is_valid_op, \
+							char option);
 bool	str_to_legal_number(const char *str, long *result);
 
 #endif //MS_BUILTIN_H
