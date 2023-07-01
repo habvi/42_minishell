@@ -2,6 +2,7 @@
 # define MS_VAR_H
 
 # include <stddef.h>
+# include <stdbool.h>
 
 /* declare */
 # define DECLARE		"declare"
@@ -43,7 +44,7 @@ struct s_var
 	char	*(*get_value)(t_var *var, char *key);
 	void	(*add)(t_var *var, const char *key, const t_var_info *var_info);
 	void	(*unset)(t_var *var, const char *key);
-	void	(*print_detail)(t_var *var, t_var_attr attr);
+	void	(*print_detail)(t_var *var, t_var_attr attr, bool is_display_attr);
 	void	(*clear)(t_var *var);
 	void	(*env_join)(t_var *var, \
 						const char *key, \
@@ -76,7 +77,7 @@ t_var_attr	var_get_attribute(t_var *var, char *key);
 int			var_is_key_exist(t_var *var, const char *key);
 
 /* print */
-void		var_print_detail(t_var *var, t_var_attr attr);
+void		var_print_detail(t_var *var, t_var_attr attr, bool is_display_attr);
 void		var_sort_elems_by_key(t_elem **elems);
 
 /* del */
