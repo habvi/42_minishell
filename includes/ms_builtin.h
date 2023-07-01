@@ -39,10 +39,11 @@
 # define ERROR_MSG_NOT_VALID_ID	"not a valid identifier"
 
 typedef enum e_result		t_result;
-typedef struct s_env		t_env;
+typedef struct s_var		t_var;
 typedef struct s_deque_node	t_deque_node;
 typedef struct s_context	t_context;
 
+// for exit
 typedef enum e_exit_argument
 {
 	EXIT_VALID_ARG,
@@ -50,13 +51,20 @@ typedef enum e_exit_argument
 	RETURN_TOO_MANY_NUMERIC_ARG,
 }	t_exit_arg;
 
+// for export
+typedef enum e_env_op
+{
+	ENV_ADD,
+	ENV_JOIN,
+}	t_env_op;
+
 uint8_t	ft_echo(const char *const *argv);
-uint8_t	ft_env(const char *const *argv, t_env *env);
+uint8_t	ft_env(const char *const *argv, t_var *var);
 uint8_t	ft_exit(const char *const *argv, t_context *context);
-uint8_t	ft_export(const char *const *argv, t_env *env);
+uint8_t	ft_export(const char *const *argv, t_var *var);
 uint8_t	ft_pwd(const char *const *argv, t_context *context);
-uint8_t	ft_declare(const char *const *argv, t_env *env);
-uint8_t	ft_unset(const char *const *argv, t_env *env);
+uint8_t	ft_declare(const char *const *argv, t_var *var);
+uint8_t	ft_unset(const char *const *argv, t_var *var);
 
 bool	is_option(const char *word);
 bool	is_end_of_option(const char *word);

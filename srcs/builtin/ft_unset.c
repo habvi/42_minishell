@@ -1,8 +1,9 @@
 #include <stdlib.h>
 #include "minishell.h"
 #include "ms_builtin.h"
+#include "ms_var.h"
 
-static void	unset_args(const char *const *args, t_env *env, uint8_t *status)
+static void	unset_args(const char *const *args, t_var *var, uint8_t *status)
 {
 	size_t	i;
 
@@ -10,14 +11,14 @@ static void	unset_args(const char *const *args, t_env *env, uint8_t *status)
 	while (args[i])
 	{
 		if (is_valid_key(args[i]))
-			env->unset(env, args[i]);
+			var->unset(var, args[i]);
 		else
 			*status = NOT_A_VALID_IDENTIFIER; // print error
 		i++;
 	}
 }
 
-uint8_t	ft_unset(const char *const *argv, t_env *env)
+uint8_t	ft_unset(const char *const *argv, t_var *var)
 {
 	uint8_t	status;
 	size_t	i;
@@ -26,6 +27,6 @@ uint8_t	ft_unset(const char *const *argv, t_env *env)
 	i = 1;
 	if (!is_valid_option(argv, &status, &i))
 		return (status);
-	unset_args(&argv[i], env, &status);
+	unset_args(&argv[i], var, &status);
 	return (status);
 }

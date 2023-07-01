@@ -1,8 +1,8 @@
 #include <stdlib.h>
-#include "minishell.h"
 #include "ms_builtin.h"
+#include "ms_var.h"
 
-uint8_t	ft_declare(const char *const *argv, t_env *env)
+uint8_t	ft_declare(const char *const *argv, t_var *var)
 {
 	uint8_t	status;
 	size_t	i;
@@ -13,7 +13,7 @@ uint8_t	ft_declare(const char *const *argv, t_env *env)
 		return (status);
 	if (!argv[i])
 	{
-		env->print_detail(env, VAR_ALL);
+		var->print_detail(var, VAR_ALL);
 		return (status);
 	}
 	return (status);

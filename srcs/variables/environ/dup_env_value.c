@@ -1,4 +1,5 @@
 #include "minishell.h"
+#include "ms_var.h"
 #include "ft_string.h"
 
 static int	is_operator_exist(const char c)

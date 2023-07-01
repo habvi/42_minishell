@@ -16,7 +16,7 @@
 // env.del		-> unset
 
 // key expected `name` -> void ...?
-int	set(t_env *env, char *key, char *value)
+int	set(t_var *env, char *key, char *value)
 {
 	// strdup key, value
 	// set to hash
@@ -26,7 +26,7 @@ int	set(t_env *env, char *key, char *value)
 }
 
 // key expected `name` -> void ...?
-int	append(t_env *env, char *key, char *value)
+int	append(t_var *env, char *key, char *value)
 {
 	// strdup key, value
 	// set to hash
@@ -36,7 +36,7 @@ int	append(t_env *env, char *key, char *value)
 }
 
 // unset failure case ...? void ?
-int	unset(t_env *env, char *key)
+int	unset(t_var *env, char *key)
 {
 	t_deque_node	*node;
 
@@ -53,7 +53,7 @@ int	unset(t_env *env, char *key)
 
 //  return value need allocate ...?
 //  use case : expansion, etc.
-char	*get(t_env *env, char *key)
+char	*get(t_var *env, char *key)
 {
 	char	*value;
 	char	*duped_value;
@@ -67,14 +67,14 @@ char	*get(t_env *env, char *key)
 	return (duped_value);
 }
 
-void	list(t_env *env)
+void	list(t_var *env)
 {
 	// print key-value-pairs to stdout
 	//   except only key
 	//   `key=value\n`
 }
 
-void	list_all(t_env *env)
+void	list_all(t_var *env)
 {
 	// print key-value-pairs to stdout
 	//   include only key
@@ -86,7 +86,7 @@ void	del_value(void *value)
 	ft_free(&value);
 }
 
-int	init_env(t_env *env)
+int	init_env(t_var *env)
 {
 	if (!env)
 		return (FAILURE);
@@ -103,7 +103,7 @@ int	init_env(t_env *env)
 	return (SUCCESS);
 }
 
-int	get_environ(t_env *env)
+int	get_environ(t_var *env)
 {
 	extern char *environ;
 
@@ -118,7 +118,7 @@ int	get_environ(t_env *env)
 
 int	main(void)
 {
-	t_env	env;
+	t_var	env;
 
 	// init
 	if (init_env(&env) == FAILURE)

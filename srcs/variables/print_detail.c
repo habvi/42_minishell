@@ -1,13 +1,12 @@
 #include "minishell.h"
-#include "ms_builtin.h"
+#include "ms_var.h"
 #include "ft_deque.h"
 #include "ft_dprintf.h"
 #include "ft_hash.h"
 #include "ft_mem.h"
-#include "ft_string.h"
 #include "ft_sys.h"
 
-static void	set_env_variable_elem(t_deque_node *node, \
+static void	set_var_variable_elem(t_deque_node *node, \
 									t_elem **elems, \
 									size_t *j, \
 									t_var_attr attr)
@@ -45,7 +44,7 @@ static void	set_elem_pointer(t_elem **elems, \
 			i++;
 			continue ;
 		}
-		set_env_variable_elem(table[i]->node, elems, &j, attr);
+		set_var_variable_elem(table[i]->node, elems, &j, attr);
 		i++;
 	}
 	elems[j] = NULL;
@@ -84,15 +83,15 @@ static void	print_elems(t_elem **elems)
 // print key-value-pairs to stdout
 //   include only key
 //   `declare -x key="value\n`
-void	env_print_detail(t_env *env, t_var_attr attr)
+void	var_print_detail(t_var *var, t_var_attr attr)
 {
 	t_elem	**elems;
 
-	elems = (t_elem **)x_malloc(sizeof(t_elem *) * (env->hash->key_count + 1));
+	elems = (t_elem **)x_malloc(sizeof(t_elem *) * (var->hash->key_count + 1));
 	if (!elems)
 		ft_abort();
-	set_elem_pointer(elems, env->hash->table, env->hash->table_size, attr);
-	sort_elems_by_key(elems);
+	set_elem_pointer(elems, var->hash->table, var->hash->table_size, attr);
+	var_sort_elems_by_key(elems);
 	print_elems(elems);
 	ft_free(&elems);
 }

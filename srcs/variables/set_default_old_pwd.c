@@ -1,7 +1,6 @@
-#include <dirent.h>
 #include <errno.h>
 #include "minishell.h"
-#include "ms_builtin.h"
+#include "ms_var.h"
 #include "ft_mem.h"
 #include "ft_string.h"
 
@@ -23,30 +22,30 @@ static bool	is_valid_old_pwd(const char *path)
 
 // search path && is invalid directory
 // delete OLDPWD in hash
-static void	validate_and_delete_old_pwd(t_env *env)
+static void	validate_and_delete_old_pwd(t_var *var)
 {
 	char	*dup_path;
 
-	dup_path = env->get_value(env, KEY_OLDPWD);
+	dup_path = var->get_value(var, KEY_OLDPWD);
 	if (!dup_path)
 		return ;
 	if (!is_valid_old_pwd(dup_path))
-		env->unset(env, KEY_OLDPWD);
+		var->unset(var, KEY_OLDPWD);
 	ft_free(&dup_path);
 }
 
 // key=OLDPWD
 // value=NULL
-static void	set_only_old_pwd_key(t_env *env)
+static void	set_only_old_pwd_key(t_var *var)
 {
-	env_create_info_add(env, KEY_OLDPWD, NULL, VAR_ENV);
+	var_create_info_add(var, KEY_OLDPWD, NULL, VAR_ENV);
 }
 
-void	set_default_old_pwd(t_env *env)
+void	set_default_old_pwd(t_var *var)
 {
-	if (env->is_key_exist(env, KEY_OLDPWD))
-		validate_and_delete_old_pwd(env);
+	if (var->is_key_exist(var, KEY_OLDPWD))
+		validate_and_delete_old_pwd(var);
 	else
-		set_only_old_pwd_key(env);
+		set_only_old_pwd_key(var);
 	return ;
 }

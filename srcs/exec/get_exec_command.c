@@ -18,9 +18,7 @@ t_deque_node	*get_next_command(t_deque_node *cmd, size_t *cmd_size)
 	}
 	if (cmd)
 	{
-		// todo : ft_free -> valgrind error...
-		free(cmd->content);
-		cmd->content = NULL;
+		ft_free(&cmd->content);
 		cmd = cmd->next;
 	}
 	return (cmd);

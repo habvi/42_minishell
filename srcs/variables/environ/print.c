@@ -1,4 +1,5 @@
 #include "minishell.h"
+#include "ms_var.h"
 #include "ft_deque.h"
 #include "ft_dprintf.h"
 #include "ft_hash.h"
@@ -29,15 +30,15 @@ static void	env_print_elem(t_deque *deque)
 // print key-value-pairs to stdout
 //   except only key
 //   `key=value\n`
-void	env_print(t_env *env)
+void	env_print(t_var *var)
 {
 	size_t	idx;
 
 	idx = 0;
-	while (idx < env->hash->table_size)
+	while (idx < var->hash->table_size)
 	{
-		if (env->hash->table[idx] && env->hash->table[idx]->size)
-			env_print_elem(env->hash->table[idx]);
+		if (var->hash->table[idx] && var->hash->table[idx]->size)
+			env_print_elem(var->hash->table[idx]);
 		idx++;
 	}
 }
