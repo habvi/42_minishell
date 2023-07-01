@@ -57,12 +57,13 @@ typedef enum e_env_op
 	ENV_JOIN,
 }	t_env_op;
 
+uint8_t	ft_cd(const char *const *argv, t_context *context);
+uint8_t	ft_declare(const char *const *argv, t_var *var);
 uint8_t	ft_echo(const char *const *argv);
 uint8_t	ft_env(const char *const *argv, t_var *var);
 uint8_t	ft_exit(const char *const *argv, t_context *context);
 uint8_t	ft_export(const char *const *argv, t_var *var);
 uint8_t	ft_pwd(const char *const *argv, t_context *context);
-uint8_t	ft_declare(const char *const *argv, t_var *var);
 uint8_t	ft_unset(const char *const *argv, t_var *var);
 
 bool	is_option(const char *word);

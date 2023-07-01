@@ -13,7 +13,8 @@ SRCS		:=	destroy.c \
 				repl.c
 
 BUILTIN_DIR	:=	builtin
-SRCS		+=	$(BUILTIN_DIR)/ft_declare.c \
+SRCS		+=	$(BUILTIN_DIR)/ft_cd.c \
+				$(BUILTIN_DIR)/ft_declare.c \
 				$(BUILTIN_DIR)/ft_echo.c \
 				$(BUILTIN_DIR)/ft_env.c \
 				$(BUILTIN_DIR)/ft_exit.c \
