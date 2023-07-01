@@ -1,10 +1,9 @@
 #include "minishell.h"
-#include "ms_builtin.h"
+#include "ms_var.h"
 #include "ft_deque.h"
 #include "ft_dprintf.h"
 #include "ft_hash.h"
 #include "ft_mem.h"
-#include "ft_string.h"
 #include "ft_sys.h"
 
 static void	set_env_variable_elem(t_deque_node *node, \

@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include "minishell.h"
 #include "ms_builtin.h"
+#include "ms_var.h"
 #include "ft_dprintf.h"
 
 // export declare VAR_ENV

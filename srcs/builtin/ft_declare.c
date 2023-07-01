@@ -1,6 +1,6 @@
 #include <stdlib.h>
-#include "minishell.h"
 #include "ms_builtin.h"
+#include "ms_var.h"
 
 uint8_t	ft_declare(const char *const *argv, t_env *env)
 {

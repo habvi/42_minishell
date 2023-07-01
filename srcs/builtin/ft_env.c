@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include "minishell.h"
 #include "ms_builtin.h"
-#include "ms_exec.h"
+#include "ms_var.h"
 
 // {"env", "arg1", "arg2", ..., NULL};
 uint8_t	ft_env(const char *const *argv, t_env *env)

@@ -1,4 +1,5 @@
 #include "minishell.h"
+#include "ms_var.h"
 #include "ft_hash.h"
 
 // always success

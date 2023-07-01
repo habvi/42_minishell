@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include "minishell.h"
 #include "ms_builtin.h"
+#include "ms_var.h"
 
 static void	unset_args(const char *const *args, t_env *env, uint8_t *status)
 {

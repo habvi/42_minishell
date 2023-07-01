@@ -23,7 +23,7 @@ SRCS		+=	$(BUILTIN_DIR)/ft_declare.c \
 				$(BUILTIN_DIR)/is_option.c \
 				$(BUILTIN_DIR)/str_to_legal_number.c
 
-ENVIRONMENT	:=	environment
+ENVIRONMENT	:=	variables
 SRCS		+=	$(ENVIRONMENT)/add.c \
 				$(ENVIRONMENT)/clear.c \
 				$(ENVIRONMENT)/declare_arg.c \

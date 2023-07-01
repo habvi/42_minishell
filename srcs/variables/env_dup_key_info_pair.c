@@ -1,7 +1,5 @@
 #include "minishell.h"
-#include "ft_deque.h"
-#include "ft_hash.h"
-#include "ft_mem.h"
+#include "ms_var.h"
 #include "ft_string.h"
 #include "ft_sys.h"
 
