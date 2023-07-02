@@ -7,17 +7,17 @@ def main():
     test_res = 0
     declare_test = [
         # "declare | /bin/grep PWD | /bin/grep -v _=",
-        f"{DISPLAY_CMD}",
-        f"declare PWD=aaa \n {DISPLAY_CMD}",
-        f"declare PWD=aaa \n declare -x PWD \n {DISPLAY_CMD}",
-        f"declare PWD=aaa \n declare +x PWD \n {DISPLAY_CMD}",
-        f"declare +x PWD=aaa \n {DISPLAY_CMD}",
-        f"declare -x PWD=aaa \n {DISPLAY_CMD}",
-        f"unset PWD \n declare PWD=aaa \n {DISPLAY_CMD}",
-        f"unset PWD \n declare -x PWD=aaa \n {DISPLAY_CMD}",
-        f"unset PWD \n declare +x PWD=aaa \n {DISPLAY_CMD}",
-        f"unset PWD \n declare +x PWD \n {DISPLAY_CMD}",
-        f"unset PWD \n declare -x PWD \n {DISPLAY_CMD}",
+        "declare -p | /bin/grep PWD | /bin/grep -v _=",
+        "declare PWD=aaa\ndeclare -p | /bin/grep PWD | /bin/grep -v _=",
+        "declare PWD=aaa\ndeclare -x PWD\ndeclare -p | /bin/grep PWD | /bin/grep -v _=",
+        "declare PWD=aaa\ndeclare +x PWD\ndeclare -p | /bin/grep PWD | /bin/grep -v _=",
+        "declare +x PWD=aaa\ndeclare -p | /bin/grep PWD | /bin/grep -v _=",
+        "declare -x PWD=aaa\ndeclare -p | /bin/grep PWD | /bin/grep -v _=",
+        "unset PWD\ndeclare PWD=aaa\ndeclare -p | /bin/grep PWD | /bin/grep -v _=",
+        "unset PWD\ndeclare -x PWD=aaa\ndeclare -p | /bin/grep PWD | /bin/grep -v _=",
+        "unset PWD\ndeclare +x PWD=aaa\ndeclare -p | /bin/grep PWD | /bin/grep -v _=",
+        "unset PWD\ndeclare +x PWD\ndeclare -p | /bin/grep PWD | /bin/grep -v _=",
+        "unset PWD\ndeclare -x PWD\ndeclare -p | /bin/grep PWD | /bin/grep -v _=",
     ]
 
     test_res |= test("ft_declare", declare_test)
