@@ -55,7 +55,7 @@ void		debug_func(const char *func_name, const int line_num);
 void		debug_2d_array(char **array);
 
 /* destroy */
-void		destroy(t_context context);
+void		destroy_context(t_context context);
 
 /* input */
 char		*input_line(void);

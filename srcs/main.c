@@ -8,7 +8,7 @@ int	main(void)
 
 	init_context(&context);
 	result = read_eval_print_loop(&context);
-	destroy(context);
+	destroy_context(context);
 	if (result == PROCESS_ERROR)
 		return (EXIT_FAILURE);
 	return (context.status);
