@@ -1,5 +1,6 @@
 #include "minishell.h"
 #include "ms_var.h"
+#include "ms_builtin.h"
 #include "ft_deque.h"
 #include "ft_dprintf.h"
 #include "ft_hash.h"
@@ -66,17 +67,22 @@ static void	print_elems(t_elem **elems, bool is_display_attr)
 	size_t		i;
 	t_var_info	*var_info;
 	char		*attr;
+	char		*quote;
 
 	i = 0;
+	quote = "";
 	while (elems[i])
 	{
 		var_info = (t_var_info *)elems[i]->value;
 		attr = get_print_attr(var_info->attr);
 		if (is_display_attr)
+		{
 			ft_dprintf(STDOUT_FILENO, "%s %s ", DECLARE, attr);
+			quote = VAR_PRINT_QUOTE;
+		}
 		ft_dprintf(STDOUT_FILENO, "%s", elems[i]->key);
 		if (var_info->value)
-			ft_dprintf(STDOUT_FILENO, "=\"%s\"", var_info->value);
+			ft_dprintf(STDOUT_FILENO, "=%s%s%s", quote, var_info->value, quote);
 		ft_dprintf(STDOUT_FILENO, "\n");
 		i++;
 	}

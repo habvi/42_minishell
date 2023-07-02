@@ -23,6 +23,8 @@
 # define ECHO_SEPARATOR		' '
 # define END_OF_CMD_OPTION	"--"
 
+# define VAR_PRINT_QUOTE	"\""
+
 // todo: naming...
 # define EXIT_ONLY_CMD_CNT		1
 # define EXIT_ARG_IDX			1
