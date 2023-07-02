@@ -105,10 +105,11 @@ char		*cd_set_path(const char *arg, t_var *var);
 t_result	cd_change_dir_to_valid_path(const char *path, \
 										const char *pwd, \
 										uint8_t *status);
+void		cd_update_pwd(char *path, t_context *context);
 void		update_pwd_in_cd(t_var *var, \
 								const char *key, \
 								const char *value, \
-								t_var_attr attr);
+								t_var_attr attr); // todo: to outsize cd..?
 // canonicalize
 char		*cd_canonicalize_path(const char *path, t_context *context);
 void		del_path_elem(void *content);
@@ -118,6 +119,6 @@ void		erase_dot_dot_path(t_deque **dq);
 char		*handle_double_slash_path(const char *path, char *absolute_path);
 char		*convert_path_elems_to_absolute_path(t_deque *path_elems);
 
-bool		is_absolute_path(const char *path); // todo : move header
+bool		is_absolute_path(const char *path); // todo : move header..?
 
 #endif //MS_BUILTIN_H

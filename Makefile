@@ -19,6 +19,7 @@ SRCS		+=	$(BUILTIN_DIR)/ft_cd_canonicalize_convert.c \
 				$(BUILTIN_DIR)/ft_cd_canonicalize.c \
 				$(BUILTIN_DIR)/ft_cd_chdir.c \
 				$(BUILTIN_DIR)/ft_cd_set_path.c \
+				$(BUILTIN_DIR)/ft_cd_update_pwd.c \
 				$(BUILTIN_DIR)/ft_cd.c \
 				$(BUILTIN_DIR)/ft_declare.c \
 				$(BUILTIN_DIR)/ft_echo.c \
