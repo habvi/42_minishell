@@ -116,6 +116,7 @@ t_deque		*separate_path_and_join(const char *path, t_context *context);
 void		erase_dot_path(t_deque **dq);
 void		erase_dot_dot_path(t_deque **dq);
 char		*handle_double_slash_path(const char *path, char *absolute_path);
+char		*convert_path_elems_to_absolute_path(t_deque *path_elems);
 
 bool		is_absolute_path(const char *path); // todo : move header
 
