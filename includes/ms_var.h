@@ -74,7 +74,7 @@ void		var_create_info_add(t_var *var, \
 
 /* get */
 char		*var_get_value(t_var *var, char *key);
-t_var_attr	var_get_attribute(t_var *var, char *key);
+t_var_attr	var_get_attribute(t_var *var, const char *key);
 int			var_is_key_exist(t_var *var, const char *key);
 
 /* print */

@@ -5,7 +5,10 @@
 #include "ft_dprintf.h"
 
 // export declare VAR_ENV
-void	declare_all(const char *const *args, t_var *var, uint8_t *status, t_var_attr attr)
+void	declare_all(const char *const *args, \
+					t_var *var, \
+					uint8_t *status, \
+					t_var_attr attr)
 {
 	size_t		i;
 	t_result	result;
