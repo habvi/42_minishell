@@ -41,6 +41,7 @@ SRCS		+=	$(VAR_DIR)/$(ENVIRON_DIR)/dup_env_key.c \
 				$(VAR_DIR)/set_default_pwd.c \
 				$(VAR_DIR)/unset.c \
 				$(VAR_DIR)/update_attr.c \
+				$(VAR_DIR)/var_create_var_info.c \
 				$(VAR_DIR)/var_dup_key_info_pair.c \
 				$(VAR_DIR)/var_sort_elems.c
 

@@ -2,23 +2,6 @@
 #include "ms_builtin.h"
 #include "ms_var.h"
 #include "ft_mem.h"
-#include "ft_sys.h"
-
-// all malloc
-// key=value -> key, = ,value, attr
-t_var_info	*var_create_var_info(const char *value, t_var_attr attr)
-{
-	t_var_info	*var_info;
-
-	if (!value)
-		return (NULL);
-	var_info = (t_var_info *)x_malloc(sizeof(t_var_info));
-	if (!var_info)
-		ft_abort();
-	var_info->value = ft_strdup_abort(value);
-	var_info->attr = attr;
-	return (var_info);
-}
 
 static void	set_key_info_pair(t_var *var, \
 								const char *key, \
