@@ -39,7 +39,7 @@ uint8_t	ft_declare(const char *const *argv, t_var *var)
 	skip_option_part(argv, &i, &is_display_attr, DECLARE_OPTION_DISPLAY_ATTR);
 	if (!argv[i])
 	{
-		var->print_detail(var, VAR_ALL, is_display_attr);
+		var->print_detail(var, VAR_ENV | VAR_SHELL, is_display_attr);
 		return (status);
 	}
 	attr = get_declare_attr(argv, &i);

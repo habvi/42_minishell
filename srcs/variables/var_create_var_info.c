@@ -9,12 +9,13 @@ t_var_info	*var_create_var_info(const char *value, t_var_attr attr)
 {
 	t_var_info	*var_info;
 
-	if (!value)
-		return (NULL);
 	var_info = (t_var_info *)x_malloc(sizeof(t_var_info));
 	if (!var_info)
 		ft_abort();
-	var_info->value = ft_strdup_abort(value);
+	if (value)
+		var_info->value = ft_strdup_abort(value);
+	else
+		var_info->value = NULL;
 	var_info->attr = attr;
 	return (var_info);
 }
