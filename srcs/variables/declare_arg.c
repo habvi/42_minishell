@@ -4,6 +4,7 @@
 #include "ft_mem.h"
 #include "ft_sys.h"
 
+
 // all malloc
 // key=value -> key, = ,value, attr
 t_var_info	*var_create_var_info(const char *value, t_var_attr attr)
@@ -36,6 +37,36 @@ static void	clear_key_value_info(char *key, char *value, t_var_info *var_info)
 	del_var_info((void **)&var_info);
 }
 
+// attr of declare is the arg_attr
+// if arg_attr is NONE, use the attr of key ...(*)
+//
+// key    key_attr    arg_attr    declare_attr
+// -------------------------------------------
+// NULL    -           x           x
+//                     -           -
+//                     NONE        -  (*)
+// !NULL   x           x           x
+//                     -           -
+//                     NONE        x  (*)
+//         -           x           x
+//                     -           -
+//                     NONE        -  (*)
+static t_var_attr	get_declare_attr(t_var *var, const char *key, t_var_attr arg_attr)
+{
+	t_var_attr	declare_attr;
+
+	if (arg_attr == VAR_NONE)
+	{
+		declare_attr = var_get_attribute(var, key);
+		if (declare_attr == VAR_NONE)
+			declare_attr = VAR_SHELL;
+	}
+	else
+		declare_attr = arg_attr;
+	return (declare_attr);
+}
+
+#include <stdio.h>
 // arg: key=value
 t_result	var_declare_arg(const char *const arg, t_var *var, t_var_attr attr)
 {
@@ -48,6 +79,8 @@ t_result	var_declare_arg(const char *const arg, t_var *var, t_var_attr attr)
 	result = separate_env_variables(arg, &key, &value, &op);
 	if (result == FAILURE || result == CONTINUE)
 		return (result);
+	attr = get_declare_attr(var, key, attr);
+//	dprintf(2, "key:%s, value:%s, attr:%d\n", key, value, attr);
 	var_info = var_create_var_info(value, attr);
 	set_key_info_pair(var, key, var_info, op);
 	clear_key_value_info(key, value, var_info);

@@ -5,9 +5,10 @@
 
 // -x -> attr=VAR_ENV
 // +x -> attr=VAR_SHELL
+// todo: bit arithmetic ... ?
 static t_var_attr	get_declare_attr(const char *const *argv, size_t *i)
 {
-	if (ft_streq(argv[*i], "-x")) // can't handle now, not discriminate op
+	if (ft_streq(argv[*i], "-x"))
 	{
 		(*i)++;
 		return (VAR_ENV);
@@ -20,22 +21,12 @@ static t_var_attr	get_declare_attr(const char *const *argv, size_t *i)
 	return (VAR_NONE);
 }
 
-// now     : arg is 'key'
-// feature : arg is key=value or key+=value... etc
-//            -> call declare_all or var_declare_arg
-static void	change_arg_attr(t_var *var, const char *key, t_var_attr attr)
-{
-	var->update_attr(var, key, attr);
-}
+//static void	change_arg_attr(t_var *var, const char *key, t_var_attr attr)
+//{
+//	var->update_attr(var, key, attr);
+//}
 
 // option : -p    display the attributes and value of each NAME
-// `+x' instead of `-x' turns off the given attribute.
-// Now, "only -p" or "only one arg" can declare, such as following:
-//   $ declare -p
-//   $ declare -x key
-//   $ declare +x key
-// feature:
-//   $ declare -p +x/-x key=value key+=value ...
 uint8_t	ft_declare(const char *const *argv, t_var *var)
 {
 	uint8_t		status;
@@ -52,6 +43,7 @@ uint8_t	ft_declare(const char *const *argv, t_var *var)
 		return (status);
 	}
 	attr = get_declare_attr(argv, &i);
-	change_arg_attr(var, argv[i], attr); // arg must 'key'
+	declare_all(&argv[i], var, &status, attr);
+//	change_arg_attr(var, argv[i], attr); // <- included in declare_all
 	return (status);
 }
