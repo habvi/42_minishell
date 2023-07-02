@@ -154,6 +154,28 @@ static void	erase_dot_dot_path(t_deque **dq)
 	*dq = stack;
 }
 
+static bool	is_head_double_slash(const char *path)
+{
+	return (path[0] == PATH_DELIMITER_CHR \
+			&& path[1] == PATH_DELIMITER_CHR \
+			&& path[2] != PATH_DELIMITER_CHR);
+}
+
+static char	*handle_double_slash_path(const char *path, char *absolute_path)
+{
+	char	*new_path;
+
+	if (is_head_double_slash(path))
+	{
+		new_path = ft_strjoin(PATH_DELIMITER_STR, absolute_path);
+		if (!new_path)
+			ft_abort();
+		ft_free(&absolute_path);
+		return (new_path);
+	}
+	return (absolute_path);
+}
+
 // 	 PWD         path
 // "/home/aaa"  libft/            -> /home/aaa/libft
 //              ./libft/          -> /home/aaa/libft
@@ -173,6 +195,7 @@ char	*cd_canonicalize_path(const char *path, t_context *context)
 	erase_dot_path(&path_elems);
 	erase_dot_dot_path(&path_elems);
 	absolute_path = convert_path_elems_to_absolute_path(path_elems);
+	absolute_path = handle_double_slash_path(path, absolute_path);
 	deque_clear_all(&path_elems, del);
 	return (absolute_path);
 }
