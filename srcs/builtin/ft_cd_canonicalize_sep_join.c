@@ -30,13 +30,10 @@ static void	split_and_add_dq(t_deque *path_elems, const char *path)
 	ft_free(&split_path);
 }
 
-t_deque	*separate_path_and_join(const char *path, t_context *context)
+t_deque	*separate_path_and_join(const char *path, \
+								t_context *context, \
+								t_deque *path_elems)
 {
-	t_deque	*path_elems;
-
-	path_elems = deque_new();
-	if (!path_elems)
-		ft_abort();
 	if (!is_absolute_path(path))
 	{
 		if (context->internal_pwd)

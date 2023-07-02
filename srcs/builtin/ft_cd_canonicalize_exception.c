@@ -4,54 +4,50 @@
 #include "ft_mem.h"
 #include "ft_string.h"
 
-void	erase_dot_path(t_deque **dq)
+void	erase_dot_path(t_deque **path_elems)
 {
-	t_deque			*stack;
+	t_deque			*new_path_elems;
 	t_deque_node	*pop_node;
 	char			*path_elem;
 
-	stack = deque_new();
-	if (!stack)
-		ft_abort();
-	while (!deque_is_empty(*dq))
+	new_path_elems = allocate_path_elems();
+	while (!deque_is_empty(*path_elems))
 	{
-		pop_node = deque_pop_front(*dq);
+		pop_node = deque_pop_front(*path_elems);
 		path_elem = (char *)pop_node->content;
 		if (ft_streq(path_elem, PATH_DOT))
 		{
 			deque_clear_node(&pop_node, del_path_elem);
 			continue ;
 		}
-		deque_add_back(stack, pop_node);
+		deque_add_back(new_path_elems, pop_node);
 	}
-	deque_clear_all(dq, del_path_elem);
-	*dq = stack;
+	deque_clear_all(path_elems, del_path_elem);
+	*path_elems = new_path_elems;
 }
 
-void	erase_dot_dot_path(t_deque **dq)
+void	erase_dot_dot_path(t_deque **path_elems)
 {
-	t_deque			*stack;
+	t_deque			*new_path_elems;
 	t_deque_node	*pop_node;
 	char			*path_elem;
 
-	stack = deque_new();
-	if (!stack)
-		ft_abort();
-	while (!deque_is_empty(*dq))
+	new_path_elems = allocate_path_elems();
+	while (!deque_is_empty(*path_elems))
 	{
-		pop_node = deque_pop_front(*dq);
+		pop_node = deque_pop_front(*path_elems);
 		path_elem = (char *)pop_node->content;
 		if (ft_streq(path_elem, PATH_DOT_DOT))
 		{
 			deque_clear_node(&pop_node, del_path_elem);
-			pop_node = deque_pop_back(stack);
+			pop_node = deque_pop_back(new_path_elems);
 			deque_clear_node(&pop_node, del_path_elem);
 			continue ;
 		}
-		deque_add_back(stack, pop_node);
+		deque_add_back(new_path_elems, pop_node);
 	}
-	deque_clear_all(dq, del_path_elem);
-	*dq = stack;
+	deque_clear_all(path_elems, del_path_elem);
+	*path_elems = new_path_elems;
 }
 
 static bool	is_head_double_slash(const char *path)

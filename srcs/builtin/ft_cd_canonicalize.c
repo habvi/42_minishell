@@ -1,6 +1,17 @@
+#include "minishell.h"
 #include "ms_builtin.h"
 #include "ft_deque.h"
 #include "ft_mem.h"
+
+t_deque	*allocate_path_elems(void)
+{
+	t_deque	*path_elems;
+
+	path_elems = deque_new();
+	if (!path_elems)
+		ft_abort();
+	return (path_elems);
+}
 
 void	del_path_elem(void *content)
 {
@@ -26,7 +37,8 @@ char	*cd_canonicalize_path(const char *path, t_context *context)
 	t_deque	*path_elems;
 	char	*absolute_path;
 
-	path_elems = separate_path_and_join(path, context);
+	path_elems = allocate_path_elems();
+	path_elems = separate_path_and_join(path, context, path_elems);
 	erase_dot_path(&path_elems);
 	erase_dot_dot_path(&path_elems);
 	absolute_path = convert_path_elems_to_absolute_path(path_elems);
