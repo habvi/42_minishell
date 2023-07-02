@@ -31,13 +31,13 @@ static void	split_and_add_dq(t_deque *path_elems, const char *path)
 }
 
 t_deque	*separate_path_and_join(const char *path, \
-								t_context *context, \
+								const char *internal_pwd, \
 								t_deque *path_elems)
 {
 	if (!is_absolute_path(path))
 	{
-		if (context->internal_pwd)
-			split_and_add_dq(path_elems, context->internal_pwd);
+		if (internal_pwd)
+			split_and_add_dq(path_elems, internal_pwd);
 	}
 	split_and_add_dq(path_elems, path);
 	return (path_elems);

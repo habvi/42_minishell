@@ -110,12 +110,12 @@ void		update_pwd_in_cd(t_var *var, \
 								const char *value, \
 								t_var_attr attr); // todo: to outsize cd..?
 // canonicalize
-char		*cd_canonicalize_path(const char *path, t_context *context);
+char		*cd_canonicalize_path(const char *path, const char *internal_pwd);
 t_deque		*allocate_path_elems(void);
 void		del_path_elem(void *content);
 void		destroy_path_elems(t_deque *path_elems);
 t_deque		*separate_path_and_join(const char *path, \
-									t_context *context, \
+									const char *internal_pwd, \
 									t_deque *path_elems);
 void		erase_dot_path(t_deque **dq);
 void		erase_dot_dot_path(t_deque **dq);

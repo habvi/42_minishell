@@ -37,13 +37,13 @@ void	destroy_path_elems(t_deque *path_elems)
 //              ////home          -> /home
 //              /home/aaa/../aaa/../././  -> /home
 //              ../../../../../../../../  -> /
-char	*cd_canonicalize_path(const char *path, t_context *context)
+char	*cd_canonicalize_path(const char *path, const char *internal_pwd)
 {
 	t_deque	*path_elems;
 	char	*absolute_path;
 
 	path_elems = allocate_path_elems();
-	path_elems = separate_path_and_join(path, context, path_elems);
+	path_elems = separate_path_and_join(path, internal_pwd, path_elems);
 	erase_dot_path(&path_elems);
 	erase_dot_dot_path(&path_elems);
 	absolute_path = convert_path_elems_to_absolute_path(path_elems);
