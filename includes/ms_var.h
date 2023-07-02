@@ -82,7 +82,6 @@ void		var_sort_elems_by_key(t_elem **elems);
 
 /* del */
 void		var_unset(t_var *var, const char *key);
-void		update_attr(t_var *var, const char *key, t_var_attr attr);
 void		del_var_info(void **var_info);
 void		var_clear(t_var *var);
 
