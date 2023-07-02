@@ -42,6 +42,11 @@ static void	strlcpy_path_elem(char *absolute_path, \
 	(*i) += len_path_elem;
 }
 
+static bool	is_last_path_elems(t_deque_node *node)
+{
+	return (!node->next);
+}
+
 char	*convert_path_elems_to_absolute_path(t_deque *path_elems)
 {
 	char			*absolute_path;
@@ -57,7 +62,7 @@ char	*convert_path_elems_to_absolute_path(t_deque *path_elems)
 	{
 		path_elem = (char *)node->content;
 		strlcpy_path_elem(absolute_path, &i, path_elem);
-		if (node->next)
+		if (!is_last_path_elems(node))
 			strlcpy_path_elem(absolute_path, &i, PATH_DELIMITER_STR);
 		node = node->next;
 	}
