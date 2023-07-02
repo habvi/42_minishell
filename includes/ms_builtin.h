@@ -100,5 +100,6 @@ t_result	cd_change_dir_to_valid_path(const char *path, \
 										const char *pwd, \
 										uint8_t *status);
 char		*cd_set_path(const char *arg, t_var *var);
+void		update_pwd_in_cd(t_var *var, const char *key, const char *value, t_var_attr attr);
 
 #endif //MS_BUILTIN_H
