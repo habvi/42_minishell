@@ -29,6 +29,7 @@ void	var_create_info_add(t_var *var, \
 {
 	t_var_info	*var_info;
 
+	// todo: var_create_var_info_for_set??
 	var_info = var_create_var_info(value, attr);
 	var_add(var, key, var_info);
 	del_var_info((void **)&var_info);

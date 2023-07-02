@@ -15,6 +15,8 @@ SRCS		:=	destroy.c \
 BUILTIN_DIR	:=	builtin
 SRCS		+=	$(BUILTIN_DIR)/ft_cd_canonicalize.c \
 				$(BUILTIN_DIR)/ft_cd_chdir.c \
+				$(BUILTIN_DIR)/ft_cd_handle_exception.c \
+				$(BUILTIN_DIR)/ft_cd_sep_path_and_join.c \
 				$(BUILTIN_DIR)/ft_cd_set_path.c \
 				$(BUILTIN_DIR)/ft_cd.c \
 				$(BUILTIN_DIR)/ft_declare.c \

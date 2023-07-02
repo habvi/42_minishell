@@ -2,8 +2,8 @@
 #include "minishell.h"
 #include "ms_builtin.h"
 #include "ms_var.h"
-#include "ft_mem.h"
 #include "ft_dprintf.h"
+#include "ft_mem.h"
 
 static bool	is_valid_cd_path(const char *path, int *tmp_err)
 {

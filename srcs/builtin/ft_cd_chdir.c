@@ -1,4 +1,3 @@
-#include <stdlib.h>
 #include <unistd.h>
 #include "minishell.h"
 #include "ms_builtin.h"

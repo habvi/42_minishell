@@ -53,9 +53,10 @@
 typedef enum e_result		t_result;
 typedef enum e_var_attr		t_var_attr;
 
-typedef struct s_var		t_var;
-typedef struct s_deque_node	t_deque_node;
 typedef struct s_context	t_context;
+typedef struct s_deque		t_deque;
+typedef struct s_deque_node	t_deque_node;
+typedef struct s_var		t_var;
 
 // for exit
 typedef enum e_exit_argument
@@ -73,35 +74,49 @@ typedef enum e_env_op
 }	t_env_op;
 
 // todo indent
-uint8_t	ft_cd(const char *const *argv, t_context *context);
-uint8_t	ft_declare(const char *const *argv, t_var *var);
-uint8_t	ft_echo(const char *const *argv);
-uint8_t	ft_env(const char *const *argv, t_var *var);
-uint8_t	ft_exit(const char *const *argv, t_context *context);
-uint8_t	ft_export(const char *const *argv, t_var *var);
-uint8_t	ft_pwd(const char *const *argv, t_context *context);
-uint8_t	ft_unset(const char *const *argv, t_var *var);
+uint8_t		ft_cd(const char *const *argv, t_context *context);
+uint8_t		ft_declare(const char *const *argv, t_var *var);
+uint8_t		ft_echo(const char *const *argv);
+uint8_t		ft_env(const char *const *argv, t_var *var);
+uint8_t		ft_exit(const char *const *argv, t_context *context);
+uint8_t		ft_export(const char *const *argv, t_var *var);
+uint8_t		ft_pwd(const char *const *argv, t_context *context);
+uint8_t		ft_unset(const char *const *argv, t_var *var);
 
-bool	is_option(const char *word);
-bool	is_arg_option(const char *arg, char option);
-bool	is_end_of_option(const char *word);
-bool	is_valid_option(const char *const *argv, uint8_t *status, size_t *i);
-void	skip_option_part(const char *const *argv, \
-							size_t *idx, \
-							bool *is_valid_op, \
-							char option);
-bool	str_to_legal_number(const char *str, long *result);
-void	declare_all(const char *const *args, \
-					t_var *var, \
-					uint8_t *status, \
-					t_var_attr attr); // todo: sep file, mv var ?
+bool		is_option(const char *word);
+bool		is_arg_option(const char *arg, char option);
+bool		is_end_of_option(const char *word);
+bool		is_valid_option(const char *const *argv, \
+							uint8_t *status, \
+							size_t *i);
+void		skip_option_part(const char *const *argv, \
+								size_t *idx, \
+								bool *is_valid_op, \
+								char option);
+bool		str_to_legal_number(const char *str, long *result);
+void		declare_all(const char *const *args, \
+						t_var *var, \
+						uint8_t *status, \
+						t_var_attr attr); // todo: sep file, mv var ?
 
-char		*cd_canonicalize_path(const char *path, t_context *context);
-bool		is_absolute_path(const char *path); // todo : move
+/* ft_cd */
+// cd
+char		*cd_set_path(const char *arg, t_var *var);
 t_result	cd_change_dir_to_valid_path(const char *path, \
 										const char *pwd, \
 										uint8_t *status);
-char		*cd_set_path(const char *arg, t_var *var);
-void		update_pwd_in_cd(t_var *var, const char *key, const char *value, t_var_attr attr);
+void		update_pwd_in_cd(t_var *var, \
+								const char *key, \
+								const char *value, \
+								t_var_attr attr);
+// canonicalize
+char		*cd_canonicalize_path(const char *path, t_context *context);
+void		del_path_elem(void *content);
+t_deque		*separate_path_and_join(const char *path, t_context *context);
+void		erase_dot_path(t_deque **dq);
+void		erase_dot_dot_path(t_deque **dq);
+char		*handle_double_slash_path(const char *path, char *absolute_path);
+
+bool		is_absolute_path(const char *path); // todo : move header
 
 #endif //MS_BUILTIN_H

@@ -50,38 +50,6 @@ t_var_attr	get_declare_attr(t_var *var, \
 	return (declare_attr);
 }
 
-// todo: check: if key_exist and value=NULL, use key's value
-// todo: can be more simple var_add and var_join ? ;maybe...
-// todo: func name
-static char	*update_value_based_on_key(t_var *var, \
-										const char *key, \
-										char *value)
-{
-	if (value)
-		return (value);
-	if (!var_is_key_exist(var, key))
-		return (NULL);
-	value = var->get_value(var, key);
-	return (value);
-}
-
-// key, var_info, op, var
-// key, value, attr, op, var -> register
-t_var_info	*var_create_var_info_for_set(t_var *var, \
-											const char *key, \
-											char *value, \
-											t_var_attr attr)
-{
-	t_var_info	*var_info;
-
-	attr = get_declare_attr(var, key, attr);
-	value = update_value_based_on_key(var, key, value);
-	var_info = var_create_var_info(value, attr);
-//	dprintf(2, "key:%s, value:%s, attr:%d\n", key, var_info->value, var_info->attr);
-	ft_free(&value);
-	return (var_info);
-}
-
 // arg: key=value
 // arg: key
 t_result	var_declare_arg(const char *const arg, t_var *var, t_var_attr attr)
