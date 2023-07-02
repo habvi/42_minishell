@@ -27,6 +27,8 @@
 # define ABSOLUTE_PATH_HEAD	'/'
 # define PATH_DELIMITER_CHR	'/'
 # define PATH_DELIMITER_STR	"/"
+# define PATH_DOT			"."
+# define PATH_DOT_DOT		".."
 
 # define VAR_PRINT_QUOTE	"\""
 
