@@ -10,6 +10,8 @@ t_var_info	*var_create_var_info(const char *value, t_var_attr attr)
 {
 	t_var_info	*var_info;
 
+	if (!value)
+		return (NULL);
 	var_info = (t_var_info *)x_malloc(sizeof(t_var_info));
 	if (!var_info)
 		ft_abort();
@@ -50,6 +52,7 @@ static void	clear_key_value_info(char *key, char *value, t_var_info *var_info)
 //         -           x           x
 //                     -           -
 //                     NONE        -  (*)
+// todo: bit arithmetic ... ?
 static t_var_attr	get_declare_attr(t_var *var, \
 										const char *key, \
 										t_var_attr arg_attr)
@@ -67,6 +70,19 @@ static t_var_attr	get_declare_attr(t_var *var, \
 	return (declare_attr);
 }
 
+// todo: check: if key_exist and value=NULL, use key's value
+// todo: can be more simple var_add and var_join ? ;maybe...
+static char	*get_declare_value(t_var *var, const char *key, char *value)
+{
+	if (value)
+		return (value);
+	if (!var_is_key_exist(var, key))
+		return (NULL);
+	ft_free(&value);
+	value = var->get_value(var, key);
+	return (value);
+}
+
 // arg: key=value
 t_result	var_declare_arg(const char *const arg, t_var *var, t_var_attr attr)
 {
@@ -80,6 +96,7 @@ t_result	var_declare_arg(const char *const arg, t_var *var, t_var_attr attr)
 	if (result == FAILURE || result == CONTINUE)
 		return (result);
 	attr = get_declare_attr(var, key, attr);
+	value = get_declare_value(var, key, value);
 	var_info = var_create_var_info(value, attr);
 	set_key_info_pair(var, key, var_info, op);
 	clear_key_value_info(key, value, var_info);
