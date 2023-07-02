@@ -15,10 +15,9 @@ static void	set_key_info_pair(t_var *var, \
 		var->env_join(var, key, var_info);
 }
 
-static void	clear_key_value_info(char *key, char *value, t_var_info *var_info)
+static void	clear_key_value_info(char *key, t_var_info *var_info)
 {
 	ft_free(&key);
-	ft_free(&value);
 	del_var_info((void **)&var_info);
 }
 
@@ -37,9 +36,9 @@ static void	clear_key_value_info(char *key, char *value, t_var_info *var_info)
 //                     -           -
 //                     NONE        -  (*)
 // todo: bit arithmetic ... ?
-static t_var_attr	get_declare_attr(t_var *var, \
-										const char *key, \
-										t_var_attr arg_attr)
+t_var_attr	get_declare_attr(t_var *var, \
+								const char *key, \
+								t_var_attr arg_attr)
 {
 	t_var_attr	declare_attr;
 
@@ -53,15 +52,34 @@ static t_var_attr	get_declare_attr(t_var *var, \
 
 // todo: check: if key_exist and value=NULL, use key's value
 // todo: can be more simple var_add and var_join ? ;maybe...
-static char	*get_declare_value(t_var *var, const char *key, char *value)
+// todo: func name
+static char	*update_value_based_on_key(t_var *var, \
+										const char *key, \
+										char *value)
 {
 	if (value)
 		return (value);
 	if (!var_is_key_exist(var, key))
 		return (NULL);
-	ft_free(&value);
 	value = var->get_value(var, key);
 	return (value);
+}
+
+// key, var_info, op, var
+// key, value, attr, op, var -> register
+t_var_info	*var_create_var_info_for_set(t_var *var, \
+											const char *key, \
+											char *value, \
+											t_var_attr attr)
+{
+	t_var_info	*var_info;
+
+	attr = get_declare_attr(var, key, attr);
+	value = update_value_based_on_key(var, key, value);
+	var_info = var_create_var_info(value, attr);
+//	dprintf(2, "key:%s, value:%s, attr:%d\n", key, var_info->value, var_info->attr);
+	ft_free(&value);
+	return (var_info);
 }
 
 // arg: key=value
@@ -77,10 +95,8 @@ t_result	var_declare_arg(const char *const arg, t_var *var, t_var_attr attr)
 	result = separate_env_variables(arg, &key, &value, &op);
 	if (result == FAILURE || result == CONTINUE)
 		return (result);
-	attr = get_declare_attr(var, key, attr);
-	value = get_declare_value(var, key, value); // update
-	var_info = var_create_var_info(value, attr);
+	var_info = var_create_var_info_for_set(var, key, value, attr);
 	set_key_info_pair(var, key, var_info, op);
-	clear_key_value_info(key, value, var_info);
+	clear_key_value_info(key, var_info);
 	return (result);
 }

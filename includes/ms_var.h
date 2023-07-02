@@ -37,7 +37,6 @@ typedef struct s_variable
 	t_var_attr	attr;
 }	t_var_info;
 
-// key - var_info paris
 struct s_var
 {
 	t_hash	*hash;
@@ -61,6 +60,13 @@ void		set_default_pwd(t_var *var);
 /* create */
 t_var_info	*var_create_var_info(const char *value, t_var_attr attr);
 t_result	var_declare_arg(const char *const arg, t_var *var, t_var_attr attr);
+t_var_info	*var_create_var_info_for_set(t_var *var, \
+											const char *key, \
+											char *value, \
+											t_var_attr attr);
+t_var_attr	get_declare_attr(t_var *var, \
+								const char *key, \
+								t_var_attr arg_attr);
 char		*x_ft_strdup(const char *str); // todo
 void		var_dup_key_info_pair(const char *key, \
 									const t_var_info *var_info, \
