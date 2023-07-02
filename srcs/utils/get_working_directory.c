@@ -41,6 +41,7 @@ char	*get_working_directory(char *for_whom)
 	cwd = get_current_path(&tmp_err);
 	if (tmp_err)
 	{
+		// todo: tmp
 		ft_dprintf(STDERR_FILENO, \
 		"%s: %s: %s: %s\n", \
 		for_whom, ERROR_MSG_RETRIEVE_CWD, ERROR_MSG_GETCWD, strerror(tmp_err));

@@ -24,6 +24,7 @@ static char	*get_pwd(t_context *context)
 	return (pwd);
 }
 
+// stdout
 uint8_t	ft_pwd(const char *const *argv, t_context *context)
 {
 	uint8_t	status;

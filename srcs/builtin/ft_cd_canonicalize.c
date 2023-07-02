@@ -15,8 +15,12 @@ void	del_path_elem(void *content)
 //              ./libft/../../    -> /home
 //              ../               -> /home
 //              ./                -> /home/aaa
-//              /home/../aaa/../  -> /
-//              ../../
+//              //                -> /
+//              //                -> //
+//              ///               -> /
+//              ////home          -> /home
+//              /home/aaa/../aaa/../././  -> /home
+//              ../../../../../../../../  -> /
 char	*cd_canonicalize_path(const char *path, t_context *context)
 {
 	t_deque	*path_elems;

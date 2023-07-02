@@ -3,6 +3,7 @@
 #include "ms_builtin.h"
 #include "ft_dprintf.h"
 
+// stdout
 static void	put_strings(const char *const *strs)
 {
 	size_t	idx;

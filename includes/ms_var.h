@@ -67,7 +67,6 @@ t_var_info	*var_create_var_info_for_set(t_var *var, \
 t_var_attr	get_declare_attr(t_var *var, \
 								const char *key, \
 								t_var_attr arg_attr);
-char		*x_ft_strdup(const char *str); // todo
 void		var_dup_key_info_pair(const char *key, \
 									const t_var_info *var_info, \
 									char **dup_key, \

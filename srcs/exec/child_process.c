@@ -24,7 +24,7 @@ static uint8_t	execute_external_command(t_command *cmd, char **environ)
 	if (!argv[0] || exec_status == EXECVE_ERROR)
 	{
 		ft_dprintf(STDERR_FILENO, "%s: %s: %s\n", \
-					SHELL_NAME, argv[0], ERROR_MSG_CMD_NOT_FOUND);
+					SHELL_NAME, argv[0], ERROR_MSG_CMD_NOT_FOUND); // todo: tmp
 		deque_clear_all(&cmd->head_command, free);
 	}
 	return (EXIT_CODE_NO_SUCH_FILE);
