@@ -41,7 +41,7 @@ struct s_var
 {
 	t_hash	*hash;
 	int		(*is_key_exist)(t_var *var, const char *key);
-	char	*(*get_value)(t_var *var, char *key);
+	char	*(*get_value)(t_var *var, const char *key);
 	void	(*add)(t_var *var, const char *key, const t_var_info *var_info);
 	void	(*unset)(t_var *var, const char *key);
 	void	(*update_attr)(t_var *var, const char *key, t_var_attr attr);
@@ -73,7 +73,7 @@ void		var_create_info_add(t_var *var, \
 								t_var_attr attr);
 
 /* get */
-char		*var_get_value(t_var *var, char *key);
+char		*var_get_value(t_var *var, const char *key);
 t_var_attr	var_get_attribute(t_var *var, const char *key);
 int			var_is_key_exist(t_var *var, const char *key);
 

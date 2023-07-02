@@ -6,7 +6,7 @@
 // return value of key
 // if key not found or value is NULL, returns NULL.
 // use case : expansion, etc.
-char	*var_get_value(t_var *var, char *key)
+char	*var_get_value(t_var *var, const char *key)
 {
 	t_var_info	*var_info;
 	char		*value;
