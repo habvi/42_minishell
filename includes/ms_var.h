@@ -44,7 +44,6 @@ struct s_var
 	char	*(*get_value)(t_var *var, const char *key);
 	void	(*add)(t_var *var, const char *key, const t_var_info *var_info);
 	void	(*unset)(t_var *var, const char *key);
-	void	(*update_attr)(t_var *var, const char *key, t_var_attr attr);
 	void	(*print_detail)(t_var *var, t_var_attr attr, bool is_display_attr);
 	void	(*clear)(t_var *var);
 	void	(*env_join)(t_var *var, \
