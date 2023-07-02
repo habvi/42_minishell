@@ -22,18 +22,26 @@ static size_t	calc_len_path(t_deque *path_elems)
 	return (len_path);
 }
 
-static char	*convert_path_elems_to_absolute_path(t_deque *path_elems)
+static char	*allocate_absolute_path(t_deque *path_elems)
 {
 	const size_t	len_path = calc_len_path(path_elems);
+	char			*absolute_path;
+
+	absolute_path = (char *)x_malloc(sizeof(char) * (len_path + 1));
+	if (!absolute_path)
+		ft_abort();
+	return (absolute_path);
+}
+
+static char	*convert_path_elems_to_absolute_path(t_deque *path_elems)
+{
 	size_t			i;
 	t_deque_node	*node;
 	char			*absolute_path;
 	char			*path_elem;
 	size_t			len_path_elem;
 
-	absolute_path = (char *)x_malloc(sizeof(char) * (len_path + 1));
-	if (!absolute_path)
-		ft_abort();
+	absolute_path = allocate_absolute_path(path_elems);
 	i = 0;
 	ft_strlcpy_void(&absolute_path[i], PATH_DELIMITER_STR, ft_strlen(PATH_DELIMITER_STR) + 1);
 	i++;
