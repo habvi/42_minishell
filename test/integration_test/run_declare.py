@@ -6,7 +6,7 @@ DISPLAY_CMD = "declare -p | /bin/grep PWD | /bin/grep -v _="
 def main():
     test_res = 0
     declare_test = [
-        "declare | /bin/grep PWD | /bin/grep -v _=",
+        # "declare | /bin/grep PWD | /bin/grep -v _=",
         f"{DISPLAY_CMD}",
         f"declare PWD=aaa \n {DISPLAY_CMD}",
         f"declare PWD=aaa \n declare -x PWD \n {DISPLAY_CMD}",

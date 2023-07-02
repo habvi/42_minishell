@@ -30,6 +30,7 @@ static t_var_attr	get_declare_attr_from_option(const char *const *argv, \
 // option : -p    display the attributes and value of each NAME
 uint8_t	ft_declare(const char *const *argv, t_var *var)
 {
+	const int	var_all = VAR_ENV | VAR_SHELL;
 	uint8_t		status;
 	size_t		i;
 	bool		is_display_attr;
@@ -40,7 +41,7 @@ uint8_t	ft_declare(const char *const *argv, t_var *var)
 	skip_option_part(argv, &i, &is_display_attr, DECLARE_OPTION_DISPLAY_ATTR);
 	if (!argv[i])
 	{
-		var->print_detail(var, VAR_ENV | VAR_SHELL, is_display_attr);
+		var->print_detail(var, var_all, is_display_attr);
 		return (status);
 	}
 	attr = get_declare_attr_from_option(argv, &i);
