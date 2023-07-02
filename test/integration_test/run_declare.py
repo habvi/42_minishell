@@ -16,6 +16,8 @@ def main():
         f"unset PWD \n declare PWD=aaa \n {DISPLAY_CMD}",
         f"unset PWD \n declare -x PWD=aaa \n {DISPLAY_CMD}",
         f"unset PWD \n declare +x PWD=aaa \n {DISPLAY_CMD}",
+        f"unset PWD \n declare +x PWD \n {DISPLAY_CMD}",
+        f"unset PWD \n declare -x PWD \n {DISPLAY_CMD}",
     ]
 
     test_res |= test("ft_declare", declare_test)
