@@ -152,6 +152,11 @@ test_pipe	: all
 test_cd		: all
 	python3 ./test/integration_test/run_cd.py
 
+# test builtin declare
+.PHONY			: test_declare
+test_declare	: all
+	python3 ./test/integration_test/run_declare.py
+
 # test builtin echo
 .PHONY		: test_echo
 test_echo	: all
