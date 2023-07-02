@@ -1,23 +1,8 @@
 #include <stdlib.h>
 #include "minishell.h"
 #include "ms_builtin.h"
-#include "ms_var.h"
 #include "ft_dprintf.h"
 #include "ft_mem.h"
-
-void	update_pwd_in_cd(t_var *var, \
-							const char *key, \
-							const char *value, \
-							t_var_attr attr)
-{
-	t_var_info	*var_info;
-	char		*dup_value;
-
-	dup_value = x_ft_strdup(value);
-	var_info = var_create_var_info_for_set(var, key, dup_value, attr);
-	var->add(var, key, var_info);
-	del_var_info((void **)&var_info);
-}
 
 static bool	is_valid_cd_path(const char *path, int *tmp_err)
 {

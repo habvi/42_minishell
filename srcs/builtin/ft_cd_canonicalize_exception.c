@@ -4,6 +4,7 @@
 #include "ft_mem.h"
 #include "ft_string.h"
 
+// stack
 void	erase_dot_path(t_deque **path_elems)
 {
 	t_deque			*new_path_elems;
@@ -26,6 +27,7 @@ void	erase_dot_path(t_deque **path_elems)
 	*path_elems = new_path_elems;
 }
 
+// stack
 void	erase_dot_dot_path(t_deque **path_elems)
 {
 	t_deque			*new_path_elems;

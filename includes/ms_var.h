@@ -58,6 +58,10 @@ void		set_default_old_pwd(t_var *var);
 void		set_default_pwd(t_var *var);
 
 /* create */
+void		var_update_key_info_pair_and_add(t_var *var, \
+												const char *key, \
+												const char *value, \
+												t_var_attr attr);
 t_var_info	*var_create_var_info(const char *value, t_var_attr attr);
 t_result	var_declare_arg(const char *const arg, t_var *var, t_var_attr attr);
 t_var_info	*var_create_var_info_for_set(t_var *var, \

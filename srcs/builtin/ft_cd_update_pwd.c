@@ -38,8 +38,8 @@ static void	update_var_pwd_oldpwd(t_context *context)
 	new_pwd = context->internal_pwd;
 
 	oldpwd_attr = get_attr_and_unset_if_newvalue_null(var);
-	update_pwd_in_cd(var, KEY_OLDPWD, new_old_pwd, oldpwd_attr);
-	update_pwd_in_cd(var, KEY_PWD, new_pwd, VAR_NONE);
+	var_update_key_info_pair_and_add(var, KEY_OLDPWD, new_old_pwd, oldpwd_attr);
+	var_update_key_info_pair_and_add(var, KEY_PWD, new_pwd, VAR_NONE);
 	ft_free(&new_old_pwd);
 }
 

@@ -1,6 +1,5 @@
 #include <errno.h>
 #include "minishell.h"
-#include "ms_builtin.h"
 #include "ms_var.h"
 #include "ft_mem.h"
 
@@ -38,7 +37,7 @@ static void	validate_and_delete_old_pwd(t_var *var)
 // value=NULL
 static void	set_only_old_pwd_key(t_var *var)
 {
-	update_pwd_in_cd(var, KEY_OLDPWD, NULL, VAR_ENV);
+	var_update_key_info_pair_and_add(var, KEY_OLDPWD, NULL, VAR_ENV);
 }
 
 void	set_default_old_pwd(t_var *var)

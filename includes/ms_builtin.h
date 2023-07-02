@@ -105,10 +105,6 @@ t_result	cd_change_dir_to_valid_path(const char *path, \
 										const char *pwd, \
 										uint8_t *status);
 void		cd_update_pwd(char *path, t_context *context);
-void		update_pwd_in_cd(t_var *var, \
-								const char *key, \
-								const char *value, \
-								t_var_attr attr); // todo: to outsize cd..?
 // canonicalize
 char		*cd_canonicalize_path(const char *path, const char *internal_pwd);
 t_deque		*allocate_path_elems(void);
