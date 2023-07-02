@@ -30,7 +30,7 @@ static void	validate_and_delete_old_pwd(t_var *var)
 	if (!dup_path)
 		return ;
 	if (!is_valid_old_pwd(dup_path))
-		var->unset(var, KEY_OLDPWD);
+		var->unset(var, KEY_OLDPWD); //todo: erase t_var_info
 	ft_free(&dup_path);
 }
 

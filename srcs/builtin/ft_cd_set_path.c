@@ -15,6 +15,10 @@ static char	*set_path_by_arg(const char *arg, t_var *var)
 	else if (ft_streq(arg, CD_ARG_OLDPWD)) // -
 		path = var->get_value(var, KEY_OLDPWD);
 	else
+		// search CDPATH
+		// exist
+			// path => absolute
+		// else
 		path = x_ft_strdup(arg);
 	return (path);
 }

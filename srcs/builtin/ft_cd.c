@@ -15,9 +15,13 @@ static bool	is_valid_cd_path(const char *path, int *tmp_err)
 
 void	cd_update_pwd(char *path, t_context *context)
 {
+	char	*absolute_path;
+
+	absolute_path = cd_canonicalize_path(path, context);
 	ft_free(&path);// todo: tmp
 	ft_free(&context->internal_pwd);
-	context->internal_pwd = get_working_directory(CMD_CD);// todo: tmp
+	context->internal_pwd = absolute_path;
+	// todo: iternal->pwd => update var->hash
 }
 
 static void	change_directory(const char *arg, \

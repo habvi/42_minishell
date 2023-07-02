@@ -22,6 +22,14 @@
 # define ECHO_SEPARATOR		' '
 # define END_OF_CMD_OPTION	"--"
 
+# define CD_ARG_HOME		"~"
+# define CD_ARG_OLDPWD		"-"
+# define ABSOLUTE_PATH_HEAD	'/'
+# define PATH_DELIMITER_CHR	'/'
+# define PATH_DELIMITER_STR	"/"
+
+# define VAR_PRINT_QUOTE	"\""
+
 // todo: naming...
 # define EXIT_ONLY_CMD_CNT		1
 # define EXIT_ARG_IDX			1
@@ -62,6 +70,7 @@ typedef enum e_env_op
 	ENV_JOIN,
 }	t_env_op;
 
+// todo indent
 uint8_t	ft_cd(const char *const *argv, t_context *context);
 uint8_t	ft_declare(const char *const *argv, t_var *var);
 uint8_t	ft_echo(const char *const *argv);
@@ -85,7 +94,8 @@ void	declare_all(const char *const *args, \
 					uint8_t *status, \
 					t_var_attr attr); // todo: sep file, mv var ?
 
-
+char		*cd_canonicalize_path(const char *path, t_context *context);
+bool		is_absolute_path(const char *path); // todo : move
 t_result	cd_change_dir_to_valid_path(const char *path, \
 										const char *pwd, \
 										uint8_t *status);

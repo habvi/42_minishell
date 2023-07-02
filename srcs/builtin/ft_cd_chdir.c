@@ -5,7 +5,7 @@
 #include "ft_string.h"
 #include "ft_mem.h"
 
-static bool	is_absolute_path(const char *path)
+bool	is_absolute_path(const char *path)
 {
 	return (path[0] == ABSOLUTE_PATH_HEAD);
 }

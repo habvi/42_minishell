@@ -14,7 +14,15 @@ void	var_add(t_var *var, const char *key, const t_var_info *var_info)
 	var_dup_key_info_pair(key, var_info, &dup_key, &dup_info);
 	target = hs_find_key(var->hash, dup_key);
 	if (target)
+	{
+		if (!dup_info->value)
+		{
+			ft_free(&dup_key);
+			del_var_info((void **)&dup_info);
+			return ;
+		}
 		hs_update_value(&dup_key, dup_info, target, var->hash->del_hash_value);
+	}
 	else
 	{
 		if (hs_add_to_table(var->hash, dup_key, dup_info) == HASH_ERROR)
