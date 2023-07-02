@@ -1,5 +1,6 @@
 #include "minishell.h"
 #include "ms_var.h"
+#include "ms_builtin.h"
 #include "ft_deque.h"
 #include "ft_dprintf.h"
 #include "ft_hash.h"
@@ -61,20 +62,27 @@ static char	*get_print_attr(t_var_attr attr)
 
 // declare -x KEY="VALUE"
 // declare -x KEY"
-static void	print_elems(t_elem **elems)
+static void	print_elems(t_elem **elems, bool is_display_attr)
 {
 	size_t		i;
 	t_var_info	*var_info;
 	char		*attr;
+	char		*quote;
 
 	i = 0;
+	quote = "";
 	while (elems[i])
 	{
 		var_info = (t_var_info *)elems[i]->value;
 		attr = get_print_attr(var_info->attr);
-		ft_dprintf(STDOUT_FILENO, "%s %s %s", DECLARE, attr, elems[i]->key);
+		if (is_display_attr)
+		{
+			ft_dprintf(STDOUT_FILENO, "%s %s ", DECLARE, attr);
+			quote = VAR_PRINT_QUOTE;
+		}
+		ft_dprintf(STDOUT_FILENO, "%s", elems[i]->key);
 		if (var_info->value)
-			ft_dprintf(STDOUT_FILENO, "=\"%s\"", var_info->value);
+			ft_dprintf(STDOUT_FILENO, "=%s%s%s", quote, var_info->value, quote);
 		ft_dprintf(STDOUT_FILENO, "\n");
 		i++;
 	}
@@ -83,7 +91,7 @@ static void	print_elems(t_elem **elems)
 // print key-value-pairs to stdout
 //   include only key
 //   `declare -x key="value\n`
-void	var_print_detail(t_var *var, t_var_attr attr)
+void	var_print_detail(t_var *var, t_var_attr attr, bool is_display_attr)
 {
 	t_elem	**elems;
 
@@ -92,6 +100,6 @@ void	var_print_detail(t_var *var, t_var_attr attr)
 		ft_abort();
 	set_elem_pointer(elems, var->hash->table, var->hash->table_size, attr);
 	var_sort_elems_by_key(elems);
-	print_elems(elems);
+	print_elems(elems, is_display_attr);
 	ft_free(&elems);
 }
