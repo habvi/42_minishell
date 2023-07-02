@@ -57,17 +57,16 @@ static bool	is_head_double_slash(const char *path)
 			&& path[2] != PATH_DELIMITER_CHR);
 }
 
-char	*handle_double_slash_path(const char *path, char *absolute_path)
+void	handle_double_slash_path(const char *path, char **absolute_path)
 {
 	char	*new_path;
 
 	if (is_head_double_slash(path))
 	{
-		new_path = ft_strjoin(PATH_DELIMITER_STR, absolute_path);
+		new_path = ft_strjoin(PATH_DELIMITER_STR, *absolute_path);
 		if (!new_path)
 			ft_abort();
-		ft_free(&absolute_path);
-		return (new_path);
+		ft_free(*absolute_path);
+		*absolute_path = new_path;
 	}
-	return (absolute_path);
 }
