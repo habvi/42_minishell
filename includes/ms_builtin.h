@@ -42,6 +42,8 @@
 # define ERROR_MSG_NOT_VALID_ID	"not a valid identifier"
 
 typedef enum e_result		t_result;
+typedef enum e_var_attr		t_var_attr;
+
 typedef struct s_var		t_var;
 typedef struct s_deque_node	t_deque_node;
 typedef struct s_context	t_context;
@@ -78,5 +80,9 @@ void	skip_option_part(const char *const *argv, \
 							bool *is_valid_op, \
 							char option);
 bool	str_to_legal_number(const char *str, long *result);
+void	declare_all(const char *const *args, \
+					t_var *var, \
+					uint8_t *status, \
+					t_var_attr attr); // todo: sep file, mv var ?
 
 #endif //MS_BUILTIN_H

@@ -5,7 +5,7 @@
 #include "ft_dprintf.h"
 
 // export declare VAR_ENV
-static void	declare_all(const char *const *args, t_var *var, uint8_t *status)
+void	declare_all(const char *const *args, t_var *var, uint8_t *status, t_var_attr attr)
 {
 	size_t		i;
 	t_result	result;
@@ -13,7 +13,7 @@ static void	declare_all(const char *const *args, t_var *var, uint8_t *status)
 	i = 0;
 	while (args[i])
 	{
-		result = var_declare_arg(args[i], var, VAR_ENV);
+		result = var_declare_arg(args[i], var, attr);
 		if (result == FAILURE)
 		{
 			*status = NOT_A_VALID_IDENTIFIER;
@@ -39,6 +39,6 @@ uint8_t	ft_export(const char *const *argv, t_var *var)
 		var->print_detail(var, VAR_ENV, true);
 		return (status);
 	}
-	declare_all(&argv[i], var, &status);
+	declare_all(&argv[i], var, &status, VAR_ENV);
 	return (status);
 }
