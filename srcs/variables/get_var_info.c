@@ -6,7 +6,7 @@
 // return value of key
 // if key not found or value is NULL, returns NULL.
 // use case : expansion, etc.
-char	*var_get_value(t_var *var, char *key)
+char	*var_get_value(t_var *var, const char *key)
 {
 	t_var_info	*var_info;
 	char		*value;
@@ -24,7 +24,7 @@ char	*var_get_value(t_var *var, char *key)
 	return (dup_value);
 }
 
-t_var_attr	var_get_attribute(t_var *var, char *key)
+t_var_attr	var_get_attribute(t_var *var, const char *key)
 {
 	t_var_info	*var_info;
 

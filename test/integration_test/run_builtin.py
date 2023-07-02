@@ -3,6 +3,7 @@ import run_exit
 import run_export
 import run_pwd
 import run_cd
+import run_declare
 
 def main():
     test_res = 0
@@ -12,6 +13,7 @@ def main():
     # test_res |= run_export.main()
     test_res |= run_pwd.main()
     # test_res |= run_cd.main()
+    test_res |= run_declare.main()
 
     return test_res
 

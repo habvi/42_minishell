@@ -15,10 +15,15 @@
 # define CMD_ENV	"env"
 # define CMD_EXIT	"exit"
 
-# define CMD_OPTION_MARKER	'-'
-# define ECHO_OPTION		'n'
+/* option */
+# define CMD_OPTION_MARKER				'-'
+# define ECHO_OPTION_DISPLAY_NEWLINE	'n'
+# define DECLARE_OPTION_DISPLAY_ATTR	'p'
+
 # define ECHO_SEPARATOR		' '
 # define END_OF_CMD_OPTION	"--"
+
+# define VAR_PRINT_QUOTE	"\""
 
 // todo: naming...
 # define EXIT_ONLY_CMD_CNT		1
@@ -39,6 +44,8 @@
 # define ERROR_MSG_NOT_VALID_ID	"not a valid identifier"
 
 typedef enum e_result		t_result;
+typedef enum e_var_attr		t_var_attr;
+
 typedef struct s_var		t_var;
 typedef struct s_deque_node	t_deque_node;
 typedef struct s_context	t_context;
@@ -67,8 +74,17 @@ uint8_t	ft_declare(const char *const *argv, t_var *var);
 uint8_t	ft_unset(const char *const *argv, t_var *var);
 
 bool	is_option(const char *word);
+bool	is_arg_option(const char *arg, char option);
 bool	is_end_of_option(const char *word);
 bool	is_valid_option(const char *const *argv, uint8_t *status, size_t *i);
+void	skip_option_part(const char *const *argv, \
+							size_t *idx, \
+							bool *is_valid_op, \
+							char option);
 bool	str_to_legal_number(const char *str, long *result);
+void	declare_all(const char *const *args, \
+					t_var *var, \
+					uint8_t *status, \
+					t_var_attr attr); // todo: sep file, mv var ?
 
 #endif //MS_BUILTIN_H

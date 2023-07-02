@@ -3,6 +3,35 @@
 #include "ft_dprintf.h"
 #include "ft_string.h"
 
+void	skip_option_part(const char *const *argv, \
+							size_t *idx, \
+							bool *is_valid_op,
+							char option)
+{
+	*is_valid_op = false;
+	if (!argv)
+		return ;
+	while (argv[*idx] && is_arg_option(argv[*idx], option))
+		*idx += 1;
+	*is_valid_op = *idx > 1;
+}
+
+bool	is_arg_option(const char *arg, char option)
+{
+	size_t	i;
+
+	if (!arg)
+		return (false);
+	if (!is_option(arg))
+		return (false);
+	i = 1;
+	while (arg[i] == option)
+		i++;
+	if (arg[i])
+		return (false);
+	return (true);
+}
+
 // option is `-[^-]`
 // `--` is not option
 bool	is_option(const char *word)

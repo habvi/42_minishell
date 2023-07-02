@@ -40,6 +40,7 @@ SRCS		+=	$(VAR_DIR)/$(ENVIRON_DIR)/dup_env_key.c \
 				$(VAR_DIR)/set_default_old_pwd.c \
 				$(VAR_DIR)/set_default_pwd.c \
 				$(VAR_DIR)/unset.c \
+				$(VAR_DIR)/var_create_var_info.c \
 				$(VAR_DIR)/var_dup_key_info_pair.c \
 				$(VAR_DIR)/var_sort_elems.c
 
@@ -149,6 +150,11 @@ test_pipe	: all
 .PHONY		: test_cd
 test_cd		: all
 	python3 ./test/integration_test/run_cd.py
+
+# test builtin declare
+.PHONY			: test_declare
+test_declare	: all
+	python3 ./test/integration_test/run_declare.py
 
 # test builtin echo
 .PHONY		: test_echo
