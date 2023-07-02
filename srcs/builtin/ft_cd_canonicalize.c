@@ -18,6 +18,11 @@ void	del_path_elem(void *content)
 	ft_free(&content);
 }
 
+void	destroy_path_elems(t_deque *path_elems)
+{
+	deque_clear_all(&path_elems, del_path_elem);
+}
+
 // 	 PWD         path
 // "/home/aaa"  libft/            -> /home/aaa/libft
 //              ./libft/          -> /home/aaa/libft
@@ -43,6 +48,6 @@ char	*cd_canonicalize_path(const char *path, t_context *context)
 	erase_dot_dot_path(&path_elems);
 	absolute_path = convert_path_elems_to_absolute_path(path_elems);
 	absolute_path = handle_double_slash_path(path, absolute_path);
-	deque_clear_all(&path_elems, del_path_elem);
+	destroy_path_elems(path_elems);
 	return (absolute_path);
 }

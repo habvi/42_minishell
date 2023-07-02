@@ -113,6 +113,7 @@ void		update_pwd_in_cd(t_var *var, \
 char		*cd_canonicalize_path(const char *path, t_context *context);
 t_deque		*allocate_path_elems(void);
 void		del_path_elem(void *content);
+void		destroy_path_elems(t_deque *path_elems);
 t_deque		*separate_path_and_join(const char *path, \
 									t_context *context, \
 									t_deque *path_elems);
