@@ -45,7 +45,5 @@ void	set_default_old_pwd(t_var *var)
 {
 	if (var->is_key_exist(var, KEY_OLDPWD))
 		validate_and_delete_old_pwd(var);
-	else
-		set_only_old_pwd_key(var);
-	return ;
+	set_only_old_pwd_key(var);
 }
