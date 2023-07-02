@@ -6,7 +6,8 @@
 // -x -> attr=VAR_ENV
 // +x -> attr=VAR_SHELL
 // todo: bit arithmetic ... ?
-static t_var_attr	get_declare_attr(const char *const *argv, size_t *i)
+static t_var_attr	get_declare_attr_from_option(const char *const *argv, \
+													size_t *i)
 {
 	if (ft_streq(argv[*i], "-x"))
 	{
@@ -42,7 +43,7 @@ uint8_t	ft_declare(const char *const *argv, t_var *var)
 		var->print_detail(var, VAR_ENV | VAR_SHELL, is_display_attr);
 		return (status);
 	}
-	attr = get_declare_attr(argv, &i);
+	attr = get_declare_attr_from_option(argv, &i);
 	declare_all(&argv[i], var, &status, attr);
 //	change_arg_attr(var, argv[i], attr); // <- included in declare_all
 	return (status);
