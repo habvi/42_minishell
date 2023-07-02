@@ -13,7 +13,7 @@ t_var_info	*var_create_var_info(const char *value, t_var_attr attr)
 	if (!var_info)
 		ft_abort();
 	if (value)
-		var_info->value = ft_strdup_abort(value);
+		var_info->value = x_ft_strdup(value);
 	else
 		var_info->value = NULL;
 	var_info->attr = attr;
