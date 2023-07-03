@@ -70,11 +70,6 @@ void		var_declare_all(const char *const *args, \
 t_result	var_declare_arg(const char *const arg, t_var *var, t_var_attr attr);
 t_var_info	*var_create_var_info_by_value_attr(const char *value, \
 												t_var_attr attr);
-
-void		var_dup_key_info_pair(const char *key, \
-									const t_var_info *var_info, \
-									char **dup_key, \
-									t_var_info **dup_info);
 char		*dup_var_key(const char *const arg, size_t *len);
 char		*dup_var_value(const char *const arg);
 
