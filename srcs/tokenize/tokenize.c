@@ -37,6 +37,6 @@ t_deque	*tokenize(char *line)
 	tokens = tokenize_line(line);
 	if (add_token_kind(&tokens) == FAILURE)
 		return (NULL);
-	debug_token_dq(tokens, "tokenize");
+	// debug_token_dq(tokens, "tokenize");
 	return (tokens);
 }
