@@ -61,11 +61,12 @@ t_var		*set_default_environ(t_context *context);
 void		set_default_old_pwd(t_var *var);
 void		set_default_pwd(t_var *var);
 
-/* create */
-void		var_update_key_info_pair_and_add(t_var *var, \
-												const char *key, \
-												const char *value, \
-												t_var_attr attr);
+/* create, dup */
+void		var_declare_all(const char *const *args, \
+						t_var *var, \
+						uint8_t *status, \
+						t_var_attr attr);
+t_result	var_declare_arg(const char *const arg, t_var *var, t_var_attr attr);
 t_var_info	*var_create_var_info_by_value_attr(const char *value, \
 												t_var_attr attr);
 t_result	var_declare_arg(const char *const arg, t_var *var, t_var_attr attr);

@@ -3,7 +3,7 @@
 #include "ms_var.h"
 #include "ft_dprintf.h"
 
-void	declare_all(const char *const *args, \
+void	var_declare_all(const char *const *args, \
 					t_var *var, \
 					uint8_t *status, \
 					t_var_attr attr)

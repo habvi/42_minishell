@@ -17,6 +17,6 @@ uint8_t	ft_export(const char *const *argv, t_var *var)
 		var->print_detail(var, VAR_ENV, true);
 		return (status);
 	}
-	declare_all(&argv[i], var, &status, VAR_ENV);
+	var_declare_all(&argv[i], var, &status, VAR_ENV);
 	return (status);
 }

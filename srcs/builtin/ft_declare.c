@@ -45,6 +45,6 @@ uint8_t	ft_declare(const char *const *argv, t_var *var)
 		return (status);
 	}
 	attr = get_declare_attr_from_arg(argv, &i);
-	declare_all(&argv[i], var, &status, attr);
+	var_declare_all(&argv[i], var, &status, attr);
 	return (status);
 }
