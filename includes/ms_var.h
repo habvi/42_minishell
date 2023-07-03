@@ -73,6 +73,11 @@ void		var_create_info_add(t_var *var, \
 								const char *value, \
 								t_var_attr attr);
 
+t_var_info	*var_create_var_info_for_set(t_var *var, \
+											const char *key, \
+											const char *value, \
+											t_var_attr attr);
+
 /* get */
 char		*var_get_value(t_var *var, const char *key);
 t_var_attr	var_get_attribute(t_var *var, const char *key);
