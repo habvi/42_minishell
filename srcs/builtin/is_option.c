@@ -5,17 +5,15 @@
 
 // return true if valid option exist
 bool	skip_valid_options(const char *const *argv, \
-							size_t *idx, \
+							size_t *i, \
 							char marker, \
 							char op_chr)
 {
 	if (!argv)
 		return (false);
-	while (argv[*idx] && is_arg_option(argv[*idx], marker, op_chr))
-		*idx += 1;
-	if (*idx == 0)
-		return (false);
-	return (true);
+	while (argv[*i] && is_arg_option(argv[*i], marker, op_chr))
+		*i += 1;
+	return (*i > 1);
 }
 
 bool	is_arg_option(const char *arg, char marker, char op_chr)
