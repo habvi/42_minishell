@@ -60,6 +60,7 @@ def main():
         f"cd ./././ \n pwd \n {DISPLAY_CMD}",
         f"cd .///////// \n pwd \n {DISPLAY_CMD}",
         f"cd ////////////////./././././../././. \n pwd \n {DISPLAY_CMD}",
+        f"declare +x PWD OLDPWD \n cd .. \n cd /bin \n pwd \n cd - \n cd ~ \n pwd \n {DISPLAY_CMD} \n unset PWD \n export PWD \n cd - \n cd - \n pwd \n {DISPLAY_CMD} "
     ]
 
     commands_list += additional_test
