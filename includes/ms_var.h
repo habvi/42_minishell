@@ -1,8 +1,9 @@
 #ifndef MS_VAR_H
 # define MS_VAR_H
 
-# include <stddef.h>
 # include <stdbool.h>
+# include <stddef.h>
+# include <stdint.h>
 
 /* declare */
 # define DECLARE		"declare"
@@ -58,8 +59,8 @@ struct s_var
 
 /* init */
 t_var		*set_default_environ(t_context *context);
-void		set_default_old_pwd(t_var *var);
 void		set_default_pwd(t_var *var);
+void		set_default_old_pwd(t_var *var);
 
 /* create, dup */
 void		var_declare_all(const char *const *args, \
@@ -69,7 +70,6 @@ void		var_declare_all(const char *const *args, \
 t_result	var_declare_arg(const char *const arg, t_var *var, t_var_attr attr);
 t_var_info	*var_create_var_info_by_value_attr(const char *value, \
 												t_var_attr attr);
-t_result	var_declare_arg(const char *const arg, t_var *var, t_var_attr attr);
 
 void		var_dup_key_info_pair(const char *key, \
 									const t_var_info *var_info, \
@@ -83,15 +83,10 @@ void		var_add(t_var *var, \
 					const char *key, \
 					const char *value, \
 					t_var_attr attr);
-void		var_create_info_add(t_var *var, \
-								const char *key, \
-								const char *value, \
-								t_var_attr attr);
-
-t_var_info	*var_create_var_info_for_set(t_var *var, \
-											const char *key, \
-											const char *value, \
-											t_var_attr attr);
+void		var_join(t_var *var, \
+						const char *key, \
+						const char *value, \
+						t_var_attr attr);
 
 /* get */
 char		*var_get_value(t_var *var, const char *key);
@@ -108,17 +103,6 @@ void		del_var_info(void **var_info);
 void		var_clear(t_var *var);
 
 /* environ */
-char		*dup_env_key(const char *const arg, size_t *len);
-char		*dup_env_value(const char *const arg);
-
-void		var_join(t_var *var, \
-						const char *key, \
-						const char *value, \
-						t_var_attr attr);
-t_result	separate_env_variables(const char *const arg, \
-									char **key, \
-									char **value, \
-									t_env_op *op);
 void		env_print(t_var *var);
 
 #endif //MS_VAR_H

@@ -98,10 +98,6 @@ bool		skip_valid_options(const char *const *argv, \
 								char marker, \
 								char op_chr);
 bool		str_to_legal_number(const char *str, long *result);
-void		declare_all(const char *const *args, \
-						t_var *var, \
-						uint8_t *status, \
-						t_var_attr attr); // todo: sep file, mv var ?
 
 /* ft_cd */
 // cd

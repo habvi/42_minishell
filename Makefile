@@ -13,14 +13,14 @@ SRCS		:=	destroy.c \
 				repl.c
 
 BUILTIN_DIR	:=	builtin
-SRCS		+=	$(BUILTIN_DIR)/ft_cd_canonicalize_convert.c \
+SRCS		+=	$(BUILTIN_DIR)/ft_cd.c \
+				$(BUILTIN_DIR)/ft_cd_canonicalize.c \
+				$(BUILTIN_DIR)/ft_cd_canonicalize_convert.c \
 				$(BUILTIN_DIR)/ft_cd_canonicalize_exception.c \
 				$(BUILTIN_DIR)/ft_cd_canonicalize_sep_join.c \
-				$(BUILTIN_DIR)/ft_cd_canonicalize.c \
 				$(BUILTIN_DIR)/ft_cd_chdir.c \
 				$(BUILTIN_DIR)/ft_cd_set_path.c \
 				$(BUILTIN_DIR)/ft_cd_update_pwd.c \
-				$(BUILTIN_DIR)/ft_cd.c \
 				$(BUILTIN_DIR)/ft_declare.c \
 				$(BUILTIN_DIR)/ft_echo.c \
 				$(BUILTIN_DIR)/ft_env.c \
@@ -33,11 +33,7 @@ SRCS		+=	$(BUILTIN_DIR)/ft_cd_canonicalize_convert.c \
 
 VAR_DIR		:=	variables
 ENVIRON_DIR	:=	environ
-SRCS		+=	$(VAR_DIR)/$(ENVIRON_DIR)/dup_env_key.c \
-				$(VAR_DIR)/$(ENVIRON_DIR)/dup_env_value.c \
-				$(VAR_DIR)/$(ENVIRON_DIR)/env_separate_variables.c \
-				$(VAR_DIR)/$(ENVIRON_DIR)/join.c \
-				$(VAR_DIR)/$(ENVIRON_DIR)/print.c \
+SRCS		+=	$(VAR_DIR)/$(ENVIRON_DIR)/print.c \
 				$(VAR_DIR)/add.c \
 				$(VAR_DIR)/clear.c \
 				$(VAR_DIR)/declare_all.c \
@@ -53,7 +49,6 @@ SRCS		+=	$(VAR_DIR)/$(ENVIRON_DIR)/dup_env_key.c \
 				$(VAR_DIR)/set_default_pwd.c \
 				$(VAR_DIR)/unset.c \
 				$(VAR_DIR)/var_create_var_info.c \
-				$(VAR_DIR)/var_dup_key_info_pair.c \
 				$(VAR_DIR)/var_sort_elems.c
 
 DEBUG_DIR	:=	debug
