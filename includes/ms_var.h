@@ -42,8 +42,14 @@ struct s_var
 	t_hash	*hash;
 	int		(*is_key_exist)(t_var *var, const char *key);
 	char	*(*get_value)(t_var *var, const char *key);
-	void	(*add)(t_var *var, const char *key, const char *value, t_var_attr attr);
-	void	(*join)(t_var *var, const char *key, const char *value, t_var_attr attr);
+	void	(*add)(t_var *var, \
+					const char *key, \
+					const char *value, \
+					t_var_attr attr);
+	void	(*join)(t_var *var, \
+					const char *key, \
+					const char *value, \
+					t_var_attr attr);
 	void	(*unset)(t_var *var, const char *key);
 	void	(*print_detail)(t_var *var, t_var_attr attr, bool is_display_attr);
 	void	(*clear)(t_var *var);
@@ -67,7 +73,10 @@ void		var_dup_key_info_pair(const char *key, \
 									const t_var_info *var_info, \
 									char **dup_key, \
 									t_var_info **dup_info);
-void		var_add(t_var *var, const char *key, const char *value, t_var_attr attr);
+void		var_add(t_var *var, \
+					const char *key, \
+					const char *value, \
+					t_var_attr attr);
 void		var_create_info_add(t_var *var, \
 								const char *key, \
 								const char *value, \
@@ -96,7 +105,10 @@ void		var_clear(t_var *var);
 char		*dup_env_key(const char *const arg, size_t *len);
 char		*dup_env_value(const char *const arg);
 
-void		var_join(t_var *var, const char *key, const char *value, t_var_attr attr);
+void		var_join(t_var *var, \
+						const char *key, \
+						const char *value, \
+						t_var_attr attr);
 t_result	separate_env_variables(const char *const arg, \
 									char **key, \
 									char **value, \

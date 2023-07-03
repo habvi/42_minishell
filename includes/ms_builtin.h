@@ -90,7 +90,9 @@ uint8_t		ft_unset(const char *const *argv, t_var *var);
 bool		is_option(const char *word, char marker);
 bool		is_arg_option(const char *arg, char marker, char op_chr);
 bool		is_end_of_option(const char *word);
-bool		is_valid_option(const char *const *argv, uint8_t *status, size_t *i);
+bool		is_valid_option(const char *const *argv, \
+							uint8_t *status, \
+							size_t *i);
 bool		skip_valid_options(const char *const *argv, \
 								size_t *idx, \
 								char marker, \
