@@ -3,29 +3,29 @@
 #include "ft_dprintf.h"
 #include "ft_string.h"
 
-void	skip_option_part(const char *const *argv, \
-							size_t *idx, \
-							bool *is_valid_op,
-							char option)
+// return true if valid option exist
+bool	skip_valid_options(const char *const *argv, \
+							size_t *i, \
+							char marker, \
+							char op_chr)
 {
-	*is_valid_op = false;
 	if (!argv)
-		return ;
-	while (argv[*idx] && is_arg_option(argv[*idx], option))
-		*idx += 1;
-	*is_valid_op = *idx > 1;
+		return (false);
+	while (argv[*i] && is_arg_option(argv[*i], marker, op_chr))
+		*i += 1;
+	return (*i > 1);
 }
 
-bool	is_arg_option(const char *arg, char option)
+bool	is_arg_option(const char *arg, char marker, char op_chr)
 {
 	size_t	i;
 
 	if (!arg)
 		return (false);
-	if (!is_option(arg))
+	if (!is_option(arg, marker))
 		return (false);
 	i = 1;
-	while (arg[i] == option)
+	while (arg[i] == op_chr)
 		i++;
 	if (arg[i])
 		return (false);
@@ -34,13 +34,13 @@ bool	is_arg_option(const char *arg, char option)
 
 // option is `-[^-]`
 // `--` is not option
-bool	is_option(const char *word)
+bool	is_option(const char *word, char marker)
 {
 	if (!word)
 		return (false);
-	if (word[0] != CMD_OPTION_MARKER)
+	if (word[0] != marker)
 		return (false);
-	if (!word[1] || word[1] == CMD_OPTION_MARKER)
+	if (!word[1] || word[1] == marker)
 		return (false);
 	return (true);
 }
@@ -53,7 +53,7 @@ bool	is_end_of_option(const char *word)
 
 bool	is_valid_option(const char *const *argv, uint8_t *status, size_t *i)
 {
-	if (is_option(argv[*i]))
+	if (is_option(argv[*i], CMD_OPTION_MARKER))
 	{
 		*status = INVALID_OPTION;
 		// print_error(cmd_name, message); // todo

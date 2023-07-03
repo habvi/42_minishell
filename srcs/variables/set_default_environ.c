@@ -24,7 +24,7 @@ static void	set_func(t_var *var)
 	var->unset = var_unset;
 	var->print_detail = var_print_detail;
 	var->clear = var_clear;
-	var->env_join = env_join;
+	var->join = var_join;
 	var->env_print = env_print;
 }
 
@@ -62,6 +62,6 @@ t_var	*set_default_environ(t_context *context)
 	set_func(var);
 	set_env_default_hash(context->var);
 	set_default_pwd(var);
-	set_default_old_pwd(var); // todo
+	set_default_old_pwd(var);
 	return (var);
 }

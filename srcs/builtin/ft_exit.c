@@ -39,6 +39,7 @@ static uint8_t	get_exit_status(const char *arg, \
 	return ((uint8_t)(long_num & BYTE_MASK));
 }
 
+// todo: print_error tmp?
 static void	put_exit_err(const char *arg, t_exit_arg res)
 {
 	if (res == RETURN_TOO_MANY_NUMERIC_ARG)

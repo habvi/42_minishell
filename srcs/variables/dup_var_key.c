@@ -31,7 +31,7 @@ static size_t	get_key_len(const char *const s)
 // abc=ddd     =       abc+=def
 // 0123        0       01234
 //    ^len     ^len       ^len
-char	*dup_env_key(const char *const arg, size_t *len)
+char	*dup_var_key(const char *const arg, size_t *len)
 {
 	char	*key;
 

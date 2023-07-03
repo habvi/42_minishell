@@ -4,6 +4,7 @@
 #include "ft_dprintf.h"
 #include "ft_hash.h"
 
+// stdout
 static void	env_print_elem(t_deque *deque)
 {
 	t_deque_node	*node;

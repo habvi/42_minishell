@@ -4,8 +4,8 @@
 
 uint8_t	call_builtin_command(const char *const *argv, t_context *context)
 {
-//	if (ft_streq(argv[0], CMD_CD))
-//		return (true);
+	if (ft_streq(argv[0], CMD_CD))
+		return (ft_cd(argv, context));
 	if (ft_streq(argv[0], CMD_DECLARE))
 		return (ft_declare(argv, context->var));
 	if (ft_streq(argv[0], CMD_ECHO))

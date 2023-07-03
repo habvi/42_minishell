@@ -6,6 +6,7 @@
 # include <stdint.h>
 
 /* return value */
+# define CHDIR_ERROR	(-1)
 # define CLOSE_ERROR	(-1)
 # define DUP_ERROR		(-1) // dup && dup2
 # define EXECVE_ERROR	(-1)
@@ -54,7 +55,7 @@ void		debug_func(const char *func_name, const int line_num);
 void		debug_2d_array(char **array);
 
 /* destroy */
-void		destroy(t_context context);
+void		destroy_context(t_context context);
 
 /* input */
 char		*input_line(void);
@@ -64,7 +65,8 @@ size_t		count_argv(const char *const *argc);
 void		ft_abort(void);
 char		*get_working_directory(char *for_whom);
 bool		is_valid_key(const char *word);
-bool		test_opendir(const char *path, int *tmp_err);
+bool		is_valid_path(const char *path, int *tmp_err);
+char		*x_ft_strdup(const char *str);
 
 /* init */
 void		init_context(t_context *context);

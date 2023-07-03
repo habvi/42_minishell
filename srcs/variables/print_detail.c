@@ -60,6 +60,7 @@ static char	*get_print_attr(t_var_attr attr)
 	return (ATTR_NONE);
 }
 
+// stdout
 // declare -x KEY="VALUE"
 // declare -x KEY"
 static void	print_elems(t_elem **elems, bool is_display_attr)

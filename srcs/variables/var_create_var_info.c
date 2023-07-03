@@ -5,17 +5,20 @@
 
 // all malloc
 // key=value -> key, = ,value, attr
-t_var_info	*var_create_var_info(const char *value, t_var_attr attr)
+t_var_info	*var_create_var_info_by_value_attr(const char *value, \
+												t_var_attr attr)
 {
 	t_var_info	*var_info;
+	char		*dup_value;
 
 	var_info = (t_var_info *)x_malloc(sizeof(t_var_info));
 	if (!var_info)
 		ft_abort();
 	if (value)
-		var_info->value = ft_strdup_abort(value);
+		dup_value = x_ft_strdup(value);
 	else
-		var_info->value = NULL;
+		dup_value = NULL;
+	var_info->value = dup_value;
 	var_info->attr = attr;
 	return (var_info);
 }
