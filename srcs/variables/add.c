@@ -48,7 +48,7 @@ static char	*get_declare_value(t_var *var, \
 
 // key, var_info, op, var
 // key, value, attr, op, var -> register
-t_var_info	*var_create_var_info_for_set(t_var *var, \
+t_var_info	*var_create_var_info_for_add(t_var *var, \
 											const char *key, \
 											const char *value, \
 											t_var_attr attr)
@@ -69,7 +69,7 @@ void	var_add(t_var *var, const char *key, const char *value, t_var_attr attr)
 	t_var_info		*var_info;
 
 	dup_key = x_ft_strdup(key);
-	var_info = var_create_var_info_for_set(var, key, value, attr);
+	var_info = var_create_var_info_for_add(var, key, value, attr);
 	target = hs_find_key(var->hash, dup_key);
 	if (target)
 		hs_update_value(&dup_key, var_info, target, var->hash->del_hash_value);
