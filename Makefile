@@ -42,8 +42,11 @@ SRCS		+=	$(VAR_DIR)/$(ENVIRON_DIR)/dup_env_key.c \
 				$(VAR_DIR)/clear.c \
 				$(VAR_DIR)/declare_all.c \
 				$(VAR_DIR)/declare_arg.c \
+				$(VAR_DIR)/dup_var_key.c \
+				$(VAR_DIR)/dup_var_value.c \
 				$(VAR_DIR)/get_var_info.c \
 				$(VAR_DIR)/is_key_exist.c \
+				$(VAR_DIR)/join.c \
 				$(VAR_DIR)/print_detail.c \
 				$(VAR_DIR)/set_default_environ.c \
 				$(VAR_DIR)/set_default_old_pwd.c \

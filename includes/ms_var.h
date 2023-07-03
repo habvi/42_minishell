@@ -75,6 +75,10 @@ void		var_dup_key_info_pair(const char *key, \
 									const t_var_info *var_info, \
 									char **dup_key, \
 									t_var_info **dup_info);
+char		*dup_var_key(const char *const arg, size_t *len);
+char		*dup_var_value(const char *const arg);
+
+/* add, join */
 void		var_add(t_var *var, \
 					const char *key, \
 					const char *value, \
