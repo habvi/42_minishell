@@ -1,6 +1,6 @@
 #include "ft_lib.h"
 
-static bool	is_whitespace(char c)
+bool	is_whitespace(char c)
 {
 	return (c == ' ' || c == '\t');
 }
