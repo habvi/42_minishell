@@ -9,7 +9,10 @@ void	debug_token_dq(t_deque *deque, const char *str)
 
 	ft_dprintf(STDERR_FILENO, "deque_print(%d) %s :", deque->size, str);
 	if (deque_is_empty(deque))
+	{
+		ft_dprintf(STDERR_FILENO, "\n");
 		return ;
+	}
 	node = deque->node;
 	while (node)
 	{
