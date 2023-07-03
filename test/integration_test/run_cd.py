@@ -60,8 +60,12 @@ def main():
         f"cd ./././ \n pwd \n {DISPLAY_CMD}",
         f"cd .///////// \n pwd \n {DISPLAY_CMD}",
         f"cd ////////////////./././././../././. \n pwd \n {DISPLAY_CMD}",
-        f"declare +x PWD OLDPWD \n cd .. \n cd /bin \n pwd \n cd - \n cd ~ \n pwd \n {DISPLAY_CMD} \n unset PWD \n export PWD \n cd - \n cd - \n pwd \n {DISPLAY_CMD} "
+        f"/usr/bin/rm -rf testdir \n /usr/bin/mkdir testdir \n cd testdir \n pwd \n cd ../ \n /usr/bin/rmdir testdir \n cd - \n  pwd \n {DISPLAY_CMD}",
+        f"declare +x PWD OLDPWD \n cd .. \n cd /bin \n pwd \n cd - \n cd ~ \n pwd \n {DISPLAY_CMD} \n unset PWD \n export PWD \n cd - \n cd - \n pwd \n {DISPLAY_CMD}",
+        f"/usr/bin/rm -rf testdir \n /usr/bin/mkdir testdir \n cd testdir \n pwd \n /usr/bin/chmod 000 ../testdir \n pwd \n {DISPLAY_CMD} \n cd ../ \n pwd \n {DISPLAY_CMD} \n /usr/bin/chmod 777 testdir \n /usr/bin/rmdir testdir",
+        f"/usr/bin/rm -rf testdir \n /usr/bin/mkdir testdir \n cd testdir \n pwd \n /usr/bin/rmdir ../testdir \n pwd \n {DISPLAY_CMD} \n cd ../ \n pwd \n {DISPLAY_CMD} \n /usr/bin/chmod 777 testdir \n /usr/bin/rmdir testdir",
     ]
+    # todo: rm $PWD \n ./minishell \n pwd \n cd ./ ....etc
 
     commands_list += additional_test
 
