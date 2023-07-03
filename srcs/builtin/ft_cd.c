@@ -28,7 +28,7 @@ static void	print_err_set_status(const char *arg, \
 	}
 	else
 	{
-		err_arg = arg;
+		err_arg = path;
 		err_msg = strerror(tmp_err);
 		ft_dprintf(STDERR_FILENO, "%s: %s: %s: %s\n", \
 				SHELL_NAME, CMD_CD, err_arg, err_msg);

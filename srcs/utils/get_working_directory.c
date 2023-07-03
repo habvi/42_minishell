@@ -46,6 +46,7 @@ char	*get_working_directory(char *for_whom)
 		"%s: %s: %s: %s\n", \
 		for_whom, ERROR_MSG_RETRIEVE_CWD, ERROR_MSG_GETCWD, strerror(tmp_err));
 		ft_free(&cwd);
+		// (todo) sh: 0: getcwd() failed: No such file or directory
 		return (NULL);
 	}
 	return (cwd);

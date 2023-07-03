@@ -43,6 +43,7 @@ void	destroy_path_elems(t_deque *path_elems)
 //              ////home          -> /home
 //              /home/aaa/../aaa/../././  -> /home
 //              ../../../../../../../../  -> /
+//  PWD=NULL                      -> unspecified
 char	*cd_canonicalize_path(const char *path, const char *internal_pwd)
 {
 	t_deque	*path_elems;

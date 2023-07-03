@@ -57,6 +57,8 @@ def main():
         f"cd . \n pwd \n {DISPLAY_CMD}",
         f"cd / \n pwd \n {DISPLAY_CMD}",
         f"cd // \n pwd \n {DISPLAY_CMD}",
+        f"cd /// \n pwd \n {DISPLAY_CMD}",
+        f"cd //// \n pwd \n {DISPLAY_CMD}",
         f"cd ./././ \n pwd \n {DISPLAY_CMD}",
         f"cd .///////// \n pwd \n {DISPLAY_CMD}",
         f"cd ////////////////./././././../././. \n pwd \n {DISPLAY_CMD}",
