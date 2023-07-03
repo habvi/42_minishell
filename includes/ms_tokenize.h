@@ -1,13 +1,25 @@
 #ifndef MS_TOKENIZE_H
 # define MS_TOKENIZE_H
 
+# include <stdbool.h>
+
 # define TOKEN_SYMBOL	"|&<>()"
 # define TOKEN_QUOTE	"\"\'"
 # define TOKEN_DELIM	" \t"
 
-# include <stdbool.h>
+# define KIND_STR_OP_PIPE			"|"
+# define KIND_STR_OP_OR				"||"
+# define KIND_STR_OP_AND			"&&"
+# define KIND_STR_REDIRECT_IN		"<"
+# define KIND_STR_REDIRECT_HEREDOC	"<<"
+# define KIND_STR_REDIRECT_OUT		">"
+# define KIND_STR_REDIRECT_APPEND	">>"
+# define KIND_STR_PAREN_LEFT		"("
+# define KIND_STR_PAREN_RIGHT		")"
 
 # define SYNTAX_ERROR	2
+
+typedef enum e_result		t_result;
 
 typedef struct s_deque		t_deque;
 typedef struct s_context	t_context;
@@ -38,11 +50,14 @@ typedef struct s_token {
 	bool		concat_next;
 }	t_token;
 
+// todo: indent
 /* tokenize */
 t_deque	*tokenize(char *line, t_context *context);
 t_deque	*tokenize_line(char *line);
 char	*get_token_str(char *head, char **end);
 char	*get_token_tail(char *head);
 void	del_token(void *content);
+
+t_result	set_correct_syntax_token_kind(t_deque *tokens, t_context *context);
 
 #endif //MS_TOKENIZE_H

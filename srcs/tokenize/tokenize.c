@@ -21,33 +21,6 @@
 //  a  "b       b\0
 //  [a] ["b  ||   b] error, None
 
-static bool	is_valid_token(const char *token)
-{
-	(void)token;
-	return (true);
-}
-
-static t_result	set_correct_syntax_token_kind(t_deque *tokens, t_context *context)
-{
-	t_deque_node	*token_node;
-	t_token			*token;
-
-	// debug_token_dq(tokens, __func__);
-	token_node = tokens->node;
-	while (token_node)
-	{
-		token = (t_token *)token_node->content;
-		if (!is_valid_token(token->str))
-		{
-			context->status = SYNTAX_ERROR; // todo: print syntax error
-			return (FAILURE);
-		}
-		// set_correct_token_kind(token);
-		token_node = token_node->next;
-	}
-	return (SUCCESS);
-}
-
 t_deque	*tokenize(char *line, t_context *context)
 {
 	t_deque	*tokens;
