@@ -59,7 +59,6 @@ static bool	is_head_double_slash(const char *path)
 			&& path[2] != PATH_DELIMITER_CHR);
 }
 
-#include <stdio.h>
 void	handle_double_slash_path(const char *path, char **absolute_path)
 {
 	char	*new_path;

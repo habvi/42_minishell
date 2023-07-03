@@ -70,7 +70,6 @@ static t_result	var_separate_key_value_op(const char *const arg, \
 	return (result);
 }
 
-
 // arg: key=value
 // arg: key
 t_result	var_declare_arg(const char *const arg, t_var *var, t_var_attr attr)
