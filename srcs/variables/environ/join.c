@@ -29,7 +29,7 @@ static void	var_join_update_value(t_var *var, \
 	char		*joined_value;
 
 	joined_value = create_joined_value(existing_node, var_info->value);
-	new_info = var_create_var_info(joined_value, VAR_ENV);
+	new_info = var_create_var_info_by_value_attr(joined_value, VAR_ENV);
 	hs_update_value(&key, new_info, existing_node, var->hash->del_hash_value);
 	del_var_info((void **)&var_info);
 	ft_free(&joined_value);
@@ -45,7 +45,7 @@ void	var_join(t_var *var, \
 	char			*dup_key;
 	t_var_info		*var_info;
 
-	var_info = var_create_var_info_for_set(var, key, value, attr);
+	var_info = var_create_var_info_by_value_attr(value, attr);
 	dup_key = x_ft_strdup(key);
 	target_node = hs_find_key(var->hash, dup_key);
 	if (target_node)

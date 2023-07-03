@@ -57,7 +57,7 @@ t_var_info	*var_create_var_info_for_add(t_var *var, \
 
 	attr = get_declare_attr(var, key, attr);
 	value = get_declare_value(var, key, value);
-	var_info = var_create_var_info(value, attr);
+	var_info = var_create_var_info_by_value_attr(value, attr);
 	ft_free(&value);
 	return (var_info);
 }
