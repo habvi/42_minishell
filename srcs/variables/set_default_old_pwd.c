@@ -1,22 +1,12 @@
-#include <errno.h>
 #include "minishell.h"
 #include "ms_var.h"
 #include "ft_mem.h"
 
-static bool	is_permission_denied(int tmp_err)
-{
-	return (tmp_err == EACCES);
-}
-
 static bool	is_valid_old_pwd_path(const char *path)
 {
-	int		tmp_err;
+	int	tmp_err;
 
-	if (test_opendir(path, &tmp_err))
-		return (true);
-	if (is_permission_denied(tmp_err))
-		return (true);
-	return (false);
+	return (is_valid_path(path, &tmp_err));
 }
 
 // key=OLDPWD

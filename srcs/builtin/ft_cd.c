@@ -40,9 +40,7 @@ static bool	is_valid_cd_path(const char *path, int *tmp_err)
 {
 	if (!path)
 		return (false);
-	if (!test_opendir(path, tmp_err))
-		return (false);
-	return (true);
+	return (is_valid_path(path, tmp_err));
 }
 
 static void	print_mv_path_if_use_oldpwd_arg(const char *arg, const char *pwd)
