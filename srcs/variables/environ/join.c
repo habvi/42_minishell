@@ -35,32 +35,24 @@ static void	env_join_value_update(t_var *var, \
 	ft_free(&joined_value);
 }
 
-// allocate dup_key, dup_info
-void	env_join(t_var *var, const char *key, const t_var_info *var_info)
+// allocate key, value
+void	var_join(t_var *var, \
+					const char *key, \
+					const char *value, \
+					t_var_attr attr)
 {
 	t_deque_node	*target_node;
 	char			*dup_key;
-	t_var_info		*dup_info;
+	t_var_info		*var_info;
 
-	var_dup_key_info_pair(key, var_info, &dup_key, &dup_info);
+	var_info = var_create_var_info_for_set(var, key, value, attr);
+	dup_key = x_ft_strdup(key);
 	target_node = hs_find_key(var->hash, dup_key);
 	if (target_node)
-		env_join_value_update(var, dup_key, dup_info, target_node);
+		env_join_value_update(var, dup_key, var_info, target_node);
 	else
 	{
-		if (hs_add_to_table(var->hash, dup_key, dup_info) == HASH_ERROR)
+		if (hs_add_to_table(var->hash, dup_key, var_info) == HASH_ERROR)
 			ft_abort();
 	}
-}
-
-void	env_create_info_join(t_var *var, \
-								const char *key, \
-								const char *value, \
-								t_var_attr attr)
-{
-	t_var_info	*var_info;
-
-	var_info = var_create_var_info(value, attr);
-	env_join(var, key, var_info);
-	del_var_info((void **)&var_info);
 }

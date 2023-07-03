@@ -24,7 +24,7 @@ static void	set_func(t_var *var)
 	var->unset = var_unset;
 	var->print_detail = var_print_detail;
 	var->clear = var_clear;
-	var->env_join = env_join;
+	var->join = var_join;
 	var->env_print = env_print;
 }
 
