@@ -101,7 +101,8 @@ PUT_SRC		:=	$(PUT_DIR)/ft_putchar_fd.c \
 # ft_string
 #--------------------------------------------
 STRING_DIR	:=	ft_string
-STRING_SRC	:=	$(STRING_DIR)/ft_split.c \
+STRING_SRC	:=	$(STRING_DIR)/ft_find_set_in_str.c \
+				$(STRING_DIR)/ft_split.c \
 				$(STRING_DIR)/ft_strcmp.c \
 				$(STRING_DIR)/ft_strchr.c \
 				$(STRING_DIR)/ft_strdup.c \

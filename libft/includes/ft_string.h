@@ -34,5 +34,6 @@ char	*ft_strndup(const char *s, size_t maxlen);
 char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_substr_tail(char const *s, unsigned int start);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
+char	*ft_find_set_in_str(char *str, const char *set);
 
 #endif
