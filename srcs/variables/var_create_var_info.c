@@ -5,7 +5,8 @@
 
 // all malloc
 // key=value -> key, = ,value, attr
-t_var_info	*var_create_var_info(const char *value, t_var_attr attr)
+t_var_info	*var_create_var_info_by_value_attr(const char *value, \
+												t_var_attr attr)
 {
 	t_var_info	*var_info;
 	char		*dup_value;

@@ -66,7 +66,8 @@ void		var_update_key_info_pair_and_add(t_var *var, \
 												const char *key, \
 												const char *value, \
 												t_var_attr attr);
-t_var_info	*var_create_var_info(const char *value, t_var_attr attr);
+t_var_info	*var_create_var_info_by_value_attr(const char *value, \
+												t_var_attr attr);
 t_result	var_declare_arg(const char *const arg, t_var *var, t_var_attr attr);
 
 void		var_dup_key_info_pair(const char *key, \
