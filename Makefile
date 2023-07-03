@@ -50,8 +50,7 @@ SRCS		+=	$(VAR_DIR)/$(ENVIRON_DIR)/dup_env_key.c \
 				$(VAR_DIR)/unset.c \
 				$(VAR_DIR)/var_create_var_info.c \
 				$(VAR_DIR)/var_dup_key_info_pair.c \
-				$(VAR_DIR)/var_sort_elems.c \
-				$(VAR_DIR)/var_update.c
+				$(VAR_DIR)/var_sort_elems.c
 
 DEBUG_DIR	:=	debug
 SRCS		+=	$(DEBUG_DIR)/put.c
