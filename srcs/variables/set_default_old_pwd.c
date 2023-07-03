@@ -1,49 +1,42 @@
-#include <errno.h>
 #include "minishell.h"
-#include "ms_builtin.h"
 #include "ms_var.h"
 #include "ft_mem.h"
 
-static bool	is_permission_denied(int tmp_err)
+static bool	is_valid_old_pwd_path(const char *path)
 {
-	return (tmp_err == EACCES);
+	int	tmp_err;
+
+	return (is_valid_path(path, &tmp_err));
 }
 
-static bool	is_valid_old_pwd(const char *path)
+// key=OLDPWD
+// value=NULL
+static void	set_old_pwd_key_only(t_var *var)
 {
-	int		tmp_err;
-
-	if (test_opendir(path, &tmp_err))
-		return (true);
-	if (is_permission_denied(tmp_err))
-		return (true);
-	return (false);
+	var->add(var, KEY_OLDPWD, NULL, VAR_ENV);
 }
 
 // search path && is invalid directory
 // delete OLDPWD in hash
-static void	validate_and_delete_old_pwd(t_var *var)
+static void	check_and_rm_invalid_oldpwd_path(t_var *var)
 {
 	char	*dup_path;
 
 	dup_path = var->get_value(var, KEY_OLDPWD);
 	if (!dup_path)
 		return ;
-	if (!is_valid_old_pwd(dup_path))
+	if (!is_valid_old_pwd_path(dup_path))
+	{
 		var->unset(var, KEY_OLDPWD); //todo: erase t_var_info
+		set_old_pwd_key_only(var);
+	}
 	ft_free(&dup_path);
-}
-
-// key=OLDPWD
-// value=NULL
-static void	set_only_old_pwd_key(t_var *var)
-{
-	update_pwd_in_cd(var, KEY_OLDPWD, NULL, VAR_ENV);
 }
 
 void	set_default_old_pwd(t_var *var)
 {
 	if (var->is_key_exist(var, KEY_OLDPWD))
-		validate_and_delete_old_pwd(var);
-	set_only_old_pwd_key(var);
+		check_and_rm_invalid_oldpwd_path(var);
+	else
+		set_old_pwd_key_only(var);
 }
