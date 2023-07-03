@@ -20,6 +20,9 @@ t_result	read_eval_print_loop(t_context *context)
 			break ;
 		command = tokenize(line);
 		ft_free(&line);
+		debug_token_dq(command, "repl");
+		deque_clear_all(&command, del_token);
+		continue ;
 		result = execute_command(command, context);
 		deque_clear_all(&command, free);
 		if (result == PROCESS_ERROR)
