@@ -1,6 +1,8 @@
 from itertools import combinations
 from test_functions import test
 
+DISPLAY_CMD = "declare -p | /bin/grep PWD | /bin/grep -v _="
+
 def make_comb(base_list):
     comb_list = []
     for i in range(len(base_list) + 1):
@@ -41,6 +43,26 @@ def main():
                 cmds = append_cmd(cmds, export)
                 cmds = append_cmd(cmds, DISPLAY)
                 commands_list.append("".join(cmds))
+
+    additional_test = [
+        f"cd \n pwd \n {DISPLAY_CMD}",
+        f"cd ~ \n pwd \n {DISPLAY_CMD}",
+        f"cd - \n pwd \n {DISPLAY_CMD}",
+        f"cd nothing \n pwd \n {DISPLAY_CMD}",
+        f"cd /bin \n pwd \n cd - \n pwd \n {DISPLAY_CMD}",
+        f"cd .. \n cd ../ \n pwd \n {DISPLAY_CMD}",
+        f"pwd \n cd ../.././../.././../../../../../ \n pwd \n cd ../ \n pwd \n {DISPLAY_CMD}",
+        f"unset PWD OLDPWD \n cd - \n cd ~ \n pwd \n {DISPLAY_CMD}",
+        f"export PWD=aaaa \n cd ~ \n pwd \n {DISPLAY_CMD}",
+        f"cd . \n pwd \n {DISPLAY_CMD}",
+        f"cd / \n pwd \n {DISPLAY_CMD}",
+        f"cd // \n pwd \n {DISPLAY_CMD}",
+        f"cd ./././ \n pwd \n {DISPLAY_CMD}",
+        f"cd .///////// \n pwd \n {DISPLAY_CMD}",
+        f"cd ////////////////./././././../././. \n pwd \n {DISPLAY_CMD}",
+    ]
+
+    commands_list += additional_test
 
     # for c in commands_list:
     #     print(c)
