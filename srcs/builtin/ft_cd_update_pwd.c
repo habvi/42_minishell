@@ -13,25 +13,21 @@ static void	update_internal_pwd(char *path, t_context *context)
 	context->internal_pwd = absolute_path;
 }
 
-static t_var_attr	get_attr_and_unset_if_newvalue_null(t_var *var)
+static void	set_condition_old_pwd_for_update(t_var *var)
 {
-	t_var_attr	attr;
-	char		*value;
+	char		*new_old_pwd;
 
-	attr = var_get_attribute(var, KEY_OLDPWD);
-	value = var_get_value(var, KEY_PWD);
-	if (!value)
+	new_old_pwd = var_get_value(var, KEY_PWD);
+	if (!new_old_pwd)
 		var->unset(var, KEY_OLDPWD);
-	ft_free(&value);
-	return (attr);
+	ft_free(&new_old_pwd);
 }
 
-static void	update_var_pwd_oldpwd(t_context *context)
+static void	update_var_old_pwd(t_context *context)
 {
 	t_var		*var;
-	t_var_attr	oldpwd_attr;
 	char		*new_old_pwd;
-	char		*new_pwd;
+	t_var_attr	new_old_pwd_attr;
 
 	var = context->var;
 	new_old_pwd = var_get_value(var, KEY_PWD);
@@ -41,8 +37,19 @@ static void	update_var_pwd_oldpwd(t_context *context)
 	ft_free(&new_old_pwd);
 }
 
+static void	update_var_pwd(t_context *context)
+{
+	t_var		*var;
+	char		*new_pwd;
+
+	var = context->var;
+	new_pwd = context->internal_pwd;
+	var->add(var, KEY_PWD, new_pwd, VAR_NONE);
+}
+
 void	cd_update_pwd(char *path, t_context *context)
 {
 	update_internal_pwd(path, context);
-	update_var_pwd_oldpwd(context);
+	update_var_old_pwd(context);
+	update_var_pwd(context);
 }
