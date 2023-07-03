@@ -102,8 +102,7 @@ bool		str_to_legal_number(const char *str, long *result);
 /* ft_cd */
 // cd
 char		*cd_set_path(const char *arg, t_var *var);
-t_result	cd_change_dir_to_valid_path(const char *path, \
-										const char *pwd, \
+t_result	cd_change_dir_to_valid_path(const char *absolute_path, \
 										uint8_t *status);
 void		cd_update_pwd(char *path, t_context *context);
 // canonicalize

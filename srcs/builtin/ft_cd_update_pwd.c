@@ -3,12 +3,8 @@
 #include "ms_var.h"
 #include "ft_mem.h"
 
-static void	update_internal_pwd(char *path, t_context *context)
+static void	update_internal_pwd(char *absolute_path, t_context *context)
 {
-	char	*absolute_path;
-
-	absolute_path = cd_canonicalize_path(path, context->internal_pwd);
-	ft_free(&path);
 	ft_free(&context->internal_pwd);
 	context->internal_pwd = absolute_path;
 }

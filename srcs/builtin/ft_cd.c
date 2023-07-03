@@ -55,6 +55,7 @@ static void	change_directory(const char *arg, \
 {
 	char		*path;
 	int			tmp_err;
+	char		*absolute_path;
 	t_result	result;
 
 	path = cd_set_path(arg, context->var);
@@ -64,14 +65,16 @@ static void	change_directory(const char *arg, \
 		ft_free(&path);
 		return ;
 	}
-	result = cd_change_dir_to_valid_path(path, context->internal_pwd, status);
+	absolute_path = cd_canonicalize_path(path, context->internal_pwd);
+	ft_free(&path);
+	result = cd_change_dir_to_valid_path(absolute_path, status);
 	if (result == FAILURE)
 	{
 		ft_dprintf(2, "cd: fail to chdir\n"); // todo: tmp
-		ft_free(&path);
+		ft_free(&absolute_path);
 		return ;
 	}
-	cd_update_pwd(path, context);
+	cd_update_pwd(absolute_path, context);
 	print_mv_path_if_use_oldpwd_arg(arg, context->internal_pwd);
 }
 
