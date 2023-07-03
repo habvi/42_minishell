@@ -1,8 +1,6 @@
 #include "minishell.h"
 #include "ms_tokenize.h"
-#include "ms_builtin.h"
 #include "ft_deque.h"
-#include "ft_mem.h"
 
 // a   b    c  |   d   eeee|f||    >   e
 // [a],[b],[c],[|],[d],[e],[&&],[f],[>],[e]
@@ -23,19 +21,41 @@
 //  a  "b       b\0
 //  [a] ["b  ||   b] error, None
 
-t_result	add_token_kind(t_deque **tokens)
+static bool	is_valid_token(const char *token)
 {
-	if (!tokens)
-		return (FAILURE);
+	(void)token;
+	return (true);
+}
+
+static t_result	set_correct_syntax_token_kind(t_deque *tokens, t_context *context)
+{
+	t_deque_node	*token_node;
+	t_token			*token;
+
+	// debug_token_dq(tokens, __func__);
+	token_node = tokens->node;
+	while (token_node)
+	{
+		token = (t_token *)token_node->content;
+		if (!is_valid_token(token->str))
+		{
+			context->status = SYNTAX_ERROR; // todo: print syntax error
+			return (FAILURE);
+		}
+		// set_correct_token_kind(token);
+		token_node = token_node->next;
+	}
 	return (SUCCESS);
 }
 
-t_deque	*tokenize(char *line)
+t_deque	*tokenize(char *line, t_context *context)
 {
 	t_deque	*tokens;
 
 	tokens = tokenize_line(line);
-	if (add_token_kind(&tokens) == FAILURE)
+	if (!tokens)
+		return (NULL); // todo: iru? set status?
+	if (set_correct_syntax_token_kind(tokens, context) == FAILURE)
 		return (NULL);
 	// debug_token_dq(tokens, "tokenize");
 	return (tokens);

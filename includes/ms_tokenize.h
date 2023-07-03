@@ -7,7 +7,10 @@
 
 # include <stdbool.h>
 
-typedef struct s_deque	t_deque;
+# define SYNTAX_ERROR	2
+
+typedef struct s_deque		t_deque;
+typedef struct s_context	t_context;
 
 typedef enum e_quote {
 	QUOTE_NONE = 0,
@@ -36,7 +39,7 @@ typedef struct s_token {
 }	t_token;
 
 /* tokenize */
-t_deque	*tokenize(char *line);
+t_deque	*tokenize(char *line, t_context *context);
 t_deque	*tokenize_line(char *line);
 char	*get_token_str(char *head, char **end);
 char	*get_token_tail(char *head);
