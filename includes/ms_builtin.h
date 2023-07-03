@@ -17,6 +17,8 @@
 /* option */
 # define CMD_OPTION_MARKER				'-'
 # define ECHO_OPTION_DISPLAY_NEWLINE	'n'
+# define DECLARE_OPTION_VAR_ENV			'x'
+# define DECLARE_DEL_ATTR_MARKER		'+'
 # define DECLARE_OPTION_DISPLAY_ATTR	'p'
 
 # define ECHO_SEPARATOR		' '
