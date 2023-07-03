@@ -1,0 +1,45 @@
+<digit>             ::= 0|1|2|3|4|5|6|7|8|9
+
+<number>            ::= <digit>
+                      | <number> <digit>
+
+<letter>            ::= a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z
+                      |A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z
+
+<word>              ::= <letter>
+                      | <word> <letter>
+
+<word_list>         ::= <word>
+                      | <word_list> <word>
+
+<assignment_word>   ::= <word> '=' <word>
+                      | <word> '+=' <word>
+
+<redirection>       ::= '>' <word>
+                      | '<' <word>
+                      | '>>' <word>
+                      | '<<' <word>
+
+<redirect_list>     ::= <redirect>
+                      | <redirect_list> <redirect>
+
+<command_element>   ::= <word_list>
+                      | <assignment_word>
+                      | <redirect_list>
+                      | <command_element> <redirect_list>
+                      | <redirect_list> <command_element>
+
+<command_list>      ::= <command_element>
+                      | <command_list>
+                      | <subshell>
+                      | <subshell> <redirect_list>
+
+<subshell>          ::= '(' <operator_list> ')'
+
+<pipeline_commands> ::= <pipeline_commands> '|' <pipeline_commands>
+                      | <command_list>
+
+<operator_list>     ::= <operator_list> '&&' <operator_list>
+                      | <operator_list> '||' <operator_list>
+                      | <pipeline_commands>
+

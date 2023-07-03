@@ -12,6 +12,8 @@ cmake-build-debug/
 !*.h
 !.github/**
 
+!srcs/tokenize/minishell.bnf
+
 !test
 
 !playground
