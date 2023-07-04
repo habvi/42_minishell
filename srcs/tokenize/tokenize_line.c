@@ -5,6 +5,13 @@
 #include "ft_string.h"
 #include "ft_sys.h"
 
+static bool	is_concatted_paren(char token_head, char next_chr)
+{
+	if (ft_strchr(TOKEN_PAREN, token_head) && token_head == next_chr)
+		return (true);
+	return (false);
+}
+
 static bool	is_concat_to_next(char token_head, char next_chr)
 {
 	if (ft_strchr(TOKEN_SYMBOL, token_head))

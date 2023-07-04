@@ -17,13 +17,7 @@ static char	*get_token_symbol_tail(char *head)
 	return (tail);
 }
 
-static bool	is_token_str_quote(char *set, char chr)
-{
-	return (ft_strchr(set, chr));
-}
-
-// 3 patterns: token str is 1)symbol, 2)quoted, 3)word
-char	*get_token_tail(char *head)
+static char	*get_token_paren_tail(char *head)
 {
 	char	*tail;
 
@@ -64,6 +58,8 @@ char	*get_token_tail(char *head)
 		tail = get_token_symbol_tail(head);
 	else if (is_token_str_quote(TOKEN_QUOTE, *head))
 		tail = get_token_quote_tail(head);
+	else if (is_token_str_quote(TOKEN_PAREN, *head))
+		tail = get_token_paren_tail(head);
 	else
 		tail = get_token_word_tail(head);
 	return (tail);
