@@ -4,6 +4,7 @@
 # include <stdbool.h>
 # include <stdint.h>
 # include <stddef.h>
+# include "ms_result.h"
 
 # define CMD_CD			"cd"
 # define CMD_DECLARE	"declare"
@@ -54,9 +55,6 @@
 # define ERROR_MSG_INVALID_OP	"invalid option"
 # define ERROR_MSG_NOT_VALID_ID	"not a valid identifier"
 # define ERROR_MSG_NOT_SET		"not set"
-
-typedef enum e_result		t_result;
-typedef enum e_var_attr		t_var_attr;
 
 typedef struct s_context	t_context;
 typedef struct s_deque		t_deque;

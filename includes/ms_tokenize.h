@@ -2,6 +2,7 @@
 # define MS_TOKENIZE_H
 
 # include <stdbool.h>
+# include "ms_result.h"
 
 # define TOKEN_SYMBOL	"|&<>()"
 # define TOKEN_QUOTE	"\"\'"
@@ -18,8 +19,6 @@
 # define KIND_STR_PAREN_RIGHT		")"
 
 # define SYNTAX_ERROR	2
-
-typedef enum e_result		t_result;
 
 typedef struct s_deque		t_deque;
 typedef struct s_context	t_context;

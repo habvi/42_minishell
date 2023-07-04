@@ -4,6 +4,7 @@
 # include <stdbool.h>
 # include <stddef.h>
 # include <stdint.h>
+# include "ms_result.h"
 
 /* declare */
 # define DECLARE		"declare"
@@ -15,9 +16,6 @@
 # define KEY_PWD		"PWD"
 # define KEY_OLDPWD		"OLDPWD"
 # define KEY_HOME		"HOME"
-
-typedef enum e_env_op			t_env_op;
-typedef enum e_result			t_result;
 
 typedef struct s_context		t_context;
 typedef struct s_var			t_var;
