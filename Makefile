@@ -2,7 +2,7 @@
 NAME		:=	minishell
 
 CC			:=	cc
-CFLAGS		:=	-Wall -Wextra -Werror -MMD -MP
+CFLAGS		:=	-Wall -Wextra -Werror -MMD -MP -pedantic
 RL_FLAGS	:=	-lreadline
 MKDIR		:=	mkdir -p
 

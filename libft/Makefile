@@ -194,7 +194,7 @@ DEPS		:=	$(OBJS:.o=.d)
 
 #--------------------------------------------
 CC			:=	cc
-CFLAGS		:=	-Wall -Wextra -Werror -MMD -MP
+CFLAGS		:=	-Wall -Wextra -Werror -MMD -MP -pedantic
 ARFLAGS		:=	rcs
 MKDIR		:=	mkdir -p
 
