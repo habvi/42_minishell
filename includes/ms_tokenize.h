@@ -68,7 +68,8 @@ void		set_token_kinds_all(t_deque *tokens);
 void		set_token_quote_type_all(t_deque *tokens);
 
 /* validate */
-bool		is_closed_quote_all(t_deque_node *node, t_context *context);
+bool		is_closed_quote_all(t_deque_node *node);
+bool		is_valid_paren_pair_all(t_deque_node *node);
 
 /* destroy */
 void		del_token(void *content);

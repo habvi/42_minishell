@@ -18,7 +18,8 @@ static bool	is_closed_quote_each_token(char *token_str)
 	return (true);
 }
 
-bool	is_closed_quote_all(t_deque_node *node, t_context *context)
+// if error, status set tokanize().
+bool	is_closed_quote_all(t_deque_node *node)
 {
 	t_token	*token;
 
@@ -27,8 +28,7 @@ bool	is_closed_quote_all(t_deque_node *node, t_context *context)
 		token = (t_token *)node->content;
 		if (!is_closed_quote_each_token(token->str))
 		{
-			context->status = SYNTAX_ERROR; // todo: print syntax error
-			ft_dprintf(STDERR_FILENO, "%s\n", ERROR_MSG_SYNTAX); // tmp
+			ft_dprintf(STDERR_FILENO, "%s\n", ERROR_MSG_SYNTAX); // todo: print
 			return (false);
 		}
 		node = node->next;
