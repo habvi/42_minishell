@@ -5,6 +5,7 @@
 #include "ft_string.h"
 #include "ft_sys.h"
 
+// ((
 static bool	is_concatted_paren(char token_head, char next_chr)
 {
 	if (ft_strchr(TOKEN_PAREN, token_head) && token_head == next_chr)
@@ -12,19 +13,21 @@ static bool	is_concatted_paren(char token_head, char next_chr)
 	return (false);
 }
 
+static bool is_token_str_word(char token_head)
+{
+	return (!ft_strchr(TOKEN_SYMBOL TOKEN_PAREN TOKEN_DELIM, token_head));
+}
+
+// token_str is word = !(symbol && paren)
+//     &&
+// next is word
 static bool	is_concat_to_next(char token_head, char next_chr)
 {
-	if (ft_strchr(TOKEN_SYMBOL, token_head))
-		return (false);
-	if (!next_chr)
-		return (false);
-	if (ft_strchr(TOKEN_SYMBOL, next_chr))
-		return (false);
-	if (is_whitespace(next_chr))
-		return (false);
-	if (!is_concatted_paren(token_head, next_chr))
-		return (false);
-	return (true);
+	if (is_token_str_word(token_head) && is_token_str_word(next_chr))
+		return (true);
+	if (is_concatted_paren(token_head, next_chr))
+		return (true);
+	return (false);
 }
 
 static t_token	*create_token_struct(char *token_str, char next_chr)
