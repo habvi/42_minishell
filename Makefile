@@ -2,7 +2,7 @@
 NAME		:=	minishell
 
 CC			:=	cc
-CFLAGS		:=	-Wall -Wextra -Werror -MMD -MP
+CFLAGS		:=	-Wall -Wextra -Werror -MMD -MP -pedantic
 RL_FLAGS	:=	-lreadline
 MKDIR		:=	mkdir -p
 
@@ -75,6 +75,7 @@ SRCS		+=	$(TOKEN_DIR)/del_token.c \
 				$(TOKEN_DIR)/get_token_str.c \
 				$(TOKEN_DIR)/get_token_tail.c \
 				$(TOKEN_DIR)/is_token_str.c \
+				$(TOKEN_DIR)/set_token_kind.c \
 				$(TOKEN_DIR)/tokenize.c \
 				$(TOKEN_DIR)/tokenize_line.c
 

@@ -85,8 +85,7 @@ MEM_SRC		:=	$(MEM_DIR)/ft_bzero.c \
 				$(MEM_DIR)/ft_memcmp.c \
 				$(MEM_DIR)/ft_memcpy.c \
 				$(MEM_DIR)/ft_memmove.c \
-				$(MEM_DIR)/ft_memset.c \
-				$(MEM_DIR)/ft_realloc.c
+				$(MEM_DIR)/ft_memset.c
 
 #--------------------------------------------
 # ft_put
@@ -194,7 +193,7 @@ DEPS		:=	$(OBJS:.o=.d)
 
 #--------------------------------------------
 CC			:=	cc
-CFLAGS		:=	-Wall -Wextra -Werror -MMD -MP
+CFLAGS		:=	-Wall -Wextra -Werror -MMD -MP -pedantic
 ARFLAGS		:=	rcs
 MKDIR		:=	mkdir -p
 

@@ -12,7 +12,7 @@ static void	set_digit_and_power(int n, uint8_t *digit, unsigned int *power)
 		return ;
 	}
 	*power *= 10;
-	return (set_digit_and_power(n / 10, digit, power));
+	set_digit_and_power(n / 10, digit, power);
 }
 
 static char	*set_to_list(int n, uint8_t digit, unsigned int power)
