@@ -26,6 +26,7 @@
 # define ERROR_MSG_SYNTAX	"syntax error near unexpected token"
 
 typedef struct s_deque		t_deque;
+typedef struct s_deque_node	t_deque_node;
 typedef struct s_context	t_context;
 
 typedef enum e_quote {
@@ -65,7 +66,10 @@ bool		is_token_str_paren(const char *str);
 void		set_token_kinds_all(t_deque *tokens);
 void		set_token_quote_type_all(t_deque *tokens);
 
-// destroy
+/* validate */
+bool		is_closed_quote_all(t_deque_node *node, t_context *context);
+
+/* destroy */
 void		del_token(void *content);
 void		destroy_tokens(t_deque *command, void (*del)(void *));
 

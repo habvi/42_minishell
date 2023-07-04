@@ -74,6 +74,7 @@ TOKEN_DIR	:=	tokenize
 SRCS		+=	$(TOKEN_DIR)/del_token.c \
 				$(TOKEN_DIR)/get_token_str.c \
 				$(TOKEN_DIR)/get_token_tail.c \
+				$(TOKEN_DIR)/is_closed_quote.c \
 				$(TOKEN_DIR)/is_token_str.c \
 				$(TOKEN_DIR)/set_token_kind.c \
 				$(TOKEN_DIR)/set_token_quote_all.c \
