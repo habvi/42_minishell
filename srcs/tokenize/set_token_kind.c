@@ -3,13 +3,7 @@
 #include "ft_deque.h"
 #include "ft_string.h"
 
-static bool	is_valid_token(const char *token)
-{
-	(void)token;
-	return (true);
-}
-
-static void	set_correct_token_kind(t_token *token)
+static void	set_each_token_kind(t_token *token)
 {
 	const char	*token_str = token->str;
 
@@ -35,7 +29,7 @@ static void	set_correct_token_kind(t_token *token)
 		token->kind = KIND_WORD;
 }
 
-t_result	set_correct_syntax_token_kind(t_deque *tokens, t_context *context)
+void	set_token_kinds_all(t_deque *tokens)
 {
 	t_deque_node	*token_node;
 	t_token			*token;
@@ -45,13 +39,7 @@ t_result	set_correct_syntax_token_kind(t_deque *tokens, t_context *context)
 	while (token_node)
 	{
 		token = (t_token *)token_node->content;
-		if (!is_valid_token(token->str))
-		{
-			context->status = SYNTAX_ERROR; // todo: print syntax error
-			return (FAILURE);
-		}
-		set_correct_token_kind(token);
+		set_each_token_kind(token);
 		token_node = token_node->next;
 	}
-	return (SUCCESS);
 }

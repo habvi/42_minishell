@@ -19,7 +19,8 @@
 # define KIND_STR_PAREN_LEFT		"("
 # define KIND_STR_PAREN_RIGHT		")"
 
-# define SYNTAX_ERROR	2
+# define SYNTAX_ERROR		2
+# define ERROR_MSG_SYNTAX	"syntax error near unexpected token"
 
 typedef struct s_deque		t_deque;
 typedef struct s_context	t_context;
@@ -55,9 +56,11 @@ t_deque		*tokenize(char *line, t_context *context);
 t_deque		*tokenize_line(char *line);
 char		*get_token_str(char *head, char **end);
 char		*get_token_tail(char *head);
-void		del_token(void *content);
 bool		is_token_str_symbol(char *set, char chr);
 bool		is_token_str_quote(char *set, char chr);
-t_result	set_correct_syntax_token_kind(t_deque *tokens, t_context *context);
+void		set_token_kinds_all(t_deque *tokens);
+// destroy
+void		del_token(void *content);
+void		destroy_tokens(t_deque *command, void (*del)(void *));
 
 #endif //MS_TOKENIZE_H

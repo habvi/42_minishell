@@ -30,17 +30,12 @@ static t_deque	*tmp_func_convert_to_executable_command(t_deque *tmp_cmds)
 	return (cmd);
 }
 
-static void	destroy_command(t_deque *command)
-{
-	deque_clear_all(&command, free);
-}
-
 t_result	read_eval_print_loop(t_context *context)
 {
 	t_deque		*command;
 	t_result	result;
 	char		*line;
-	t_deque		*tmp_command;
+	t_deque		*tokens;
 
 	command = NULL;
 	result = SUCCESS;
@@ -49,20 +44,15 @@ t_result	read_eval_print_loop(t_context *context)
 		line = input_line();
 		if (!line)
 			break ;
-		tmp_command = tokenize(line, context);
+		tokens = tokenize(line, context);
 		ft_free(&line);
-		if (context->status != EXIT_SUCCESS) // todo: or if !tmp_command
-		{
-			destroy_command(tmp_command);
-			return (FAILURE);
-		}
-		// >>>>>> todo(erase): for test, temporaly pass only str deque.
-		// debug_token_dq(tmp_command, "repl");
-		command = tmp_func_convert_to_executable_command(tmp_command);
-		deque_clear_all(&tmp_command, del_token);
-		// <<<<<<
+		if (context->status != EXIT_SUCCESS)
+			continue ;
+		command = tmp_func_convert_to_executable_command(tokens);
+		destroy_tokens(tokens, del_token);
+		// parser
 		result = execute_command(command, context);
-		destroy_command(command);
+		destroy_tokens(command, free);
 		if (result == PROCESS_ERROR)
 			break ;
 	}
