@@ -59,8 +59,9 @@ t_deque		*tokenize(char *line, t_context *context);
 t_deque		*tokenize_line(char *line);
 char		*get_token_str(char *head, char **end);
 char		*get_token_tail(char *head);
-bool		is_token_str_symbol(char *set, char chr);
-bool		is_token_str_quote(char *set, char chr);
+bool		is_token_str_symbol(char chr);
+bool		is_token_str_quote(char chr);
+bool		is_token_str_paren(char chr);
 void		set_token_kinds_all(t_deque *tokens);
 void		set_token_quote_all(t_deque *tokens);
 
