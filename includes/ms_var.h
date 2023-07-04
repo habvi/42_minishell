@@ -58,7 +58,7 @@ struct s_var
 };
 
 /* init */
-t_var		*set_default_environ(t_context *context);
+t_var		*set_default_environ(void);
 void		set_default_pwd(t_var *var);
 void		set_default_old_pwd(t_var *var);
 

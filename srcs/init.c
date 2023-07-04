@@ -23,7 +23,7 @@ static void	set_context_default_value(t_context *context)
 {
 	t_var	*var;
 
-	context->var = set_default_environ(context);
+	context->var = set_default_environ();
 	var = context->var;
 	context->internal_pwd = var->get_value(var, KEY_PWD);
 	context->is_interactive = set_is_interactive();
