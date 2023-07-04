@@ -63,6 +63,7 @@ char		*get_token_tail(char *head);
 bool		is_token_str_symbol(const char *str);
 bool		is_token_str_quote(const char *str);
 bool		is_token_str_paren(const char *str);
+bool		is_concat_to_next(char token_head, char next_chr);
 void		set_token_kinds_all(t_deque *tokens);
 void		set_token_quote_type_all(t_deque *tokens);
 
