@@ -19,6 +19,9 @@
 # define KIND_STR_PAREN_LEFT		"("
 # define KIND_STR_PAREN_RIGHT		")"
 
+# define SINGLE_QUOTE_CHR	'\''
+# define DOUBLE_QUOTE_CHR	'\"'
+
 # define SYNTAX_ERROR		2
 # define ERROR_MSG_SYNTAX	"syntax error near unexpected token"
 
@@ -59,6 +62,8 @@ char		*get_token_tail(char *head);
 bool		is_token_str_symbol(char *set, char chr);
 bool		is_token_str_quote(char *set, char chr);
 void		set_token_kinds_all(t_deque *tokens);
+void		set_token_quote_all(t_deque *tokens);
+
 // destroy
 void		del_token(void *content);
 void		destroy_tokens(t_deque *command, void (*del)(void *));
