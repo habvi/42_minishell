@@ -41,5 +41,7 @@ t_deque	*tokenize_line(char *line);
 char	*get_token_str(char *head, char **end);
 char	*get_token_tail(char *head);
 void	del_token(void *content);
+bool	is_token_str_symbol(char *set, char chr);
+bool	is_token_str_quote(char *set, char chr);
 
 #endif //MS_TOKENIZE_H
