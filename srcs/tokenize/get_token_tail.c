@@ -4,19 +4,19 @@
 #include "ft_mem.h"
 #include "ft_string.h"
 
-static char	*get_token_symbol_tail(char *head, char symbol)
+static char	*get_token_symbol_tail(char *head, const char symbol)
 {
 	while (*head && *head == symbol)
 		head++;
 	return (head);
 }
 
-static bool	is_token_str_symbol(char *set, char chr)
+static bool	is_token_str_symbol(char *set, const char chr)
 {
 	return (ft_strchr(set, chr));
 }
 
-static bool	is_token_str_quote(char *set, char chr)
+static bool	is_token_str_quote(char *set, const char chr)
 {
 	return (ft_strchr(set, chr));
 }
@@ -32,7 +32,7 @@ char	*get_token_tail(char *head)
 		tail = get_token_symbol_tail(head, head_chr);
 	else if (is_token_str_quote(TOKEN_QUOTE, head_chr))
 	{
-		tail = ft_find_set_in_str(head, (char [2]){head_chr, 0});
+		tail = ft_find_set_in_str(head, (const char [2]){head_chr, 0});
 		if (*tail)
 			tail++;
 	}
