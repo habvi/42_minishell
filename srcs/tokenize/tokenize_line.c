@@ -1,22 +1,8 @@
 #include "minishell.h"
 #include "ms_tokenize.h"
-#include "ms_builtin.h"
 #include "ft_deque.h"
 #include "ft_string.h"
 #include "ft_sys.h"
-
-static bool	is_concat_to_next(char token_head, char next_chr)
-{
-	if (ft_strchr(TOKEN_SYMBOL, token_head))
-		return (false);
-	if (!next_chr)
-		return (false);
-	if (ft_strchr(TOKEN_SYMBOL, next_chr))
-		return (false);
-	if (is_whitespace(next_chr))
-		return (false);
-	return (true);
-}
 
 static t_token	*create_token_struct(char *token_str, char next_chr)
 {

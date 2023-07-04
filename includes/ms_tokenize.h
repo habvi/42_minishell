@@ -1,13 +1,33 @@
 #ifndef MS_TOKENIZE_H
 # define MS_TOKENIZE_H
 
-# define TOKEN_SYMBOL	"|&<>()"
+# include <stdbool.h>
+# include "ms_result.h"
+
+# define TOKEN_SYMBOL	"|&<>"
+# define TOKEN_PAREN	"()"
 # define TOKEN_QUOTE	"\"\'"
 # define TOKEN_DELIM	" \t"
 
-# include <stdbool.h>
+# define KIND_STR_OP_PIPE			"|"
+# define KIND_STR_OP_OR				"||"
+# define KIND_STR_OP_AND			"&&"
+# define KIND_STR_REDIRECT_IN		"<"
+# define KIND_STR_REDIRECT_HEREDOC	"<<"
+# define KIND_STR_REDIRECT_OUT		">"
+# define KIND_STR_REDIRECT_APPEND	">>"
+# define KIND_STR_PAREN_LEFT		"("
+# define KIND_STR_PAREN_RIGHT		")"
 
-typedef struct s_deque	t_deque;
+# define SINGLE_QUOTE_CHR	'\''
+# define DOUBLE_QUOTE_CHR	'\"'
+
+# define SYNTAX_ERROR		2
+# define ERROR_MSG_SYNTAX	"syntax error near unexpected token"
+
+typedef struct s_deque		t_deque;
+typedef struct s_deque_node	t_deque_node;
+typedef struct s_context	t_context;
 
 typedef enum e_quote {
 	QUOTE_NONE = 0,
@@ -36,10 +56,23 @@ typedef struct s_token {
 }	t_token;
 
 /* tokenize */
-t_deque	*tokenize(char *line);
-t_deque	*tokenize_line(char *line);
-char	*get_token_str(char *head, char **end);
-char	*get_token_tail(char *head);
-void	del_token(void *content);
+t_deque		*tokenize(char *line, t_context *context);
+t_deque		*tokenize_line(char *line);
+char		*get_token_str(char *head, char **end);
+char		*get_token_tail(char *head);
+bool		is_token_str_symbol(const char *str);
+bool		is_token_str_quote(const char *str);
+bool		is_token_str_paren(const char *str);
+bool		is_concat_to_next(char token_head, char next_chr);
+void		set_token_kinds_all(t_deque *tokens);
+void		set_token_quote_type_all(t_deque *tokens);
+
+/* validate */
+bool		is_closed_quote_all(t_deque_node *node);
+bool		is_valid_paren_pair_all(t_deque_node *node);
+
+/* destroy */
+void		del_token(void *content);
+void		destroy_tokens(t_deque *command, void (*del)(void *));
 
 #endif //MS_TOKENIZE_H

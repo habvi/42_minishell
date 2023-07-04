@@ -4,6 +4,7 @@
 # include <stdbool.h>
 # include <stdint.h>
 # include <unistd.h>
+# include "ms_result.h"
 
 # define CHILD_PID		0
 # define READ			0
@@ -13,8 +14,6 @@
 
 # define ERROR_MSG_NO_SUCH_FILE		"No such file or directory"
 # define ERROR_MSG_CMD_NOT_FOUND	"command not found"
-
-typedef enum e_result		t_result;
 
 typedef struct s_deque_node	t_deque_node;
 typedef struct s_deque		t_deque;

@@ -1,8 +1,9 @@
+#include <stdlib.h>
 #include "minishell.h"
 #include "ms_tokenize.h"
-#include "ms_builtin.h"
 #include "ft_deque.h"
-#include "ft_mem.h"
+#include "ft_dprintf.h"
+#include "ft_string.h"
 
 // a   b    c  |   d   eeee|f||    >   e
 // [a],[b],[c],[|],[d],[e],[&&],[f],[>],[e]
@@ -23,20 +24,30 @@
 //  a  "b       b\0
 //  [a] ["b  ||   b] error, None
 
-t_result	add_token_kind(t_deque **tokens)
+static bool	is_valid_tokens_syntax(t_deque_node *node)
 {
-	if (!tokens)
-		return (FAILURE);
-	return (SUCCESS);
+	if (!is_closed_quote_all(node))
+		return (false);
+	if (!is_valid_paren_pair_all(node))
+		return (false);
+	return (true);
 }
 
-t_deque	*tokenize(char *line)
+// tokens != NULL
+t_deque	*tokenize(char *line, t_context *context)
 {
 	t_deque	*tokens;
 
 	tokens = tokenize_line(line);
-	if (add_token_kind(&tokens) == FAILURE)
+	set_token_kinds_all(tokens);
+	if (!is_valid_tokens_syntax(tokens->node))
+	{
+		context->status = SYNTAX_ERROR; // todo: print syntax error
+		destroy_tokens(tokens, del_token);
 		return (NULL);
+	}
+	set_token_quote_type_all(tokens);
 	// debug_token_dq(tokens, "tokenize");
+	context->status = EXIT_SUCCESS;
 	return (tokens);
 }

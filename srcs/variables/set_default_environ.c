@@ -51,16 +51,15 @@ static void	set_env_default_hash(t_var *var)
 	get_environ(var);
 }
 
-t_var	*set_default_environ(t_context *context)
+t_var	*set_default_environ(void)
 {
 	t_var	*var;
 
 	var = (t_var *)x_malloc(sizeof(t_var));
 	if (!var)
 		ft_abort();
-	context->var = var;
 	set_func(var);
-	set_env_default_hash(context->var);
+	set_env_default_hash(var);
 	set_default_pwd(var);
 	set_default_old_pwd(var);
 	return (var);
