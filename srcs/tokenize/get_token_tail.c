@@ -24,19 +24,46 @@ static bool	is_token_str_quote(char *set, char chr)
 // 3 patterns: token str is 1)symbol, 2)quoted, 3)word
 char	*get_token_tail(char *head)
 {
+	char	*tail;
+
+	tail = head + 1;
+	return (tail);
+}
+
+static char	*get_token_quote_tail(char *head)
+{
 	char		*tail;
-	const char	head_chr = *head;
+	const char	set[2] = {*head, '\0'};
 
 	head++;
-	if (is_token_str_symbol(TOKEN_SYMBOL, head_chr))
-		tail = get_token_symbol_tail(head, head_chr);
-	else if (is_token_str_quote(TOKEN_QUOTE, head_chr))
-	{
-		tail = ft_find_set_in_str(head, (char [2]){head_chr, 0});
-		if (*tail)
-			tail++;
-	}
+	tail = ft_find_set_in_str(head, set);
+	if (*tail)
+		tail++;
+	return (tail);
+}
+
+static char	*get_token_word_tail(char *head)
+{
+	char		*tail;
+	const char	*set = TOKEN_SYMBOL TOKEN_QUOTE TOKEN_DELIM TOKEN_PAREN;
+
+	head++;
+	tail = ft_find_set_in_str(head, set);
+	return (tail);
+}
+
+// token_str
+// ^head    ^ tail
+// 3 patterns: token str is 1)symbol, 2)quoted, 3)word
+char	*get_token_tail(char *head)
+{
+	char		*tail;
+
+	if (is_token_str_symbol(TOKEN_SYMBOL, *head))
+		tail = get_token_symbol_tail(head);
+	else if (is_token_str_quote(TOKEN_QUOTE, *head))
+		tail = get_token_quote_tail(head);
 	else
-		tail = ft_find_set_in_str(head, TOKEN_SYMBOL TOKEN_QUOTE TOKEN_DELIM);
+		tail = get_token_word_tail(head);
 	return (tail);
 }
