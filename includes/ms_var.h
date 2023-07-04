@@ -26,10 +26,9 @@ typedef struct s_hash_table		t_hash;
 
 typedef enum e_var_attr
 {
-	VAR_NONE = 0b00,
-	VAR_ENV = 0b01,
-	VAR_SHELL = 0b10,
-	VAR_ALL = 0b11,
+	VAR_NONE = 0,
+	VAR_ENV = 1 << 0,
+	VAR_SHELL = 1 << 1,
 }	t_var_attr;
 
 typedef struct s_variable
