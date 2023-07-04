@@ -22,6 +22,8 @@ static bool	is_concat_to_next(char token_head, char next_chr)
 		return (false);
 	if (is_whitespace(next_chr))
 		return (false);
+	if (!is_concatted_paren(token_head, next_chr))
+		return (false);
 	return (true);
 }
 
