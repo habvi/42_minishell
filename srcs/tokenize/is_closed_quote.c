@@ -8,7 +8,7 @@ static bool	is_closed_quote_each_token(char *token_str)
 {
 	const size_t	len = ft_strlen(token_str);
 	const char		head = *token_str;
-	const char 		tail = token_str[len];
+	const char		tail = token_str[len];
 
 	if (is_token_str_quote(token_str))
 	{
