@@ -11,7 +11,7 @@ def main():
                 "pwd pwd",
                  ]  # add more test after implement cd
 
-    test_res |= test("ft_exit", pwd_test)
+    test_res |= test("ft_pwd", pwd_test)
 
     return test_res
 
