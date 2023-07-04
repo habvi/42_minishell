@@ -49,7 +49,7 @@ static char	*get_token_word_tail(char *head)
 // 3 patterns: token str is 1)symbol, 2)quoted, 3)word
 char	*get_token_tail(char *head)
 {
-	char		*tail;
+	char	*tail;
 
 	if (is_token_str_symbol(TOKEN_SYMBOL, *head))
 		tail = get_token_symbol_tail(head);

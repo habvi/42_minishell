@@ -50,16 +50,14 @@ typedef struct s_token {
 	bool		concat_next;
 }	t_token;
 
-// todo: indent
 /* tokenize */
-t_deque	*tokenize(char *line, t_context *context);
-t_deque	*tokenize_line(char *line);
-char	*get_token_str(char *head, char **end);
-char	*get_token_tail(char *head);
-void	del_token(void *content);
-bool	is_token_str_symbol(char *set, char chr);
-bool	is_token_str_quote(char *set, char chr);
-
+t_deque		*tokenize(char *line, t_context *context);
+t_deque		*tokenize_line(char *line);
+char		*get_token_str(char *head, char **end);
+char		*get_token_tail(char *head);
+void		del_token(void *content);
+bool		is_token_str_symbol(char *set, char chr);
+bool		is_token_str_quote(char *set, char chr);
 t_result	set_correct_syntax_token_kind(t_deque *tokens, t_context *context);
 
 #endif //MS_TOKENIZE_H
