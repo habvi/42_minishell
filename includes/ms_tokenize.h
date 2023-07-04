@@ -1,7 +1,8 @@
 #ifndef MS_TOKENIZE_H
 # define MS_TOKENIZE_H
 
-# define TOKEN_SYMBOL	"|&<>()"
+# define TOKEN_SYMBOL	"|&<>"
+# define TOKEN_PAREN	"()"
 # define TOKEN_QUOTE	"\"\'"
 # define TOKEN_DELIM	" \t"
 

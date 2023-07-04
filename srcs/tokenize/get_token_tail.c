@@ -4,16 +4,17 @@
 #include "ft_mem.h"
 #include "ft_string.h"
 
-static char	*get_token_symbol_tail(char *head, char symbol)
+// ||| -> [||], [|]
+//         ^^ max_len=2
+static char	*get_token_symbol_tail(char *head)
 {
-	while (*head && *head == symbol)
-		head++;
-	return (head);
-}
+	char		*tail;
+	const char	symbol_chr = *head;
 
-static bool	is_token_str_symbol(char *set, char chr)
-{
-	return (ft_strchr(set, chr));
+	tail = head + 1;
+	if (*tail == symbol_chr)
+		tail++;
+	return (tail);
 }
 
 static bool	is_token_str_quote(char *set, char chr)
