@@ -51,11 +51,11 @@ char	*get_token_tail(char *head)
 {
 	char	*tail;
 
-	if (is_token_str_symbol(*head))
+	if (is_token_str_symbol(head))
 		tail = get_token_symbol_tail(head);
-	else if (is_token_str_quote(*head))
+	else if (is_token_str_quote(head))
 		tail = get_token_quote_tail(head);
-	else if (is_token_str_paren(*head))
+	else if (is_token_str_paren(head))
 		tail = get_token_paren_tail(head);
 	else
 		tail = get_token_word_tail(head);

@@ -1,17 +1,24 @@
 #include "ms_tokenize.h"
 #include "ft_string.h"
 
-bool	is_token_str_symbol(char chr)
+//todo: str??
+bool	is_token_str_symbol(const char *str)
 {
-	return (ft_strchr(TOKEN_SYMBOL, chr));
+	const char head_chr = *str;
+
+	return (ft_strchr(TOKEN_SYMBOL, head_chr));
 }
 
-bool	is_token_str_quote(char chr)
+bool	is_token_str_quote(const char *str)
 {
-	return (ft_strchr(TOKEN_QUOTE, chr));
+	const char head_chr = *str;
+
+	return (ft_strchr(TOKEN_QUOTE, head_chr));
 }
 
-bool	is_token_str_paren(char chr)
+bool	is_token_str_paren(const char *str)
 {
-	return (ft_strchr(TOKEN_PAREN, chr));
+	const char head_chr = *str;
+
+	return (ft_strchr(TOKEN_PAREN, head_chr));
 }
