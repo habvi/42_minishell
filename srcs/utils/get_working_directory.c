@@ -6,6 +6,17 @@
 #include "ft_mem.h"
 #include "ft_sys.h"
 
+static char	*extend_path(char *path, const size_t newsize)
+{
+	char	*new_path;
+
+	new_path = (char *)x_malloc(sizeof(char) * newsize);
+	if (!new_path)
+		ft_abort();
+	ft_free(&path);
+	return (new_path);
+}
+
 // use getcwd to original error handling.
 static char	*get_current_path(int *tmp_err)
 {
@@ -25,9 +36,7 @@ static char	*get_current_path(int *tmp_err)
 		if (*tmp_err != ERANGE)
 			break ;
 		size *= 2;
-		path = (char *)ft_realloc(path, size);
-		if (!path)
-			ft_abort();
+		path = extend_path(path, size);
 	}
 	return (path);
 }

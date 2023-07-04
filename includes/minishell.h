@@ -4,6 +4,7 @@
 # include <stdbool.h>
 # include <stddef.h>
 # include <stdint.h>
+# include "ms_result.h"
 
 /* return value */
 # define CHDIR_ERROR	(-1)
@@ -32,14 +33,7 @@
 # define ERROR_MSG_RETRIEVE_CWD	"error retrieving current directory"
 
 typedef struct s_var	t_var;
-
-typedef enum e_result
-{
-	PROCESS_ERROR = -1,
-	SUCCESS = 0,
-	FAILURE = 1,
-	CONTINUE = 2,
-}	t_result;
+typedef struct s_deque	t_deque;
 
 typedef struct s_context
 {
@@ -53,6 +47,7 @@ typedef struct s_context
 /* debug */
 void		debug_func(const char *func_name, const int line_num);
 void		debug_2d_array(char **array);
+void		debug_token_dq(t_deque *deque, const char *str);
 
 /* destroy */
 void		destroy_context(t_context context);

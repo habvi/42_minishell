@@ -2,7 +2,7 @@
 NAME		:=	minishell
 
 CC			:=	cc
-CFLAGS		:=	-Wall -Wextra -Werror -MMD -MP
+CFLAGS		:=	-Wall -Wextra -Werror -MMD -MP -pedantic
 RL_FLAGS	:=	-lreadline
 MKDIR		:=	mkdir -p
 
@@ -52,7 +52,8 @@ SRCS		+=	$(VAR_DIR)/add.c \
 				$(VAR_DIR)/var_sort_elems.c
 
 DEBUG_DIR	:=	debug
-SRCS		+=	$(DEBUG_DIR)/put.c
+SRCS		+=	$(DEBUG_DIR)/debug_token_dq.c \
+				$(DEBUG_DIR)/put.c
 
 EXEC_DIR	:=	exec
 SRCS		+=	$(EXEC_DIR)/call_builtin_command.c \
@@ -70,7 +71,17 @@ INPUT_DIR	:=	input
 SRCS		+=	$(INPUT_DIR)/input.c
 
 TOKEN_DIR	:=	tokenize
-SRCS		+=	$(TOKEN_DIR)/tokenize.c
+SRCS		+=	$(TOKEN_DIR)/del_token.c \
+				$(TOKEN_DIR)/get_token_str.c \
+				$(TOKEN_DIR)/get_token_tail.c \
+				$(TOKEN_DIR)/is_closed_paren.c \
+				$(TOKEN_DIR)/is_closed_quote.c \
+				$(TOKEN_DIR)/is_concat_to_next.c \
+				$(TOKEN_DIR)/is_token_str.c \
+				$(TOKEN_DIR)/set_token_kind.c \
+				$(TOKEN_DIR)/set_token_quote_all.c \
+				$(TOKEN_DIR)/tokenize.c \
+				$(TOKEN_DIR)/tokenize_line.c
 
 UTILS_DIR	:=	utils
 SRCS		+=	$(UTILS_DIR)/count_array.c \

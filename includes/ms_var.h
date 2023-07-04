@@ -4,6 +4,7 @@
 # include <stdbool.h>
 # include <stddef.h>
 # include <stdint.h>
+# include "ms_result.h"
 
 /* declare */
 # define DECLARE		"declare"
@@ -16,9 +17,6 @@
 # define KEY_OLDPWD		"OLDPWD"
 # define KEY_HOME		"HOME"
 
-typedef enum e_env_op			t_env_op;
-typedef enum e_result			t_result;
-
 typedef struct s_context		t_context;
 typedef struct s_var			t_var;
 typedef struct s_hash_element	t_elem;
@@ -26,10 +24,9 @@ typedef struct s_hash_table		t_hash;
 
 typedef enum e_var_attr
 {
-	VAR_NONE = 0b00,
-	VAR_ENV = 0b01,
-	VAR_SHELL = 0b10,
-	VAR_ALL = 0b11,
+	VAR_NONE = 0,
+	VAR_ENV = 1 << 0,
+	VAR_SHELL = 1 << 1,
 }	t_var_attr;
 
 typedef struct s_variable
@@ -58,7 +55,7 @@ struct s_var
 };
 
 /* init */
-t_var		*set_default_environ(t_context *context);
+t_var		*set_default_environ(void);
 void		set_default_pwd(t_var *var);
 void		set_default_old_pwd(t_var *var);
 

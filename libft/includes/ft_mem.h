@@ -16,6 +16,5 @@ void	*ft_memset(void *b, int c, size_t len);
 
 // if malloc error, return NULL
 void	*ft_calloc(size_t count, size_t size);
-void	*ft_realloc(void *src, size_t newsize);
 
 #endif

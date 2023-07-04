@@ -4,6 +4,7 @@
 # include <stdbool.h>
 # include <stdint.h>
 # include <stddef.h>
+# include "ms_result.h"
 
 # define CMD_CD			"cd"
 # define CMD_DECLARE	"declare"
@@ -55,9 +56,6 @@
 # define ERROR_MSG_NOT_VALID_ID	"not a valid identifier"
 # define ERROR_MSG_NOT_SET		"not set"
 
-typedef enum e_result		t_result;
-typedef enum e_var_attr		t_var_attr;
-
 typedef struct s_context	t_context;
 typedef struct s_deque		t_deque;
 typedef struct s_deque_node	t_deque_node;
@@ -98,6 +96,7 @@ bool		skip_valid_options(const char *const *argv, \
 								char marker, \
 								char op_chr);
 bool		str_to_legal_number(const char *str, long *result);
+bool		is_whitespace(char c);
 
 /* ft_cd */
 // cd
