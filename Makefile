@@ -70,6 +70,9 @@ SRCS		+=	$(EXEC_DIR)/call_builtin_command.c \
 INPUT_DIR	:=	input
 SRCS		+=	$(INPUT_DIR)/input.c
 
+PARSE_DIR	:=	parse
+SRCS		+=	$(PARSE_DIR)/parse.c
+
 TOKEN_DIR	:=	tokenize
 SRCS		+=	$(TOKEN_DIR)/del_token.c \
 				$(TOKEN_DIR)/get_token_str.c \

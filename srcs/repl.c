@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include "minishell.h"
 #include "ms_exec.h"
+#include "ms_parse.h"
 #include "ms_tokenize.h"
 #include "ft_deque.h"
 #include "ft_mem.h"
@@ -36,6 +37,7 @@ t_result	read_eval_print_loop(t_context *context)
 	t_result	result;
 	char		*line;
 	t_deque		*tokens;
+	t_ast		*ast;
 
 	command = NULL;
 	result = SUCCESS;
@@ -50,7 +52,8 @@ t_result	read_eval_print_loop(t_context *context)
 			continue ;
 		command = tmp_func_convert_to_executable_command(tokens);
 		destroy_tokens(tokens, del_token);
-		// ast = parse(tokens);
+		ast = parse(tokens);
+		(void)ast;
 		result = execute_command(command, context);
 		destroy_tokens(command, free);
 		if (result == PROCESS_ERROR)
