@@ -38,6 +38,15 @@ static t_deque	*tmp_func_convert_to_executable_command(t_deque *tmp_cmds)
 	return (cmd);
 }
 
+static t_deque	*tmp_convert(t_deque *tokens, t_ast *ast)
+{
+	t_deque		*command;
+
+	command = tmp_func_convert_to_executable_command(tokens);
+	destroy_tmp(tokens, del_token, ast);
+	return (command);
+}
+
 t_result	read_eval_print_loop(t_context *context)
 {
 	t_deque		*command;
@@ -58,8 +67,7 @@ t_result	read_eval_print_loop(t_context *context)
 		ast = parse(tokens, context);
 		if (context->status != EXIT_SUCCESS)
 			continue ;
-		command = tmp_func_convert_to_executable_command(tokens);
-		destroy_tmp(tokens, del_token, ast);
+		command = tmp_convert(tokens, ast);
 		result = execute_command(command, context);
 		destroy_tmp(command, free, ast);
 		if (result == PROCESS_ERROR)
