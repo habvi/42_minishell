@@ -8,9 +8,9 @@
 
 void	destroy_tmp(t_deque *command, void (*del_token)(void *), t_ast *ast)
 {
-	destroy_tokens(command, del_token);
-	(void)ast;
-	// ft_free(&ast);
+	if (command)
+		destroy_tokens(command, del_token);
+	destroy_ast_tree(&ast);
 }
 
 // todo: after parser done, erase this func.
