@@ -47,6 +47,7 @@ typedef enum e_token_kind {
 	TOKEN_KIND_PAREN_RIGHT,
 }	t_token_kind;
 
+//todo: content of concat_next
 typedef struct s_token {
 	char			*str;
 	t_token_kind	kind;
