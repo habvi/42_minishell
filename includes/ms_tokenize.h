@@ -22,7 +22,6 @@
 # define SINGLE_QUOTE_CHR	'\''
 # define DOUBLE_QUOTE_CHR	'\"'
 
-# define SYNTAX_ERROR		2
 # define ERROR_MSG_SYNTAX	"syntax error near unexpected token"
 
 typedef struct s_deque		t_deque;

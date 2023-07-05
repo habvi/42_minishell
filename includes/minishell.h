@@ -18,6 +18,10 @@
 # define WAIT_ERROR		(-1)
 # define UNREACHABLE	(-1)
 
+/* status */
+// tokenize and parse
+# define SYNTAX_ERROR		2
+
 /* size */
 # define VAR_LIST_SIZE	256
 

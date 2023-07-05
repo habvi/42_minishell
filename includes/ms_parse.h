@@ -1,9 +1,13 @@
 #ifndef MS_PARSE_H
 # define MS_PARSE_H
 
-typedef struct s_deque	t_deque;
-typedef struct s_token	t_token;
-typedef struct s_ast	t_ast;
+# include <stdbool.h>
+
+typedef struct s_context	t_context;
+typedef struct s_deque		t_deque;
+typedef struct s_deque_node	t_deque_node;
+typedef struct s_token		t_token;
+typedef struct s_ast		t_ast;
 
 typedef enum e_node_kind
 {
@@ -31,6 +35,9 @@ struct s_ast
 	t_ast		*right;
 };
 
-t_ast	*parse(t_deque *tokens);
+t_ast	*parse(t_deque *tokens, t_context *context);
+
+/* syntax check */
+bool	is_parenthesis_concatenated_all(t_deque_node *node);
 
 #endif //MS_PARSE_H
