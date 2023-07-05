@@ -7,9 +7,9 @@ static bool	is_valid_paren_each_token(const t_token_kind kind, \
 										size_t *left, \
 										size_t *right)
 {
-	if (kind == KIND_PAREN_LEFT)
+	if (kind == TOKEN_KIND_PAREN_LEFT)
 		(*left)++;
-	else if (kind == KIND_PAREN_RIGHT)
+	else if (kind == TOKEN_KIND_PAREN_RIGHT)
 		(*right)++;
 	return (*left >= *right);
 }

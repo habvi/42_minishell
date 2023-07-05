@@ -14,25 +14,25 @@
 
 static char	*get_token_kind_str(t_token_kind kind)
 {
-	if (kind == KIND_WORD)
+	if (kind == TOKEN_KIND_WORD)
 		return ("w");
-	if (kind == KIND_OP_PIPE)
+	if (kind == TOKEN_KIND_OP_PIPE)
 		return ("|");
-	if (kind == KIND_OP_OR)
+	if (kind == TOKEN_KIND_OP_OR)
 		return ("||");
-	if (kind == KIND_OP_AND)
+	if (kind == TOKEN_KIND_OP_AND)
 		return ("&&");
-	if (kind == KIND_REDIRECT_IN)
+	if (kind == TOKEN_KIND_REDIRECT_IN)
 		return ("<");
-	if (kind == KIND_REDIRECT_HEREDOC)
+	if (kind == TOKEN_KIND_REDIRECT_HEREDOC)
 		return ("<<");
-	if (kind == KIND_REDIRECT_OUT)
+	if (kind == TOKEN_KIND_REDIRECT_OUT)
 		return (">");
-	if (kind == KIND_REDIRECT_APPEND)
+	if (kind == TOKEN_KIND_REDIRECT_APPEND)
 		return (">>");
-	if (kind == KIND_PAREN_LEFT)
+	if (kind == TOKEN_KIND_PAREN_LEFT)
 		return ("(");
-	if (kind == KIND_PAREN_RIGHT)
+	if (kind == TOKEN_KIND_PAREN_RIGHT)
 		return (")");
 	return ("Error");
 }
