@@ -10,7 +10,8 @@ void	destroy_tmp(t_deque *command, void (*del_token)(void *), t_ast *ast)
 {
 	if (command)
 		destroy_tokens(command, del_token);
-	destroy_ast_tree(&ast);
+	if (ast)
+		destroy_ast_tree(&ast);
 }
 
 // todo: after parser done, erase this func.
@@ -42,6 +43,8 @@ static t_deque	*tmp_convert(t_deque *tokens, t_ast *ast)
 {
 	t_deque		*command;
 
+	if (!tokens)
+		return (NULL);
 	command = tmp_func_convert_to_executable_command(tokens);
 	destroy_tmp(tokens, del_token, ast);
 	return (command);
@@ -67,6 +70,7 @@ t_result	read_eval_print_loop(t_context *context)
 		ast = parse(tokens, context);
 		if (context->status != EXIT_SUCCESS)
 			continue ;
+		tokens = NULL; // todo: for parse test. erase.
 		command = tmp_convert(tokens, ast);
 		result = execute_command(command, context);
 		destroy_tmp(command, free, ast);

@@ -30,12 +30,16 @@ t_node_kind	convert_kind_token_to_node(t_deque_node *token_node)
 		return (0);//todo: tmp
 	token = token_node->content;
 	token_kind = token->kind;
-	if (token_kind == TOKEN_KIND_OP_AND)
-		return (NODE_KIND_OP_AND);
-	if (token_kind == TOKEN_KIND_OP_OR)
-		return (NODE_KIND_OP_OR);
 	if (token_kind == TOKEN_KIND_OP_PIPE)
 		return (NODE_KIND_OP_PIPE);
+	if (token_kind == TOKEN_KIND_OP_OR)
+		return (NODE_KIND_OP_OR);
+	if (token_kind == TOKEN_KIND_OP_AND)
+		return (NODE_KIND_OP_AND);
+	if (token_kind == TOKEN_KIND_PAREN_LEFT)
+		return (NODE_KIND_SUBSHELL);
+	if (token_kind == TOKEN_KIND_WORD)
+		return (NODE_KIND_COMMAND);
 	return (NODE_KIND_NONE); //todo: tmp
 }
 
@@ -49,6 +53,8 @@ t_ast	*create_operator_list_node(t_deque_node **token_node)
 	t_ast		*right_node;
 	t_node_kind	kind;
 
+	// ft_dprintf(2, "--------- &&,|| ------------------\n");
+	// debug_token_dq_node(*token_node);
 	left_node = create_command_list_node(token_node);
 	while (*token_node && is_token_kind_and_or(*token_node))
 	{
@@ -69,6 +75,8 @@ t_ast	*create_command_list_node(t_deque_node **token_node)
 	t_ast		*right_node;
 	t_node_kind	kind;
 
+	// ft_dprintf(2, "--------- | ------------------\n");
+	// debug_token_dq_node(*token_node);
 	left_node = create_command_or_subshell_node(token_node);
 	while (*token_node && is_token_kind_pipe(*token_node))
 	{
@@ -104,18 +112,17 @@ static t_deque_node	*deque_dup_node(t_token *token)
 	return (new_node);
 }
 
-static void	transfer_command_from_tokens(t_deque *command, \
-											t_deque_node **token_node)
+static void	dup_command_from_tokens(t_deque *command, t_deque_node **token_node)
 {
-	t_token			*token;
 	t_deque_node	*dup_node;
+	t_node_kind		node_kind;
 
 	if (!token_node)
 		return ;
 	while (*token_node)
 	{
-		token = (t_token *)(*token_node)->content;
-		if (token->kind != TOKEN_KIND_WORD)
+		node_kind = convert_kind_token_to_node(*token_node);
+		if (node_kind != NODE_KIND_COMMAND && node_kind != NODE_KIND_NONE)
 			return ;
 		dup_node = deque_dup_node((t_token *)(*token_node)->content);
 		deque_add_back(command, dup_node);
@@ -130,25 +137,31 @@ static void	transfer_command_from_tokens(t_deque *command, \
 // 		| '(' expr ')'
 t_ast	*create_command_or_subshell_node(t_deque_node **token_node)
 {
-	t_token			*token;
-	t_token_kind	token_kind;
-	t_ast			*ast_node;
+	t_token		*token;
+	t_ast		*ast_node;
 
+	if (!*token_node)
+		return (NULL);
 	token = (t_token *)(*token_node)->content;
-	token_kind = token->kind;
 	// command
-	if (token_kind == TOKEN_KIND_WORD)
+	if (token->kind == TOKEN_KIND_WORD)
 	{
+		// ft_dprintf(2, "--------- command ------------------\n");
+		// debug_token_dq_node(*token_node);
 		ast_node = new_command_leaf(NODE_KIND_COMMAND);
-		transfer_command_from_tokens(ast_node->command, token_node);
+		dup_command_from_tokens(ast_node->command, token_node);
+		// debug_print_ast_tree(ast_node, __func__);
+		// heredoc
 		return (ast_node);
 	}
 	// subshell
-	if (token_kind == TOKEN_KIND_PAREN_LEFT)
+	if (token->kind == TOKEN_KIND_PAREN_LEFT)
 	{
+		// ft_dprintf(2, "--------- ( ------------------\n");
+		// debug_token_dq_node(*token_node);
 		*token_node = (*token_node)->next;
 		ast_node = create_operator_list_node(token_node);
-		if (token_kind == TOKEN_KIND_PAREN_RIGHT)
+		if (token->kind == TOKEN_KIND_PAREN_RIGHT)
 		{
 			*token_node = (*token_node)->next;
 			return (ast_node);
