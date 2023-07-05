@@ -52,7 +52,8 @@ SRCS		+=	$(VAR_DIR)/add.c \
 				$(VAR_DIR)/var_sort_elems.c
 
 DEBUG_DIR	:=	debug
-SRCS		+=	$(DEBUG_DIR)/debug_token_dq.c \
+SRCS		+=	$(DEBUG_DIR)/debug_print_ast.c \
+				$(DEBUG_DIR)/debug_token_dq.c \
 				$(DEBUG_DIR)/put.c
 
 EXEC_DIR	:=	exec

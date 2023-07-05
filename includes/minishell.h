@@ -36,8 +36,10 @@
 # define ERROR_MSG_GETCWD		"getcwd: cannot access parent directories"
 # define ERROR_MSG_RETRIEVE_CWD	"error retrieving current directory"
 
-typedef struct s_var	t_var;
-typedef struct s_deque	t_deque;
+typedef struct s_var		t_var;
+typedef struct s_deque		t_deque;
+typedef struct s_deque_node	t_deque_node;
+typedef struct s_ast		t_ast;
 
 typedef struct s_context
 {
@@ -52,6 +54,7 @@ typedef struct s_context
 void		debug_func(const char *func_name, const int line_num);
 void		debug_2d_array(char **array);
 void		debug_token_dq(t_deque *deque, const char *str);
+void		debug_print_ast_tree(t_ast *root, const char *str);
 
 /* destroy */
 void		destroy_context(t_context context);
