@@ -3,6 +3,7 @@
 #include "ms_tokenize.h"
 #include "ft_deque.h"
 #include "ft_dprintf.h"
+#include "ft_mem.h"
 #include "ft_string.h"
 
 // a   b    c  |   d   eeee|f||    >   e
@@ -39,6 +40,7 @@ t_deque	*tokenize(char *line, t_context *context)
 	t_deque	*tokens;
 
 	tokens = tokenize_line(line);
+	ft_free(&line);
 	set_token_kinds_all(tokens);
 	if (!is_valid_tokens_syntax(tokens->node))
 	{
