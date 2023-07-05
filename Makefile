@@ -71,7 +71,8 @@ INPUT_DIR	:=	input
 SRCS		+=	$(INPUT_DIR)/input.c
 
 PARSE_DIR	:=	parse
-SRCS		+=	$(PARSE_DIR)/is_parenthesis_concatted.c \
+SRCS		+=	$(PARSE_DIR)/abstruct_syntax_tree.c \
+				$(PARSE_DIR)/is_parenthesis_concatted.c \
 				$(PARSE_DIR)/is_valid_redirect_syntax.c \
 				$(PARSE_DIR)/new_ast_node.c \
 				$(PARSE_DIR)/parse.c
