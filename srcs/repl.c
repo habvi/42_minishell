@@ -6,6 +6,12 @@
 #include "ft_deque.h"
 #include "ft_mem.h"
 
+void	destroy_tmp(t_deque *command, void (*del_token)(void *), t_ast *ast)
+{
+	destroy_tokens(command, del_token);
+	ft_free(&ast);
+}
+
 // todo: after parser done, erase this func.
 // deque_node->content : only (char *)t_token->str
 static t_deque	*tmp_func_convert_to_executable_command(t_deque *tmp_cmds)
@@ -39,7 +45,6 @@ t_result	read_eval_print_loop(t_context *context)
 	t_deque		*tokens;
 	t_ast		*ast;
 
-	command = NULL;
 	result = SUCCESS;
 	while (true)
 	{
@@ -50,12 +55,11 @@ t_result	read_eval_print_loop(t_context *context)
 		ft_free(&line);
 		if (context->status != EXIT_SUCCESS)
 			continue ;
+		ast = parse(tokens, context);
 		command = tmp_func_convert_to_executable_command(tokens);
-		destroy_tokens(tokens, del_token);
-		ast = parse(tokens);
-		(void)ast;
+		destroy_tmp(tokens, del_token, ast);
 		result = execute_command(command, context);
-		destroy_tokens(command, free);
+		destroy_tmp(command, free, ast);
 		if (result == PROCESS_ERROR)
 			break ;
 	}
