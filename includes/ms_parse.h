@@ -39,5 +39,6 @@ t_ast	*parse(t_deque *tokens, t_context *context);
 
 /* syntax check */
 bool	is_parenthesis_concatenated_all(t_deque_node *node);
+bool	is_valid_redirect_syntax_all(t_deque_node *node);
 
 #endif //MS_PARSE_H

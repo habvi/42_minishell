@@ -72,6 +72,7 @@ SRCS		+=	$(INPUT_DIR)/input.c
 
 PARSE_DIR	:=	parse
 SRCS		+=	$(PARSE_DIR)/is_parenthesis_concatted.c \
+				$(PARSE_DIR)/is_valid_redirect_syntax.c \
 				$(PARSE_DIR)/parse.c
 
 TOKEN_DIR	:=	tokenize
