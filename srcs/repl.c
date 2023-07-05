@@ -50,7 +50,7 @@ t_result	read_eval_print_loop(t_context *context)
 			continue ;
 		command = tmp_func_convert_to_executable_command(tokens);
 		destroy_tokens(tokens, del_token);
-		// parser
+		// ast = parse(tokens);
 		result = execute_command(command, context);
 		destroy_tokens(command, free);
 		if (result == PROCESS_ERROR)

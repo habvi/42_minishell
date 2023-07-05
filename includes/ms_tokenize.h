@@ -46,13 +46,13 @@ typedef enum e_token_kind {
 	KIND_REDIRECT_APPEND,
 	KIND_PAREN_LEFT,
 	KIND_PAREN_RIGHT,
-}	t_kind;
+}	t_token_kind;
 
 typedef struct s_token {
-	char		*str;
-	t_kind		kind;
-	t_quote		quote;
-	bool		concat_next;
+	char			*str;
+	t_token_kind	kind;
+	t_quote			quote;
+	bool			concat_next;
 }	t_token;
 
 /* tokenize */

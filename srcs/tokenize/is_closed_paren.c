@@ -3,7 +3,7 @@
 #include "ft_deque.h"
 #include "ft_dprintf.h"
 
-static bool	is_valid_paren_each_token(const t_kind kind, \
+static bool	is_valid_paren_each_token(const t_token_kind kind, \
 										size_t *left, \
 										size_t *right)
 {

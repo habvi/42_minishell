@@ -6,13 +6,13 @@
 
 // typedef struct s_token {
 //	char		*str;
-//	t_kind		kind;
+//	t_token_kind		kind;
 //	t_quote		quote;
 //	bool		concat_next;
 //}	t_token;
 //
 
-static char	*get_token_kind_str(t_kind kind)
+static char	*get_token_kind_str(t_token_kind kind)
 {
 	if (kind == KIND_WORD)
 		return ("w");
