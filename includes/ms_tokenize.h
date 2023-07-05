@@ -64,9 +64,9 @@ bool		is_token_str_symbol(const char *str);
 bool		is_token_str_quote(const char *str);
 bool		is_token_str_paren(const char *str);
 bool		is_concat_to_next(char token_head, char next_chr);
-bool		is_token_kind_and_or(t_token_kind kind);
-bool		is_token_kind_pipe(t_token_kind kind);
-bool		is_token_kind_subshell(t_token_kind kind);
+bool		is_token_kind_and_or(t_deque_node *node);
+bool		is_token_kind_pipe(t_deque_node *node);
+bool		is_token_kind_subshell(t_deque_node *node);
 
 void		set_token_kinds_all(t_deque *tokens);
 void		set_token_quote_type_all(t_deque *tokens);

@@ -41,4 +41,9 @@ t_ast	*parse(t_deque *tokens, t_context *context);
 bool	is_parenthesis_concatenated_all(t_deque_node *node);
 bool	is_valid_redirect_syntax_all(t_deque_node *node);
 
+/* ast */
+
+t_ast	*new_command_leaf(t_node_kind kind);
+t_ast	*new_ast_node(t_node_kind kind, t_ast *left, t_ast *right);
+
 #endif //MS_PARSE_H
