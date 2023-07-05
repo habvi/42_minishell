@@ -8,7 +8,6 @@ arithmetic
   term	    	= primary, [(*|/) primary]*
   primary    	= num | '(' expr ')'
 
-
  minishell
 <subshell>          ::= '(' <operator_list> ')'
 
@@ -19,7 +18,6 @@ arithmetic
                       | <operator_list> '||' <operator_list>
                       | <pipeline_commands>
  */
-
 
 t_node_kind	convert_kind_token_to_node(t_deque_node *token_node)
 {
@@ -38,7 +36,6 @@ t_node_kind	convert_kind_token_to_node(t_deque_node *token_node)
 		return (NODE_KIND_OP_PIPE);
 	return (NODE_KIND_NONE); //todo: tmp
 }
-
 
 // <op_list>
 // expr	= <com_list> '&&' <com_list>
@@ -98,7 +95,3 @@ t_ast	*create_command_or_subshell_node(t_deque_node **token_node)
 	// subshell
 
 }
-
-
-
-

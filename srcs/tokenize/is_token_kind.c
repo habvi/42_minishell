@@ -3,8 +3,8 @@
 
 bool	is_token_kind_and_or(t_deque_node *node)
 {
-	t_token		*token;
-	t_token_kind kind;
+	t_token			*token;
+	t_token_kind	kind;
 
 	if (!node)
 		return (false);
@@ -15,8 +15,8 @@ bool	is_token_kind_and_or(t_deque_node *node)
 
 bool	is_token_kind_pipe(t_deque_node *node)
 {
-	t_token		*token;
-	t_token_kind kind;
+	t_token			*token;
+	t_token_kind	kind;
 
 	if (!node)
 		return (false);
@@ -27,8 +27,8 @@ bool	is_token_kind_pipe(t_deque_node *node)
 
 bool	is_token_kind_subshell(t_deque_node *node)
 {
-	t_token		*token;
-	t_token_kind kind;
+	t_token			*token;
+	t_token_kind	kind;
 
 	if (!node)
 		return (false);
