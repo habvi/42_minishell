@@ -55,15 +55,10 @@ static char	*get_concat_str(bool is_concat_next)
 	return ("");
 }
 
-void	debug_token_dq(t_deque *deque, const char *str)
+void	debug_token_dq_node(t_deque_node *node)
 {
-	t_deque_node	*node;
-	t_token			*token;
+	t_token	*token;
 
-	ft_dprintf(STDERR_FILENO, "deque_print(%d) %s :\n", deque->size, str);
-	if (deque_is_empty(deque))
-		return ;
-	node = deque->node;
 	while (node)
 	{
 		token = (t_token *)node->content;
@@ -76,4 +71,12 @@ void	debug_token_dq(t_deque *deque, const char *str)
 			ft_dprintf(STDERR_FILENO, "\n");
 	}
 	ft_dprintf(STDERR_FILENO, "\n");
+}
+
+void	debug_token_dq(t_deque *deque, const char *str)
+{
+	ft_dprintf(STDERR_FILENO, "deque_print(%d) %s :\n", deque->size, str);
+	if (deque_is_empty(deque))
+		return ;
+	debug_token_dq_node(deque->node);
 }

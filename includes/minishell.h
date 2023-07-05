@@ -54,6 +54,7 @@ typedef struct s_context
 void		debug_func(const char *func_name, const int line_num);
 void		debug_2d_array(char **array);
 void		debug_token_dq(t_deque *deque, const char *str);
+void		debug_token_dq_node(t_deque_node *node);
 void		debug_print_ast_tree(t_ast *root, const char *str);
 
 /* destroy */
