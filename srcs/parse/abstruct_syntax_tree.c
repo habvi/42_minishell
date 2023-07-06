@@ -21,20 +21,20 @@ arithmetic
                       | <pipeline_commands>
  */
 
-static void	print_token_str(t_deque_node *node)
-{
-	t_token *token;
-	char	*str;
-
-	if (!node)
-		str = NULL;
-	else
-	{
-		token = (t_token *)node->content;
-		str = token->str;
-	}
-	ft_dprintf(2, "token_str:%s\n", str);
-}
+//static void	print_token_str(t_deque_node *node)
+//{
+//	t_token *token;
+//	char	*str;
+//
+//	if (!node)
+//		str = NULL;
+//	else
+//	{
+//		token = (t_token *)node->content;
+//		str = token->str;
+//	}
+//	ft_dprintf(2, "token_str:%s\n", str);
+//}
 
 t_node_kind	convert_kind_token_to_node(t_deque_node *token_node)
 {
