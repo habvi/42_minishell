@@ -40,21 +40,25 @@ static char	*get_ast_node_kind_str(t_node_kind node_kind)
 	return ("");
 }
 
-static void	print_tree_node(t_ast *root, int depth, int is_rhs, char *prefix)
+static void	print_tree_node(t_ast *node, int depth, int is_rhs, char *prefix)
 {
+	if (!node)
+		return ;
 	prefix[depth * PRINT_WIDTH] = '\0';
 	ft_dprintf(STDERR_FILENO, "%s%s─", prefix, (is_rhs ? "└" : "├"));
-	if (root->kind == NODE_KIND_COMMAND && root->command)
-		print_tokens_dq_in_oneline(root->command);
+	if (node->kind == NODE_KIND_COMMAND && node->command)
+		print_tokens_dq_in_oneline(node->command);
+	else if (node->kind == NODE_KIND_SUBSHELL)
+		ft_dprintf(STDERR_FILENO, "( )\n");
 	else
-		ft_dprintf(STDERR_FILENO, "[%s]\n", get_ast_node_kind_str(root->kind));
+		ft_dprintf(STDERR_FILENO, "[%s]\n", get_ast_node_kind_str(node->kind));
 	prefix[depth * PRINT_WIDTH] = is_rhs ? ' ' : '|';
 	prefix[depth * PRINT_WIDTH + 1] = ' ';
 	prefix[depth * PRINT_WIDTH + 2] = ' ';
-	if (root->left != NULL)
-		print_tree_node(root->left, depth + 1, root->right == NULL, prefix);
-	if (root->right != NULL)
-		print_tree_node(root->right, depth + 1, 1, prefix);
+	if (node->left != NULL)
+		print_tree_node(node->left, depth + 1, node->right == NULL, prefix);
+	if (node->right != NULL)
+		print_tree_node(node->right, depth + 1, 1, prefix);
 }
 
 void	debug_print_ast_tree(t_ast *root, const char *str)
