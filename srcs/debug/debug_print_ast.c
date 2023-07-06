@@ -39,7 +39,7 @@ static char	*get_ast_node_kind_str(t_node_kind node_kind)
 static char	*get_tree_symbol(bool is_rhs)
 {
 	if (is_rhs)
-		return ("└ ");
+		return ("└");
 	return ("├");
 }
 
