@@ -27,30 +27,22 @@ t_ast	*parse(t_deque *tokens, t_context *context)
 {
 	t_ast			*ast;
 	t_deque_node	*head_node;
-	t_token			*token;
 
 	if (deque_is_empty(tokens))
-	{
-		destroy_tokens(tokens, del_token);
 		return (NULL);
-	}
 	head_node = tokens->node;
 	if (!is_valid_pre_parse_syntax(head_node))
 	{
 		context->status = SYNTAX_ERROR; // todo: print syntax error
-		destroy_tokens(tokens, del_token);
-		return (false);
+		return (NULL);
 	}
 	// todo: status syntax error
 	ast = create_operator_list_node(&head_node);
 	if (head_node)
 	{
-		token = (head_node)->content;
-		ft_dprintf(STDERR_FILENO, "%s %s\n", \
-		"parse_top : syntax error near unexpected token", token->str);
+		context->status = SYNTAX_ERROR; // todo: print syntax error
+		ast_print_error(head_node);
 	}
-	// debug_token_dq(tokens, "parse");
-	debug_print_ast_tree(ast, __func__);
-	destroy_tokens(tokens, del_token); // todo: parse done, destroy on
+	// debug_print_ast_tree(ast, __func__);
 	return (ast);
 }

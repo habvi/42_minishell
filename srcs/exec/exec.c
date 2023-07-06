@@ -73,8 +73,7 @@ t_result	execute_command(t_deque *dq_cmd, t_context *context)
 	t_command		cmd;
 	t_deque_node	*exec_cmd;
 
-	if (!dq_cmd) // todo: for parse test. erase.
-		return (SUCCESS); // todo: for parse test. erase.
+	// todo: null handle?
 	init_cmd(&cmd, dq_cmd);
 	exec_cmd = dq_cmd->node;
 	if (is_single_builtin(exec_cmd))

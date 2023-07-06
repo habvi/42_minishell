@@ -20,7 +20,9 @@
 
 /* status */
 // tokenize and parse
-# define SYNTAX_ERROR		2
+# define SYNTAX_ERROR				2
+# define ERROR_MSG_SYNTAX			"syntax error near unexpected token"
+# define ERROR_SYNTAX_DEFAULT_ARG	"newline"
 
 /* size */
 # define VAR_LIST_SIZE	256

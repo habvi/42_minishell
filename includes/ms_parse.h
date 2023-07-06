@@ -60,4 +60,6 @@ void		dup_redirection_from_tokens(t_deque *command, \
 
 void		destroy_ast_tree(t_ast **root);
 
+void		*ast_print_error(t_deque_node *token_node);
+
 #endif //MS_PARSE_H
