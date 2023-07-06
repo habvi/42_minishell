@@ -125,7 +125,13 @@ t_ast	*create_command_or_subshell_node(t_deque_node **token_node)
 		{
 //			ft_dprintf(2, "      -- ( --\n");
 			*token_node = (*token_node)->next;
-			// 
+			token = (t_token *)(*token_node)->content;
+			if (token->kind == TOKEN_KIND_PAREN_RIGHT)
+			{
+				ft_dprintf(STDERR_FILENO, "%s [%s]\n", \
+					"parse (): syntax error near unexpected token", token->str);
+				return (NULL);
+			}
 			ast_node = create_operator_list_node(token_node);
 		}
 		token = (t_token *)(*token_node)->content;
