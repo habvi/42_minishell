@@ -50,6 +50,8 @@ t_ast	*create_operator_list_node(t_deque_node **token_node)
 //	print_token_str(*token_node);
 //	debug_token_dq_node(*token_node);
 	left_node = create_command_list_node(token_node);
+	if (!left_node)
+		return (NULL);
 	while (*token_node && is_token_kind_and_or(*token_node))
 	{
 		kind = convert_kind_token_to_node(*token_node); // &&, ||
@@ -73,6 +75,8 @@ t_ast	*create_command_list_node(t_deque_node **token_node)
 //	print_token_str(*token_node);
 	// debug_token_dq_node(*token_node);
 	left_node = create_command_or_subshell_node(token_node);
+	if (!left_node)
+		return (NULL);
 	while (*token_node && is_token_kind_pipe(*token_node))
 	{
 		kind = convert_kind_token_to_node(*token_node); // |
@@ -98,13 +102,13 @@ t_ast	*create_command_or_subshell_node(t_deque_node **token_node)
 
 	if (!*token_node)
 	{
-		ft_dprintf(STDERR_FILENO, "%s\n", \
+		ft_dprintf(STDERR_FILENO, "%s\n", 
 				"parse NULL: syntax error near unexpected token");
 		return (NULL);
 	}
 	token = (t_token *)(*token_node)->content;
 	// command
-	if (token->kind == TOKEN_KIND_WORD)
+	if (token->kind == TOKEN_KIND_WORD || is_token_kind_redirection(token->kind))
 	{
 //		ft_dprintf(2, "    --------- command ------------------\n");
 //		print_token_str(*token_node);
@@ -127,11 +131,7 @@ t_ast	*create_command_or_subshell_node(t_deque_node **token_node)
 			*token_node = (*token_node)->next;
 			token = (t_token *)(*token_node)->content;
 			if (token->kind == TOKEN_KIND_PAREN_RIGHT)
-			{
-				ft_dprintf(STDERR_FILENO, "%s [%s]\n", \
-					"parse (): syntax error near unexpected token", token->str);
 				return (NULL);
-			}
 			ast_node = create_operator_list_node(token_node);
 		}
 		token = (t_token *)(*token_node)->content;
@@ -144,9 +144,5 @@ t_ast	*create_command_or_subshell_node(t_deque_node **token_node)
 			return (ast_node);
 		}
 	}
-	token = (t_token *)(*token_node)->content;
-	// error
-	ft_dprintf(STDERR_FILENO, "%s [%s]\n", \
-				"parse: syntax error near unexpected token", token->str);
 	return (NULL);
 }
