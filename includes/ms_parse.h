@@ -37,21 +37,25 @@ struct s_ast
 	t_ast		*right;
 };
 
-t_ast	*parse(t_deque *tokens, t_context *context);
+t_ast		*parse(t_deque *tokens, t_context *context);
 
 /* syntax check */
-bool	is_parenthesis_concatenated_all(t_deque_node *node);
-bool	is_valid_redirect_syntax_all(t_deque_node *node);
+bool		is_parenthesis_concatenated_all(t_deque_node *node);
+bool		is_valid_redirect_syntax_all(t_deque_node *node);
 
 /* ast */
-t_ast	*create_operator_list_node(t_deque_node **token_node);
-t_ast	*create_command_list_node(t_deque_node **token_node);
-t_ast	*create_command_or_subshell_node(t_deque_node **token_node);
+t_ast		*create_operator_list_node(t_deque_node **token_node);
+t_ast		*create_command_list_node(t_deque_node **token_node);
+t_ast		*create_command_or_subshell_node(t_deque_node **token_node);
 
-t_ast	*new_command_leaf(void);
-t_ast	*new_ast_node(t_node_kind kind, t_ast *left, t_ast *right);
-t_ast	*new_subshell_node(t_ast *left);
+t_ast		*new_command_leaf(void);
+t_ast		*new_ast_node(t_node_kind kind, t_ast *left, t_ast *right);
+t_ast		*new_subshell_node(t_ast *left);
 
-void	destroy_ast_tree(t_ast **root);
+t_node_kind	convert_kind_token_to_node(t_deque_node *token_node);
+void		dup_command_from_tokens(t_deque *command, \
+									t_deque_node **token_node);
+
+void		destroy_ast_tree(t_ast **root);
 
 #endif //MS_PARSE_H

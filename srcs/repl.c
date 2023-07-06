@@ -43,11 +43,11 @@ static t_deque	*tmp_convert(t_deque **tokens, t_ast *ast)
 {
 	t_deque		*command;
 
-	if (!*tokens)
+	command = NULL;
+	if (!command)
 		return (NULL);
 	command = tmp_func_convert_to_executable_command(*tokens);
 	destroy_tmp(*tokens, del_token, ast);
-	*tokens = NULL;
 	return (command);
 }
 

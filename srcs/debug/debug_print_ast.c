@@ -36,20 +36,6 @@ static char	*get_ast_node_kind_str(t_node_kind node_kind)
 	return ("");
 }
 
-static char	*get_tree_symbol(bool is_rhs)
-{
-	if (is_rhs)
-		return ("└");
-	return ("├");
-}
-
-static char	get_tree_space(bool is_rhs)
-{
-	if (is_rhs)
-		return (' ');
-	return ('|');
-}
-
 static void	print_tree_node(t_ast *node, int depth, int is_rhs, char *prefix)
 {
 	if (!node)

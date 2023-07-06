@@ -53,6 +53,7 @@ SRCS		+=	$(VAR_DIR)/add.c \
 
 DEBUG_DIR	:=	debug
 SRCS		+=	$(DEBUG_DIR)/debug_print_ast.c \
+				$(DEBUG_DIR)/debug_print_ast_sub.c \
 				$(DEBUG_DIR)/debug_token_dq.c \
 				$(DEBUG_DIR)/put.c
 
@@ -73,6 +74,8 @@ SRCS		+=	$(INPUT_DIR)/input.c
 
 PARSE_DIR	:=	parse
 SRCS		+=	$(PARSE_DIR)/abstruct_syntax_tree.c \
+				$(PARSE_DIR)/ast_convert_kind.c \
+				$(PARSE_DIR)/ast_dup_token.c \
 				$(PARSE_DIR)/destroy_ast.c \
 				$(PARSE_DIR)/is_parenthesis_concatted.c \
 				$(PARSE_DIR)/is_valid_redirect_syntax.c \
