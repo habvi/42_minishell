@@ -42,6 +42,12 @@ t_ast	*parse(t_deque *tokens, t_context *context)
 	}
 	// todo: status syntax error
 	ast = create_operator_list_node(&head_node);
+	if (head_node)
+	{
+		t_token	*token = (head_node)->content;
+		ft_dprintf(STDERR_FILENO, "%s %s\n", \
+		"parse_top : syntax error near unexpected token", token->str);
+	}
 	// debug_token_dq(tokens, "parse");
 	debug_print_ast_tree(ast, __func__);
 	destroy_tokens(tokens, del_token); // todo: parse done, destroy on
