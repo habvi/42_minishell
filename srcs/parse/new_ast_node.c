@@ -18,12 +18,12 @@ static t_ast	*init_ast_node(void)
 	return (new_node);
 }
 
-t_ast	*new_command_leaf(t_node_kind kind)
+t_ast	*new_command_leaf(void)
 {
 	t_ast	*new_node;
 
 	new_node = init_ast_node();
-	new_node->kind = kind;
+	new_node->kind = NODE_KIND_COMMAND;
 	new_node->command = deque_new();
 	if (!new_node->command)
 		ft_abort();

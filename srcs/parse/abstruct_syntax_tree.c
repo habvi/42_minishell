@@ -170,7 +170,7 @@ t_ast	*create_command_or_subshell_node(t_deque_node **token_node)
 //		ft_dprintf(2, "    --------- command ------------------\n");
 //		print_token_str(*token_node);
 		// debug_token_dq_node(*token_node);
-		ast_node = new_command_leaf(NODE_KIND_COMMAND);
+		ast_node = new_command_leaf();
 		dup_command_from_tokens(ast_node->command, token_node);
 		// debug_print_ast_tree(ast_node, __func__);
 		// heredoc

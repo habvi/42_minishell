@@ -48,7 +48,7 @@ t_ast	*create_operator_list_node(t_deque_node **token_node);
 t_ast	*create_command_list_node(t_deque_node **token_node);
 t_ast	*create_command_or_subshell_node(t_deque_node **token_node);
 
-t_ast	*new_command_leaf(t_node_kind kind);
+t_ast	*new_command_leaf(void);
 t_ast	*new_ast_node(t_node_kind kind, t_ast *left, t_ast *right);
 
 void	destroy_ast_tree(t_ast **root);
