@@ -30,6 +30,19 @@ t_ast	*new_command_leaf(void)
 	return (new_node);
 }
 
+t_ast	*new_subshell_node(t_ast *left)
+{
+	t_ast	*new_node;
+
+	new_node = init_ast_node();
+	new_node->kind = NODE_KIND_SUBSHELL;
+	new_node->command = deque_new();
+	if (!new_node->command)
+		ft_abort();
+	new_node->left = left;
+	return (new_node);
+}
+
 t_ast	*new_ast_node(t_node_kind kind, t_ast *left, t_ast *right)
 {
 	t_ast	*new_node;

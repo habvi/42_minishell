@@ -193,6 +193,7 @@ t_ast	*create_command_or_subshell_node(t_deque_node **token_node)
 		{
 //			ft_dprintf(2, "      -- ) --\n");
 			*token_node = (*token_node)->next;
+			ast_node = new_subshell_node(ast_node);
 			return (ast_node);
 		}
 	}
