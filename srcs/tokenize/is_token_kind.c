@@ -36,3 +36,15 @@ bool	is_token_kind_subshell(t_deque_node *node)
 	kind = token->kind;
 	return (kind == TOKEN_KIND_PAREN_LEFT || kind == TOKEN_KIND_PAREN_RIGHT);
 }
+
+bool	is_token_kind_word(t_deque_node *node)
+{
+	t_token			*token;
+	t_token_kind	kind;
+
+	if (!node)
+		return (false);
+	token = (t_token *)node->content;
+	kind = token->kind;
+	return (kind == TOKEN_KIND_WORD);
+}
