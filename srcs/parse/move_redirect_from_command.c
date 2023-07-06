@@ -5,6 +5,12 @@
 #include "ft_dprintf.h"
 #include "ft_sys.h"
 
+// todo: implement del
+void	del_redirect(void *content)
+{
+	(void)content;
+}
+
 static t_redirect	*init_redirect(void)
 {
 	t_redirect	*redirect;
