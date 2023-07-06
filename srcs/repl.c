@@ -1,9 +1,18 @@
 #include <stdlib.h>
 #include "minishell.h"
 #include "ms_exec.h"
+#include "ms_parse.h"
 #include "ms_tokenize.h"
 #include "ft_deque.h"
 #include "ft_mem.h"
+
+void	destroy_tmp(t_deque *command, void (*del_token)(void *), t_ast *ast)
+{
+	if (command)
+		destroy_tokens(command, del_token);
+	if (ast)
+		destroy_ast_tree(&ast);
+}
 
 // todo: after parser done, erase this func.
 // deque_node->content : only (char *)t_token->str
@@ -30,14 +39,24 @@ static t_deque	*tmp_func_convert_to_executable_command(t_deque *tmp_cmds)
 	return (cmd);
 }
 
+static t_deque	*tmp_convert(t_deque **tokens)
+{
+	t_deque		*command;
+
+	command = tmp_func_convert_to_executable_command(*tokens);
+	if (*tokens)
+		destroy_tokens(*tokens, del_token);
+	return (command);
+}
+
 t_result	read_eval_print_loop(t_context *context)
 {
 	t_deque		*command;
 	t_result	result;
 	char		*line;
 	t_deque		*tokens;
+	t_ast		*ast;
 
-	command = NULL;
 	result = SUCCESS;
 	while (true)
 	{
@@ -45,14 +64,14 @@ t_result	read_eval_print_loop(t_context *context)
 		if (!line)
 			break ;
 		tokens = tokenize(line, context);
-		ft_free(&line);
 		if (context->status != EXIT_SUCCESS)
 			continue ;
-		command = tmp_func_convert_to_executable_command(tokens);
-		destroy_tokens(tokens, del_token);
-		// parser
+		ast = parse(tokens, context);
+		if (context->status != EXIT_SUCCESS)
+			continue ;
+		command = tmp_convert(&tokens);
 		result = execute_command(command, context);
-		destroy_tokens(command, free);
+		destroy_tmp(command, free, ast);
 		if (result == PROCESS_ERROR)
 			break ;
 	}

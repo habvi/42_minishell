@@ -22,9 +22,6 @@
 # define SINGLE_QUOTE_CHR	'\''
 # define DOUBLE_QUOTE_CHR	'\"'
 
-# define SYNTAX_ERROR		2
-# define ERROR_MSG_SYNTAX	"syntax error near unexpected token"
-
 typedef struct s_deque		t_deque;
 typedef struct s_deque_node	t_deque_node;
 typedef struct s_context	t_context;
@@ -36,23 +33,24 @@ typedef enum e_quote {
 }	t_quote;
 
 typedef enum e_token_kind {
-	KIND_WORD,
-	KIND_OP_PIPE,
-	KIND_OP_OR,
-	KIND_OP_AND,
-	KIND_REDIRECT_IN,
-	KIND_REDIRECT_HEREDOC,
-	KIND_REDIRECT_OUT,
-	KIND_REDIRECT_APPEND,
-	KIND_PAREN_LEFT,
-	KIND_PAREN_RIGHT,
-}	t_kind;
+	TOKEN_KIND_WORD,
+	TOKEN_KIND_OP_PIPE,
+	TOKEN_KIND_OP_OR,
+	TOKEN_KIND_OP_AND,
+	TOKEN_KIND_REDIRECT_IN,
+	TOKEN_KIND_REDIRECT_HEREDOC,
+	TOKEN_KIND_REDIRECT_OUT,
+	TOKEN_KIND_REDIRECT_APPEND,
+	TOKEN_KIND_PAREN_LEFT,
+	TOKEN_KIND_PAREN_RIGHT,
+}	t_token_kind;
 
+//todo: content of concat_next
 typedef struct s_token {
-	char		*str;
-	t_kind		kind;
-	t_quote		quote;
-	bool		concat_next;
+	char			*str;
+	t_token_kind	kind;
+	t_quote			quote;
+	bool			concat_next;
 }	t_token;
 
 /* tokenize */
@@ -64,12 +62,25 @@ bool		is_token_str_symbol(const char *str);
 bool		is_token_str_quote(const char *str);
 bool		is_token_str_paren(const char *str);
 bool		is_concat_to_next(char token_head, char next_chr);
+bool		is_token_kind_word(t_token_kind token_kind);
+bool		is_token_kind_redirection(t_token_kind token_kind);
+bool		is_token_kind_and_or_from_node(t_deque_node *node);
+bool		is_token_kind_pipe_from_node(t_deque_node *node);
+bool		is_token_kind_word_form_node(t_deque_node *node);
+bool		is_token_kind_command_as_ast_node(t_deque_node *node);
+bool		is_token_kind_paren_left_as_ast_node(t_deque_node *node);
+bool		is_token_kind_paren_right_as_ast_node(t_deque_node *node);
+bool		is_token_kind_subshell_as_ast_node(t_deque_node *node);
+
 void		set_token_kinds_all(t_deque *tokens);
 void		set_token_quote_type_all(t_deque *tokens);
 
 /* validate */
 bool		is_closed_quote_all(t_deque_node *node);
 bool		is_valid_paren_pair_all(t_deque_node *node);
+
+/* init */
+t_token		*init_token_struct(void);
 
 /* destroy */
 void		del_token(void *content);

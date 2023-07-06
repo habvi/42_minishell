@@ -52,7 +52,9 @@ SRCS		+=	$(VAR_DIR)/add.c \
 				$(VAR_DIR)/var_sort_elems.c
 
 DEBUG_DIR	:=	debug
-SRCS		+=	$(DEBUG_DIR)/debug_token_dq.c \
+SRCS		+=	$(DEBUG_DIR)/debug_print_ast.c \
+				$(DEBUG_DIR)/debug_print_ast_sub.c \
+				$(DEBUG_DIR)/debug_token_dq.c \
 				$(DEBUG_DIR)/put.c
 
 EXEC_DIR	:=	exec
@@ -70,6 +72,17 @@ SRCS		+=	$(EXEC_DIR)/call_builtin_command.c \
 INPUT_DIR	:=	input
 SRCS		+=	$(INPUT_DIR)/input.c
 
+PARSE_DIR	:=	parse
+SRCS		+=	$(PARSE_DIR)/abstruct_syntax_tree.c \
+				$(PARSE_DIR)/ast_convert_kind.c \
+				$(PARSE_DIR)/ast_dup_token.c \
+				$(PARSE_DIR)/ast_print_error.c \
+				$(PARSE_DIR)/destroy_ast.c \
+				$(PARSE_DIR)/is_parenthesis_concatted.c \
+				$(PARSE_DIR)/is_valid_redirect_syntax.c \
+				$(PARSE_DIR)/new_ast_node.c \
+				$(PARSE_DIR)/parse.c
+
 TOKEN_DIR	:=	tokenize
 SRCS		+=	$(TOKEN_DIR)/del_token.c \
 				$(TOKEN_DIR)/get_token_str.c \
@@ -77,6 +90,9 @@ SRCS		+=	$(TOKEN_DIR)/del_token.c \
 				$(TOKEN_DIR)/is_closed_paren.c \
 				$(TOKEN_DIR)/is_closed_quote.c \
 				$(TOKEN_DIR)/is_concat_to_next.c \
+				$(TOKEN_DIR)/is_token_kind.c \
+				$(TOKEN_DIR)/is_token_kind_from_node.c \
+				$(TOKEN_DIR)/is_token_kind_from_node_subshell.c \
 				$(TOKEN_DIR)/is_token_str.c \
 				$(TOKEN_DIR)/set_token_kind.c \
 				$(TOKEN_DIR)/set_token_quote_all.c \

@@ -6,33 +6,33 @@
 
 // typedef struct s_token {
 //	char		*str;
-//	t_kind		kind;
+//	t_token_kind		kind;
 //	t_quote		quote;
 //	bool		concat_next;
 //}	t_token;
 //
 
-static char	*get_token_kind_str(t_kind kind)
+static char	*get_token_kind_str(t_token_kind kind)
 {
-	if (kind == KIND_WORD)
+	if (kind == TOKEN_KIND_WORD)
 		return ("w");
-	if (kind == KIND_OP_PIPE)
+	if (kind == TOKEN_KIND_OP_PIPE)
 		return ("|");
-	if (kind == KIND_OP_OR)
+	if (kind == TOKEN_KIND_OP_OR)
 		return ("||");
-	if (kind == KIND_OP_AND)
+	if (kind == TOKEN_KIND_OP_AND)
 		return ("&&");
-	if (kind == KIND_REDIRECT_IN)
+	if (kind == TOKEN_KIND_REDIRECT_IN)
 		return ("<");
-	if (kind == KIND_REDIRECT_HEREDOC)
+	if (kind == TOKEN_KIND_REDIRECT_HEREDOC)
 		return ("<<");
-	if (kind == KIND_REDIRECT_OUT)
+	if (kind == TOKEN_KIND_REDIRECT_OUT)
 		return (">");
-	if (kind == KIND_REDIRECT_APPEND)
+	if (kind == TOKEN_KIND_REDIRECT_APPEND)
 		return (">>");
-	if (kind == KIND_PAREN_LEFT)
+	if (kind == TOKEN_KIND_PAREN_LEFT)
 		return ("(");
-	if (kind == KIND_PAREN_RIGHT)
+	if (kind == TOKEN_KIND_PAREN_RIGHT)
 		return (")");
 	return ("Error");
 }
@@ -55,15 +55,10 @@ static char	*get_concat_str(bool is_concat_next)
 	return ("");
 }
 
-void	debug_token_dq(t_deque *deque, const char *str)
+void	debug_token_dq_node(t_deque_node *node)
 {
-	t_deque_node	*node;
-	t_token			*token;
+	t_token	*token;
 
-	ft_dprintf(STDERR_FILENO, "deque_print(%d) %s :\n", deque->size, str);
-	if (deque_is_empty(deque))
-		return ;
-	node = deque->node;
 	while (node)
 	{
 		token = (t_token *)node->content;
@@ -76,4 +71,12 @@ void	debug_token_dq(t_deque *deque, const char *str)
 			ft_dprintf(STDERR_FILENO, "\n");
 	}
 	ft_dprintf(STDERR_FILENO, "\n");
+}
+
+void	debug_token_dq(t_deque *deque, const char *str)
+{
+	ft_dprintf(STDERR_FILENO, "deque_print(%d) %s :\n", deque->size, str);
+	if (deque_is_empty(deque))
+		return ;
+	debug_token_dq_node(deque->node);
 }
