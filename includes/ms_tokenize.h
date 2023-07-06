@@ -68,6 +68,7 @@ bool		is_token_kind_and_or(t_deque_node *node);
 bool		is_token_kind_pipe(t_deque_node *node);
 bool		is_token_kind_subshell(t_deque_node *node);
 bool		is_token_kind_word(t_deque_node *node);
+bool		is_token_kind_redirection(t_token_kind token_kind);
 
 void		set_token_kinds_all(t_deque *tokens);
 void		set_token_quote_type_all(t_deque *tokens);

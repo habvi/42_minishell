@@ -27,6 +27,7 @@ t_ast	*parse(t_deque *tokens, t_context *context)
 {
 	t_ast			*ast;
 	t_deque_node	*head_node;
+	t_token			*token;
 
 	if (deque_is_empty(tokens))
 	{
@@ -44,7 +45,7 @@ t_ast	*parse(t_deque *tokens, t_context *context)
 	ast = create_operator_list_node(&head_node);
 	if (head_node)
 	{
-		t_token	*token = (head_node)->content;
+		token = (head_node)->content;
 		ft_dprintf(STDERR_FILENO, "%s %s\n", \
 		"parse_top : syntax error near unexpected token", token->str);
 	}

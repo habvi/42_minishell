@@ -125,6 +125,7 @@ t_ast	*create_command_or_subshell_node(t_deque_node **token_node)
 		{
 //			ft_dprintf(2, "      -- ( --\n");
 			*token_node = (*token_node)->next;
+			// 
 			ast_node = create_operator_list_node(token_node);
 		}
 		token = (t_token *)(*token_node)->content;
@@ -133,6 +134,7 @@ t_ast	*create_command_or_subshell_node(t_deque_node **token_node)
 //			ft_dprintf(2, "      -- ) --\n");
 			*token_node = (*token_node)->next;
 			ast_node = new_subshell_node(ast_node);
+			dup_redirection_from_tokens(ast_node->command, token_node);
 			return (ast_node);
 		}
 	}

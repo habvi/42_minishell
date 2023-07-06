@@ -2,19 +2,6 @@
 #include "ms_tokenize.h"
 #include "ft_deque.h"
 
-static bool	is_token_kind_redirection(const t_token_kind kind)
-{
-	if (kind == TOKEN_KIND_REDIRECT_IN)
-		return (true);
-	if (kind == TOKEN_KIND_REDIRECT_HEREDOC)
-		return (true);
-	if (kind == TOKEN_KIND_REDIRECT_OUT)
-		return (true);
-	if (kind == TOKEN_KIND_REDIRECT_APPEND)
-		return (true);
-	return (false);
-}
-
 static bool	is_valid_redirect_syntax_each(const t_token *cur_token, \
 											const t_token *next_token)
 {

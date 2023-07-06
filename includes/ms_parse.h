@@ -55,6 +55,8 @@ t_ast		*new_subshell_node(t_ast *left);
 t_node_kind	convert_kind_token_to_node(t_deque_node *token_node);
 void		dup_command_from_tokens(t_deque *command, \
 									t_deque_node **token_node);
+void		dup_redirection_from_tokens(t_deque *command, \
+										t_deque_node **token_node);
 
 void		destroy_ast_tree(t_ast **root);
 
