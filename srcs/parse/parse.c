@@ -28,6 +28,11 @@ t_ast	*parse(t_deque *tokens, t_context *context)
 	t_ast			*ast;
 	t_deque_node	*head_node;
 
+	if (deque_is_empty(tokens))
+	{
+		destroy_tokens(tokens, del_token);
+		return (NULL);
+	}
 	head_node = tokens->node;
 	if (!is_valid_pre_parse_syntax(head_node))
 	{
@@ -36,7 +41,6 @@ t_ast	*parse(t_deque *tokens, t_context *context)
 		return (false);
 	}
 	// todo: status syntax error
-	// todo: tokens NULL??
 	ast = create_operator_list_node(&head_node);
 	// debug_token_dq(tokens, "parse");
 	debug_print_ast_tree(ast, __func__);

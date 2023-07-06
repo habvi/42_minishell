@@ -162,7 +162,11 @@ t_ast	*create_command_or_subshell_node(t_deque_node **token_node)
 //	print_token_str(*token_node);
 
 	if (!*token_node)
+	{
+		ft_dprintf(STDERR_FILENO, "%s\n", 
+				"parse NULL: syntax error near unexpected token");
 		return (NULL);
+	}
 	token = (t_token *)(*token_node)->content;
 	// command
 	if (token->kind == TOKEN_KIND_WORD)
