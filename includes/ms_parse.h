@@ -58,8 +58,14 @@ void		dup_command_from_tokens(t_deque *command, \
 void		dup_redirection_from_tokens(t_deque *command, \
 										t_deque_node **token_node);
 
+/* heredoc */
+void		execute_heredoc_command_leaf(t_ast *ast_node);
+void		execute_heredoc_subshell_node(t_ast	*ast_node);
+
+/* destroy */
 void		destroy_ast_tree(t_ast **root);
 
+/* error */
 void		*ast_print_error(t_deque_node *token_node);
 
 #endif //MS_PARSE_H
