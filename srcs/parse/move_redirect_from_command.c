@@ -15,8 +15,8 @@ static t_redirect	*init_redirect(void)
 	redirect->list = deque_new();
 	if (!redirect->list)
 		ft_abort();
-	redirect->in_fd = STDIN_FILENO;
-	redirect->out_fd = STDOUT_FILENO;
+	redirect->in_fd = IN_FD_INIT;
+	redirect->out_fd = OUT_FD_INIT;
 	return (redirect);
 }
 

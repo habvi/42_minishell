@@ -2,6 +2,12 @@
 # define MS_PARSE_H
 
 # include <stdbool.h>
+# include "ms_result.h"
+
+# define HEREDOC_FILE_PREFIX ".pien_"
+
+# define IN_FD_INIT		STDIN_FILENO
+# define OUT_FD_INIT	STDOUT_FILENO
 
 typedef struct s_context	t_context;
 typedef struct s_deque		t_deque;
@@ -26,6 +32,7 @@ typedef struct s_redirect
 	t_deque	*list;
 	int		in_fd;
 	int		out_fd;
+	char	*heredoc_filename;
 }	t_redirect;
 
 struct s_ast
@@ -59,7 +66,7 @@ void		dup_redirection_from_tokens(t_deque *command, \
 										t_deque_node **token_node);
 
 /* heredoc */
-void		execute_heredoc(t_ast *ast_node);
+t_result	execute_heredoc(t_ast *ast_node);
 void		move_redirect_from_command(t_ast *ast_node);
 
 /* destroy */

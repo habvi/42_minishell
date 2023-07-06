@@ -70,7 +70,8 @@ static t_ast	*create_command_leaf(t_deque_node **token_node)
 
 	ast_node = new_command_leaf();
 	dup_command_from_tokens(ast_node->command, token_node);
-	execute_heredoc(ast_node);
+	if (execute_heredoc(ast_node) == PROCESS_ERROR)
+		return (NULL);
 	return (ast_node);
 }
 
