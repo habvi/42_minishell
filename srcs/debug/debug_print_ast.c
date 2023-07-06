@@ -45,7 +45,10 @@ static void	print_tree_node(t_ast *node, int depth, int is_rhs, char *prefix)
 	if (node->kind == NODE_KIND_COMMAND && node->command)
 		print_tokens_dq_in_oneline(node->command);
 	else if (node->kind == NODE_KIND_SUBSHELL)
-		ft_dprintf(STDERR_FILENO, "( )\n");
+	{
+		ft_dprintf(STDERR_FILENO, "( ) ");
+		print_tokens_dq_in_oneline(node->command);
+	}
 	else
 		ft_dprintf(STDERR_FILENO, "[%s]\n", get_ast_node_kind_str(node->kind));
 	prefix[depth * PRINT_WIDTH] = get_tree_space(is_rhs);
