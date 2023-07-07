@@ -43,6 +43,10 @@
 # define ERROR_MSG_GETCWD		"getcwd: cannot access parent directories"
 # define ERROR_MSG_RETRIEVE_CWD	"error retrieving current directory"
 
+/* parse, exec */
+# define IN_FD_INIT		STDIN_FILENO
+# define OUT_FD_INIT	STDOUT_FILENO
+
 typedef struct s_var		t_var;
 typedef struct s_deque		t_deque;
 typedef struct s_deque_node	t_deque_node;

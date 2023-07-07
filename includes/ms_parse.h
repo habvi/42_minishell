@@ -7,9 +7,6 @@
 # define HEREDOC_FILE_PREFIX	".pien_"
 # define OPEN_PERMISSION		"0664"
 
-# define IN_FD_INIT		STDIN_FILENO
-# define OUT_FD_INIT	STDOUT_FILENO
-
 typedef struct s_context	t_context;
 typedef struct s_deque		t_deque;
 typedef struct s_deque_node	t_deque_node;
