@@ -1,5 +1,3 @@
-#include <fcntl.h>
-#include <limits.h>
 #include <readline/readline.h>
 #include "minishell.h"
 #include "ms_parse.h"
@@ -100,7 +98,7 @@ t_result	execute_heredoc(t_ast *ast_node)
 	right_result = execute_heredoc(ast_node->right);
 	if (right_result == PROCESS_ERROR)
 		return (PROCESS_ERROR);
-	if (!(ast_node->kind == NODE_KIND_COMMAND || ast_node->kind == NODE_KIND_SUBSHELL))
+	if (!is_node_kind_exec_heredoc(ast_node->kind))
 		return (SUCCESS);
 	move_redirect_from_command(ast_node);
 	heredoc_result = execute_heredoc_all(ast_node->redirects);

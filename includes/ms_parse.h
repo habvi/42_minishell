@@ -71,6 +71,9 @@ void		move_redirect_from_command(t_ast *ast_node);
 char		*create_heredoc_filename(void);
 t_result	open_heredoc_filedes(int *in_fd, char **filename);
 
+/* is */
+bool		is_node_kind_exec_heredoc(t_node_kind node_kind);
+
 /* destroy */
 void		destroy_ast_tree(t_ast **root);
 
