@@ -23,6 +23,9 @@
 # define SYNTAX_ERROR				2
 # define ERROR_MSG_SYNTAX			"syntax error near unexpected token"
 # define ERROR_SYNTAX_DEFAULT_ARG	"newline"
+# define ERROR_TYPE_WARNING			"warning"
+# define ERROR_MSG_WARNING			"warning"
+# define ERROR_MSG_HEREDOC_EOF		"here-document delimited by end-of-file"
 
 /* size */
 # define VAR_LIST_SIZE	256
@@ -33,6 +36,7 @@
 /* string */
 # define SHELL_NAME		"minishell"
 # define PROMPT_NAME	"minishell "
+# define HEREDOC_PROMPT	"> "
 
 # define SHELL_INIT				"shell-init"
 # define ERROR_MSG_GETCWD		"getcwd: cannot access parent directories"
