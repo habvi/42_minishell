@@ -79,8 +79,10 @@ bool		is_token_kind_paren_left_as_ast_node(t_deque_node *token_node);
 bool		is_token_kind_paren_right_as_ast_node(t_deque_node *token_node);
 bool		is_token_kind_subshell_as_ast_node(t_deque_node *token_node);
 
+/* set, update */
 void		set_token_kinds_all(t_deque *tokens);
 void		set_token_quote_type_all(t_deque *tokens);
+void		remove_quote_in_token_str(t_deque *tokens);
 
 /* validate */
 bool		is_closed_quote_all(t_deque_node *node);

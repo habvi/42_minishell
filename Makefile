@@ -98,6 +98,7 @@ SRCS		+=	$(TOKEN_DIR)/del_token.c \
 				$(TOKEN_DIR)/is_token_kind_from_node.c \
 				$(TOKEN_DIR)/is_token_kind_from_node_subshell.c \
 				$(TOKEN_DIR)/is_token_str.c \
+				$(TOKEN_DIR)/remove_quote.c \
 				$(TOKEN_DIR)/set_token_kind.c \
 				$(TOKEN_DIR)/set_token_quote_all.c \
 				$(TOKEN_DIR)/tokenize.c \
