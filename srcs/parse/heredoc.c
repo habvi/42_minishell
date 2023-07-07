@@ -12,33 +12,6 @@
 #include "ft_sys.h"
 #include "ft_mem.h"
 
-static void	clean_up_prev_heredoc(int in_fd, char *filename)
-{
-	close(in_fd); 		// todo: error handling
-	unlink(filename);	// todo: error handling
-	ft_free(&filename);
-}
-
-// todo: error handling and msg
-static t_result	open_heredoc_filedes(int *in_fd, char **filename)
-{
-	int	tmp_err;
-
-	if (*in_fd != IN_FD_INIT)
-		clean_up_prev_heredoc(*in_fd, *filename);
-	*filename = create_heredoc_filename();
-	errno = 0;
-	*in_fd = open(*filename, O_CREAT | O_WRONLY | O_TRUNC, 0664);
-//	ft_dprintf(2, "new in_fd:%d, filename:%s\n", *in_fd, *filename);
-	tmp_err = errno;
-	if (tmp_err == ENOMEM)
-	{
-		perror("open");
-		return (PROCESS_ERROR);
-	}
-	return (SUCCESS);
-}
-
 static void	execute_heredoc_each(int fd, const char *delimiter)
 {
 	char	*line;

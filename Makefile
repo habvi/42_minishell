@@ -84,6 +84,7 @@ SRCS		+=	$(PARSE_DIR)/abstruct_syntax_tree.c \
 				$(PARSE_DIR)/is_valid_redirect_syntax.c \
 				$(PARSE_DIR)/move_redirect_from_command.c \
 				$(PARSE_DIR)/new_ast_node.c \
+				$(PARSE_DIR)/open_heredoc_fd.c \
 				$(PARSE_DIR)/parse.c
 
 TOKEN_DIR	:=	tokenize
