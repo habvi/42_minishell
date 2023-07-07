@@ -7,9 +7,7 @@
 #include "ft_deque.h"
 #include "ft_dprintf.h"
 #include "ft_hash.h"
-#include "ft_lib.h"
 #include "ft_string.h"
-#include "ft_sys.h"
 #include "ft_mem.h"
 
 // todo: wanted in warning msg
@@ -24,7 +22,7 @@ static void	read_input_save_to_fd(int fd, const char *delimiter)
 		if (!line)
 		{
 			ft_dprintf(STDERR_FILENO, \
-			"%s: %s: %s (wanted `%s')", \
+			"%s: %s: %s (wanted `%s')\n", \
 			SHELL_NAME, ERROR_TYPE_WARNING, ERROR_MSG_HEREDOC_EOF, delimiter);
 			break ;
 		}
