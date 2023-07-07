@@ -89,7 +89,19 @@ static t_result	execute_heredoc_all(t_redirect *redirect)
 t_result	execute_heredoc(t_ast *ast_node)
 {
 	t_result	heredoc_result;
+	t_result	left_result;
+	t_result	right_result;
 
+	if (!ast_node)
+		return (SUCCESS);
+	left_result = execute_heredoc(ast_node->left);
+	if (left_result == PROCESS_ERROR)
+		return (PROCESS_ERROR);
+	right_result = execute_heredoc(ast_node->right);
+	if (right_result == PROCESS_ERROR)
+		return (PROCESS_ERROR);
+	if (!(ast_node->kind == NODE_KIND_COMMAND || ast_node->kind == NODE_KIND_SUBSHELL))
+		return (SUCCESS);
 	move_redirect_from_command(ast_node);
 	heredoc_result = execute_heredoc_all(ast_node->redirects);
 	if (heredoc_result == PROCESS_ERROR)

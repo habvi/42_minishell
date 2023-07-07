@@ -27,6 +27,7 @@ t_ast	*parse(t_deque *tokens, t_context *context)
 {
 	t_ast			*ast;
 	t_deque_node	*head_node;
+	t_result		heredoc_result;
 
 	if (deque_is_empty(tokens))
 		return (NULL);
@@ -43,6 +44,9 @@ t_ast	*parse(t_deque *tokens, t_context *context)
 		context->status = SYNTAX_ERROR; // todo: print syntax error
 		ast_print_error(head_node);
 	}
+	heredoc_result = execute_heredoc(ast);
+	if (heredoc_result == PROCESS_ERROR)
+		return (NULL);
 	// debug_print_ast_tree(ast, __func__);
 	return (ast);
 }

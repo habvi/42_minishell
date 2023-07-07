@@ -70,8 +70,8 @@ static t_ast	*create_command_leaf(t_deque_node **token_node)
 
 	ast_node = new_command_leaf();
 	dup_command_from_tokens(ast_node->command, token_node);
-	if (execute_heredoc(ast_node) == PROCESS_ERROR)
-		return (NULL);
+//	if (execute_heredoc(ast_node) == PROCESS_ERROR)
+//		return (NULL);
 	return (ast_node);
 }
 
@@ -91,7 +91,7 @@ static t_ast	*create_subshell_node(t_deque_node **token_node)
 		*token_node = (*token_node)->next;
 		ast_node = new_subshell_node(ast_node);
 		dup_redirection_from_tokens(ast_node->command, token_node);
-		execute_heredoc(ast_node);
+//		execute_heredoc(ast_node);
 		return (ast_node);
 	}
 	return (NULL);
