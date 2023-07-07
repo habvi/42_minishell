@@ -1,3 +1,4 @@
+#include <unistd.h>
 #include "ms_parse.h"
 #include "ms_tokenize.h"
 #include "ft_deque.h"
@@ -8,7 +9,11 @@ static void	destroy_redirects(t_redirect **redirects)
 	if (!redirects || !*redirects)
 		return ;
 	deque_clear_all(&(*redirects)->list, del_token);
-	ft_free(&(*redirects)->heredoc_filename);
+	if ((*redirects)->heredoc_filename)
+	{
+		unlink((*redirects)->heredoc_filename);
+		ft_free(&(*redirects)->heredoc_filename);
+	}
 	ft_free(redirects);
 }
 
