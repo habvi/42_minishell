@@ -1,10 +1,11 @@
 #include "minishell.h"
 #include "ms_exec.h"
+#include "ms_tokenize.h"
 #include "ms_parse.h"
 #include "ft_deque.h"
 #include "ft_mem.h"
 #include "ft_sys.h"
-
+/*
 static void	exec_builtin_in_parent_proc(t_command cmd, \
 										t_deque_node *exec_cmd, \
 										t_context *context)
@@ -68,14 +69,64 @@ t_result	exec_command_iter(t_deque_node *exec_cmd, \
 	context->status = last_status;
 	return (SUCCESS);
 }
+ */
 
 ///////////////////////////////////////////////////////////////////////////////
+
+static char	*get_head_token_str(t_deque *command)
+{
+	const t_token	*token = (t_token *)command->node->content;
+
+	return (token->str);
+}
+
+
+static char	**convert_command_to_argv(t_deque *command)
+{
+	char			**argv;
+	const size_t	size = command->size;
+	size_t			i;
+	t_token			*token;
+	t_deque_node	*token_node;
+
+	argv = (char **)x_malloc(sizeof(char *) * (size + 1));
+	if (!argv)
+		ft_abort();
+	i = 0;
+	token_node = command->node;
+	while (token_node)
+	{
+		token = (t_token *)token_node->content;
+		argv[i] = x_ft_strdup(token->str);
+		i++;
+		token_node = token_node->next;
+	}
+	argv[i] = NULL;
+	return (argv);
+}
+
+static void	execute_single_builtin(t_ast *self_node, t_context *context)
+{
+	char	**argv;
+
+	argv = convert_command_to_argv(self_node->command);
+	context->status = call_builtin_command((const char *const *)argv, context);
+	free_2d_array(&argv);
+}
 
 // &&, ||, subshell, command, (ex |)
 static bool	is_single_builtin_command(t_ast *self_node, t_ast *parent_node)
 {
-	return (self_node->kind == NODE_KIND_COMMAND \
-			&& parent_node->kind != NODE_KIND_OP_PIPE);
+	char	*cmd;
+
+	if (self_node->kind != NODE_KIND_COMMAND)
+		return (false);
+	cmd = get_head_token_str(self_node->command);
+	if (!is_command_builtin(cmd))
+		return (false);
+	if (parent_node && parent_node->kind == NODE_KIND_OP_PIPE)
+		return (false);
+	return (true);
 }
 
 static t_result	execute_command_recursive(t_ast *self_node, \
@@ -95,10 +146,7 @@ static t_result	execute_command_recursive(t_ast *self_node, \
 			return (PROCESS_ERROR);
 	}
 	if (is_single_builtin_command(self_node, parent_node))
-	{
-		if (execute_single_builtin(self_node, context) == PROCESS_ERROR)
-				return (PROCESS_ERROR);
-	}
+		execute_single_builtin(self_node, context); // todo: process error?
 	// else if (exec_command(ast) == PROCESS_ERROR)
 	// 	return (PROCESS_ERROR);
 	return (SUCCESS);
