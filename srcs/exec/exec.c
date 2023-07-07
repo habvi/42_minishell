@@ -80,7 +80,6 @@ static char	*get_head_token_str(t_deque *command)
 	return (token->str);
 }
 
-
 static char	**convert_command_to_argv(t_deque *command)
 {
 	char			**argv;
@@ -129,17 +128,64 @@ static bool	is_single_builtin_command(t_ast *self_node, t_ast *parent_node)
 	return (true);
 }
 
+// !single builtin commands, &&, ||, |, ()
+//t_result	exec_command(t_ast *self_node, t_ast *parent_node, t_context *context)
+//{
+//	if (self_node->kind == NODE_KIND_OP_AND)
+//	{
+//
+//	}
+//	else if (self_node->kind == NODE_KIND_OP_OR)
+//	{
+//
+//	}
+//	else if (self_node->kind == NODE_KIND_SUBSHELL)
+//	{
+//
+//	}
+//	else if (self_node->kind == NODE_KIND_OP_PIPE)
+//	{
+//
+//	}
+//	else // command
+//	{
+//
+//	}
+//
+//}
+
+static bool	is_executable_right_node(t_ast *self_node, uint8_t status)
+{
+	if (!is_node_kind_and_or(self_node->kind))
+		return (true);
+	if (self_node->kind == NODE_KIND_OP_AND && status == 0)
+		return (true);
+	if (self_node->kind == NODE_KIND_OP_OR && status != 0)
+		return (true);
+	return (false);
+}
+
 static t_result	execute_command_recursive(t_ast *self_node, \
 											t_ast *parent_node, \
 											t_context *context)
 {
 	if (!self_node)
 		return (SUCCESS);
+
+	// () -> fork -> execute_command(exec)
+
+
 	if (self_node->left)
 	{
 		if (execute_command_recursive(self_node->left, self_node, context) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 	}
+
+	// and, or
+	//   left ? right or return
+	if (!is_executable_right_node(self_node, context->status))
+		return (CONTINUE);
+
 	if (self_node->right)
 	{
 		if (execute_command_recursive(self_node->right, self_node, context) == PROCESS_ERROR)
@@ -147,8 +193,8 @@ static t_result	execute_command_recursive(t_ast *self_node, \
 	}
 	if (is_single_builtin_command(self_node, parent_node))
 		execute_single_builtin(self_node, context); // todo: process error?
-	// else if (exec_command(ast) == PROCESS_ERROR)
-	// 	return (PROCESS_ERROR);
+//	else if (exec_command(self_node, parent_node, context) == PROCESS_ERROR)
+//		return (PROCESS_ERROR);
 	return (SUCCESS);
 }
 
