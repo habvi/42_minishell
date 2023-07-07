@@ -13,9 +13,7 @@ static char	*create_joined_value(t_deque_node *node, char *new_value)
 
 	elem = (t_elem *)node->content;
 	existing_info = (t_var_info *)elem->value;
-	joined = ft_strjoin(existing_info->value, new_value);
-	if (!joined)
-		ft_abort();
+	joined = x_ft_strjoin(existing_info->value, new_value);
 	return (joined);
 }
 

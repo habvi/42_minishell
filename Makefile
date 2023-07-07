@@ -73,19 +73,20 @@ INPUT_DIR	:=	input
 SRCS		+=	$(INPUT_DIR)/input.c
 
 PARSE_DIR	:=	parse
-SRCS		+=	$(PARSE_DIR)/abstruct_syntax_tree.c \
+HEREDOC_DIR	:=	heredoc
+SRCS		+=	$(PARSE_DIR)/$(HEREDOC_DIR)/create_heredoc_filename.c \
+				$(PARSE_DIR)/$(HEREDOC_DIR)/heredoc.c \
+				$(PARSE_DIR)/$(HEREDOC_DIR)/open_heredoc_fd.c \
+				$(PARSE_DIR)/abstruct_syntax_tree.c \
 				$(PARSE_DIR)/ast_convert_kind.c \
 				$(PARSE_DIR)/ast_dup_token.c \
 				$(PARSE_DIR)/ast_print_error.c \
-				$(PARSE_DIR)/create_heredoc_filename.c \
 				$(PARSE_DIR)/destroy_ast.c \
-				$(PARSE_DIR)/heredoc.c \
 				$(PARSE_DIR)/is_node_kind.c \
 				$(PARSE_DIR)/is_parenthesis_concatted.c \
 				$(PARSE_DIR)/is_valid_redirect_syntax.c \
 				$(PARSE_DIR)/move_redirect_from_command.c \
 				$(PARSE_DIR)/new_ast_node.c \
-				$(PARSE_DIR)/open_heredoc_fd.c \
 				$(PARSE_DIR)/parse.c
 
 TOKEN_DIR	:=	tokenize

@@ -35,7 +35,6 @@ static char	*create_hidden_filename_based_on_hash(void)
 
 	seed_str = x_ft_itoa(seed);
 	hash = hs_gen_fnv((const unsigned char *)seed_str, (size_t)INT_MAX);
-//	hash = hs_gen_fnv((const unsigned char *)seed_str, (size_t)1);
 	hash_str = x_ft_itoa((int)hash);
 	hidden_filename = create_hidden_filename(hash_str, seed_str);
 	ft_free(&seed_str);
@@ -65,12 +64,8 @@ char	*create_heredoc_filename(void)
 	while (true)
 	{
 		filename = create_hidden_filename_based_on_hash();
-//		ft_dprintf(2, "try access filename:%s\n", filename);
 		if (is_file_creatable(filename))
-		{
-//			ft_dprintf(2, " -> filename:%s\n", filename);
 			break ;
-		}
 		ft_free(&filename);
 	}
 	return (filename);

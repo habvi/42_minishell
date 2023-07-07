@@ -4,7 +4,8 @@
 # include <stdbool.h>
 # include "ms_result.h"
 
-# define HEREDOC_FILE_PREFIX ".pien_"
+# define HEREDOC_FILE_PREFIX	".pien_"
+# define OPEN_PERMISSION		"0664"
 
 # define IN_FD_INIT		STDIN_FILENO
 # define OUT_FD_INIT	STDOUT_FILENO
