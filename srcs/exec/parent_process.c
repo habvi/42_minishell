@@ -3,7 +3,7 @@
 #include "minishell.h"
 #include "ms_exec.h"
 #include "ft_sys.h"
-
+/*
 static t_result	get_last_command_status(pid_t pid, \
 									int *wait_status, \
 									uint8_t *last_status)
@@ -57,3 +57,4 @@ t_result	parent_process(t_command *cmd, \
 	}
 	return (SUCCESS);
 }
+*/

@@ -24,24 +24,24 @@ t_deque_node	*get_next_command(t_deque_node *cmd, size_t *cmd_size)
 	return (cmd);
 }
 
-char	**convert_command_to_array(t_deque_node *cmd, const size_t size)
-{
-	char	**command;
-	char	*tmp;
-	size_t	i;
-
-	command = (char **)x_malloc(sizeof(char *) * (size + 1));
-	if (!command)
-		ft_abort();
-	i = 0;
-	while (i < size)
-	{
-		tmp = cmd->content;
-		cmd->content = NULL;
-		command[i] = tmp;
-		cmd = cmd->next;
-		i++;
-	}
-	command[i] = NULL;
-	return (command);
-}
+//char	**convert_command_to_array(t_deque_node *cmd, const size_t size)
+//{
+//	char	**command;
+//	char	*tmp;
+//	size_t	i;
+//
+//	command = (char **)x_malloc(sizeof(char *) * (size + 1));
+//	if (!command)
+//		ft_abort();
+//	i = 0;
+//	while (i < size)
+//	{
+//		tmp = cmd->content;
+//		cmd->content = NULL;
+//		command[i] = tmp;
+//		cmd = cmd->next;
+//		i++;
+//	}
+//	command[i] = NULL;
+//	return (command);
+//}

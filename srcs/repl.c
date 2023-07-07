@@ -8,7 +8,6 @@
 
 t_result	read_eval_print_loop(t_context *context)
 {
-	t_deque		*command;
 	t_result	result;
 	char		*line;
 	t_deque		*tokens;

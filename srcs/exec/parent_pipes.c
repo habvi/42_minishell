@@ -1,7 +1,7 @@
 #include "minishell.h"
 #include "ms_exec.h"
 #include "ft_sys.h"
-
+/*
 static t_result	handle_parent_pipes_except_first(t_fd *fd)
 {
 	if (x_close(fd->prev_fd) == CLOSE_ERROR)
@@ -31,3 +31,4 @@ t_result	handle_parent_pipes(t_command *cmd, t_fd *fd)
 	}
 	return (SUCCESS);
 }
+*/

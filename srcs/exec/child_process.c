@@ -3,7 +3,7 @@
 #include "ms_exec.h"
 #include "ft_deque.h"
 #include "ft_dprintf.h"
-
+/*
 static uint8_t	execute_builtin_command(t_command *cmd, t_context *context)
 {
 	const char *const	*argv = (const char *const *)cmd->exec_command;
@@ -47,3 +47,4 @@ void	child_process(t_command *cmd, \
 	else
 		exit(execute_external_command(cmd, environ));
 }
+*/

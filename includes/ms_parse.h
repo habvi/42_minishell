@@ -34,7 +34,7 @@ typedef struct s_redirect
 struct s_ast
 {
 	t_node_kind	kind;
-	t_deque		*command;
+	t_deque		*command; // [token1]-[token2]-...
 	t_redirect	*redirects;
 	t_ast		*left;
 	t_ast		*right;

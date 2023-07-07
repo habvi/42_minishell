@@ -1,5 +1,6 @@
 #include <fcntl.h>
 #include <readline/readline.h>
+#include "minishell.h"
 #include "ms_parse.h"
 #include "ft_dprintf.h"
 #include "ft_sys.h"
