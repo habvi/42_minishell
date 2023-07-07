@@ -45,10 +45,11 @@ t_deque	*tokenize(char *line, t_context *context)
 	if (!is_valid_tokens_syntax(tokens->node))
 	{
 		context->status = SYNTAX_ERROR; // todo: print syntax error
-		destroy_tokens(tokens, del_token);
+		destroy_tokens(&tokens, del_token);
 		return (NULL);
 	}
 	set_token_quote_type_all(tokens);
+	remove_quote_in_token_str(tokens);
 	// debug_token_dq(tokens, "tokenize");
 	context->status = EXIT_SUCCESS;
 	return (tokens);

@@ -73,13 +73,19 @@ INPUT_DIR	:=	input
 SRCS		+=	$(INPUT_DIR)/input.c
 
 PARSE_DIR	:=	parse
-SRCS		+=	$(PARSE_DIR)/abstruct_syntax_tree.c \
+HEREDOC_DIR	:=	heredoc
+SRCS		+=	$(PARSE_DIR)/$(HEREDOC_DIR)/create_heredoc_filename.c \
+				$(PARSE_DIR)/$(HEREDOC_DIR)/heredoc.c \
+				$(PARSE_DIR)/$(HEREDOC_DIR)/open_heredoc_fd.c \
+				$(PARSE_DIR)/abstruct_syntax_tree.c \
 				$(PARSE_DIR)/ast_convert_kind.c \
 				$(PARSE_DIR)/ast_dup_token.c \
 				$(PARSE_DIR)/ast_print_error.c \
 				$(PARSE_DIR)/destroy_ast.c \
+				$(PARSE_DIR)/is_node_kind.c \
 				$(PARSE_DIR)/is_parenthesis_concatted.c \
 				$(PARSE_DIR)/is_valid_redirect_syntax.c \
+				$(PARSE_DIR)/move_redirect_from_command.c \
 				$(PARSE_DIR)/new_ast_node.c \
 				$(PARSE_DIR)/parse.c
 
@@ -94,6 +100,7 @@ SRCS		+=	$(TOKEN_DIR)/del_token.c \
 				$(TOKEN_DIR)/is_token_kind_from_node.c \
 				$(TOKEN_DIR)/is_token_kind_from_node_subshell.c \
 				$(TOKEN_DIR)/is_token_str.c \
+				$(TOKEN_DIR)/remove_quote.c \
 				$(TOKEN_DIR)/set_token_kind.c \
 				$(TOKEN_DIR)/set_token_quote_all.c \
 				$(TOKEN_DIR)/tokenize.c \
@@ -105,7 +112,9 @@ SRCS		+=	$(UTILS_DIR)/count_array.c \
 				$(UTILS_DIR)/get_working_directory.c \
 				$(UTILS_DIR)/is_valid_key.c \
 				$(UTILS_DIR)/is_valid_path.c \
-				$(UTILS_DIR)/x_ft_strdup.c
+				$(UTILS_DIR)/x_ft_itoa.c \
+				$(UTILS_DIR)/x_ft_strdup.c \
+				$(UTILS_DIR)/x_ft_strjoin.c
 
 OBJS_DIR	:=	objs
 OBJS		:=	$(SRCS:%.c=$(OBJS_DIR)/%.o)

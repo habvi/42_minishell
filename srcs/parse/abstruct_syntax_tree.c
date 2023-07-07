@@ -1,8 +1,6 @@
-#include "minishell.h"
 #include "ms_parse.h"
 #include "ms_tokenize.h"
 #include "ft_deque.h"
-#include "ft_dprintf.h"
 
 /*
 arithmetic
@@ -72,7 +70,6 @@ static t_ast	*create_command_leaf(t_deque_node **token_node)
 
 	ast_node = new_command_leaf();
 	dup_command_from_tokens(ast_node->command, token_node);
-	// heredoc
 	return (ast_node);
 }
 

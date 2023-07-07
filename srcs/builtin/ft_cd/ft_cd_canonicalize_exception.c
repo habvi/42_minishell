@@ -65,9 +65,7 @@ void	handle_double_slash_path(const char *path, char **absolute_path)
 
 	if (is_head_double_slash(path))
 	{
-		new_path = ft_strjoin(PATH_DELIMITER_STR, *absolute_path);
-		if (!new_path)
-			ft_abort();
+		new_path = x_ft_strjoin(PATH_DELIMITER_STR, *absolute_path);
 		ft_free(absolute_path);
 		*absolute_path = new_path;
 	}

@@ -6,7 +6,7 @@
 #include "ft_deque.h"
 #include "ft_mem.h"
 
-void	destroy_tmp(t_deque *command, void (*del_token)(void *), t_ast *ast)
+void	destroy_tmp(t_deque **command, void (*del_token)(void *), t_ast *ast)
 {
 	if (command)
 		destroy_tokens(command, del_token);
@@ -45,7 +45,7 @@ static t_deque	*tmp_convert(t_deque **tokens)
 
 	command = tmp_func_convert_to_executable_command(*tokens);
 	if (*tokens)
-		destroy_tokens(*tokens, del_token);
+		destroy_tokens(tokens, del_token);
 	return (command);
 }
 
@@ -66,12 +66,12 @@ t_result	read_eval_print_loop(t_context *context)
 		tokens = tokenize(line, context);
 		if (context->status != EXIT_SUCCESS)
 			continue ;
-		ast = parse(tokens, context);
+		ast = parse(&tokens, context);
 		if (context->status != EXIT_SUCCESS)
 			continue ;
 		command = tmp_convert(&tokens);
 		result = execute_command(command, context);
-		destroy_tmp(command, free, ast);
+		destroy_tmp(&command, free, ast);
 		if (result == PROCESS_ERROR)
 			break ;
 	}

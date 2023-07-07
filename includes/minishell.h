@@ -7,6 +7,7 @@
 # include "ms_result.h"
 
 /* return value */
+# define ACCESS_ERROR	(-1)
 # define CHDIR_ERROR	(-1)
 # define CLOSE_ERROR	(-1)
 # define DUP_ERROR		(-1) // dup && dup2
@@ -23,6 +24,9 @@
 # define SYNTAX_ERROR				2
 # define ERROR_MSG_SYNTAX			"syntax error near unexpected token"
 # define ERROR_SYNTAX_DEFAULT_ARG	"newline"
+# define ERROR_TYPE_WARNING			"warning"
+# define ERROR_MSG_WARNING			"warning"
+# define ERROR_MSG_HEREDOC_EOF		"here-document delimited by end-of-file"
 
 /* size */
 # define VAR_LIST_SIZE	256
@@ -33,6 +37,7 @@
 /* string */
 # define SHELL_NAME		"minishell"
 # define PROMPT_NAME	"minishell "
+# define HEREDOC_PROMPT	"> "
 
 # define SHELL_INIT				"shell-init"
 # define ERROR_MSG_GETCWD		"getcwd: cannot access parent directories"
@@ -73,7 +78,9 @@ void		ft_abort(void);
 char		*get_working_directory(char *for_whom);
 bool		is_valid_key(const char *word);
 bool		is_valid_path(const char *path, int *tmp_err);
+char		*x_ft_itoa(int n);
 char		*x_ft_strdup(const char *str);
+char		*x_ft_strjoin(char const *s1, char const *s2);
 
 /* init */
 void		init_context(t_context *context);

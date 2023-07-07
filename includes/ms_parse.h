@@ -2,6 +2,13 @@
 # define MS_PARSE_H
 
 # include <stdbool.h>
+# include "ms_result.h"
+
+# define HEREDOC_FILE_PREFIX	".pien_"
+# define OPEN_PERMISSION		"0664"
+
+# define IN_FD_INIT		STDIN_FILENO
+# define OUT_FD_INIT	STDOUT_FILENO
 
 typedef struct s_context	t_context;
 typedef struct s_deque		t_deque;
@@ -16,9 +23,7 @@ typedef enum e_node_kind
 	NODE_KIND_OP_PIPE,
 	NODE_KIND_OP_OR,
 	NODE_KIND_OP_AND,
-	// NODE_KIND_PAREN_LEFT,
-	// NODE_KIND_PAREN_RIGHT,
-	NODE_KIND_SUBSHELL, // ?
+	NODE_KIND_SUBSHELL,
 }	t_node_kind;
 
 typedef struct s_redirect
@@ -26,6 +31,7 @@ typedef struct s_redirect
 	t_deque	*list;
 	int		in_fd;
 	int		out_fd;
+	char	*heredoc_filename;
 }	t_redirect;
 
 struct s_ast
@@ -37,7 +43,7 @@ struct s_ast
 	t_ast		*right;
 };
 
-t_ast		*parse(t_deque *tokens, t_context *context);
+t_ast		*parse(t_deque **tokens, t_context *context);
 
 /* syntax check */
 bool		is_parenthesis_concatenated_all(t_deque_node *node);
@@ -58,8 +64,19 @@ void		dup_command_from_tokens(t_deque *command, \
 void		dup_redirection_from_tokens(t_deque *command, \
 										t_deque_node **token_node);
 
+/* heredoc */
+t_result	execute_heredoc(t_ast *ast_node);
+void		move_redirect_from_command(t_ast *ast_node);
+char		*create_heredoc_filename(void);
+t_result	open_heredoc_filedes(int *in_fd, char **filename);
+
+/* is */
+bool		is_node_kind_exec_heredoc(t_node_kind node_kind);
+
+/* destroy */
 void		destroy_ast_tree(t_ast **root);
 
+/* error */
 void		*ast_print_error(t_deque_node *token_node);
 
 #endif //MS_PARSE_H

@@ -20,6 +20,16 @@ static void	print_tokens_dq_in_oneline(t_deque *dq)
 		ft_dprintf(STDERR_FILENO, "%s ", token->str);
 		node = node->next;
 	}
+}
+
+static void	print_token_comamnd_and_redirect(t_ast *ast)
+{
+	print_tokens_dq_in_oneline(ast->command);
+	if (ast->redirects)
+	{
+		ft_dprintf(STDERR_FILENO, " : ");
+		print_tokens_dq_in_oneline(ast->redirects->list);
+	}
 	ft_dprintf(STDERR_FILENO, "\n");
 }
 
@@ -43,11 +53,11 @@ static void	print_tree_node(t_ast *node, int depth, int is_rhs, char *prefix)
 	prefix[depth * PRINT_WIDTH] = '\0';
 	ft_dprintf(STDERR_FILENO, "%s%s─", prefix, get_tree_symbol(is_rhs));
 	if (node->kind == NODE_KIND_COMMAND && node->command)
-		print_tokens_dq_in_oneline(node->command);
+		print_token_comamnd_and_redirect(node);
 	else if (node->kind == NODE_KIND_SUBSHELL)
 	{
 		ft_dprintf(STDERR_FILENO, "( ) ");
-		print_tokens_dq_in_oneline(node->command);
+		print_token_comamnd_and_redirect(node);
 	}
 	else
 		ft_dprintf(STDERR_FILENO, "[%s]\n", get_ast_node_kind_str(node->kind));
@@ -66,7 +76,7 @@ void	debug_print_ast_tree(t_ast *root, const char *str)
 
 	ft_bzero(draw_prefix, MAX_DEPTH * PRINT_WIDTH + 1);
 	ft_dprintf(STDERR_FILENO, "-------------------------\n");
-	ft_dprintf(STDERR_FILENO, "%-12s:\n", str);
+	ft_dprintf(STDERR_FILENO, "%-12s\n", str);
 	print_tree_node(root, 0, 1, draw_prefix);
 	ft_dprintf(STDERR_FILENO, "-------------------------\n");
 }
