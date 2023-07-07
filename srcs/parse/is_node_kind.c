@@ -18,3 +18,12 @@ bool	is_node_kind_exec_heredoc(t_node_kind node_kind)
 		return (true);
 	return (false);
 }
+
+bool	is_node_kind_and_or(t_node_kind node_kind)
+{
+	if (node_kind == NODE_KIND_OP_AND)
+		return (true);
+	if (node_kind == NODE_KIND_OP_OR)
+		return (true);
+	return (false);
+}
