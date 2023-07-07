@@ -68,6 +68,7 @@ void		dup_redirection_from_tokens(t_deque *command, \
 /* heredoc */
 t_result	execute_heredoc(t_ast *ast_node);
 void		move_redirect_from_command(t_ast *ast_node);
+char		*create_heredoc_filename(void);
 
 /* destroy */
 void		destroy_ast_tree(t_ast **root);
