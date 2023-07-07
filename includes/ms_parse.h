@@ -22,9 +22,7 @@ typedef enum e_node_kind
 	NODE_KIND_OP_PIPE,
 	NODE_KIND_OP_OR,
 	NODE_KIND_OP_AND,
-	// NODE_KIND_PAREN_LEFT,
-	// NODE_KIND_PAREN_RIGHT,
-	NODE_KIND_SUBSHELL, // ?
+	NODE_KIND_SUBSHELL,
 }	t_node_kind;
 
 typedef struct s_redirect
@@ -44,7 +42,7 @@ struct s_ast
 	t_ast		*right;
 };
 
-t_ast		*parse(t_deque *tokens, t_context *context);
+t_ast		*parse(t_deque **tokens, t_context *context);
 
 /* syntax check */
 bool		is_parenthesis_concatenated_all(t_deque_node *node);

@@ -13,7 +13,7 @@ void	del_token(void *content)
 	ft_free(&token);
 }
 
-void	destroy_tokens(t_deque *command, void (*del)(void *))
+void	destroy_tokens(t_deque **command, void (*del)(void *))
 {
-	deque_clear_all(&command, del);
+	deque_clear_all(command, del);
 }

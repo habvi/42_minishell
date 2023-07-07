@@ -93,6 +93,6 @@ t_token		*init_token_struct(void);
 
 /* destroy */
 void		del_token(void *content);
-void		destroy_tokens(t_deque *command, void (*del)(void *));
+void		destroy_tokens(t_deque **command, void (*del)(void *));
 
 #endif //MS_TOKENIZE_H
