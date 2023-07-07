@@ -78,7 +78,9 @@ void		ft_abort(void);
 char		*get_working_directory(char *for_whom);
 bool		is_valid_key(const char *word);
 bool		is_valid_path(const char *path, int *tmp_err);
+char		*x_ft_itoa(int n);
 char		*x_ft_strdup(const char *str);
+char		*x_ft_strjoin(char const *s1, char const *s2);
 
 /* init */
 void		init_context(t_context *context);
