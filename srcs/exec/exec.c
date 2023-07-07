@@ -1,3 +1,4 @@
+#include <sys/wait.h>
 #include "minishell.h"
 #include "ms_exec.h"
 #include "ms_tokenize.h"
@@ -80,7 +81,7 @@ static char	*get_head_token_str(t_deque *command)
 	return (token->str);
 }
 
-static char	**convert_command_to_argv(t_deque *command)
+char	**convert_command_to_argv(t_deque *command)
 {
 	char			**argv;
 	const size_t	size = command->size;
@@ -113,6 +114,15 @@ static void	execute_single_builtin(t_ast *self_node, t_context *context)
 	free_2d_array(&argv);
 }
 
+static bool	is_last_pipe_node(t_ast *self_node, t_ast *parent_node)
+{
+	if (self_node->kind != NODE_KIND_OP_PIPE)
+		return (false);
+	if (parent_node && parent_node->kind == NODE_KIND_OP_PIPE)
+		return (false);
+	return (true);
+}
+
 // &&, ||, subshell, command, (ex |)
 static bool	is_single_builtin_command(t_ast *self_node, t_ast *parent_node)
 {
@@ -129,30 +139,28 @@ static bool	is_single_builtin_command(t_ast *self_node, t_ast *parent_node)
 }
 
 // !single builtin commands, &&, ||, |, ()
-//t_result	exec_command(t_ast *self_node, t_ast *parent_node, t_context *context)
-//{
-//	if (self_node->kind == NODE_KIND_OP_AND)
-//	{
-//
-//	}
-//	else if (self_node->kind == NODE_KIND_OP_OR)
-//	{
-//
-//	}
-//	else if (self_node->kind == NODE_KIND_SUBSHELL)
-//	{
-//
-//	}
-//	else if (self_node->kind == NODE_KIND_OP_PIPE)
-//	{
-//
-//	}
-//	else // command
-//	{
-//
-//	}
-//
-//}
+t_result	exec_command(t_ast *self_node, t_context *context)
+{
+	extern char	**environ;
+
+	if (self_node->kind != NODE_KIND_COMMAND)
+		return (SUCCESS);
+
+	if (x_pipe(self_node->pipe_fd) == PIPE_ERROR)
+		return (PROCESS_ERROR);
+	self_node->pid = x_fork();
+	if (self_node->pid == FORK_ERROR)
+		return (PROCESS_ERROR);
+	context->is_interactive = false;
+	if (self_node->pid == CHILD_PID)
+		child_process(self_node, environ, context);
+	else
+	{
+		if (parent_process(self_node) == PROCESS_ERROR)
+			return (PROCESS_ERROR);
+	}
+	return (SUCCESS);
+}
 
 static bool	is_executable_right_node(t_ast *self_node, uint8_t status)
 {
@@ -165,6 +173,27 @@ static bool	is_executable_right_node(t_ast *self_node, uint8_t status)
 	return (false);
 }
 
+#include <unistd.h>
+static void	handle_last_command(t_ast *self_node, t_ast *parent_node, t_context *context)
+{
+	int	last_status;
+
+	if (self_node->kind != NODE_KIND_OP_PIPE)
+		return ;
+	if (!is_last_pipe_node(self_node, parent_node))
+		return ;
+	char c;
+	while (read(self_node->prev_fd, &c, 1) > 0)
+	{
+		write(STDOUT_FILENO, &c, 1);
+	}
+
+	waitpid(self_node->pid, &last_status, 0);
+	while (wait(NULL) != -1);
+
+	context->status = WEXITSTATUS(last_status);
+}
+
 static t_result	execute_command_recursive(t_ast *self_node, \
 											t_ast *parent_node, \
 											t_context *context)
@@ -172,29 +201,48 @@ static t_result	execute_command_recursive(t_ast *self_node, \
 	if (!self_node)
 		return (SUCCESS);
 
-	// () -> fork -> execute_command(exec)
+	// ( )
+	// fork -> execute_command(exec)
 
-
+	// node
 	if (self_node->left)
 	{
 		if (execute_command_recursive(self_node->left, self_node, context) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 	}
 
-	// and, or
-	//   left ? right or return
+	// &&, ||
 	if (!is_executable_right_node(self_node, context->status))
 		return (CONTINUE);
 
+	// prev_fd = left->pipe_fd[WRITE]
+	if (self_node->kind == NODE_KIND_OP_PIPE)
+		self_node->right->prev_fd = self_node->left->pipe_fd[READ];
+
+	// node
 	if (self_node->right)
 	{
 		if (execute_command_recursive(self_node->right, self_node, context) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 	}
+
+	if (self_node->kind == NODE_KIND_OP_PIPE)
+		self_node->prev_fd = self_node->right->prev_fd;
+
+	// |
+	// if kind = pipe_node; last pipe node -> fd, wait
+	if (self_node->kind == NODE_KIND_OP_PIPE)
+	{
+		self_node->prev_fd = self_node->right->pipe_fd[READ];
+		self_node->pid = self_node->right->pid;
+	}
+
+	// command
 	if (is_single_builtin_command(self_node, parent_node))
 		execute_single_builtin(self_node, context); // todo: process error?
-//	else if (exec_command(self_node, parent_node, context) == PROCESS_ERROR)
-//		return (PROCESS_ERROR);
+	else if (exec_command(self_node, context) == PROCESS_ERROR)
+		return (PROCESS_ERROR);
+	handle_last_command(self_node, parent_node, context);
 	return (SUCCESS);
 }
 

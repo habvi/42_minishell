@@ -2,6 +2,7 @@
 # define MS_PARSE_H
 
 # include <stdbool.h>
+# include <unistd.h>
 # include "ms_result.h"
 
 # define HEREDOC_FILE_PREFIX	".pien_"
@@ -36,6 +37,9 @@ struct s_ast
 	t_node_kind	kind;
 	t_deque		*command; // [token1]-[token2]-...
 	t_redirect	*redirects;
+	int			pipe_fd[2];
+	int			prev_fd;
+	pid_t		pid;
 	t_ast		*left;
 	t_ast		*right;
 };

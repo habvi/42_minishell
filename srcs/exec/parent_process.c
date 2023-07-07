@@ -58,3 +58,17 @@ t_result	parent_process(t_command *cmd, \
 	return (SUCCESS);
 }
 */
+
+//static t_result	handle_parent_pipes_except_first(t_fd *fd)
+//{
+//	if (x_close(fd->prev_fd) == CLOSE_ERROR)
+//		return (PROCESS_ERROR);
+//	return (SUCCESS);
+//}
+
+t_result	parent_process(t_ast *self_node)
+{
+	if (handle_parent_pipes(self_node) == PROCESS_ERROR)
+		return (PROCESS_ERROR);
+	return (SUCCESS);
+}

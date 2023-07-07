@@ -4,7 +4,6 @@
 #include "ms_parse.h"
 #include "ms_tokenize.h"
 #include "ft_deque.h"
-#include "ft_mem.h"
 
 t_result	read_eval_print_loop(t_context *context)
 {

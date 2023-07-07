@@ -50,4 +50,13 @@ bool			is_single_builtin(t_deque_node *cmd);
 
 /* parent */
 
+/* ast */
+char		**convert_command_to_argv(t_deque *command);
+t_result	handle_child_pipes(t_ast *self_node);
+void		child_process(t_ast *self_node, \
+							char **environ, \
+							t_context *context);
+t_result	handle_parent_pipes(t_ast *self_node);
+t_result	parent_process(t_ast *self_node);
+
 #endif //MS_EXEC_H
