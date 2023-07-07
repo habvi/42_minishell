@@ -7,6 +7,7 @@
 # include "ms_result.h"
 
 /* return value */
+# define ACCESS_ERROR	(-1)
 # define CHDIR_ERROR	(-1)
 # define CLOSE_ERROR	(-1)
 # define DUP_ERROR		(-1) // dup && dup2

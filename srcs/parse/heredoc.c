@@ -51,8 +51,7 @@ static char	*create_hidden_filename(const char *hash_str, const char *seed_str)
 	return (hidden_filename);
 }
 
-// filename = <hash> + num -> itoa
-static char *create_heredoc_filename(void)
+static char	*create_hidden_filename_based_on_hash(void)
 {
 	const int	seed = count_up_seed_num();
 	size_t		hash;
@@ -61,12 +60,45 @@ static char *create_heredoc_filename(void)
 	char 		*hidden_filename;
 
 	seed_str = x_ft_itoa(seed);
-	hash = hs_gen_fnv((const unsigned char*)seed_str, (size_t)INT_MAX);
+	hash = hs_gen_fnv((const unsigned char*)seed_str, (size_t)1);
 	hash_str = x_ft_itoa((int)hash);
 	hidden_filename = create_hidden_filename(hash_str, seed_str);
 	ft_free(&seed_str);
 	ft_free(&hash_str);
 	return (hidden_filename);
+}
+
+// file can create when result of access(2) is no such file
+static bool	is_file_creatable(const char *filepath)
+{
+	int	tmp_err;
+	int	ret;
+
+	errno = 0;
+	ret = access(filepath, F_OK);
+	tmp_err = errno;
+	if (ret == ACCESS_ERROR && tmp_err == ENOENT)
+		return (true);
+	return (false);
+}
+
+// filename = <hash> + num -> itoa
+static char *create_heredoc_filename(void)
+{
+	char	*filename;
+
+	while (true)
+	{
+		filename = create_hidden_filename_based_on_hash();
+//		ft_dprintf(2, "try access filename:%s\n", filename);
+		if (is_file_creatable(filename))
+		{
+//			ft_dprintf(2, " -> filename:%s\n", filename);
+			break ;
+		}
+		ft_free(&filename);
+	}
+	return (filename);
 }
 
 static void	clean_up_prev_heredoc(int in_fd, char *filename)
