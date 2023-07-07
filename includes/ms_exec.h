@@ -15,15 +15,10 @@
 # define ERROR_MSG_NO_SUCH_FILE		"No such file or directory"
 # define ERROR_MSG_CMD_NOT_FOUND	"command not found"
 
-typedef struct s_deque_node	t_deque_node;
-typedef struct s_deque		t_deque;
+typedef struct s_ast		t_ast;
 typedef struct s_context	t_context;
-
-typedef struct s_command {
-	t_deque			*head_command;
-	char			**exec_command;
-	t_deque_node	*next_command;
-}	t_command;
+typedef struct s_deque		t_deque;
+typedef struct s_deque_node	t_deque_node;
 
 typedef struct s_fd {
 	int	pipefd[2];
@@ -46,13 +41,12 @@ void			child_process(t_command *cmd, \
 								t_context *context);
 
 /* exec */
-t_result		execute_command(t_deque *dq_cmd, t_context *context);
+t_result		execute_command(t_ast *ast, t_context *context);
 t_deque_node	*get_next_command(t_deque_node *cmd, size_t *cmd_size);
 char			**convert_command_to_array(t_deque_node *cmd, \
 											const size_t size);
 
 /* init */
-void			init_cmd(t_command *cmd, t_deque *dq_cmd);
 void			init_fd(t_fd *fd);
 
 /* is_single_builtin */

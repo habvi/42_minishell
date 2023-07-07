@@ -1,11 +1,5 @@
+#include "minishell.h"
 #include "ms_exec.h"
-
-void	init_cmd(t_command *cmd, t_deque *dq_cmd)
-{
-	cmd->head_command = dq_cmd;
-	cmd->exec_command = NULL;
-	cmd->next_command = NULL;
-}
 
 // todo: init pipefd is necessary..?
 void	init_fd(t_fd *fd)

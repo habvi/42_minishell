@@ -1,5 +1,6 @@
 #include "minishell.h"
 #include "ms_exec.h"
+#include "ms_parse.h"
 #include "ft_deque.h"
 #include "ft_mem.h"
 #include "ft_sys.h"
@@ -68,20 +69,45 @@ t_result	exec_command_iter(t_deque_node *exec_cmd, \
 	return (SUCCESS);
 }
 
-t_result	execute_command(t_deque *dq_cmd, t_context *context)
-{
-	t_command		cmd;
-	t_deque_node	*exec_cmd;
+///////////////////////////////////////////////////////////////////////////////
 
-	// todo: null handle?
-	init_cmd(&cmd, dq_cmd);
-	exec_cmd = dq_cmd->node;
-	if (is_single_builtin(exec_cmd))
-	{
-		exec_builtin_in_parent_proc(cmd, exec_cmd, context);
+// &&, ||, subshell, command, (ex |)
+static bool	is_single_builtin_command(t_ast *self_node, t_ast *parent_node)
+{
+	return (self_node->kind == NODE_KIND_COMMAND \
+			&& parent_node->kind != NODE_KIND_OP_PIPE);
+}
+
+static t_result	execute_command_recursive(t_ast *self_node, \
+											t_ast *parent_node, \
+											t_context *context)
+{
+	if (!self_node)
 		return (SUCCESS);
+	if (self_node->left)
+	{
+		if (execute_command_recursive(self_node->left, self_node, context) == PROCESS_ERROR)
+			return (PROCESS_ERROR);
 	}
-	if (exec_command_iter(exec_cmd, cmd, context) == PROCESS_ERROR)
-		return (PROCESS_ERROR);
+	if (self_node->right)
+	{
+		if (execute_command_recursive(self_node->right, self_node, context) == PROCESS_ERROR)
+			return (PROCESS_ERROR);
+	}
+	if (is_single_builtin_command(self_node, parent_node))
+	{
+		if (execute_single_builtin(self_node, context) == PROCESS_ERROR)
+				return (PROCESS_ERROR);
+	}
+	// else if (exec_command(ast) == PROCESS_ERROR)
+	// 	return (PROCESS_ERROR);
 	return (SUCCESS);
+}
+
+t_result	execute_command(t_ast *ast, t_context *context)
+{
+	t_result	result;
+
+	result = execute_command_recursive(ast, NULL, context);
+	return (result);
 }
