@@ -12,7 +12,8 @@
 #include "ft_sys.h"
 #include "ft_mem.h"
 
-static void	execute_heredoc_each(int fd, const char *delimiter)
+// todo: wanted in warning msg
+static void	read_input_save_to_fd(int fd, const char *delimiter)
 {
 	char	*line;
 
@@ -24,7 +25,7 @@ static void	execute_heredoc_each(int fd, const char *delimiter)
 		{
 			ft_dprintf(STDERR_FILENO, \
 			"%s: %s: %s (wanted `%s')", \
-			SHELL_NAME, ERROR_TYPE_WARNING, ERROR_MSG_HEREDOC_EOF, delimiter); // todo: wanted
+			SHELL_NAME, ERROR_TYPE_WARNING, ERROR_MSG_HEREDOC_EOF, delimiter);
 			break ;
 		}
 		if (ft_streq(line, delimiter))
@@ -38,7 +39,7 @@ static void	execute_heredoc_each(int fd, const char *delimiter)
 	}
 }
 
-static char	*get_heredoc_eof(t_deque_node *token_node)
+static char	*get_heredoc_delimiter(t_deque_node *token_node)
 {
 	t_token	*token;
 
@@ -46,13 +47,28 @@ static char	*get_heredoc_eof(t_deque_node *token_node)
 	return (token->str);
 }
 
-// todo: check filename
+static t_result	execute_heredoc_each(t_deque_node *token_node, \
+										int *in_fd, \
+										char **filename)
+{
+	t_result	result;
+	char		*delimiter;
+
+	if (!is_token_kind_redirection_from_node(token_node))
+		return (CONTINUE);
+	result = open_heredoc_filedes(in_fd, filename); // todo change fd...
+	if (result == PROCESS_ERROR)
+		return (PROCESS_ERROR);
+	delimiter = get_heredoc_delimiter(token_node->next); // don't free
+	read_input_save_to_fd(*in_fd, delimiter);
+	return (SUCCESS);
+}
+
 static t_result	execute_heredoc_all(t_redirect *redirect)
 {
 	t_deque_node	*token_node;
 	int				in_fd;
 	char			*filename;
-	char 			*delimiter;
 	t_result		result;
 
 	if (!redirect)
@@ -62,16 +78,9 @@ static t_result	execute_heredoc_all(t_redirect *redirect)
 	filename = NULL;
 	while (token_node)
 	{
-		if (!is_token_kind_redirection_from_node(token_node))
-		{
-			token_node = token_node->next;
-			continue ;
-		}
-		result = open_heredoc_filedes(&in_fd, &filename);
+		result = execute_heredoc_each(token_node, &in_fd, &filename);
 		if (result == PROCESS_ERROR)
 			return (PROCESS_ERROR);
-		delimiter = get_heredoc_eof(token_node->next);
-		execute_heredoc_each(in_fd, delimiter);
 		token_node = token_node->next;
 	}
 	redirect->in_fd = in_fd;
@@ -81,8 +90,11 @@ static t_result	execute_heredoc_all(t_redirect *redirect)
 
 t_result	execute_heredoc(t_ast *ast_node)
 {
+	t_result	heredoc_result;
+
 	move_redirect_from_command(ast_node);
-	if (execute_heredoc_all(ast_node->redirects) == PROCESS_ERROR)
+	heredoc_result = execute_heredoc_all(ast_node->redirects);
+	if (heredoc_result == PROCESS_ERROR)
 		return (PROCESS_ERROR);
 	return (SUCCESS);
 }
