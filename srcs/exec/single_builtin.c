@@ -6,10 +6,15 @@
 #include "ft_deque.h"
 #include "ft_mem.h"
 
-static char	*get_head_token_str(t_deque *command)
+char	*get_head_token_str(t_deque *command)
 {
-	const t_token	*token = (t_token *)command->node->content;
+	t_token	*token;
 
+	if (!command)
+		return (NULL);
+	if (deque_is_empty(command))
+		return (NULL);
+	token = (t_token *)command->node->content;
 	return (token->str);
 }
 
