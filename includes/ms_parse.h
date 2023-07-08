@@ -37,12 +37,13 @@ struct s_ast
 	t_node_kind	kind;
 	t_deque		*command; // [token1]-[token2]-...
 	t_redirect	*redirects;
-	bool		is_exec_in_pipe;
 	int			pipe_fd[2];
 	int			prev_fd;
+//	bool		is_exec_in_pipe;
 	pid_t		pid;
 	t_ast		*left;
 	t_ast		*right;
+	t_ast		*parent;
 };
 
 t_ast		*parse(t_deque **tokens, t_context *context);
