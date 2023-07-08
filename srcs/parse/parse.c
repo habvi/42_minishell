@@ -44,7 +44,7 @@ t_ast	*parse(t_deque **tokens, t_context *context)
 		context->status = SYNTAX_ERROR; // todo: print syntax error
 		return (destroy_tokens_and_ast(tokens, NULL));
 	}
-	ast = create_operator_list_node(&head_node);
+	ast = create_operator_list_node(&head_node, context);
 	if (head_node)
 	{
 		context->status = SYNTAX_ERROR; // todo: print syntax error
