@@ -32,7 +32,6 @@ bool	is_first_command(int prev_fd)
 	return (prev_fd == IN_FD_INIT);
 }
 
-//todo:fds?
 t_result	handle_child_pipes(t_ast *self_node)
 {
 	const int	prev_fd = self_node->prev_fd;

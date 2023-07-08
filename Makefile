@@ -59,13 +59,11 @@ SRCS		+=	$(DEBUG_DIR)/debug_print_ast.c \
 
 EXEC_DIR	:=	exec
 SRCS		+=	$(EXEC_DIR)/call_builtin_command.c \
-				$(EXEC_DIR)/check_command.c \
 				$(EXEC_DIR)/child_pipes.c \
 				$(EXEC_DIR)/child_process.c \
 				$(EXEC_DIR)/exec.c \
 				$(EXEC_DIR)/exec_command.c \
 				$(EXEC_DIR)/get_exec_command.c \
-				$(EXEC_DIR)/init.c \
 				$(EXEC_DIR)/is_single_builtin.c \
 				$(EXEC_DIR)/parent_pipes.c \
 				$(EXEC_DIR)/parent_process.c \
