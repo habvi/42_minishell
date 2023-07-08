@@ -46,15 +46,16 @@ t_ast	*parse(t_deque **tokens, t_context *context)
 	}
 	ast = create_operator_list_node(&head_node, context);
 	if (head_node)
+		context->status = SYNTAX_ERROR;
+	if (context->status == SYNTAX_ERROR)
 	{
-		context->status = SYNTAX_ERROR; // todo: print syntax error
 		ast_print_error(head_node);
 		return (destroy_tokens_and_ast(tokens, &ast));
 	}
 	heredoc_result = execute_heredoc(ast);
 	if (heredoc_result == PROCESS_ERROR)
 		return (destroy_tokens_and_ast(tokens, &ast));
-	// debug_print_ast_tree(ast, __func__);
+	debug_print_ast_tree(ast, __func__);
 	// destroy_tokens(tokens, del_token); when exec by ast, destroy tokens.
 	return (ast);
 }

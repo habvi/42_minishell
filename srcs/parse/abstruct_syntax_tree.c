@@ -34,7 +34,7 @@ t_ast	*create_operator_list_node(t_deque_node **token_node, \
 	left_node = create_command_list_node(token_node, context);
 	if (!left_node)
 		return (NULL);
-	while (*token_node && is_token_kind_and_or_from_node(*token_node))
+	while (*token_node && is_token_kind_and_or_from_node(*token_node) && context->status != SYNTAX_ERROR)
 	{
 		kind = convert_kind_token_to_node(*token_node); // &&, ||
 		*token_node = (*token_node)->next;
@@ -56,7 +56,7 @@ t_ast	*create_command_list_node(t_deque_node **token_node, t_context *context)
 	left_node = create_command_or_subshell_node(token_node, context);
 	if (!left_node)
 		return (NULL);
-	while (*token_node && is_token_kind_pipe_from_node(*token_node))
+	while (*token_node && is_token_kind_pipe_from_node(*token_node) && context->status != SYNTAX_ERROR)
 	{
 		kind = convert_kind_token_to_node(*token_node); // |
 		*token_node = (*token_node)->next;
@@ -107,11 +107,16 @@ t_ast	*create_command_or_subshell_node(t_deque_node **token_node, \
 	t_ast	*ast_node;
 
 	if (!*token_node)
-		return (ast_print_error(*token_node));
+	{
+		context->status = SYNTAX_ERROR;
+		return (NULL);
+	}
 	ast_node = NULL;
 	if (is_token_kind_command_as_ast_node(*token_node))
 		ast_node = create_command_leaf(token_node);
 	else if (is_token_kind_subshell_as_ast_node(*token_node))
 		ast_node = create_subshell_node(token_node, context);
+	if (!ast_node)
+		context->status = SYNTAX_ERROR;
 	return (ast_node);
 }
