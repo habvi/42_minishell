@@ -2,6 +2,7 @@
 #include <sys/wait.h>
 #include "minishell.h"
 #include "ms_exec.h"
+#include "ms_parse.h"
 #include "ft_sys.h"
 /*
 static t_result	get_last_command_status(pid_t pid, \
@@ -66,9 +67,52 @@ t_result	parent_process(t_command *cmd, \
 //	return (SUCCESS);
 //}
 
-t_result	parent_process(t_ast *self_node)
+static t_result	get_last_command_status(pid_t pid, \
+									int *last_status)
 {
+	pid_t	wait_pid;
+	int		status;
+
+	wait_pid = x_waitpid(pid, &status, 0);
+	if (wait_pid != WAIT_ERROR && WIFEXITED(status))
+		*last_status = WEXITSTATUS(status);
+	else
+		return (PROCESS_ERROR);
+	return (SUCCESS);
+}
+
+// if wait error, no need for auto perror.
+static t_result	wait_all_child_process(int wait_status)
+{
+	while (true)
+	{
+		errno = 0;
+		if (wait(NULL) != WAIT_ERROR)
+			continue ;
+		if (errno == ECHILD && WIFEXITED(wait_status))
+			break ;
+		else
+		{
+			perror("wait");
+			return (PROCESS_ERROR);
+		}
+	}
+	return (SUCCESS);
+}
+
+t_result	parent_process(t_ast *self_node, t_context *context)
+{
+	int		last_status;
+
 	if (handle_parent_pipes(self_node) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
+	if (!self_node->is_exec_in_pipe)
+	{
+		if (get_last_command_status(self_node->pid, &last_status) == PROCESS_ERROR)
+			return (PROCESS_ERROR);
+		if (wait_all_child_process(last_status) == PROCESS_ERROR)
+			return (PROCESS_ERROR);
+		context->status = last_status; // todo here...?
+	}
 	return (SUCCESS);
 }

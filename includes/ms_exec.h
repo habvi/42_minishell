@@ -57,6 +57,6 @@ void		child_process(t_ast *self_node, \
 							char **environ, \
 							t_context *context);
 t_result	handle_parent_pipes(t_ast *self_node);
-t_result	parent_process(t_ast *self_node);
+t_result	parent_process(t_ast *self_node, t_context *context);
 
 #endif //MS_EXEC_H

@@ -40,8 +40,11 @@ t_result	handle_child_pipes(t_ast *self_node)
 		if (handle_child_pipes_except_first(self_node->prev_fd) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 	}
-	if (handle_child_pipes_except_last(self_node->pipe_fd) == PROCESS_ERROR)
-		return (PROCESS_ERROR);
+	if (self_node->is_exec_in_pipe)
+	{
+		if (handle_child_pipes_except_last(self_node->pipe_fd) == PROCESS_ERROR)
+			return (PROCESS_ERROR);
+	}
 	return (SUCCESS);
 }
 

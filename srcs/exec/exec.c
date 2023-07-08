@@ -114,14 +114,14 @@ static void	execute_single_builtin(t_ast *self_node, t_context *context)
 	free_2d_array(&argv);
 }
 
-static bool	is_last_pipe_node(t_ast *self_node, t_ast *parent_node)
-{
-	if (self_node->kind != NODE_KIND_OP_PIPE)
-		return (false);
-	if (parent_node && parent_node->kind == NODE_KIND_OP_PIPE)
-		return (false);
-	return (true);
-}
+//static bool	is_last_pipe_node(t_ast *self_node, t_ast *parent_node)
+//{
+//	if (self_node->kind != NODE_KIND_OP_PIPE)
+//		return (false);
+//	if (parent_node && parent_node->kind == NODE_KIND_OP_PIPE)
+//		return (false);
+//	return (true);
+//}
 
 // &&, ||, subshell, command, (ex |)
 static bool	is_single_builtin_command(t_ast *self_node, t_ast *parent_node)
@@ -156,7 +156,7 @@ t_result	exec_command(t_ast *self_node, t_context *context)
 		child_process(self_node, environ, context);
 	else
 	{
-		if (parent_process(self_node) == PROCESS_ERROR)
+		if (parent_process(self_node, context) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 	}
 	return (SUCCESS);
@@ -173,26 +173,30 @@ static bool	is_executable_right_node(t_ast *self_node, uint8_t status)
 	return (false);
 }
 
-#include <unistd.h>
-static void	handle_last_command(t_ast *self_node, t_ast *parent_node, t_context *context)
-{
-	int	last_status;
-
-	if (self_node->kind != NODE_KIND_OP_PIPE)
-		return ;
-	if (!is_last_pipe_node(self_node, parent_node))
-		return ;
-	char c;
-	while (read(self_node->prev_fd, &c, 1) > 0)
-	{
-		write(STDOUT_FILENO, &c, 1);
-	}
-
-	waitpid(self_node->pid, &last_status, 0);
-	while (wait(NULL) != -1);
-
-	context->status = WEXITSTATUS(last_status);
-}
+//#include <unistd.h>
+//static void	handle_last_command(t_ast *self_node, t_ast *parent_node, t_context *context)
+//{
+//	int	last_status;
+//
+//	if (self_node->kind != NODE_KIND_OP_PIPE)
+//		return ;
+//	if (!is_last_pipe_node(self_node, parent_node))
+//		return ;
+//
+////	dup2(self_node->prev_fd, STDOUT_FILENO);
+////	close(self_node->prev_fd);
+//
+//	char c;
+//	while (read(self_node->prev_fd, &c, 1) > 0)
+//	{
+//		write(STDOUT_FILENO, &c, 1);
+//	}
+//
+//	waitpid(self_node->pid, &last_status, 0);
+//	while (wait(NULL) != -1);
+//
+//	context->status = WEXITSTATUS(last_status);
+//}
 
 static t_result	execute_command_recursive(t_ast *self_node, \
 											t_ast *parent_node, \
@@ -215,9 +219,13 @@ static t_result	execute_command_recursive(t_ast *self_node, \
 	if (!is_executable_right_node(self_node, context->status))
 		return (CONTINUE);
 
-	// prev_fd = left->pipe_fd[WRITE]
+	// prev_fd = left->pipe_fd[READ]
 	if (self_node->kind == NODE_KIND_OP_PIPE)
+	{
 		self_node->right->prev_fd = self_node->left->pipe_fd[READ];
+		if (!parent_node || parent_node->kind != NODE_KIND_OP_PIPE)
+			self_node->right->is_exec_in_pipe = false; // todo: add
+	}
 
 	// node
 	if (self_node->right)
@@ -242,7 +250,7 @@ static t_result	execute_command_recursive(t_ast *self_node, \
 		execute_single_builtin(self_node, context); // todo: process error?
 	else if (exec_command(self_node, context) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
-	handle_last_command(self_node, parent_node, context);
+//	handle_last_command(self_node, parent_node, context);
 	return (SUCCESS);
 }
 
