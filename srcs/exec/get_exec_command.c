@@ -1,47 +1,29 @@
 #include "minishell.h"
+#include "ms_tokenize.h"
 #include "ft_deque.h"
-#include "ft_string.h"
 #include "ft_mem.h"
 #include "ft_sys.h"
 
-// | command                  -> not handle yet
-// command arg                -> return NULL
-// command arg |              -> return NULL
-// command arg | command2 arg -> return command2
-t_deque_node	*get_next_command(t_deque_node *cmd, size_t *cmd_size)
+char	**convert_command_to_argv(t_deque *command)
 {
-	*cmd_size = 0;
-	while (cmd && !ft_streq(cmd->content, "|"))
-	{
-		cmd = cmd->next;
-		(*cmd_size)++;
-	}
-	if (cmd)
-	{
-		ft_free(&cmd->content);
-		cmd = cmd->next;
-	}
-	return (cmd);
-}
+	char			**argv;
+	const size_t	size = command->size;
+	size_t			i;
+	t_token			*token;
+	t_deque_node	*token_node;
 
-//char	**convert_command_to_array(t_deque_node *cmd, const size_t size)
-//{
-//	char	**command;
-//	char	*tmp;
-//	size_t	i;
-//
-//	command = (char **)x_malloc(sizeof(char *) * (size + 1));
-//	if (!command)
-//		ft_abort();
-//	i = 0;
-//	while (i < size)
-//	{
-//		tmp = cmd->content;
-//		cmd->content = NULL;
-//		command[i] = tmp;
-//		cmd = cmd->next;
-//		i++;
-//	}
-//	command[i] = NULL;
-//	return (command);
-//}
+	argv = (char **)x_malloc(sizeof(char *) * (size + 1));
+	if (!argv)
+		ft_abort();
+	i = 0;
+	token_node = command->node;
+	while (token_node)
+	{
+		token = (t_token *)token_node->content;
+		argv[i] = x_ft_strdup(token->str);
+		i++;
+		token_node = token_node->next;
+	}
+	argv[i] = NULL;
+	return (argv);
+}
