@@ -29,6 +29,7 @@ static void	print_token_comamnd_and_redirect(t_ast *ast)
 	{
 		ft_dprintf(STDERR_FILENO, " : ");
 		print_tokens_dq_in_oneline(ast->redirects->list);
+		ft_dprintf(STDERR_FILENO, " : %d", ast->prev_fd);
 	}
 	ft_dprintf(STDERR_FILENO, "\n");
 }
