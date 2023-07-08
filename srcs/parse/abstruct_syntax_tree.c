@@ -19,6 +19,17 @@ arithmetic
                       | <pipeline_commands>
 */
 
+static char *get_token_node_str(t_deque_node *node)
+{
+	t_token  *token;
+
+	if (!node)
+		return (NULL);
+	token = (t_token *)node->content;
+	return (token->str);
+}
+
+#include <stdio.h>
 // <op_list>
 // expr	= <com_list> '&&' <com_list>
 //		| <com_list> '||' <com_list>
@@ -37,6 +48,11 @@ t_ast	*create_operator_list_node(t_deque_node **token_node)
 		kind = convert_kind_token_to_node(*token_node); // &&, ||
 		*token_node = (*token_node)->next;
 		right_node = create_command_list_node(token_node);
+		if (!right_node)
+		{
+			dprintf(2, "right is null, now node:%s\n", get_token_node_str(*token_node)); // todo: free
+			return (NULL);
+		}
 		left_node = new_ast_node(kind, left_node, right_node);
 	}
 	return (left_node);
@@ -59,6 +75,11 @@ t_ast	*create_command_list_node(t_deque_node **token_node)
 		kind = convert_kind_token_to_node(*token_node); // |
 		*token_node = (*token_node)->next;
 		right_node = create_command_or_subshell_node(token_node);
+		if (!right_node)
+		{
+			dprintf(2, "right is null, now node:%s\n", get_token_node_str(*token_node)); // todo: free
+			return (NULL);
+		}
 		left_node = new_ast_node(kind, left_node, right_node);
 	}
 	return (left_node);
