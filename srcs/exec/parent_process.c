@@ -4,7 +4,7 @@
 #include "ms_exec.h"
 #include "ms_parse.h"
 #include "ft_sys.h"
-/*
+
 static t_result	get_last_command_status(pid_t pid, \
 									int *wait_status, \
 									uint8_t *last_status)
@@ -38,81 +38,20 @@ static t_result	wait_all_child_process(int wait_status)
 	return (SUCCESS);
 }
 
-//todo fd->fds?
-t_result	parent_process(t_command *cmd, \
-							t_fd *fd, \
-							pid_t pid, \
-							uint8_t *last_status)
+t_result	parent_process(t_ast *self_node, t_context *context)
 {
 	int	wait_status;
 
-	if (handle_parent_pipes(cmd, fd) == PROCESS_ERROR)
+	if (handle_parent_pipes(self_node) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
-	if (is_last_command(cmd->next_command))
+	if (is_last_command_node(self_node))
 	{
-		if (get_last_command_status(pid, &wait_status, last_status) \
-															== PROCESS_ERROR)
+		if (get_last_command_status(self_node->pid, \
+									&wait_status, \
+									&context->status) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 		if (wait_all_child_process(wait_status) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
-	}
-	return (SUCCESS);
-}
-*/
-
-//static t_result	handle_parent_pipes_except_first(t_fd *fd)
-//{
-//	if (x_close(fd->prev_fd) == CLOSE_ERROR)
-//		return (PROCESS_ERROR);
-//	return (SUCCESS);
-//}
-
-static t_result	get_last_command_status(pid_t pid, \
-									int *last_status)
-{
-	pid_t	wait_pid;
-	int		status;
-
-	wait_pid = x_waitpid(pid, &status, 0);
-	if (wait_pid != WAIT_ERROR && WIFEXITED(status))
-		*last_status = WEXITSTATUS(status);
-	else
-		return (PROCESS_ERROR);
-	return (SUCCESS);
-}
-
-// if wait error, no need for auto perror.
-static t_result	wait_all_child_process(int wait_status)
-{
-	while (true)
-	{
-		errno = 0;
-		if (wait(NULL) != WAIT_ERROR)
-			continue ;
-		if (errno == ECHILD && WIFEXITED(wait_status))
-			break ;
-		else
-		{
-			perror("wait");
-			return (PROCESS_ERROR);
-		}
-	}
-	return (SUCCESS);
-}
-
-t_result	parent_process(t_ast *self_node, t_context *context)
-{
-	int		last_status;
-
-	if (handle_parent_pipes(self_node) == PROCESS_ERROR)
-		return (PROCESS_ERROR);
-	if (!self_node->is_exec_in_pipe)
-	{
-		if (get_last_command_status(self_node->pid, &last_status) == PROCESS_ERROR)
-			return (PROCESS_ERROR);
-		if (wait_all_child_process(last_status) == PROCESS_ERROR)
-			return (PROCESS_ERROR);
-		context->status = last_status; // todo here...?
 	}
 	return (SUCCESS);
 }
