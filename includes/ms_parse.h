@@ -39,7 +39,6 @@ struct s_ast
 	t_redirect	*redirects;
 	int			pipe_fd[2];
 	int			prev_fd;
-//	bool		is_exec_in_pipe;
 	pid_t		pid;
 	t_ast		*left;
 	t_ast		*right;
