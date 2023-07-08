@@ -14,6 +14,7 @@ static t_ast	*init_ast_node(void)
 	new_node->kind = NODE_KIND_NONE;
 	new_node->command = NULL;
 	new_node->redirects = NULL;
+	new_node->is_exec_in_pipe = true;
 	new_node->pipe_fd[READ] = IN_FD_INIT;
 	new_node->pipe_fd[WRITE] = OUT_FD_INIT;
 	new_node->prev_fd = IN_FD_INIT;
