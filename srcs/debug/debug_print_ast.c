@@ -1,4 +1,5 @@
 #include "minishell.h"
+#include "ms_exec.h"
 #include "ms_parse.h"
 #include "ms_tokenize.h"
 #include "ft_deque.h"
@@ -24,13 +25,15 @@ static void	print_tokens_dq_in_oneline(t_deque *dq)
 
 static void	print_token_comamnd_and_redirect(t_ast *ast)
 {
-	print_tokens_dq_in_oneline(ast->command);
+	if (ast->command)
+		print_tokens_dq_in_oneline(ast->command);
 	if (ast->redirects)
 	{
-		ft_dprintf(STDERR_FILENO, " : ");
+		ft_dprintf(STDERR_FILENO, ":");
 		print_tokens_dq_in_oneline(ast->redirects->list);
-		ft_dprintf(STDERR_FILENO, " : %d", ast->prev_fd);
 	}
+	ft_dprintf(STDERR_FILENO, " :prev[%d]in[%d]out[%d] ", \
+				ast->prev_fd, ast->pipe_fd[READ], ast->pipe_fd[WRITE]);
 	ft_dprintf(STDERR_FILENO, "\n");
 }
 
@@ -58,6 +61,11 @@ static void	print_tree_node(t_ast *node, int depth, int is_rhs, char *prefix)
 	else if (node->kind == NODE_KIND_SUBSHELL)
 	{
 		ft_dprintf(STDERR_FILENO, "( ) ");
+		print_token_comamnd_and_redirect(node);
+	}
+	else if (node->kind == NODE_KIND_OP_PIPE)
+	{
+		ft_dprintf(STDERR_FILENO, "[|] ");
 		print_token_comamnd_and_redirect(node);
 	}
 	else

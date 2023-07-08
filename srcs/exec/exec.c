@@ -27,34 +27,38 @@ static t_result	execute_subshell(t_ast *root_node, t_context *context)
 	if (root_node->pid == FORK_ERROR)
 		return (PROCESS_ERROR);
 	context->is_interactive = false;
+	root_node->left->pipe_fd[READ] = root_node->pipe_fd[READ];
+	root_node->left->pipe_fd[WRITE] = root_node->pipe_fd[WRITE];
+	root_node->left->prev_fd = root_node->prev_fd;
 	if (root_node->pid == CHILD_PID)
 	{
-		// root_node->left->parent = NULL;
-		if (handle_child_pipes(root_node) == PROCESS_ERROR)
-			exit(EXIT_FAILURE);
-		root_node->left->pipe_fd[READ] = root_node->pipe_fd[READ];
-		root_node->left->pipe_fd[WRITE] = root_node->pipe_fd[WRITE];
+		// if (handle_child_pipes(root_node) == PROCESS_ERROR)
+		// 	exit(EXIT_FAILURE);
 		if (execute_command(root_node->left, context) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 		exit (context->status);
 	}
 	else
 	{
-		if (parent_process(root_node, context) == PROCESS_ERROR)
+		int	wait_status;
+
+		// usleep(50000);
+		root_node->prev_fd = root_node->left->pipe_fd[READ];
+		// if (handle_parent_pipes(root_node) == PROCESS_ERROR)
+		// 	return (PROCESS_ERROR);
+		if (get_last_command_status(\
+				root_node->pid, &wait_status, &context->status) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
-	}
-	ft_dprintf(2, "r_fd : %d \n", root_node->prev_fd);
-	if (root_node->parent)
-	{
-		ft_dprintf(2, "p_fd : %d\n", root_node->parent->prev_fd);
-		// root_node->parent->prev_fd = root_node->prev_fd;
-		// ft_dprintf(2, "p_fd : %d\n\n", root_node->parent->prev_fd);
+		if (wait_all_child_process(wait_status) == PROCESS_ERROR)
+			return (PROCESS_ERROR);
 	}
 	// char c;
 	// while (read(root_node->prev_fd, &c, 1) > 0)
 	// {
 	// 	write(2, &c, 1);
 	// }
+	if (root_node->parent)
+		root_node->parent->prev_fd = root_node->prev_fd;
 	return (SUCCESS);
 }
 
@@ -66,22 +70,19 @@ static t_result	execute_command_recursive(t_ast *self_node, t_context *context)
 	// debug_print_ast_tree(self_node, "subshell");
 	// ( )
 	if (is_node_kind_subshell(self_node->kind))
-	{
-		// ft_dprintf(2, "sub : %d\n\n", self_node->prev_fd, self_node->left->prev_fd);
 		return (execute_subshell(self_node, context));
-	}
 
 	// node left
 	if (self_node->left)
 	{
 		if (execute_command_recursive(self_node->left, context) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
+		// subshell
+		if (self_node->kind == NODE_KIND_SUBSHELL)
+			self_node->parent->prev_fd = self_node->prev_fd;
 		//  [command] after left: prev_fd = left->pipe_fd[READ]
 		if (self_node->kind == NODE_KIND_OP_PIPE && self_node->right)
 			self_node->right->prev_fd = self_node->prev_fd;
-		// subshell
-		// if (self_node->kind == NODE_KIND_SUBSHELL && self_node->right)
-		// 	self_node->parent->prev_fd = self_node->prev_fd;
 	}
 
 	// &&, ||

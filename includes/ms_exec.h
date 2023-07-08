@@ -64,4 +64,9 @@ bool			is_single_builtin_command(t_ast *self_node);
 bool			is_last_command_node(t_ast *self_node);
 char			*get_head_token_str(t_deque *command);
 
+t_result		get_last_command_status(pid_t pid, \
+										int *wait_status, \
+										uint8_t *last_status);
+t_result		wait_all_child_process(int wait_status);
+
 #endif //MS_EXEC_H

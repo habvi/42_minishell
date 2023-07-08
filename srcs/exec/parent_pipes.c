@@ -21,6 +21,7 @@ static t_result	handle_parent_pipes_except_last(t_ast *self_node)
 	}
 	if (x_close(self_node->pipe_fd[WRITE]) == CLOSE_ERROR)
 		return (PROCESS_ERROR);
+	// debug_print_ast_tree(self_node, __func__);
 	return (SUCCESS);
 }
 
@@ -30,14 +31,17 @@ t_result	handle_parent_pipes(t_ast *self_node)
 
 	if (!is_first_command(prev_fd))
 	{
+		// ft_dprintf(2, "-- p not first command ------\n");
 		if (handle_parent_pipes_except_first(prev_fd) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 	}
 	if (!is_last_command_node(self_node))
 	{
+		// ft_dprintf(2, "-- p not last command ------\n");
 		if (handle_parent_pipes_except_last(self_node) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 	}
 	// ft_dprintf(2, "3 pipe_fd : %d, %d\n", self_node->pipe_fd[0], self_node->pipe_fd[1]);
+	// debug_print_ast_tree(self_node, __func__);
 	return (SUCCESS);
 }
