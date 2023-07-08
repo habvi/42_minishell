@@ -42,6 +42,7 @@ struct s_ast
 	pid_t		pid;
 	t_ast		*left;
 	t_ast		*right;
+	t_ast		*parent;
 };
 
 t_ast		*parse(t_deque **tokens, t_context *context);

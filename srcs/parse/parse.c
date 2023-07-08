@@ -44,7 +44,7 @@ t_ast	*parse(t_deque **tokens, t_context *context)
 	t_result		heredoc_result;
 
 	if (deque_is_empty(*tokens))
-		return (NULL);
+		return (destroy_tokens_and_ast(tokens, NULL, false, NULL));
 	head_node = (*tokens)->node;
 	if (!is_valid_pre_parse_syntax(head_node))
 	{
@@ -60,6 +60,6 @@ t_ast	*parse(t_deque **tokens, t_context *context)
 	if (heredoc_result == PROCESS_ERROR)
 		return (destroy_tokens_and_ast(tokens, &ast, false, head_node));
 	// debug_print_ast_tree(ast, __func__);
-	// destroy_tokens(tokens, del_token); when exec by ast, destroy tokens.
+	destroy_tokens(tokens, del_token); //when exec by ast, destroy tokens.
 	return (ast);
 }

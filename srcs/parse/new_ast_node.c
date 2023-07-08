@@ -20,6 +20,7 @@ static t_ast	*init_ast_node(void)
 	new_node->pid = 0;
 	new_node->left = NULL;
 	new_node->right = NULL;
+	new_node->parent = NULL;
 	return (new_node);
 }
 

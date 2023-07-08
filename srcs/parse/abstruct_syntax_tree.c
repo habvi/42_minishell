@@ -19,6 +19,26 @@ arithmetic
                       | <operator_list> '||' <operator_list>
                       | <pipeline_commands>
 */
+/*
+static char *get_token_node_str(t_deque_node *node)
+{
+	t_token  *token;
+
+	if (!node)
+		return (NULL);
+	token = (t_token *)node->content;
+	return (token->str);
+}
+*/
+static void	set_parent_of_children_node(t_ast **self_node)
+{
+	if (!self_node || !*self_node)
+		return ;
+	if ((*self_node)->left)
+		(*self_node)->left->parent = *self_node;
+	if ((*self_node)->right)
+		(*self_node)->right->parent = *self_node;
+}
 
 // <op_list>
 // expr	= <com_list> '&&' <com_list>
@@ -42,6 +62,7 @@ t_ast	*create_operator_list_node(t_deque_node **token_node, \
 		*token_node = (*token_node)->next;
 		right_node = create_command_list_node(token_node, context);
 		left_node = new_ast_node(kind, left_node, right_node);
+		set_parent_of_children_node(&left_node);
 	}
 	return (left_node);
 }
@@ -66,6 +87,7 @@ t_ast	*create_command_list_node(t_deque_node **token_node, t_context *context)
 		*token_node = (*token_node)->next;
 		right_node = create_command_or_subshell_node(token_node, context);
 		left_node = new_ast_node(kind, left_node, right_node);
+		set_parent_of_children_node(&left_node);
 	}
 	return (left_node);
 }
@@ -95,6 +117,7 @@ static t_ast	*create_subshell_node(t_deque_node **token_node, \
 	{
 		*token_node = (*token_node)->next;
 		ast_node = new_subshell_node(ast_node);
+		set_parent_of_children_node(&ast_node);
 		dup_redirection_from_tokens(ast_node->command, token_node);
 		return (ast_node);
 	}

@@ -6,7 +6,8 @@
 #include "ft_dprintf.h"
 #include "ft_mem.h"
 
-static uint8_t	execute_builtin_command(const char *const *argv, t_context *context)
+static uint8_t	execute_builtin_command(const char *const *argv, \
+										t_context *context)
 {
 	uint8_t	exec_status;
 

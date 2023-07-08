@@ -2,8 +2,9 @@
 #include <sys/wait.h>
 #include "minishell.h"
 #include "ms_exec.h"
+#include "ms_parse.h"
 #include "ft_sys.h"
-/*
+
 static t_result	get_last_command_status(pid_t pid, \
 									int *wait_status, \
 									uint8_t *last_status)
@@ -37,38 +38,20 @@ static t_result	wait_all_child_process(int wait_status)
 	return (SUCCESS);
 }
 
-//todo fd->fds?
-t_result	parent_process(t_command *cmd, \
-							t_fd *fd, \
-							pid_t pid, \
-							uint8_t *last_status)
+t_result	parent_process(t_ast *self_node, t_context *context)
 {
 	int	wait_status;
 
-	if (handle_parent_pipes(cmd, fd) == PROCESS_ERROR)
+	if (handle_parent_pipes(self_node) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
-	if (is_last_command(cmd->next_command))
+	if (is_last_command_node(self_node))
 	{
-		if (get_last_command_status(pid, &wait_status, last_status) \
-															== PROCESS_ERROR)
+		if (get_last_command_status(self_node->pid, \
+									&wait_status, \
+									&context->status) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 		if (wait_all_child_process(wait_status) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 	}
-	return (SUCCESS);
-}
-*/
-
-//static t_result	handle_parent_pipes_except_first(t_fd *fd)
-//{
-//	if (x_close(fd->prev_fd) == CLOSE_ERROR)
-//		return (PROCESS_ERROR);
-//	return (SUCCESS);
-//}
-
-t_result	parent_process(t_ast *self_node)
-{
-	if (handle_parent_pipes(self_node) == PROCESS_ERROR)
-		return (PROCESS_ERROR);
 	return (SUCCESS);
 }
