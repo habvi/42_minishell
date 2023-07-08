@@ -68,6 +68,7 @@ SRCS		+=	$(EXEC_DIR)/call_builtin_command.c \
 				$(EXEC_DIR)/is_single_builtin.c \
 				$(EXEC_DIR)/parent_pipes.c \
 				$(EXEC_DIR)/parent_process.c \
+				$(EXEC_DIR)/single_builtin.c \
 
 INPUT_DIR	:=	input
 SRCS		+=	$(INPUT_DIR)/input.c

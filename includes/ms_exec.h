@@ -58,5 +58,7 @@ void		child_process(t_ast *self_node, \
 							t_context *context);
 t_result	handle_parent_pipes(t_ast *self_node);
 t_result	parent_process(t_ast *self_node, t_context *context);
+void		execute_single_builtin(t_ast *self_node, t_context *context);
+bool		is_single_builtin_command(t_ast *self_node);
 
 #endif //MS_EXEC_H
