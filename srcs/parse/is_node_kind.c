@@ -5,7 +5,7 @@ static bool	is_node_kind_command(t_node_kind node_kind)
 	return (node_kind == NODE_KIND_COMMAND);
 }
 
-static bool	is_node_kind_subshell(t_node_kind node_kind)
+bool	is_node_kind_subshell(t_node_kind node_kind)
 {
 	return (node_kind == NODE_KIND_SUBSHELL);
 }

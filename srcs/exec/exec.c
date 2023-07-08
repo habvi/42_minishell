@@ -18,14 +18,38 @@ static bool	is_executable_right_node(t_ast *self_node, uint8_t status)
 	return (false);
 }
 
-static t_result	execute_command_recursive(t_ast *self_node, \
-											t_context *context)
+static t_result	execute_subshell(t_ast *root_node, t_context *context)
+{
+
+	if (x_pipe(root_node->pipe_fd) == PIPE_ERROR)
+		return (PROCESS_ERROR);
+	root_node->pid = x_fork();
+	if (root_node->pid == FORK_ERROR)
+		return (PROCESS_ERROR);
+	context->is_interactive = false;
+	if (root_node->pid == CHILD_PID)
+	{
+		root_node->left->parent = NULL;
+		if (execute_command(root_node->left, context) == PROCESS_ERROR)
+			return (PROCESS_ERROR);
+		exit (context->status);
+	}
+	else
+	{
+		if (parent_process(root_node, context) == PROCESS_ERROR)
+			return (PROCESS_ERROR);
+	}
+	return (SUCCESS);
+}
+
+static t_result	execute_command_recursive(t_ast *self_node, t_context *context)
 {
 	if (!self_node)
 		return (SUCCESS);
 
 	// ( )
-	// fork -> execute_command(exec)
+	if (is_node_kind_subshell(self_node->kind))
+		return (execute_subshell(self_node, context));
 
 	// node left
 	if (self_node->left)

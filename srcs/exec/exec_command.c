@@ -25,6 +25,8 @@ bool	is_last_command_node(t_ast *self_node)
 	t_ast	*parent_node;
 
 	parent_node = self_node->parent;
+	if (self_node->kind == NODE_KIND_SUBSHELL)
+		return (true);
 	if (self_node->kind != NODE_KIND_COMMAND)
 		return (false);
 	if (!parent_node)

@@ -76,6 +76,7 @@ char		*create_heredoc_filename(void);
 t_result	open_heredoc_filedes(int *in_fd, char **filename);
 
 /* is */
+bool		is_node_kind_subshell(t_node_kind node_kind);
 bool		is_node_kind_exec_heredoc(t_node_kind node_kind);
 bool		is_node_kind_and_or(t_node_kind node_kind);
 
