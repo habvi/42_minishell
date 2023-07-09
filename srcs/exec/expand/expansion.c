@@ -1,13 +1,10 @@
 #include "minishell.h"
-#include "ms_exec.h"
-#include "ms_expansion.h"
 #include "ms_tokenize.h"
 #include "ms_parse.h"
 #include "ms_var.h"
 #include "ft_deque.h"
 #include "ft_mem.h"
 #include "ft_string.h"
-#include "ft_sys.h"
 
 static char	*strcat_after_doller(char *str)
 {
@@ -45,7 +42,6 @@ static char	*find_key_and_substr(char **str, t_context *context)
 		tail++;
 	*str = tail;
 	substr = x_ft_strndup(head, tail - head);
-	ft_dprintf(2, "4 [%s]\n", substr);
 	if (ft_streq(substr, "_"))
 	{
 		(*str)++;
@@ -72,33 +68,34 @@ static char	*substr_before_doller(char **str)
 	return (substr);
 }
 
-static void	expand_str(t_token *token, t_context *context)
+static char	*expand_str(char *str, char *expand_str)
+{
+	char	*tmp;
+
+	tmp = str;
+	str = x_ft_strjoin(tmp, expand_str);
+	ft_free(&tmp);
+	ft_free(&expand_str);
+	return (str);
+}
+
+static void	expand_token(t_token *token, t_context *context)
 {
 	char	*str;
 	char	*new_str;
-	char	*tmp;
 	char	*joind_str;
 
 	joind_str = NULL;
 	str = token->str;
 	while (*str)
 	{
-		ft_dprintf(2, "1 [%s]\n", str);
 		if (*str == '$')
 		{
 			new_str = find_key_and_substr(&str, context);
-			tmp = joind_str;
-			joind_str = x_ft_strjoin(tmp, new_str);
-			ft_dprintf(2, "2 [%s]\n", joind_str);
-			ft_free(&tmp);
-			ft_free(&new_str);
+			joind_str = expand_str(joind_str, new_str);
 		}
 		new_str = substr_before_doller(&str);
-		tmp = joind_str;
-		joind_str = x_ft_strjoin(tmp, new_str);
-		ft_dprintf(2, "3 [%s]\n", joind_str);
-		ft_free(&tmp);
-		ft_free(&new_str);
+		joind_str = expand_str(joind_str, new_str);
 	}
 	ft_free(&token->str);
 	token->str = joind_str;
@@ -124,7 +121,7 @@ t_result	expand_variables(t_ast *self_node, t_context *context)
 				node = node->next;
 				continue ;
 			}
-			expand_str(token, context);
+			expand_token(token, context);
 			node = node->next;
 		}
 	}
