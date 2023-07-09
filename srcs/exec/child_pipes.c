@@ -16,7 +16,7 @@ static t_result	handle_child_pipes_except_first(int prev_fd)
 
 static t_result	handle_child_pipes_except_last(int pipe_fd[2])
 {
-	ft_dprintf(2, "----------------------\n");
+//	ft_dprintf(2, "----------------------\n");
 	if (x_close(pipe_fd[READ]) == CLOSE_ERROR)
 		return (PROCESS_ERROR);
 	if (x_close(STDOUT_FILENO) == CLOSE_ERROR)
