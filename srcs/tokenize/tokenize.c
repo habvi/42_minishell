@@ -35,7 +35,7 @@ static bool	is_valid_tokens_syntax(t_deque_node *node)
 }
 
 // tokens != NULL
-t_deque	*tokenize(char *line, t_context *context)
+t_deque	*tokenize(char *line, t_context *context, t_result *result)
 {
 	t_deque	*tokens;
 
@@ -45,12 +45,12 @@ t_deque	*tokenize(char *line, t_context *context)
 	if (!is_valid_tokens_syntax(tokens->node))
 	{
 		context->status = SYNTAX_ERROR; // todo: print syntax error
+		*result = FAILURE;
 		destroy_tokens(&tokens, del_token);
 		return (NULL);
 	}
 	set_token_quote_type_all(tokens);
 	remove_quote_in_token_str(tokens);
 	// debug_token_dq(tokens, "tokenize");
-	context->status = EXIT_SUCCESS;
 	return (tokens);
 }

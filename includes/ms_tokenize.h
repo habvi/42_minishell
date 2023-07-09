@@ -54,7 +54,7 @@ typedef struct s_token {
 }	t_token;
 
 /* tokenize */
-t_deque		*tokenize(char *line, t_context *context);
+t_deque		*tokenize(char *line, t_context *context, t_result *result);
 t_deque		*tokenize_line(char *line);
 char		*get_token_str(char *head, char **end);
 char		*get_token_tail(char *head);

@@ -45,7 +45,7 @@ struct s_ast
 	t_ast		*parent;
 };
 
-t_ast		*parse(t_deque **tokens, t_context *context);
+t_ast		*parse(t_deque **tokens, t_context *context, t_result *result);
 
 /* syntax check */
 bool		is_parenthesis_concatenated_all(t_deque_node *node);
