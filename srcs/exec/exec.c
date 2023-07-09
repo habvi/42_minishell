@@ -78,7 +78,7 @@ static t_result	execute_command_recursive(t_ast *self_node, t_context *context)
 		if (execute_command_recursive(self_node->left, context) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 		// subshell
-		if (self_node->kind == NODE_KIND_SUBSHELL)
+		if (self_node->kind == NODE_KIND_SUBSHELL && self_node->parent)
 			self_node->parent->prev_fd = self_node->prev_fd;
 		//  [command] after left: prev_fd = left->pipe_fd[READ]
 		if (self_node->kind == NODE_KIND_OP_PIPE && self_node->right)
