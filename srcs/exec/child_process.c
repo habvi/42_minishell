@@ -15,6 +15,19 @@ static uint8_t	execute_builtin_command(const char *const *argv, \
 	return (exec_status);
 }
 
+// PATH="path_1:path_2:path_3...:path_n"
+// access(path + argv[0]) -> exec or next path
+// 1. check path -> if access() return 0, exec path
+//                              return -1, EACCESS, pass path -> 2
+// 2. most left accessable path -> permission denied ?
+
+// file
+// search PATH
+
+// execve
+//  dir/file ???
+//  ./relative_path
+//  /absolute_path
 static uint8_t	execute_external_command(char *const *argv, char **environ)
 {
 	int	exec_status;
