@@ -7,23 +7,7 @@
 #include "ft_mem.h"
 #include "ft_sys.h"
 
-char	*get_node_kind_str(t_node_kind kind)
-{
-	if (kind == NODE_KIND_NONE)
-		return ("NONE");
-	if (kind == NODE_KIND_COMMAND)
-		return ("COMMAND");
-	if (kind == NODE_KIND_OP_PIPE)
-		return ("|");
-	if (kind == NODE_KIND_OP_OR)
-		return ("||");
-	if (kind == NODE_KIND_OP_AND)
-		return ("&&");
-	if (kind == NODE_KIND_SUBSHELL)
-		return ("()");
-	return ("ERROR");
-}
-
+// &&, ||
 static bool	is_executable_right_node(t_ast *self_node, uint8_t status)
 {
 	if (!is_node_kind_and_or(self_node->kind))
@@ -35,44 +19,8 @@ static bool	is_executable_right_node(t_ast *self_node, uint8_t status)
 	return (false);
 }
 
-static t_result	execute_command_recursive(t_ast *self_node, t_context *context)
+static t_result	execute_command_internal(t_ast *self_node, t_context *context)
 {
-	if (!self_node)
-		return (SUCCESS);
-
-	// debug_print_ast_tree(self_node, "subshell");
-	// ( )
-//	if (is_node_kind_subshell(self_node->kind))
-//		return (execute_subshell(self_node, context));
-
-	// node left
-	if (self_node->kind != NODE_KIND_SUBSHELL && self_node->left)
-	{
-		if (execute_command_recursive(self_node->left, context) == PROCESS_ERROR)
-			return (PROCESS_ERROR);
-		// subshell
-//		if (self_node->kind == NODE_KIND_SUBSHELL && self_node->parent)
-//			self_node->parent->prev_fd = self_node->prev_fd;
-		//  [command] after left: prev_fd = left->pipe_fd[READ]
-		if (self_node->kind == NODE_KIND_OP_PIPE && self_node->right)
-			self_node->right->prev_fd = self_node->prev_fd;
-	}
-
-	// &&, ||
-	if (!is_executable_right_node(self_node, context->status))
-		return (CONTINUE);
-
-	// node right
-	if (self_node->kind != NODE_KIND_SUBSHELL && self_node->right)
-	{
-		if (execute_command_recursive(self_node->right, context) == PROCESS_ERROR)
-			return (PROCESS_ERROR);
-		// [command] after right: prev_fd = left->pipe_fd[READ]
-		if (self_node->kind == NODE_KIND_OP_PIPE && self_node->parent)
-			self_node->parent->prev_fd = self_node->prev_fd;
-	}
-
-	// command
 	if (is_single_builtin_command(self_node))
 		execute_single_builtin(self_node, context); // todo: process error?
 	else if (exec_command_each(self_node, context) == PROCESS_ERROR)
@@ -80,11 +28,18 @@ static t_result	execute_command_recursive(t_ast *self_node, t_context *context)
 	return (SUCCESS);
 }
 
-t_result	execute_command(t_ast *ast, t_context *context)
+// todo: redirect, expansion
+t_result	execute_command(t_ast *self_node, t_context *context)
 {
-	t_result	result;
-
-	result = execute_command_recursive(ast, context);
-	// debug_print_ast_tree(ast, "aaaa");
-	return (result);
+	if (!self_node)
+		return (SUCCESS);
+	if (exec_handle_left_node(self_node, context) == PROCESS_ERROR)
+		return (PROCESS_ERROR);
+	if (!is_executable_right_node(self_node, context->status))
+		return (CONTINUE);
+	if (exec_handle_right_node(self_node, context) == PROCESS_ERROR)
+		return (PROCESS_ERROR);
+	if (execute_command_internal(self_node, context) == PROCESS_ERROR)
+		return (PROCESS_ERROR);
+	return (SUCCESS);
 }
