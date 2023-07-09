@@ -59,8 +59,10 @@ SRCS		+=	$(DEBUG_DIR)/debug_print_ast.c \
 
 EXEC_DIR	:=	exec
 EXPAND_DIR	:=	expand
-SRCS		+=	$(EXEC_DIR)/$(EXPAND_DIR)/expand_parameter.c\
+SRCS		+=	$(EXEC_DIR)/$(EXPAND_DIR)/concat_tokens.c  \
+				$(EXEC_DIR)/$(EXPAND_DIR)/expand_parameter.c\
 				$(EXEC_DIR)/$(EXPAND_DIR)/expansion.c  \
+				$(EXEC_DIR)/$(EXPAND_DIR)/remove_empty_tokens.c  \
 				$(EXEC_DIR)/$(EXPAND_DIR)/substr_before_dollar.c  \
 				$(EXEC_DIR)/call_builtin_command.c \
 				$(EXEC_DIR)/child_pipes.c \

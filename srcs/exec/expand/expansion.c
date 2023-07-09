@@ -5,7 +5,6 @@
 #include "ms_var.h"
 #include "ft_deque.h"
 #include "ft_mem.h"
-#include "ft_string.h"
 
 static void	expand_token(t_token *token, t_context *context)
 {
@@ -51,14 +50,22 @@ static void	expand_tokens(t_deque *tokens, t_context *context)
 	}
 }
 
+// word splitting: if unquoted, word split by delimiter
 t_result	expand_variables(t_ast *self_node, t_context *context)
 {
 	t_redirect	*redirects;
 
 	expand_tokens(self_node->command, context);
+//	split_expand_word(self_node->command);
+	remove_empty_tokens(self_node->command);
+	concat_tokens(self_node->command);
 	redirects = self_node->redirects;
 	if (redirects)
+	{
 		expand_tokens(redirects->list, context);
-	// word splitting
+//		split_expand_word(redirects->list);
+		remove_empty_tokens(redirects->list);
+		concat_tokens(redirects->list);
+	}
 	return (SUCCESS);
 }
