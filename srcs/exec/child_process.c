@@ -46,11 +46,9 @@ void	child_process(t_ast *self_node, \
 		status = execute_builtin_command((const char *const *)argv, context);
 	else if (self_node->kind == NODE_KIND_SUBSHELL)
 	{
-//		dprintf(2, "subshell 1\n");
+		self_node->left->parent = NULL;
 		execute_command(self_node->left, context); // todo: process error
-//		dprintf(2, "subshell 2\n");
 		status = context->status;
-//		dprintf(2, "subshell \n");
 	}
 	else
 		status = execute_external_command((char *const *)argv, environ);

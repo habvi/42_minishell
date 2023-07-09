@@ -59,7 +59,7 @@ t_ast	*parse(t_deque **tokens, t_context *context)
 	heredoc_result = execute_heredoc(ast);
 	if (heredoc_result == PROCESS_ERROR)
 		return (destroy_tokens_and_ast(tokens, &ast, false, head_node));
-	// debug_print_ast_tree(ast, __func__);
+	debug_print_ast_tree(ast, __func__);
 	destroy_tokens(tokens, del_token); //when exec by ast, destroy tokens.
 	return (ast);
 }
