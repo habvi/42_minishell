@@ -1,14 +1,11 @@
-#include "minishell.h"
 #include "ms_expansion.h"
 #include "ms_tokenize.h"
 #include "ms_parse.h"
-#include "ms_var.h"
 #include "ft_deque.h"
-#include "ft_mem.h"
 #include "ft_string.h"
 
 // *node != NULL
-void	remove_empty_tokens_each(t_deque *tokens, t_deque_node **node)
+static void	remove_empty_tokens_each(t_deque *tokens, t_deque_node **node)
 {
 	t_deque_node	*next;
 	t_token			*token;

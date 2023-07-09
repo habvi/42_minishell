@@ -5,7 +5,6 @@
 #include "ms_var.h"
 #include "ft_deque.h"
 #include "ft_mem.h"
-#include "ft_string.h"
 
 static void	expand_token(t_token *token, t_context *context)
 {

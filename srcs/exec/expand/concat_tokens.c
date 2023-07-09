@@ -7,8 +7,8 @@
 
 static char	*concat_token_str(t_deque_node *node1, t_deque_node *node2)
 {
-	const t_token	*token1 = (t_token *)node1->content;;
-	const t_token	*token2 = (t_token *)node2->content;;
+	const t_token	*token1 = (t_token *)node1->content;
+	const t_token	*token2 = (t_token *)node2->content;
 	char			*concat_str;
 
 	concat_str = x_ft_strjoin(token1->str, token2->str);
@@ -27,7 +27,7 @@ static void	swap_next_token_str(t_deque_node *next, char *concat_str)
 // tokens=[token1]=[token2]-[token3]=[token4]
 //         ^now   ^ concat_next
 // *node != NULL
-void	concat_tokens_each(t_deque *tokens, t_deque_node **node)
+static void	concat_tokens_each(t_deque *tokens, t_deque_node **node)
 {
 	t_deque_node	*next;
 	char			*concat_str;
