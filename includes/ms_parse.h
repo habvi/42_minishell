@@ -86,4 +86,6 @@ void		destroy_ast_tree(t_ast **root);
 /* error */
 void		*ast_print_error(t_deque_node *token_node);
 
+char		*get_node_kind_str(t_node_kind kind);
+
 #endif //MS_PARSE_H

@@ -34,7 +34,7 @@ bool	is_last_command_node(t_ast *self_node)
 		return (true);
 	if (is_last_pipe_node(parent_node) && parent_node->right == self_node)
 	{
-		ft_dprintf(2, "cat?????\n");
+//		ft_dprintf(2, "cat?????\n");
 		return (true);
 	}
 	if (is_node_kind_and_or(parent_node->kind))
@@ -51,6 +51,9 @@ t_result	exec_command_each(t_ast *self_node, t_context *context)
 
 	if (!(self_node->kind == NODE_KIND_COMMAND || self_node->kind == NODE_KIND_SUBSHELL))
 		return (SUCCESS);
+//	dprintf(2, "    -- exec_command_each command[%s] %s ------\n",
+//		get_head_token_str(self_node->command),
+//		get_node_kind_str(self_node->kind));
 	// no need new pipe, when parent is subshell node (ittan ignore builtin..)
 	if (self_node->parent && self_node->parent->kind == NODE_KIND_OP_PIPE)
 	{

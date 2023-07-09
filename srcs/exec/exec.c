@@ -7,6 +7,23 @@
 #include "ft_mem.h"
 #include "ft_sys.h"
 
+char	*get_node_kind_str(t_node_kind kind)
+{
+	if (kind == NODE_KIND_NONE)
+		return ("NONE");
+	if (kind == NODE_KIND_COMMAND)
+		return ("COMMAND");
+	if (kind == NODE_KIND_OP_PIPE)
+		return ("|");
+	if (kind == NODE_KIND_OP_OR)
+		return ("||");
+	if (kind == NODE_KIND_OP_AND)
+		return ("&&");
+	if (kind == NODE_KIND_SUBSHELL)
+		return ("()");
+	return ("ERROR");
+}
+
 static bool	is_executable_right_node(t_ast *self_node, uint8_t status)
 {
 	if (!is_node_kind_and_or(self_node->kind))
@@ -17,23 +34,28 @@ static bool	is_executable_right_node(t_ast *self_node, uint8_t status)
 		return (true);
 	return (false);
 }
-
+/*
 static t_result	execute_subshell(t_ast *root_node, t_context *context)
 {
-
+	dprintf(2, "-- subshell start command[%s] %s ------\n",
+			get_head_token_str(root_node->command),
+			get_node_kind_str(root_node->kind));
+	dprintf(2, "-- subshell->left command[%s] %s ------\n\n",
+			get_head_token_str(root_node->left->command),
+			get_node_kind_str(root_node->left->kind));
 	if (x_pipe(root_node->pipe_fd) == PIPE_ERROR)
 		return (PROCESS_ERROR);
 	root_node->pid = x_fork();
 	if (root_node->pid == FORK_ERROR)
 		return (PROCESS_ERROR);
 	context->is_interactive = false;
-	root_node->left->pipe_fd[READ] = root_node->pipe_fd[READ];
-	root_node->left->pipe_fd[WRITE] = root_node->pipe_fd[WRITE];
-	root_node->left->prev_fd = root_node->prev_fd;
+//	root_node->left->pipe_fd[READ] = root_node->pipe_fd[READ];
+//	root_node->left->pipe_fd[WRITE] = root_node->pipe_fd[WRITE];
+//	root_node->left->prev_fd = root_node->prev_fd;
 	if (root_node->pid == CHILD_PID)
 	{
-		// if (handle_child_pipes(root_node) == PROCESS_ERROR)
-		// 	exit(EXIT_FAILURE);
+		 if (handle_child_pipes(root_node) == PROCESS_ERROR)
+		 	exit(EXIT_FAILURE);
 		if (execute_command(root_node->left, context) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 		exit (context->status);
@@ -43,9 +65,9 @@ static t_result	execute_subshell(t_ast *root_node, t_context *context)
 		int	wait_status;
 
 		// usleep(50000);
-		root_node->prev_fd = root_node->left->pipe_fd[READ];
-		// if (handle_parent_pipes(root_node) == PROCESS_ERROR)
-		// 	return (PROCESS_ERROR);
+//		root_node->prev_fd = root_node->left->pipe_fd[READ];
+		 if (handle_parent_pipes(root_node) == PROCESS_ERROR)
+		 	return (PROCESS_ERROR);
 		if (get_last_command_status(\
 				root_node->pid, &wait_status, &context->status) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
@@ -58,9 +80,17 @@ static t_result	execute_subshell(t_ast *root_node, t_context *context)
 	// 	write(2, &c, 1);
 	// }
 	if (root_node->parent)
+	{
 		root_node->parent->prev_fd = root_node->prev_fd;
+		dprintf(2, "-- subshell start[%s] : parent->prev:%d ------\n",
+				get_head_token_str(root_node->left->command), root_node->parent->prev_fd);
+	}
+	else
+		dprintf(2, "-- subshell start[%s]: parent null ------\n",
+				get_head_token_str(root_node->left->command));
 	return (SUCCESS);
 }
+ */
 
 static t_result	execute_command_recursive(t_ast *self_node, t_context *context)
 {
@@ -69,8 +99,8 @@ static t_result	execute_command_recursive(t_ast *self_node, t_context *context)
 
 	// debug_print_ast_tree(self_node, "subshell");
 	// ( )
-	if (is_node_kind_subshell(self_node->kind))
-		return (execute_subshell(self_node, context));
+//	if (is_node_kind_subshell(self_node->kind))
+//		return (execute_subshell(self_node, context));
 
 	// node left
 	if (self_node->left)

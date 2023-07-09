@@ -31,13 +31,17 @@ t_result	handle_parent_pipes(t_ast *self_node)
 
 	if (!is_first_command(prev_fd))
 	{
-		// ft_dprintf(2, "-- p not first command ------\n");
+//		 dprintf(2, "  -- parent not first command[%s] %s ------\n",
+//				 get_head_token_str(self_node->command),
+//				 get_node_kind_str(self_node->kind));
 		if (handle_parent_pipes_except_first(prev_fd) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 	}
 	if (!is_last_command_node(self_node))
 	{
-		// ft_dprintf(2, "-- p not last command ------\n");
+//		 dprintf(2, "  -- parent not last command[%s] %s ------\n",
+//				 get_head_token_str(self_node->command),
+//				 get_node_kind_str(self_node->kind));
 		if (handle_parent_pipes_except_last(self_node) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 	}
