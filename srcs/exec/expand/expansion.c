@@ -101,15 +101,11 @@ static void	expand_token(t_token *token, t_context *context)
 	token->str = joind_str;
 }
 
-t_result	expand_variables(t_ast *self_node, t_context *context)
+static void	expand_command(t_deque *command, t_context *context)
 {
-	t_deque			*command;
 	t_deque_node	*node;
 	t_token			*token;
 
-	// parameter and variables expansion
-	// expand command
-	command = (t_deque *)self_node->command;
 	if (command)
 	{
 		node = command->node;
@@ -125,6 +121,13 @@ t_result	expand_variables(t_ast *self_node, t_context *context)
 			node = node->next;
 		}
 	}
+}
+
+t_result	expand_variables(t_ast *self_node, t_context *context)
+{
+
+	// parameter and variables expansion
+	expand_command(self_node->command, context);
 	// expand redirect
 	// redirect_list = (t_deque *)self_node->redirects->list;
 	// --------------
