@@ -85,6 +85,7 @@ bool		is_valid_key(const char *word);
 bool		is_valid_path(const char *path, int *tmp_err);
 char		*x_ft_itoa(int n);
 char		*x_ft_strdup(const char *str);
+char		*x_ft_strndup(const char *str, size_t maxlen);
 char		*x_ft_strjoin(char const *s1, char const *s2);
 
 /* init */

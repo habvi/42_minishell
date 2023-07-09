@@ -12,3 +12,15 @@ char	*x_ft_strdup(const char *str)
 		ft_abort();
 	return (dup);
 }
+
+char	*x_ft_strndup(const char *str, size_t maxlen)
+{
+	char	*dup;
+
+	if (!str)
+		return (NULL);
+	dup = ft_strndup(str, maxlen);
+	if (!dup)
+		ft_abort();
+	return (dup);
+}
