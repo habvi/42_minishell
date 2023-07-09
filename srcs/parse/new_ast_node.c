@@ -59,3 +59,13 @@ t_ast	*new_ast_node(t_node_kind kind, t_ast *left, t_ast *right)
 	new_node->right = right;
 	return (new_node);
 }
+
+void	set_parent_of_children_node(t_ast **self_node)
+{
+	if (!self_node || !*self_node)
+		return ;
+	if ((*self_node)->left)
+		(*self_node)->left->parent = *self_node;
+	if ((*self_node)->right)
+		(*self_node)->right->parent = *self_node;
+}

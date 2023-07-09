@@ -4,11 +4,6 @@
 #include "ft_deque.h"
 
 /*
-arithmetic
-  expression	= term, [(+|-) term]*
-  term	    	= primary, [(*|/) primary]*
-  primary    	= num | '(' expr ')'
-
  minishell
 <subshell>          ::= '(' <operator_list> ')'
 
@@ -19,26 +14,6 @@ arithmetic
                       | <operator_list> '||' <operator_list>
                       | <pipeline_commands>
 */
-/*
-static char *get_token_node_str(t_deque_node *node)
-{
-	t_token  *token;
-
-	if (!node)
-		return (NULL);
-	token = (t_token *)node->content;
-	return (token->str);
-}
-*/
-static void	set_parent_of_children_node(t_ast **self_node)
-{
-	if (!self_node || !*self_node)
-		return ;
-	if ((*self_node)->left)
-		(*self_node)->left->parent = *self_node;
-	if ((*self_node)->right)
-		(*self_node)->right->parent = *self_node;
-}
 
 // <op_list>
 // expr	= <com_list> '&&' <com_list>
