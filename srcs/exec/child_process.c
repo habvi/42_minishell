@@ -28,7 +28,7 @@ static uint8_t	execute_external_command(char *const *argv, char **environ)
 	}
 	return (EXIT_CODE_NO_SUCH_FILE);
 }
-#include <stdio.h>
+
 // if execve erorr, no need for auto perror.
 void	child_process(t_ast *self_node, \
 						char **environ, \

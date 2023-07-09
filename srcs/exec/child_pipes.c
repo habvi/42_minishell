@@ -16,7 +16,6 @@ static t_result	handle_child_pipes_except_first(int prev_fd)
 
 static t_result	handle_child_pipes_except_last(int pipe_fd[2])
 {
-//	ft_dprintf(2, "----------------------\n");
 	if (x_close(pipe_fd[READ]) == CLOSE_ERROR)
 		return (PROCESS_ERROR);
 	if (x_close(STDOUT_FILENO) == CLOSE_ERROR)
@@ -39,25 +38,13 @@ t_result	handle_child_pipes(t_ast *self_node)
 
 	if (!is_first_command(prev_fd))
 	{
-//		dprintf(2, "    -- child : not first command[%s] %s ------\n",
-//				get_head_token_str(self_node->command),
-//				get_node_kind_str(self_node->kind));
 		if (handle_child_pipes_except_first(prev_fd) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 	}
 	if (!is_last_command_node(self_node))
 	{
-//		dprintf(2, "    -- child : not last command[%s] %s ------\n",
-//				get_head_token_str(self_node->command),
-//				get_node_kind_str(self_node->kind));
 		if (handle_child_pipes_except_last(self_node->pipe_fd) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 	}
-	// char c;
-	// while (read(self_node->pipe_fd[WRITE], &c, 1) > 0)
-	// {
-	// 	write(2, &c, 1);
-	// }
-	// ft_dprintf(2, "[%s/%d]\n", get_head_token_str(self_node->command), self_node->prev_fd);
 	return (SUCCESS);
 }
