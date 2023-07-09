@@ -112,6 +112,7 @@ SRCS		+=	$(TOKEN_DIR)/del_token.c \
 
 UTILS_DIR	:=	utils
 SRCS		+=	$(UTILS_DIR)/count_array.c \
+				$(UTILS_DIR)/extend_str.c \
 				$(UTILS_DIR)/ft_abort.c \
 				$(UTILS_DIR)/get_working_directory.c \
 				$(UTILS_DIR)/is_valid_key.c \
