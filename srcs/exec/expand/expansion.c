@@ -7,78 +7,6 @@
 #include "ft_mem.h"
 #include "ft_string.h"
 
-static char	*strcat_after_dollar(char *str)
-{
-	char	*new_str;
-
-	new_str = x_ft_strjoin(STR_DOLLAR, str);
-	ft_free(&str);
-	return (new_str);
-}
-
-static char	*expand_status(char **str, t_context *context)
-{
-	(*str)++;
-	return (x_ft_itoa(context->status));
-}
-
-static char	*expand_key(char **str, t_var *var)
-{
-	char	*head;
-	char	*tail;
-	char	*key;
-	char	*value;
-
-	head = *str;
-	tail = *str;
-	if (!is_valid_head(*head))
-		return (x_ft_strdup(STR_DOLLAR));
-	tail++;
-	while (tail && is_valid_after_head(*tail))
-		tail++;
-	*str = tail;
-	key = x_ft_strndup(head, tail - head);
-	if (ft_streq(key, STR_UNDERSCORE))
-	{
-		(*str)++;
-		return (strcat_after_dollar(key));
-	}
-	value = var->get_value(var, key);
-	ft_free(&key);
-	return (value);
-}
-
-// $_aaaa, alnum or _
-// $_&
-// $_\0
-// $, $8, $$
-static char	*expand_parameter(char **str, t_context *context)
-{
-	char	*value;
-
-	(*str)++;
-	if (**str == PARAM_STATUS)
-		value = expand_status(str, context);
-	else
-		value = expand_key(str, context->var);
-	return (value);
-}
-
-static char	*substr_before_dollar(char **str)
-{
-	char	*head;
-	char	*tail;
-	char	*substr;
-
-	head = *str;
-	tail = *str;
-	while (*tail && *tail != CHAR_DOLLAR)
-		tail++;
-	substr = x_ft_strndup(head, tail - head);
-	*str = tail;
-	return (substr);
-}
-
 static void	expand_token(t_token *token, t_context *context)
 {
 	char	*str;
@@ -101,14 +29,14 @@ static void	expand_token(t_token *token, t_context *context)
 	token->str = joind_str;
 }
 
-static void	expand_command(t_deque *command, t_context *context)
+static void	expand_tokens(t_deque *tokens, t_context *context)
 {
 	t_deque_node	*node;
 	t_token			*token;
 
-	if (command)
+	if (tokens)
 	{
-		node = command->node;
+		node = tokens->node;
 		while (node)
 		{
 			token = (t_token *)node->content;
@@ -125,12 +53,12 @@ static void	expand_command(t_deque *command, t_context *context)
 
 t_result	expand_variables(t_ast *self_node, t_context *context)
 {
+	t_redirect	*redirects;
 
-	// parameter and variables expansion
-	expand_command(self_node->command, context);
-	// expand redirect
-	// redirect_list = (t_deque *)self_node->redirects->list;
-	// --------------
+	expand_tokens(self_node->command, context);
+	redirects = self_node->redirects;
+	if (redirects)
+		expand_tokens(redirects->list, context);
 	// word splitting
 	return (SUCCESS);
 }

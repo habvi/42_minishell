@@ -30,9 +30,10 @@ static void	destroy_ast_node(t_ast *root)
 	ft_free(&root);
 }
 
-void	destroy_ast_tree(t_ast **root)
+void	*destroy_ast_tree(t_ast **root)
 {
 	if (!root || !*root)
-		return ;
+		return (NULL);
 	destroy_ast_node(*root);
+	return (NULL);
 }

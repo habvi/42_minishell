@@ -48,6 +48,10 @@ struct s_ast
 t_ast		*parse(t_deque **tokens, t_context *context, t_result *result);
 
 /* syntax check */
+bool		is_valid_pre_parse_syntax(t_deque_node *head_node, \
+										t_deque **tokens, \
+										t_context *context, \
+										t_result *result);
 bool		is_parenthesis_concatenated_all(t_deque_node *node);
 bool		is_valid_redirect_syntax_all(t_deque_node *node);
 
@@ -83,9 +87,10 @@ bool		is_node_kind_exec_heredoc(t_node_kind node_kind);
 bool		is_node_kind_and_or(t_node_kind node_kind);
 
 /* destroy */
-void		destroy_ast_tree(t_ast **root);
+void		*destroy_ast_tree(t_ast **root);
 
 /* error */
 void		*ast_print_error(t_deque_node *token_node);
+void		set_error_status(t_context *context, t_result *result);
 
 #endif //MS_PARSE_H

@@ -20,3 +20,9 @@ void	*ast_print_error(t_deque_node *token_node)
 				SHELL_NAME, ERROR_MSG_SYNTAX, err_arg);
 	return (NULL);
 }
+
+void	set_error_status(t_context *context, t_result *result)
+{
+	context->status = SYNTAX_ERROR;
+	*result = FAILURE;
+}

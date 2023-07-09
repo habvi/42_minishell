@@ -14,5 +14,7 @@ typedef struct s_context	t_context;
 // typedef struct s_deque_node	t_deque_node;
 
 t_result	expand_variables(t_ast *self_node, t_context *context);
+char		*expand_parameter(char **str, t_context *context);
+char		*substr_before_dollar(char **str);
 
 #endif //MS_EXPANSION_H
