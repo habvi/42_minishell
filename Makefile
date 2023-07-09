@@ -58,7 +58,9 @@ SRCS		+=	$(DEBUG_DIR)/debug_print_ast.c \
 				$(DEBUG_DIR)/put.c
 
 EXEC_DIR	:=	exec
-SRCS		+=	$(EXEC_DIR)/call_builtin_command.c \
+EXPAND_DIR	:=	expand
+SRCS		+=	$(EXEC_DIR)/$(EXPAND_DIR)/expansion.c \
+				$(EXEC_DIR)/call_builtin_command.c \
 				$(EXEC_DIR)/child_pipes.c \
 				$(EXEC_DIR)/child_process.c \
 				$(EXEC_DIR)/exec.c \
