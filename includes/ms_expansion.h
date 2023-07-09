@@ -3,6 +3,11 @@
 
 # include "ms_result.h"
 
+# define CHAR_DOLLAR	'$'
+# define STR_DOLLAR		"$"
+# define STR_UNDERSCORE	"_"
+# define PARAM_STATUS	'?'
+
 typedef struct s_ast		t_ast;
 typedef struct s_context	t_context;
 // typedef struct s_deque		t_deque;

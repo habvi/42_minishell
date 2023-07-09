@@ -1,4 +1,5 @@
 #include "minishell.h"
+#include "ms_expansion.h"
 #include "ms_tokenize.h"
 #include "ms_parse.h"
 #include "ms_var.h"
@@ -6,54 +7,64 @@
 #include "ft_mem.h"
 #include "ft_string.h"
 
-static char	*strcat_after_doller(char *str)
+static char	*strcat_after_dollar(char *str)
 {
 	char	*new_str;
 
-	new_str = x_ft_strjoin("$", str);
+	new_str = x_ft_strjoin(STR_DOLLAR, str);
 	ft_free(&str);
 	return (new_str);
+}
+
+static char	*expand_status(char **str, t_context *context)
+{
+	(*str)++;
+	return (x_ft_itoa(context->status));
+}
+
+static char	*expand_key(char **str, t_var *var)
+{
+	char	*head;
+	char	*tail;
+	char	*key;
+	char	*value;
+
+	head = *str;
+	tail = *str;
+	if (!is_valid_head(*head))
+		return (x_ft_strdup(STR_DOLLAR));
+	tail++;
+	while (tail && is_valid_after_head(*tail))
+		tail++;
+	*str = tail;
+	key = x_ft_strndup(head, tail - head);
+	if (ft_streq(key, STR_UNDERSCORE))
+	{
+		(*str)++;
+		return (strcat_after_dollar(key));
+	}
+	value = var->get_value(var, key);
+	ft_free(&key);
+	return (value);
 }
 
 // $_aaaa, alnum or _
 // $_&
 // $_\0
 // $, $8, $$
-static char	*find_key_and_substr(char **str, t_context *context)
+static char	*expand_parameter(char **str, t_context *context)
 {
-	char	*head;
-	char	*tail;
-	char	*substr;
 	char	*value;
-	t_var	*var;
 
 	(*str)++;
-	if (**str == '?')
-	{
-		(*str)++;
-		return (x_ft_itoa(context->status));
-	}
-	head = *str;
-	tail = *str;
-	if (!is_valid_head(*head))
-		return (strcat_after_doller(x_ft_strdup("")));
-	tail++;
-	while (tail && is_valid_after_head(*tail))
-		tail++;
-	*str = tail;
-	substr = x_ft_strndup(head, tail - head);
-	if (ft_streq(substr, "_"))
-	{
-		(*str)++;
-		return (strcat_after_doller(substr));
-	}
-	var = context->var;
-	value = var->get_value(var, substr);
-	ft_free(&substr);
+	if (**str == PARAM_STATUS)
+		value = expand_status(str, context);
+	else
+		value = expand_key(str, context->var);
 	return (value);
 }
 
-static char	*substr_before_doller(char **str)
+static char	*substr_before_dollar(char **str)
 {
 	char	*head;
 	char	*tail;
@@ -61,22 +72,11 @@ static char	*substr_before_doller(char **str)
 
 	head = *str;
 	tail = *str;
-	while (*tail && *tail != '$')
+	while (*tail && *tail != CHAR_DOLLAR)
 		tail++;
 	substr = x_ft_strndup(head, tail - head);
 	*str = tail;
 	return (substr);
-}
-
-static char	*expand_str(char *str, char *expand_str)
-{
-	char	*tmp;
-
-	tmp = str;
-	str = x_ft_strjoin(tmp, expand_str);
-	ft_free(&tmp);
-	ft_free(&expand_str);
-	return (str);
 }
 
 static void	expand_token(t_token *token, t_context *context)
@@ -89,13 +89,13 @@ static void	expand_token(t_token *token, t_context *context)
 	str = token->str;
 	while (*str)
 	{
-		if (*str == '$')
+		if (*str == CHAR_DOLLAR)
 		{
-			new_str = find_key_and_substr(&str, context);
-			joind_str = expand_str(joind_str, new_str);
+			new_str = expand_parameter(&str, context);
+			joind_str = extend_str(joind_str, new_str);
 		}
-		new_str = substr_before_doller(&str);
-		joind_str = expand_str(joind_str, new_str);
+		new_str = substr_before_dollar(&str);
+		joind_str = extend_str(joind_str, new_str);
 	}
 	ft_free(&token->str);
 	token->str = joind_str;
