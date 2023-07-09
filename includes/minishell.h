@@ -5,6 +5,7 @@
 # include <stddef.h>
 # include <stdint.h>
 # include "ms_result.h"
+# include "ft_dprintf.h"
 
 /* return value */
 # define ACCESS_ERROR	(-1)

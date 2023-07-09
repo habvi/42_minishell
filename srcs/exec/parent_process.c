@@ -5,7 +5,7 @@
 #include "ms_parse.h"
 #include "ft_sys.h"
 
-static t_result	get_last_command_status(pid_t pid, \
+t_result	get_last_command_status(pid_t pid, \
 									int *wait_status, \
 									uint8_t *last_status)
 {
@@ -20,7 +20,7 @@ static t_result	get_last_command_status(pid_t pid, \
 }
 
 // if wait error, no need for auto perror.
-static t_result	wait_all_child_process(int wait_status)
+t_result	wait_all_child_process(int wait_status)
 {
 	while (true)
 	{

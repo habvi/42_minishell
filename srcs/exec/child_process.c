@@ -44,6 +44,12 @@ void	child_process(t_ast *self_node, \
 		exit(EXIT_FAILURE);
 	if (is_command_builtin(argv[0]))
 		status = execute_builtin_command((const char *const *)argv, context);
+	else if (self_node->kind == NODE_KIND_SUBSHELL)
+	{
+		self_node->left->parent = NULL;
+		execute_command(self_node->left, context); // todo: process error
+		status = context->status;
+	}
 	else
 		status = execute_external_command((char *const *)argv, environ);
 	free_2d_array(&argv);

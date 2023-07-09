@@ -10,7 +10,6 @@ static t_result	handle_parent_pipes_except_first(int prev_fd)
 	return (SUCCESS);
 }
 
-// todo: parent?
 static t_result	handle_parent_pipes_except_last(t_ast *self_node)
 {
 	if (self_node->parent)
