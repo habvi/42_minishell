@@ -82,6 +82,8 @@ size_t		count_argv(const char *const *argc);
 void		ft_abort(void);
 char		*get_working_directory(char *for_whom);
 bool		is_valid_key(const char *word);
+bool		is_valid_head(const char c);
+bool		is_valid_after_head(const char c);
 bool		is_valid_path(const char *path, int *tmp_err);
 char		*x_ft_itoa(int n);
 char		*x_ft_strdup(const char *str);
