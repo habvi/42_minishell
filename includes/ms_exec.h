@@ -15,15 +15,10 @@
 # define ERROR_MSG_NO_SUCH_FILE		"No such file or directory"
 # define ERROR_MSG_CMD_NOT_FOUND	"command not found"
 
-typedef struct s_deque_node	t_deque_node;
-typedef struct s_deque		t_deque;
+typedef struct s_ast		t_ast;
 typedef struct s_context	t_context;
-
-typedef struct s_command {
-	t_deque			*head_command;
-	char			**exec_command;
-	t_deque_node	*next_command;
-}	t_command;
+typedef struct s_deque		t_deque;
+typedef struct s_deque_node	t_deque_node;
 
 typedef struct s_fd {
 	int	pipefd[2];
@@ -39,20 +34,14 @@ bool			is_first_command(int prev_fd);
 bool			is_last_command(t_deque_node *next_cmd);
 
 /* child_process */
-t_result		handle_child_pipes(t_command *cmd, t_fd *fd);
-void			child_process(t_command *cmd, \
-								t_fd *fd, \
-								char **environ, \
-								t_context *context);
 
 /* exec */
-t_result		execute_command(t_deque *dq_cmd, t_context *context);
+t_result		execute_command(t_ast *ast, t_context *context);
 t_deque_node	*get_next_command(t_deque_node *cmd, size_t *cmd_size);
 char			**convert_command_to_array(t_deque_node *cmd, \
 											const size_t size);
 
 /* init */
-void			init_cmd(t_command *cmd, t_deque *dq_cmd);
 void			init_fd(t_fd *fd);
 
 /* is_single_builtin */
@@ -60,10 +49,26 @@ bool			is_command_builtin(const char *cmd);
 bool			is_single_builtin(t_deque_node *cmd);
 
 /* parent */
-t_result		handle_parent_pipes(t_command *cmd, t_fd *fd);
-t_result		parent_process(t_command *cmd, \
-								t_fd *fd, \
-								pid_t pid, \
-								uint8_t *last_status);
+
+/* ast */
+char			**convert_command_to_argv(t_deque *command);
+t_result		handle_child_pipes(t_ast *self_node);
+void			child_process(t_ast *self_node, \
+								char **environ, \
+								t_context *context);
+t_result		handle_parent_pipes(t_ast *self_node);
+t_result		parent_process(t_ast *self_node, t_context *context);
+t_result		exec_command_each(t_ast *self_node, t_context *context);
+void			execute_single_builtin(t_ast *self_node, t_context *context);
+bool			is_single_builtin_command(t_ast *self_node);
+bool			is_last_command_node(t_ast *self_node);
+char			*get_head_token_str(t_deque *command);
+
+t_result		get_last_command_status(pid_t pid, \
+										int *wait_status, \
+										uint8_t *last_status);
+t_result		wait_all_child_process(int wait_status);
+t_result		exec_handle_left_node(t_ast *self_node, t_context *context);
+t_result		exec_handle_right_node(t_ast *self_node, t_context *context);
 
 #endif //MS_EXEC_H

@@ -5,6 +5,7 @@
 # include <stddef.h>
 # include <stdint.h>
 # include "ms_result.h"
+# include "ft_dprintf.h"
 
 /* return value */
 # define ACCESS_ERROR	(-1)
@@ -42,6 +43,10 @@
 # define SHELL_INIT				"shell-init"
 # define ERROR_MSG_GETCWD		"getcwd: cannot access parent directories"
 # define ERROR_MSG_RETRIEVE_CWD	"error retrieving current directory"
+
+/* parse, exec */
+# define IN_FD_INIT		STDIN_FILENO
+# define OUT_FD_INIT	STDOUT_FILENO
 
 typedef struct s_var		t_var;
 typedef struct s_deque		t_deque;

@@ -50,5 +50,5 @@ bool	is_token_kind_redirection_from_node(t_deque_node *token_node)
 		return (false);
 	token = (t_token *)token_node->content;
 	kind = token->kind;
-	return (is_token_kind_redirection(kind));
+	return (kind == TOKEN_KIND_REDIRECT_HEREDOC);
 }
