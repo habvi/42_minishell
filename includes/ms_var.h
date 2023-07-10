@@ -13,6 +13,7 @@
 # define ATTR_SHELL		"--"
 
 /* var key */
+# define KEY_PATH		"PATH"
 # define KEY_PWD		"PWD"
 # define KEY_OLDPWD		"OLDPWD"
 # define KEY_HOME		"HOME"

@@ -81,5 +81,8 @@ t_result		exec_handle_left_node(t_ast *self_node, t_context *context);
 t_result		exec_handle_right_node(t_ast *self_node, t_context *context);
 
 char			*get_next_path(char **path_list);
+char			*create_executable_path(char *paths, const char *const command);
+char			*create_accessible_path(char *paths, const char *const command);
+char			*create_exec_path(const char *const *argv, t_var *var);
 
 #endif //MS_EXEC_H

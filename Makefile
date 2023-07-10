@@ -61,6 +61,8 @@ EXEC_DIR	:=	exec
 SRCS		+=	$(EXEC_DIR)/call_builtin_command.c \
 				$(EXEC_DIR)/child_pipes.c \
 				$(EXEC_DIR)/child_process.c \
+				$(EXEC_DIR)/create_exec_path.c \
+				$(EXEC_DIR)/create_executable_or_accessible_path.c \
 				$(EXEC_DIR)/exec.c \
 				$(EXEC_DIR)/exec_command.c \
 				$(EXEC_DIR)/exec_external_command.c \
