@@ -2,8 +2,10 @@
 #include "minishell.h"
 #include "ms_exec.h"
 #include "ms_parse.h"
+#include "ms_builtin.h"
 #include "ft_deque.h"
 #include "ft_dprintf.h"
+#include "ft_string.h"
 #include "ft_mem.h"
 
 static uint8_t	execute_builtin_command(const char *const *argv, \
@@ -13,33 +15,6 @@ static uint8_t	execute_builtin_command(const char *const *argv, \
 
 	exec_status = call_builtin_command(argv, context);
 	return (exec_status);
-}
-
-// PATH="path_1:path_2:path_3...:path_n"
-// access(path + argv[0]) -> exec or next path
-// 1. check path -> if access() return 0, exec path
-//                              return -1, EACCESS, pass path -> 2
-// 2. most left accessable path -> permission denied ?
-
-// file
-// search PATH
-
-// execve
-//  dir/file ???
-//  ./relative_path
-//  /absolute_path
-static uint8_t	execute_external_command(char *const *argv, char **environ)
-{
-	int	exec_status;
-
-	if (argv[0])
-		exec_status = execve(argv[0], (char *const *) argv, environ);
-	if (!argv[0] || exec_status == EXECVE_ERROR)
-	{
-		ft_dprintf(STDERR_FILENO, "%s: %s: %s\n", \
-					SHELL_NAME, argv[0], ERROR_MSG_CMD_NOT_FOUND); // todo: tmp
-	}
-	return (EXIT_CODE_NO_SUCH_FILE);
 }
 
 static uint8_t	execute_subshell(t_ast *self_node, t_context *context)
@@ -68,7 +43,9 @@ static uint8_t	execute_command_in_child(t_ast *self_node, \
 	else if (self_node->kind == NODE_KIND_SUBSHELL)
 		status = execute_subshell(self_node, context);
 	else
-		status = execute_external_command((char *const *)argv, environ);
+		status = execute_external_command((char *const *)argv, \
+											environ, \
+											context->var);
 	free_2d_array(&argv);
 	return (status);
 }

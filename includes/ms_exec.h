@@ -40,6 +40,9 @@ t_result		execute_command(t_ast *ast, t_context *context);
 t_deque_node	*get_next_command(t_deque_node *cmd, size_t *cmd_size);
 char			**convert_command_to_array(t_deque_node *cmd, \
 											const size_t size);
+uint8_t			execute_external_command(char *const *argv, \
+											char **environ, \
+											t_var *var);
 
 /* init */
 void			init_fd(t_fd *fd);
