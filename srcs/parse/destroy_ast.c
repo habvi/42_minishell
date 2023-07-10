@@ -1,5 +1,6 @@
 #include <unistd.h>
 #include <wait.h>
+#include "ms_exec.h"
 #include "ms_parse.h"
 #include "ms_tokenize.h"
 #include "ft_deque.h"
@@ -38,7 +39,7 @@ static void	wait_all_child_lastly(t_ast *ast)
 	wait_all_child_lastly(ast->left);
 	wait_all_child_lastly(ast->right);
 	if (ast->pid)
-		waitpid(ast->pid, NULL, 0);
+		waitpid(ast->pid, NULL, NO_OPTION);
 }
 
 void	destroy_ast_tree(t_ast **root, t_result result)

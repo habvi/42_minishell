@@ -9,6 +9,7 @@
 # define CHILD_PID		0
 # define READ			0
 # define WRITE			1
+# define NO_OPTION		0
 
 # define EXIT_CODE_NO_SUCH_FILE		127
 
@@ -19,6 +20,7 @@ typedef struct s_ast		t_ast;
 typedef struct s_context	t_context;
 typedef struct s_deque		t_deque;
 typedef struct s_deque_node	t_deque_node;
+typedef struct s_var		t_var;
 
 typedef struct s_fd {
 	int	pipefd[2];
