@@ -45,13 +45,11 @@ static char	*create_hidden_filename_based_on_hash(void)
 // file can create when result of access(2) is no such file
 static bool	is_file_creatable(const char *filepath)
 {
-	int	tmp_err;
 	int	ret;
 
 	errno = 0;
 	ret = access(filepath, F_OK);
-	tmp_err = errno;
-	if (ret == ACCESS_ERROR && tmp_err == ENOENT)
+	if (ret == ACCESS_ERROR && errno == ENOENT) //todo
 		return (true);
 	return (false);
 }
