@@ -17,6 +17,8 @@ static char	*set_path_by_arg(const char *arg, t_var *var, bool *is_print_path)
 		*is_print_path = true;
 		path = var->get_value(var, KEY_OLDPWD);
 	}
+	else if (ft_streq(arg, ""))
+		path = x_ft_strdup(PATH_CURRENT);
 	else
 		path = search_cdpath(arg, var, is_print_path);
 	return (path);

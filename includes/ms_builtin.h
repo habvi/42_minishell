@@ -33,6 +33,7 @@
 # define PATH_DOT			"."
 # define PATH_DOT_DOT		".."
 # define CHAR_PATH_DOT		'.'
+# define PATH_CURRENT		"."
 
 # define VAR_PRINT_QUOTE	"\""
 
