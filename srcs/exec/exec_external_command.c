@@ -29,11 +29,10 @@ static void	error_execve(char *const cmd, int tmp_err, t_context *context)
 					SHELL_NAME, cmd, strerror(tmp_err));
 }
 
-uint8_t	execute_external_command(char *const *argv, \
-									char **environ, \
-									t_context *context)
+uint8_t	execute_external_command(char *const *argv, t_context *context)
 {
 	char	*exec_path;
+	char	**envp;
 
 	if (!argv[0])
 		return (0); // todo: ok? case:redirect only
@@ -44,9 +43,11 @@ uint8_t	execute_external_command(char *const *argv, \
 		ft_free(&exec_path);
 		return (context->status);
 	}
+	envp = convert_environ(context->var);
 	errno = 0;
-	if (execve(exec_path, (char *const *) argv, environ) == EXECVE_ERROR)
+	if (execve(exec_path, (char *const *)argv, envp) == EXECVE_ERROR)
 		error_execve(argv[0], errno, context);
 	ft_free(&exec_path);
+	free_2d_array(&envp);
 	return (context->status);
 }

@@ -68,6 +68,7 @@ SRCS		+=	$(EXEC_DIR)/$(EXPAND_DIR)/concat_tokens.c  \
 				$(EXEC_DIR)/call_builtin_command.c \
 				$(EXEC_DIR)/child_pipes.c \
 				$(EXEC_DIR)/child_process.c \
+				$(EXEC_DIR)/convert_environ.c \
 				$(EXEC_DIR)/exec.c \
 				$(EXEC_DIR)/exec_command.c \
 				$(EXEC_DIR)/exec_external_command.c \
