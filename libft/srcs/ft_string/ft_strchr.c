@@ -1,6 +1,6 @@
 #include "ft_string.h"
 
-char	*ft_strchr(const char *s, int int_c)
+char	*ft_strchr(char *s, int int_c)
 {
 	char	c;
 
@@ -8,10 +8,10 @@ char	*ft_strchr(const char *s, int int_c)
 	while (*s)
 	{
 		if (*s == c)
-			return ((char *)s);
+			return (s);
 		s++;
 	}
 	if (c == '\0')
-		return ((char *)s);
+		return (s);
 	return (NULL);
 }

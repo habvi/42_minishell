@@ -24,9 +24,11 @@ static char	*get_token_paren_tail(char *head)
 
 static char	*get_token_quote_tail(char *head)
 {
-	char		*tail;
-	const char	set[2] = {*head, '\0'};
+	char	*tail;
+	char	set[2];
 
+	set[0] = *head;
+	set[1] = '\0';
 	head++;
 	tail = ft_find_set_in_str(head, set);
 	if (*tail)
@@ -36,9 +38,10 @@ static char	*get_token_quote_tail(char *head)
 
 static char	*get_token_word_tail(char *head)
 {
-	char		*tail;
-	const char	*set = TOKEN_SYMBOL TOKEN_QUOTE TOKEN_DELIM TOKEN_PAREN;
+	char	*tail;
+	char	*set;
 
+	set = TOKEN_SYMBOL TOKEN_QUOTE TOKEN_DELIM TOKEN_PAREN;
 	head++;
 	tail = ft_find_set_in_str(head, set);
 	return (tail);

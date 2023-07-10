@@ -12,8 +12,9 @@ static bool	is_argv_path(const char *const argv_head)
 {
 	if (!argv_head)
 		return (false);
-	if (ft_find_set_in_str(PATH_DELIMITER_STR, argv_head))
-		return (true);
+	(void)argv_head;
+//	if (ft_find_set_in_str(PATH_DELIMITER_STR, argv_head))// todo:
+//		return (true);
 	return (false);
 }
 

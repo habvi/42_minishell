@@ -1,4 +1,5 @@
 #include <unistd.h>
+#include <wait.h>
 #include "ms_parse.h"
 #include "ms_tokenize.h"
 #include "ft_deque.h"
