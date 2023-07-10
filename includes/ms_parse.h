@@ -7,6 +7,7 @@
 
 # define HEREDOC_FILE_PREFIX	".pien_"
 # define OPEN_PERMISSION		"0664"
+# define RANDOM_STR_SIZE		50
 
 typedef struct s_context	t_context;
 typedef struct s_deque		t_deque;
