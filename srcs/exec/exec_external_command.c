@@ -12,9 +12,8 @@ static bool	is_argv_path(const char *const argv_head)
 {
 	if (!argv_head)
 		return (false);
-	(void)argv_head;
-//	if (ft_find_set_in_str(PATH_DELIMITER_STR, argv_head))// todo:
-//		return (true);
+	if (ft_strchr_bool(argv_head, PATH_DELIMITER_CHR))
+		return (true);
 	return (false);
 }
 
@@ -59,8 +58,8 @@ static uint8_t	search_command_and_exec(char *const *argv, \
 		return (-1); // todo define
 	// get_path -> execve ?
 	//  or
-	// if (command)   -> search_path_and_exec()
-	// else if (path) -> just execve()
+	// if (command; no slash)   -> search_path_and_exec()
+	// else if (path; has slash) -> just execve()
 	exec_path = create_exec_path((const char *const *)argv, var);
 	exec_status = execve(exec_path, (char *const *) argv, environ);
 	ft_free(&exec_path);

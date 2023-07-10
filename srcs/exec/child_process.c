@@ -23,7 +23,7 @@ static uint8_t	execute_subshell(t_ast *self_node, t_context *context)
 	t_result	result;
 
 	root_node = self_node->left;
-	root_node->parent = NULL;
+	root_node->parent = NULL; //todo: NULL?
 	result = execute_command(root_node, context);
 	if (result == PROCESS_ERROR)
 		return (EXIT_FAILURE);
@@ -43,9 +43,11 @@ static uint8_t	execute_command_in_child(t_ast *self_node, \
 	else if (self_node->kind == NODE_KIND_SUBSHELL)
 		status = execute_subshell(self_node, context);
 	else
+	{
 		status = execute_external_command((char *const *)argv, \
 											environ, \
 											context->var);
+	}
 	free_2d_array(&argv);
 	return (status);
 }
