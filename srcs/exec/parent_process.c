@@ -11,7 +11,7 @@ t_result	get_last_command_status(pid_t pid, \
 {
 	pid_t	wait_pid;
 
-	wait_pid = x_waitpid(pid, wait_status, 0);
+	wait_pid = x_waitpid(pid, wait_status, NO_OPTION);
 	if (wait_pid != WAIT_ERROR && WIFEXITED(*wait_status))
 		*last_status = WEXITSTATUS(*wait_status);
 	else

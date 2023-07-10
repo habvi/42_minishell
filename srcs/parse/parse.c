@@ -29,7 +29,7 @@ static void	*destroy_tokens_and_ast(t_deque **tokens, \
 {
 	// debug_print_ast_tree(*ast, __func__);
 	if (ast)
-		destroy_ast_tree(ast);
+		destroy_ast_tree(ast, SUCCESS);
 	if (is_print_error)
 		ast_print_error(head_node);
 	destroy_tokens(tokens, del_token);

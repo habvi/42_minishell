@@ -20,6 +20,12 @@
 # define WAIT_ERROR		(-1)
 # define UNREACHABLE	(-1)
 
+# define STR_PATH_DELIMITER		":"
+# define CHR_PATH_DELIMITER		':'
+# define STR_CURRENT_PATH		"./"
+# define STR_SLASH				"/"
+# define CHR_SLASH				'/'
+
 /* status */
 // tokenize and parse
 # define SYNTAX_ERROR				2
@@ -83,14 +89,25 @@ void		ft_abort(void);
 char		*get_working_directory(char *for_whom);
 bool		is_valid_key(const char *word);
 bool		is_valid_path(const char *path, int *tmp_err);
+bool		test_opendir_strict(const char *path);
 char		*x_ft_itoa(int n);
 char		*x_ft_strdup(const char *str);
 char		*x_ft_strjoin(char const *s1, char const *s2);
+char		*create_split_src_paths(t_var *var, const char *key);
 
 /* init */
 void		init_context(t_context *context);
 
 /* repl */
 t_result	read_eval_print_loop(t_context *context);
+
+/* path */
+char		*get_next_path(char **path_list);
+char		*create_executable_path(char *paths, const char *const command);
+char		*create_accessible_path(char *paths, const char *const command);
+char		*create_exec_path(const char *const *argv, t_var *var);
+char		*create_valid_path_by_judge(char *paths, \
+										const char *const arg, \
+										bool (*judge)(const char *path));
 
 #endif //MINISHELL_H
