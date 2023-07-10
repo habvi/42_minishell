@@ -11,7 +11,9 @@
 # define WRITE			1
 # define NO_OPTION		0
 
-# define EXIT_CODE_NO_SUCH_FILE		127
+# define STATUS_PERMISSION			126
+# define STATUS_NO_SUCH_FILE		127
+# define STATUS_CMD_NOT_FOUND		127
 
 # define ERROR_MSG_NO_SUCH_FILE		"No such file or directory"
 # define ERROR_MSG_CMD_NOT_FOUND	"command not found"
@@ -44,7 +46,7 @@ char			**convert_command_to_array(t_deque_node *cmd, \
 											const size_t size);
 uint8_t			execute_external_command(char *const *argv, \
 											char **environ, \
-											t_var *var);
+											t_context *context);
 
 /* init */
 void			init_fd(t_fd *fd);

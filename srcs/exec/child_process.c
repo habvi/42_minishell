@@ -46,7 +46,7 @@ static uint8_t	execute_command_in_child(t_ast *self_node, \
 	{
 		status = execute_external_command((char *const *)argv, \
 											environ, \
-											context->var);
+											context);
 	}
 	free_2d_array(&argv);
 	return (status);

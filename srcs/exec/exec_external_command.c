@@ -1,80 +1,52 @@
-#include <stdlib.h>
+#include <errno.h>
+#include <string.h>
 #include "minishell.h"
 #include "ms_exec.h"
-#include "ms_parse.h"
-#include "ms_builtin.h"
-#include "ft_deque.h"
+#include "ms_var.h"
 #include "ft_dprintf.h"
-#include "ft_string.h"
 #include "ft_mem.h"
 
-static bool	is_argv_path(const char *const argv_head)
+static uint8_t	set_execve_status(int tmp_err)
 {
-	if (!argv_head)
-		return (false);
-	if (ft_strchr_bool(argv_head, PATH_DELIMITER_CHR))
-		return (true);
-	return (false);
+	if (tmp_err == EACCES)
+		return (STATUS_PERMISSION); // 126
+	if (tmp_err == ENOENT)
+		return (STATUS_NO_SUCH_FILE); // 127
+	return (1);// todo:tmp
 }
 
-// PATH="path_1:path_2:path_3...:path_n"
-// access(path + argv[0]) -> exec or next path
-// 1. check path -> if access() return 0, exec path
-//                              return -1, EACCESS, pass path -> 2
-// 2. most left accessable path -> permission denied ?
-
-// file
-// search PATH
-static char	*search_command_path(const char *const command, const t_var *var)
+static void	error_cmd_not_found(char *const cmd, t_context *context)
 {
-	char	*path;
-
-	(void)command;
-	(void)var;
-	path = NULL;
-
-	return (path);
+	context->status = STATUS_CMD_NOT_FOUND;
+	ft_dprintf(STDERR_FILENO, "%s: %s: %s\n", \
+					SHELL_NAME, cmd, ERROR_MSG_CMD_NOT_FOUND);
 }
 
-static char	*create_exec_path(const char *const *argv, const t_var *var)
+static void	error_execve(char *const cmd, int tmp_err, t_context *context)
 {
-	char	*path;
-
-	if (is_argv_path(argv[0]))
-		path = x_ft_strdup(argv[0]);
-	else
-		path = search_command_path(argv[0], var);
-	return (path);
+	context->status = set_execve_status(tmp_err);
+	ft_dprintf(STDERR_FILENO, "%s: %s: %s\n", \
+					SHELL_NAME, cmd, strerror(tmp_err));
 }
 
-static uint8_t	search_command_and_exec(char *const *argv, \
-										char **environ, \
-										const t_var *var)
+uint8_t	execute_external_command(char *const *argv, \
+									char **environ, \
+									t_context *context)
 {
 	char	*exec_path;
-	uint8_t	exec_status;
 
 	if (!argv[0])
-		return (-1); // todo define
-	// get_path -> execve ?
-	//  or
-	// if (command; no slash)   -> search_path_and_exec()
-	// else if (path; has slash) -> just execve()
-	exec_path = create_exec_path((const char *const *)argv, var);
-	exec_status = execve(exec_path, (char *const *) argv, environ);
-	ft_free(&exec_path);
-	return (exec_status);
-}
-
-uint8_t	execute_external_command(char *const *argv, char **environ, t_var *var)
-{
-	int		exec_status;
-
-	exec_status = search_command_and_exec(argv, environ, var);
-	if (!argv[0] || exec_status == EXECVE_ERROR)
+		return (0); // todo: ok? case:redirect only
+	exec_path = create_exec_path((const char *const *)argv, context->var);
+	if (!exec_path)
 	{
-		ft_dprintf(STDERR_FILENO, "%s: %s: %s\n", \
-					SHELL_NAME, argv[0], ERROR_MSG_CMD_NOT_FOUND); // todo: tmp
+		error_cmd_not_found(argv[0], context);
+		ft_free(&exec_path);
+		return (context->status);
 	}
-	return (EXIT_CODE_NO_SUCH_FILE);
+	errno = 0;
+	if (execve(exec_path, (char *const *) argv, environ) == EXECVE_ERROR)
+		error_execve(argv[0], errno, context);
+	ft_free(&exec_path);
+	return (context->status);
 }
