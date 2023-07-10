@@ -15,12 +15,12 @@ static bool	is_slash_in_argv(const char *const argv_head)
 	return (false);
 }
 
-static char	*create_split_src_paths(t_var *var)
+char	*create_split_src_paths(t_var *var, const char *key)
 {
 	char	*env_path;
 	char	*env_path_concat_colon;
 
-	env_path = var->get_value(var, KEY_PATH);
+	env_path = var->get_value(var, key);
 	env_path_concat_colon = x_ft_strjoin(env_path, STR_PATH_DELIMITER);
 	ft_free(&env_path);
 	return (env_path_concat_colon);
@@ -32,7 +32,7 @@ static char	*search_command_path(const char *const command, t_var *var)
 	char	*env_path;
 	char	*exec_path;
 
-	env_path = create_split_src_paths(var);
+	env_path = create_split_src_paths(var, KEY_PATH);
 	exec_path = create_executable_path(env_path, command);
 	if (exec_path)
 	{
@@ -44,6 +44,7 @@ static char	*search_command_path(const char *const command, t_var *var)
 	return (exec_path);
 }
 
+// todo move /path
 // if search_command_path return NULL -> command not found
 char	*create_exec_path(const char *const *argv, t_var *var)
 {

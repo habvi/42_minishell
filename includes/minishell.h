@@ -86,6 +86,7 @@ bool		is_valid_path(const char *path, int *tmp_err);
 char		*x_ft_itoa(int n);
 char		*x_ft_strdup(const char *str);
 char		*x_ft_strjoin(char const *s1, char const *s2);
+char		*create_split_src_paths(t_var *var, const char *key);
 
 /* init */
 void		init_context(t_context *context);

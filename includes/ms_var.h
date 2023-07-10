@@ -17,6 +17,7 @@
 # define KEY_PWD		"PWD"
 # define KEY_OLDPWD		"OLDPWD"
 # define KEY_HOME		"HOME"
+# define KEY_CDPATH		"CDPATH"
 
 typedef struct s_context		t_context;
 typedef struct s_var			t_var;

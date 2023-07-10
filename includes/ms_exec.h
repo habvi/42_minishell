@@ -84,5 +84,8 @@ char			*get_next_path(char **path_list);
 char			*create_executable_path(char *paths, const char *const command);
 char			*create_accessible_path(char *paths, const char *const command);
 char			*create_exec_path(const char *const *argv, t_var *var);
+char			*create_executable_or_accessible_path(char *paths, \
+											const char *const command, \
+											bool (*judge)(const char *path));
 
 #endif //MS_EXEC_H
