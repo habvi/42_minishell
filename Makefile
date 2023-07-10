@@ -65,6 +65,7 @@ SRCS		+=	$(EXEC_DIR)/call_builtin_command.c \
 				$(EXEC_DIR)/exec_command.c \
 				$(EXEC_DIR)/exec_external_command.c \
 				$(EXEC_DIR)/get_exec_command.c \
+				$(EXEC_DIR)/get_next_path.c \
 				$(EXEC_DIR)/handle_node.c \
 				$(EXEC_DIR)/is_single_builtin.c \
 				$(EXEC_DIR)/parent_pipes.c \
