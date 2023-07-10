@@ -2,6 +2,17 @@
 #include <errno.h>
 #include "minishell.h"
 
+bool	test_opendir_strict(const char *path)
+{
+	DIR	*dirp;
+
+	dirp = opendir(path);
+	if (!dirp)
+		return (false);
+	closedir(dirp);
+	return (true);
+}
+
 static bool	test_opendir(const char *path, int *tmp_err)
 {
 	DIR	*dirp;
@@ -9,9 +20,9 @@ static bool	test_opendir(const char *path, int *tmp_err)
 	errno = 0;
 	dirp = opendir(path);
 	*tmp_err = errno;
-	closedir(dirp);
 	if (*tmp_err != 0)
 		return (false);
+	closedir(dirp);
 	return (true);
 }
 

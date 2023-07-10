@@ -32,6 +32,7 @@
 # define PATH_DELIMITER_STR	"/"
 # define PATH_DOT			"."
 # define PATH_DOT_DOT		".."
+# define CHAR_PATH_DOT		'.'
 
 # define VAR_PRINT_QUOTE	"\""
 
@@ -100,7 +101,7 @@ bool		is_whitespace(char c);
 
 /* ft_cd */
 // cd
-char		*cd_set_path(const char *arg, t_var *var);
+char		*cd_set_path(const char *arg, t_var *var, bool *is_print_path);
 t_result	cd_change_dir_to_valid_path(const char *absolute_path, \
 										uint8_t *status);
 void		cd_update_pwd(char *path, t_context *context);
@@ -116,6 +117,7 @@ void		erase_dot_path(t_deque **dq);
 void		erase_dot_dot_path(t_deque **dq);
 void		handle_double_slash_path(const char *path, char **absolute_path);
 char		*convert_path_elems_to_absolute_path(t_deque *path_elems);
+char		*search_cdpath(const char *arg, t_var *var, bool *is_print_path);
 
 bool		is_absolute_path(const char *path); // todo : move header..?
 

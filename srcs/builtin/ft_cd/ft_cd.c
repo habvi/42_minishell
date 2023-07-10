@@ -43,9 +43,10 @@ static bool	is_valid_cd_path(const char *path, int *tmp_err)
 	return (is_valid_path(path, tmp_err));
 }
 
-static void	print_mv_path_if_use_oldpwd_arg(const char *arg, const char *pwd)
+static void	print_mv_path_use_oldpwd_or_cdpath(bool is_print_path, \
+												const char *pwd)
 {
-	if (ft_streq(arg, CD_ARG_OLDPWD))
+	if (is_print_path)
 		ft_dprintf(STDOUT_FILENO, "%s\n", pwd);
 }
 
@@ -57,8 +58,9 @@ static void	change_directory(const char *arg, \
 	int			tmp_err;
 	char		*absolute_path;
 	t_result	result;
+	bool		is_print_path;
 
-	path = cd_set_path(arg, context->var);
+	path = cd_set_path(arg, context->var, &is_print_path);
 	if (!is_valid_cd_path(path, &tmp_err))
 	{
 		print_err_set_status(arg, path, tmp_err, status);
@@ -75,7 +77,7 @@ static void	change_directory(const char *arg, \
 		return ;
 	}
 	cd_update_pwd(absolute_path, context);
-	print_mv_path_if_use_oldpwd_arg(arg, context->internal_pwd);
+	print_mv_path_use_oldpwd_or_cdpath(is_print_path, context->internal_pwd);
 }
 
 uint8_t	ft_cd(const char *const *argv, t_context *context)

@@ -14,14 +14,15 @@ SRCS		:=	destroy.c \
 
 BUILTIN_DIR	:=	builtin
 FT_CD_DIR	:=	ft_cd
-SRCS		+=	$(BUILTIN_DIR)/$(FT_CD_DIR)/ft_cd.c \
-				$(BUILTIN_DIR)/$(FT_CD_DIR)/ft_cd_canonicalize.c \
-				$(BUILTIN_DIR)/$(FT_CD_DIR)/ft_cd_canonicalize_convert.c \
-				$(BUILTIN_DIR)/$(FT_CD_DIR)/ft_cd_canonicalize_exception.c \
-				$(BUILTIN_DIR)/$(FT_CD_DIR)/ft_cd_canonicalize_sep_join.c \
-				$(BUILTIN_DIR)/$(FT_CD_DIR)/ft_cd_chdir.c \
-				$(BUILTIN_DIR)/$(FT_CD_DIR)/ft_cd_set_path.c \
-				$(BUILTIN_DIR)/$(FT_CD_DIR)/ft_cd_update_pwd.c \
+SRCS		+=	$(BUILTIN_DIR)/$(FT_CD_DIR)/canonicalize.c \
+				$(BUILTIN_DIR)/$(FT_CD_DIR)/canonicalize_convert.c \
+				$(BUILTIN_DIR)/$(FT_CD_DIR)/canonicalize_exception.c \
+				$(BUILTIN_DIR)/$(FT_CD_DIR)/canonicalize_sep_join.c \
+				$(BUILTIN_DIR)/$(FT_CD_DIR)/chdir.c \
+				$(BUILTIN_DIR)/$(FT_CD_DIR)/ft_cd.c \
+				$(BUILTIN_DIR)/$(FT_CD_DIR)/search_cdpath.c \
+				$(BUILTIN_DIR)/$(FT_CD_DIR)/set_path.c \
+				$(BUILTIN_DIR)/$(FT_CD_DIR)/update_pwd.c \
 				$(BUILTIN_DIR)/ft_declare.c \
 				$(BUILTIN_DIR)/ft_echo.c \
 				$(BUILTIN_DIR)/ft_env.c \
@@ -225,5 +226,10 @@ test_export	: all
 .PHONY		: test_pwd
 test_pwd	: all
 	python3 ./test/integration_test/run_pwd.py
+
+# test builtin pwd
+.PHONY		: test_mix
+test_mix	: all
+	python3 ./test/integration_test/run_mix.py
 
 -include $(DEPS)
