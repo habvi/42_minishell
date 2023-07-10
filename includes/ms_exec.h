@@ -18,8 +18,6 @@
 # define ERROR_MSG_NO_SUCH_FILE		"No such file or directory"
 # define ERROR_MSG_CMD_NOT_FOUND	"command not found"
 
-# define STR_PATH_DELIMITER			":"
-
 typedef struct s_ast		t_ast;
 typedef struct s_context	t_context;
 typedef struct s_deque		t_deque;
@@ -79,13 +77,5 @@ t_result		get_last_command_status(pid_t pid, \
 t_result		wait_all_child_process(int wait_status);
 t_result		exec_handle_left_node(t_ast *self_node, t_context *context);
 t_result		exec_handle_right_node(t_ast *self_node, t_context *context);
-
-char			*get_next_path(char **path_list);
-char			*create_executable_path(char *paths, const char *const command);
-char			*create_accessible_path(char *paths, const char *const command);
-char			*create_exec_path(const char *const *argv, t_var *var);
-char			*create_executable_or_accessible_path(char *paths, \
-											const char *const command, \
-											bool (*judge)(const char *path));
 
 #endif //MS_EXEC_H

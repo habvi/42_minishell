@@ -20,6 +20,12 @@
 # define WAIT_ERROR		(-1)
 # define UNREACHABLE	(-1)
 
+# define STR_PATH_DELIMITER		":"
+# define CHR_PATH_DELIMITER		':'
+# define STR_CURRENT_PATH		"./"
+# define STR_SLASH				"/"
+# define CHR_SLASH				'/'
+
 /* status */
 // tokenize and parse
 # define SYNTAX_ERROR				2
@@ -94,5 +100,14 @@ void		init_context(t_context *context);
 
 /* repl */
 t_result	read_eval_print_loop(t_context *context);
+
+/* path */
+char		*get_next_path(char **path_list);
+char		*create_executable_path(char *paths, const char *const command);
+char		*create_accessible_path(char *paths, const char *const command);
+char		*create_exec_path(const char *const *argv, t_var *var);
+char		*create_valid_path_by_judge(char *paths, \
+										const char *const arg, \
+										bool (*judge)(const char *path));
 
 #endif //MINISHELL_H

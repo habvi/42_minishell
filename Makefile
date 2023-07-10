@@ -62,13 +62,10 @@ EXEC_DIR	:=	exec
 SRCS		+=	$(EXEC_DIR)/call_builtin_command.c \
 				$(EXEC_DIR)/child_pipes.c \
 				$(EXEC_DIR)/child_process.c \
-				$(EXEC_DIR)/create_exec_path.c \
-				$(EXEC_DIR)/create_executable_or_accessible_path.c \
 				$(EXEC_DIR)/exec.c \
 				$(EXEC_DIR)/exec_command.c \
 				$(EXEC_DIR)/exec_external_command.c \
 				$(EXEC_DIR)/get_exec_command.c \
-				$(EXEC_DIR)/get_next_path.c \
 				$(EXEC_DIR)/handle_node.c \
 				$(EXEC_DIR)/is_single_builtin.c \
 				$(EXEC_DIR)/parent_pipes.c \
@@ -95,6 +92,13 @@ SRCS		+=	$(PARSE_DIR)/$(HEREDOC_DIR)/create_heredoc_filename.c \
 				$(PARSE_DIR)/move_redirect_from_command.c \
 				$(PARSE_DIR)/new_ast_node.c \
 				$(PARSE_DIR)/parse.c
+
+PATH_DIR	:=	path
+SRCS		+=	$(PATH_DIR)/create_exec_path.c \
+				$(PATH_DIR)/create_executable_or_accessible_path.c \
+				$(PATH_DIR)/create_split_src_paths.c \
+				$(PATH_DIR)/get_next_path.c
+
 
 TOKEN_DIR	:=	tokenize
 SRCS		+=	$(TOKEN_DIR)/del_token.c \

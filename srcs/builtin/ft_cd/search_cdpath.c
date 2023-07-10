@@ -31,9 +31,9 @@ static char	*search_command_path(const char *arg, t_var *var)
 	char	*valid_path;
 
 	cdpath = create_split_src_paths(var, KEY_CDPATH);
-	valid_path = create_executable_or_accessible_path(cdpath, \
-														(const char *const)arg, \
-														test_opendir_strict);
+	valid_path = create_valid_path_by_judge(cdpath, \
+											(const char *const)arg, \
+											test_opendir_strict);
 	ft_free(&cdpath);
 	return (valid_path);
 }
