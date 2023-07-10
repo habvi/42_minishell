@@ -85,13 +85,17 @@ char		*input_line(void);
 
 /* utils */
 size_t		count_argv(const char *const *argc);
+char		*extend_str(char *left, char *right);
 void		ft_abort(void);
 char		*get_working_directory(char *for_whom);
 bool		is_valid_key(const char *word);
+bool		is_valid_head(const char c);
+bool		is_valid_after_head(const char c);
 bool		is_valid_path(const char *path, int *tmp_err);
 bool		test_opendir_strict(const char *path);
 char		*x_ft_itoa(int n);
 char		*x_ft_strdup(const char *str);
+char		*x_ft_strndup(const char *str, size_t maxlen);
 char		*x_ft_strjoin(char const *s1, char const *s2);
 char		*create_split_src_paths(t_var *var, const char *key);
 

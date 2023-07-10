@@ -59,7 +59,13 @@ SRCS		+=	$(DEBUG_DIR)/debug_print_ast.c \
 				$(DEBUG_DIR)/put.c
 
 EXEC_DIR	:=	exec
-SRCS		+=	$(EXEC_DIR)/call_builtin_command.c \
+EXPAND_DIR	:=	expand
+SRCS		+=	$(EXEC_DIR)/$(EXPAND_DIR)/concat_tokens.c  \
+				$(EXEC_DIR)/$(EXPAND_DIR)/expand_parameter.c\
+				$(EXEC_DIR)/$(EXPAND_DIR)/expansion.c  \
+				$(EXEC_DIR)/$(EXPAND_DIR)/remove_empty_tokens.c  \
+				$(EXEC_DIR)/$(EXPAND_DIR)/substr_before_dollar.c  \
+				$(EXEC_DIR)/call_builtin_command.c \
 				$(EXEC_DIR)/child_pipes.c \
 				$(EXEC_DIR)/child_process.c \
 				$(EXEC_DIR)/exec.c \
@@ -83,7 +89,7 @@ SRCS		+=	$(PARSE_DIR)/$(HEREDOC_DIR)/create_heredoc_filename.c \
 				$(PARSE_DIR)/abstruct_syntax_tree.c \
 				$(PARSE_DIR)/ast_convert_kind.c \
 				$(PARSE_DIR)/ast_dup_token.c \
-				$(PARSE_DIR)/ast_print_error.c \
+				$(PARSE_DIR)/ast_error.c \
 				$(PARSE_DIR)/destroy_ast.c \
 				$(PARSE_DIR)/get_node_kind_str.c \
 				$(PARSE_DIR)/is_node_kind.c \
@@ -91,7 +97,8 @@ SRCS		+=	$(PARSE_DIR)/$(HEREDOC_DIR)/create_heredoc_filename.c \
 				$(PARSE_DIR)/is_valid_redirect_syntax.c \
 				$(PARSE_DIR)/move_redirect_from_command.c \
 				$(PARSE_DIR)/new_ast_node.c \
-				$(PARSE_DIR)/parse.c
+				$(PARSE_DIR)/parse.c \
+				$(PARSE_DIR)/pre_parse_syntax.c
 
 PATH_DIR	:=	path
 SRCS		+=	$(PATH_DIR)/create_exec_path.c \
@@ -119,6 +126,7 @@ SRCS		+=	$(TOKEN_DIR)/del_token.c \
 
 UTILS_DIR	:=	utils
 SRCS		+=	$(UTILS_DIR)/count_array.c \
+				$(UTILS_DIR)/extend_str.c \
 				$(UTILS_DIR)/ft_abort.c \
 				$(UTILS_DIR)/get_working_directory.c \
 				$(UTILS_DIR)/is_valid_key.c \

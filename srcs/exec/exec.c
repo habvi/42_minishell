@@ -1,6 +1,7 @@
 #include <sys/wait.h>
 #include "minishell.h"
 #include "ms_exec.h"
+#include "ms_expansion.h"
 #include "ms_tokenize.h"
 #include "ms_parse.h"
 #include "ft_deque.h"
@@ -9,6 +10,9 @@
 
 static t_result	execute_command_internal(t_ast *self_node, t_context *context)
 {
+	// expansion
+	expand_variables(self_node, context);
+	// redirect fd
 	if (is_single_builtin_command(self_node))
 		execute_single_builtin(self_node, context); // todo: process error?
 	else if (exec_command_each(self_node, context) == PROCESS_ERROR)

@@ -12,17 +12,17 @@ t_result	read_eval_print_loop(t_context *context)
 	t_deque		*tokens;
 	t_ast		*ast;
 
-	result = SUCCESS;
 	while (true)
 	{
+		result = SUCCESS;
 		line = input_line();
 		if (!line)
 			break ;
-		tokens = tokenize(line, context);
-		if (context->status != EXIT_SUCCESS)
+		tokens = tokenize(line, context, &result);
+		if (result == FAILURE)
 			continue ;
-		ast = parse(&tokens, context);
-		if (context->status != EXIT_SUCCESS)
+		ast = parse(&tokens, context, &result);
+		if (result == FAILURE)
 			continue ;
 		result = execute_command(ast, context);
 		destroy_ast_tree(&ast, result);
