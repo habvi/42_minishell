@@ -98,5 +98,5 @@ uint8_t	ft_cd(const char *const *argv, t_context *context)
 		return (status);
 	}
 	change_directory(argv[i], context, &status);
-	return (EXIT_SUCCESS);
+	return (status);
 }
