@@ -87,7 +87,7 @@ bool		is_node_kind_exec_heredoc(t_node_kind node_kind);
 bool		is_node_kind_and_or(t_node_kind node_kind);
 
 /* destroy */
-void		*destroy_ast_tree(t_ast **root);
+void		destroy_ast_tree(t_ast **root, t_result result);
 
 /* error */
 void		*ast_print_error(t_deque_node *token_node);

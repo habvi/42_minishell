@@ -14,14 +14,15 @@ SRCS		:=	destroy.c \
 
 BUILTIN_DIR	:=	builtin
 FT_CD_DIR	:=	ft_cd
-SRCS		+=	$(BUILTIN_DIR)/$(FT_CD_DIR)/ft_cd.c \
-				$(BUILTIN_DIR)/$(FT_CD_DIR)/ft_cd_canonicalize.c \
-				$(BUILTIN_DIR)/$(FT_CD_DIR)/ft_cd_canonicalize_convert.c \
-				$(BUILTIN_DIR)/$(FT_CD_DIR)/ft_cd_canonicalize_exception.c \
-				$(BUILTIN_DIR)/$(FT_CD_DIR)/ft_cd_canonicalize_sep_join.c \
-				$(BUILTIN_DIR)/$(FT_CD_DIR)/ft_cd_chdir.c \
-				$(BUILTIN_DIR)/$(FT_CD_DIR)/ft_cd_set_path.c \
-				$(BUILTIN_DIR)/$(FT_CD_DIR)/ft_cd_update_pwd.c \
+SRCS		+=	$(BUILTIN_DIR)/$(FT_CD_DIR)/canonicalize.c \
+				$(BUILTIN_DIR)/$(FT_CD_DIR)/canonicalize_convert.c \
+				$(BUILTIN_DIR)/$(FT_CD_DIR)/canonicalize_exception.c \
+				$(BUILTIN_DIR)/$(FT_CD_DIR)/canonicalize_sep_join.c \
+				$(BUILTIN_DIR)/$(FT_CD_DIR)/chdir.c \
+				$(BUILTIN_DIR)/$(FT_CD_DIR)/ft_cd.c \
+				$(BUILTIN_DIR)/$(FT_CD_DIR)/search_cdpath.c \
+				$(BUILTIN_DIR)/$(FT_CD_DIR)/set_path.c \
+				$(BUILTIN_DIR)/$(FT_CD_DIR)/update_pwd.c \
 				$(BUILTIN_DIR)/ft_declare.c \
 				$(BUILTIN_DIR)/ft_echo.c \
 				$(BUILTIN_DIR)/ft_env.c \
@@ -69,6 +70,7 @@ SRCS		+=	$(EXEC_DIR)/$(EXPAND_DIR)/concat_tokens.c  \
 				$(EXEC_DIR)/child_process.c \
 				$(EXEC_DIR)/exec.c \
 				$(EXEC_DIR)/exec_command.c \
+				$(EXEC_DIR)/exec_external_command.c \
 				$(EXEC_DIR)/get_exec_command.c \
 				$(EXEC_DIR)/handle_node.c \
 				$(EXEC_DIR)/is_single_builtin.c \
@@ -97,6 +99,13 @@ SRCS		+=	$(PARSE_DIR)/$(HEREDOC_DIR)/create_heredoc_filename.c \
 				$(PARSE_DIR)/new_ast_node.c \
 				$(PARSE_DIR)/parse.c \
 				$(PARSE_DIR)/pre_parse_syntax.c
+
+PATH_DIR	:=	path
+SRCS		+=	$(PATH_DIR)/create_exec_path.c \
+				$(PATH_DIR)/create_executable_or_accessible_path.c \
+				$(PATH_DIR)/create_split_src_paths.c \
+				$(PATH_DIR)/get_next_path.c
+
 
 TOKEN_DIR	:=	tokenize
 SRCS		+=	$(TOKEN_DIR)/del_token.c \
@@ -229,5 +238,10 @@ test_export	: all
 .PHONY		: test_pwd
 test_pwd	: all
 	python3 ./test/integration_test/run_pwd.py
+
+# test builtin pwd
+.PHONY		: test_mix
+test_mix	: all
+	python3 ./test/integration_test/run_mix.py
 
 -include $(DEPS)

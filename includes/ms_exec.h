@@ -9,8 +9,11 @@
 # define CHILD_PID		0
 # define READ			0
 # define WRITE			1
+# define NO_OPTION		0
 
-# define EXIT_CODE_NO_SUCH_FILE		127
+# define STATUS_PERMISSION			126
+# define STATUS_NO_SUCH_FILE		127
+# define STATUS_CMD_NOT_FOUND		127
 
 # define ERROR_MSG_NO_SUCH_FILE		"No such file or directory"
 # define ERROR_MSG_CMD_NOT_FOUND	"command not found"
@@ -19,6 +22,7 @@ typedef struct s_ast		t_ast;
 typedef struct s_context	t_context;
 typedef struct s_deque		t_deque;
 typedef struct s_deque_node	t_deque_node;
+typedef struct s_var		t_var;
 
 typedef struct s_fd {
 	int	pipefd[2];
@@ -40,6 +44,9 @@ t_result		execute_command(t_ast *ast, t_context *context);
 t_deque_node	*get_next_command(t_deque_node *cmd, size_t *cmd_size);
 char			**convert_command_to_array(t_deque_node *cmd, \
 											const size_t size);
+uint8_t			execute_external_command(char *const *argv, \
+											char **environ, \
+											t_context *context);
 
 /* init */
 void			init_fd(t_fd *fd);
