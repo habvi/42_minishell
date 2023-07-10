@@ -54,6 +54,7 @@ struct s_var
 	void	(*print_detail)(t_var *var, t_var_attr attr, bool is_display_attr);
 	void	(*clear)(t_var *var);
 	void	(*env_print)(t_var *var);
+	char	**(*convert_to_envp)(t_var *var);
 };
 
 /* init */
@@ -98,5 +99,6 @@ void		var_clear(t_var *var);
 
 /* environ */
 void		env_print(t_var *var);
+char		**var_convert_to_envp(t_var *var);
 
 #endif //MS_VAR_H

@@ -73,7 +73,7 @@ static void	convert_elem_to_env(char **envp, t_deque *deque)
 	}
 }
 
-char	**convert_environ(t_var *var)
+char	**var_convert_to_envp(t_var *var)
 {
 	char			**envp;
 	const size_t	size = count_envp_size(var->hash);
