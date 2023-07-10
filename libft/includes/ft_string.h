@@ -6,6 +6,7 @@
 
 /* compare */
 char	*ft_strchr(char *s, int c);
+bool	ft_strchr_bool(const char *s, int int_c);
 char	*ft_strrchr(const char *s, int c);
 bool	ft_streq(const char *s1, const char *s2);
 int		ft_strcmp(const char *s1, const char *s2);
