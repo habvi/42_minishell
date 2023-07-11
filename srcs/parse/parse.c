@@ -18,6 +18,7 @@ static t_ast	*create_ast(t_deque *tokens, \
 	{
 		set_error_status(context, result);
 		ast_print_error(head_node);
+		destroy_ast_tree(&ast, *result);
 		return (NULL);
 	}
 	return (ast);
@@ -45,7 +46,7 @@ t_ast	*parse(t_deque **tokens, t_context *context, t_result *result)
 		return (destroy_tokens(tokens, del_token));
 	ast = create_ast(*tokens, context, result);
 	if (!ast)
-		return (destroy_tokens_and_ast(tokens, &ast, *result));
+		return (destroy_tokens(tokens, del_token));
 	heredoc_result = execute_heredoc(ast);
 	if (heredoc_result == PROCESS_ERROR)
 		return (destroy_tokens_and_ast(tokens, &ast, *result));
