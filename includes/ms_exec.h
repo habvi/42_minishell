@@ -22,6 +22,7 @@ typedef struct s_ast		t_ast;
 typedef struct s_context	t_context;
 typedef struct s_deque		t_deque;
 typedef struct s_deque_node	t_deque_node;
+typedef struct s_redirect	t_redirect;
 typedef struct s_var		t_var;
 
 typedef struct s_fd {
@@ -73,5 +74,8 @@ t_result		get_last_command_status(pid_t pid, \
 t_result		wait_all_child_process(int wait_status);
 t_result		exec_handle_left_node(t_ast *self_node, t_context *context);
 t_result		exec_handle_right_node(t_ast *self_node, t_context *context);
+
+/* redirects */
+t_result		redirect_fd(t_redirect *redirects, t_context *context);
 
 #endif //MS_EXEC_H

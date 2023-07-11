@@ -50,6 +50,7 @@ static void	expand_tokens(t_deque *tokens, t_context *context)
 	}
 }
 
+// todo: void?
 // word splitting: if unquoted, word split by delimiter
 t_result	expand_variables(t_ast *self_node, t_context *context)
 {

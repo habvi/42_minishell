@@ -91,6 +91,7 @@ SRCS		+=	$(EXEC_DIR)/$(EXPAND_DIR)/concat_tokens.c  \
 				$(EXEC_DIR)/is_single_builtin.c \
 				$(EXEC_DIR)/parent_pipes.c \
 				$(EXEC_DIR)/parent_process.c \
+				$(EXEC_DIR)/redirects.c \
 				$(EXEC_DIR)/single_builtin.c \
 
 INPUT_DIR	:=	input
