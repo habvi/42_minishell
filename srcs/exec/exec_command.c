@@ -49,8 +49,6 @@ static bool	is_node_executable(t_ast *ast_node)
 // !single builtin commands, &&, ||, |, ()
 t_result	exec_command_each(t_ast *self_node, t_context *context)
 {
-	extern char	**environ;
-
 	if (!is_node_executable(self_node))
 		return (SUCCESS);
 	// no need new pipe, when parent is subshell node (ittan ignore builtin..)
@@ -64,7 +62,7 @@ t_result	exec_command_each(t_ast *self_node, t_context *context)
 		return (PROCESS_ERROR);
 	context->is_interactive = false;
 	if (self_node->pid == CHILD_PID)
-		child_process(self_node, environ, context);
+		child_process(self_node, context);
 	else
 	{
 		if (parent_process(self_node, context) == PROCESS_ERROR)

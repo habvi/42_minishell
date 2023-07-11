@@ -29,24 +29,27 @@ static void	error_execve(char *const cmd, int tmp_err, t_context *context)
 					SHELL_NAME, cmd, strerror(tmp_err));
 }
 
-uint8_t	execute_external_command(char *const *argv, \
-									char **environ, \
-									t_context *context)
+uint8_t	execute_external_command(char *const *argv, t_context *context)
 {
 	char	*exec_path;
+	char	**envp;
+	t_var	*var;
 
 	if (!argv[0])
 		return (0); // todo: ok? case:redirect only
-	exec_path = create_exec_path((const char *const *)argv, context->var);
+	var = context->var;
+	exec_path = create_exec_path((const char *const *)argv, var);
 	if (!exec_path)
 	{
 		error_cmd_not_found(argv[0], context);
 		ft_free(&exec_path);
 		return (context->status);
 	}
+	envp = var->convert_to_envp(var);
 	errno = 0;
-	if (execve(exec_path, (char *const *) argv, environ) == EXECVE_ERROR)
+	if (execve(exec_path, (char *const *)argv, envp) == EXECVE_ERROR)
 		error_execve(argv[0], errno, context);
 	ft_free(&exec_path);
+	free_2d_array(&envp);
 	return (context->status);
 }

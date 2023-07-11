@@ -36,6 +36,7 @@ SRCS		+=	$(BUILTIN_DIR)/$(FT_CD_DIR)/canonicalize.c \
 VAR_DIR		:=	variables
 SRCS		+=	$(VAR_DIR)/add.c \
 				$(VAR_DIR)/clear.c \
+				$(VAR_DIR)/convert.c \
 				$(VAR_DIR)/declare_all.c \
 				$(VAR_DIR)/declare_arg.c \
 				$(VAR_DIR)/dup_var_key.c \

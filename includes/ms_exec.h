@@ -44,9 +44,7 @@ t_result		execute_command(t_ast *ast, t_context *context);
 t_deque_node	*get_next_command(t_deque_node *cmd, size_t *cmd_size);
 char			**convert_command_to_array(t_deque_node *cmd, \
 											const size_t size);
-uint8_t			execute_external_command(char *const *argv, \
-											char **environ, \
-											t_context *context);
+uint8_t			execute_external_command(char *const *argv, t_context *context);
 
 /* init */
 void			init_fd(t_fd *fd);
@@ -60,9 +58,7 @@ bool			is_single_builtin(t_deque_node *cmd);
 /* ast */
 char			**convert_command_to_argv(t_deque *command);
 t_result		handle_child_pipes(t_ast *self_node);
-void			child_process(t_ast *self_node, \
-								char **environ, \
-								t_context *context);
+void			child_process(t_ast *self_node, t_context *context);
 t_result		handle_parent_pipes(t_ast *self_node);
 t_result		parent_process(t_ast *self_node, t_context *context);
 t_result		exec_command_each(t_ast *self_node, t_context *context);

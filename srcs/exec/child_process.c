@@ -30,9 +30,7 @@ static uint8_t	execute_subshell(t_ast *self_node, t_context *context)
 	return (context->status);
 }
 
-static uint8_t	execute_command_in_child(t_ast *self_node, \
-											char **environ, \
-											t_context *context)
+static uint8_t	execute_command_in_child(t_ast *self_node, t_context *context)
 {
 	char	**argv;
 	uint8_t	status;
@@ -44,18 +42,14 @@ static uint8_t	execute_command_in_child(t_ast *self_node, \
 		status = execute_subshell(self_node, context);
 	else
 	{
-		status = execute_external_command((char *const *)argv, \
-											environ, \
-											context);
+		status = execute_external_command((char *const *)argv, context);
 	}
 	free_2d_array(&argv);
 	return (status);
 }
 
 // if execve erorr, no need for auto perror.
-void	child_process(t_ast *self_node, \
-						char **environ, \
-						t_context *context)
+void	child_process(t_ast *self_node, t_context *context)
 {
 	uint8_t	status;
 
@@ -63,6 +57,6 @@ void	child_process(t_ast *self_node, \
 	// debug_2d_array(argv);
 	if (handle_child_pipes(self_node) == PROCESS_ERROR)
 		exit(EXIT_FAILURE);
-	status = execute_command_in_child(self_node, environ, context);
+	status = execute_command_in_child(self_node, context);
 	exit (status);
 }
