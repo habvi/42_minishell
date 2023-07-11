@@ -37,6 +37,8 @@ t_result	open_heredoc_filedes(int *in_fd, char **filename)
 	if (is_prev_heredoc_file_exist(*in_fd))
 		clean_up_prev_heredoc(*in_fd, *filename);
 	*filename = create_heredoc_filename();
+	if (!*filename)
+		return (PROCESS_ERROR);
 	*in_fd = open_file_dup_errno(*filename, &tmp_err);
 	if (tmp_err == ENOMEM)
 	{
