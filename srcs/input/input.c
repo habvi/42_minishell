@@ -1,6 +1,7 @@
+#include <stdbool.h>
+#include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-#include <stdbool.h>
 #include "minishell.h"
 
 static bool	is_empty_line(const char *line)

@@ -1,9 +1,23 @@
 
 NAME		:=	minishell
 
+UNAME 		:= $(shell uname)
+
 CC			:=	cc
-CFLAGS		:=	-Wall -Wextra -Werror -MMD -MP -pedantic
-RL_FLAGS	:=	-lreadline
+
+CFLAGS		:=	-Wall -Wextra -Werror -MMD -MP
+ifeq ($(UNAME), Linux)
+	CFLAGS	+=	-pedantic
+endif
+
+ifeq ($(UNAME), Linux)
+	RL_FLAGS	:=	-lreadline
+else
+ifeq ($(UNAME), Darwin)
+	RL_FLAGS	:= -L$(shell brew --prefix readline)/lib -lreadline
+endif
+endif
+
 MKDIR		:=	mkdir -p
 
 SRCS_DIR	:=	srcs
@@ -147,7 +161,11 @@ ifdef SANI
 endif
 
 INCLUDES_DIR	:=	includes
-INCLUDES		:=	-I./$(INCLUDES_DIR)/ -I$(LIBFT_DIR)/$(INCLUDES_DIR)/
+INCLUDES	:=	-I./$(INCLUDES_DIR)/ -I$(LIBFT_DIR)/$(INCLUDES_DIR)/
+ifeq ($(UNAME), Darwin)
+	INCLUDES	+=	-I$(shell brew --prefix readline)/include
+endif
+
 DEPS			:=	$(OBJS:.o=.d)
 
 .PHONY	: all
