@@ -1,9 +1,23 @@
 
 NAME		:=	minishell
 
+UNAME 		:= $(shell uname)
+
 CC			:=	cc
-CFLAGS		:=	-Wall -Wextra -Werror -MMD -MP -pedantic
-RL_FLAGS	:=	-lreadline
+
+CFLAGS		:=	-Wall -Wextra -Werror -MMD -MP
+ifeq ($(UNAME), Linux)
+	CFLAGS	+=	-pedantic
+endif
+
+ifeq ($(UNAME), Linux)
+	RL_FLAGS	:=	-lreadline
+else
+ifeq ($(UNAME), Darwin)
+	RL_FLAGS	:= -L$(shell brew --prefix readline)/lib -lreadline
+endif
+endif
+
 MKDIR		:=	mkdir -p
 
 SRCS_DIR	:=	srcs
@@ -36,6 +50,7 @@ SRCS		+=	$(BUILTIN_DIR)/$(FT_CD_DIR)/canonicalize.c \
 VAR_DIR		:=	variables
 SRCS		+=	$(VAR_DIR)/add.c \
 				$(VAR_DIR)/clear.c \
+				$(VAR_DIR)/convert.c \
 				$(VAR_DIR)/declare_all.c \
 				$(VAR_DIR)/declare_arg.c \
 				$(VAR_DIR)/dup_var_key.c \
@@ -68,7 +83,6 @@ SRCS		+=	$(EXEC_DIR)/$(EXPAND_DIR)/concat_tokens.c  \
 				$(EXEC_DIR)/call_builtin_command.c \
 				$(EXEC_DIR)/child_pipes.c \
 				$(EXEC_DIR)/child_process.c \
-				$(EXEC_DIR)/convert_environ.c \
 				$(EXEC_DIR)/exec.c \
 				$(EXEC_DIR)/exec_command.c \
 				$(EXEC_DIR)/exec_external_command.c \
@@ -148,7 +162,11 @@ ifdef SANI
 endif
 
 INCLUDES_DIR	:=	includes
-INCLUDES		:=	-I./$(INCLUDES_DIR)/ -I$(LIBFT_DIR)/$(INCLUDES_DIR)/
+INCLUDES	:=	-I./$(INCLUDES_DIR)/ -I$(LIBFT_DIR)/$(INCLUDES_DIR)/
+ifeq ($(UNAME), Darwin)
+	INCLUDES	+=	-I$(shell brew --prefix readline)/include
+endif
+
 DEPS			:=	$(OBJS:.o=.d)
 
 .PHONY	: all

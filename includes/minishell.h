@@ -1,9 +1,11 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <stdio.h>
 # include <stdbool.h>
 # include <stddef.h>
 # include <stdint.h>
+
 # include "ms_result.h"
 # include "ft_dprintf.h"
 
