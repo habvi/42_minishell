@@ -58,6 +58,8 @@ t_deque		*tokenize(char *line, t_context *context, t_result *result);
 t_deque		*tokenize_line(char *line);
 char		*get_token_str(char *head, char **end);
 char		*get_token_tail(char *head);
+void		skip_token_delimiter(char **head);
+t_deque_node	*create_token_node(char *token_str, char next_chr); // todo: indent
 
 /* is */
 bool		is_token_str_symbol(const char *str);

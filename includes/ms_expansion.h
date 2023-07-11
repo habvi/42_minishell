@@ -1,6 +1,7 @@
 #ifndef MS_EXPANSION_H
 # define MS_EXPANSION_H
 
+# include <stdbool.h>
 # include "ms_result.h"
 
 # define CHAR_DOLLAR	'$'
@@ -18,5 +19,11 @@ char		*expand_parameter(char **str, t_context *context);
 char		*substr_before_dollar(char **str);
 void		remove_empty_tokens(t_deque *tokens);
 void		concat_tokens(t_deque *tokens);
+void		split_expand_word(t_deque **tokens, bool is_assign_cmd);
+void		word_split_and_add_for_general_cmd(char *token_str, \
+												t_deque *expanded);
+void		word_split_and_add_for_assign_cmd(char *token_str, \
+												t_deque *expanded, \
+												bool is_assign_cmd);
 
 #endif //MS_EXPANSION_H
