@@ -26,6 +26,7 @@ static void	set_func(t_var *var)
 	var->clear = var_clear;
 	var->join = var_join;
 	var->env_print = env_print;
+	var->convert_to_envp = var_convert_to_envp;
 }
 
 static void	get_environ(t_var *var)
