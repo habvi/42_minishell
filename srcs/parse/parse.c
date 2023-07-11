@@ -9,12 +9,12 @@ static t_ast	*create_ast(t_deque *tokens, \
 {
 	t_deque_node	*head_node;
 	t_ast			*ast;
+	uint8_t			ast_status;
 
+	ast_status = AST_STATUS_SUCCESS;
 	head_node = tokens->node;
-	ast = create_operator_list_node(&head_node, context);
-	if (head_node)
-		set_error_status(context, result);
-	if (context->status == SYNTAX_ERROR)
+	ast = create_operator_list_node(&head_node, &ast_status);
+	if (head_node || ast_status == SYNTAX_ERROR)
 	{
 		set_error_status(context, result);
 		ast_print_error(head_node);
