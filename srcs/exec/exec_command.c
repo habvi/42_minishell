@@ -46,27 +46,11 @@ static bool	is_node_executable(t_ast *ast_node)
 	return (kind == NODE_KIND_COMMAND || kind == NODE_KIND_SUBSHELL);
 }
 
-static void	update_in_fd(t_ast *self_node)
-{
-	t_redirect	*redirects;
-
-	redirects = (t_redirect *)self_node->redirects;
-	if (!redirects)
-		return ;
-	if (redirects->in_fd != IN_FD_INIT)
-	{
-		if (self_node->prev_fd != IN_FD_INIT)
-			close(self_node->prev_fd); // todo: error
-		self_node->prev_fd = redirects->in_fd;
-	}
-}
-
 // !single builtin commands, &&, ||, |, ()
 t_result	exec_command_each(t_ast *self_node, t_context *context)
 {
 	if (!is_node_executable(self_node))
 		return (SUCCESS);
-	update_in_fd(self_node);
 	// no need new pipe, when parent is subshell node (ittan ignore builtin..)
 	if (self_node->parent && self_node->parent->kind == NODE_KIND_OP_PIPE)
 	{

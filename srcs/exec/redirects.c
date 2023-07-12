@@ -8,8 +8,9 @@
 #include "ft_mem.h"
 #include "ft_sys.h"
 
-#define OPEN_FLAG_READ	O_RDONLY
-#define OPEN_FLAG_WRITE	O_WRONLY
+#define OPEN_FLAG_READ		(O_RDONLY)
+#define OPEN_FLAG_WRITE		(O_CREAT | O_WRONLY | O_TRUNC)
+#define OPEN_FLAG_APPEND	(O_CREAT | O_WRONLY | O_APPEND)
 
 // todo: tmp. append, heredoc
 static t_result	connect_process_io_fd(t_redirect *redirects, \
@@ -18,20 +19,24 @@ static t_result	connect_process_io_fd(t_redirect *redirects, \
 {
 	int	fd;
 
-	fd = open(path, open_flag);
-	if (fd == -1)
-		return (PROCESS_ERROR); //todo
+//	fd = open(path, open_flag);
+//	if (fd == -1)
+//		return (PROCESS_ERROR); //todo
 	if (open_flag == OPEN_FLAG_READ)
 	{
+		fd = open(path, open_flag);
 		if (redirects->in_fd != IN_FD_INIT)
 			close(redirects->in_fd);
 		redirects->in_fd = fd;
 	}
-	else if (open_flag == OPEN_FLAG_WRITE)
+	else if (open_flag == OPEN_FLAG_WRITE || open_flag == OPEN_FLAG_APPEND)
 	{
-		if (redirects->out_fd != IN_FD_INIT)
+		ft_dprintf(2, "2 out_fd:%d\n", redirects->out_fd);
+		fd = open(path, open_flag, 0664);
+		if (redirects->out_fd != OUT_FD_INIT)
 			close(redirects->out_fd);
 		redirects->out_fd = fd;
+		ft_dprintf(2, "3 out_fd:%d\n", redirects->out_fd);
 	}
 	return (SUCCESS);
 }
@@ -45,9 +50,13 @@ static t_result	redirect_token(t_redirect *redirects, \
 	result = FAILURE;
 	if (kind == TOKEN_KIND_REDIRECT_IN || kind == TOKEN_KIND_REDIRECT_HEREDOC)
 		result = connect_process_io_fd(redirects, path, OPEN_FLAG_READ);
-	else if (kind == TOKEN_KIND_REDIRECT_OUT \
-			|| kind == TOKEN_KIND_REDIRECT_APPEND)
+	else if (kind == TOKEN_KIND_REDIRECT_OUT)
+	{
+		ft_dprintf(2, "1 kind:%d, file:%s\n", kind, path);
 		result = connect_process_io_fd(redirects, path, OPEN_FLAG_WRITE);
+	}
+	else if (kind == TOKEN_KIND_REDIRECT_APPEND)
+		result = connect_process_io_fd(redirects, path, OPEN_FLAG_APPEND);
 	return (result);
 }
 
