@@ -48,10 +48,11 @@ static t_result	execute_heredoc_each(t_deque_node *token_node, \
 										int *in_fd, \
 										char **filename)
 {
-	t_result	result;
-	char		*delimiter;
+	const t_token	*token = (t_token *)token_node->content;
+	t_result		result;
+	char			*delimiter;
 
-	if (!is_token_kind_redirection_from_node(token_node))
+	if (token->kind != TOKEN_KIND_REDIRECT_HEREDOC)
 		return (CONTINUE);
 	result = open_heredoc_filedes(in_fd, filename); // todo change fd...
 	if (result == PROCESS_ERROR)
