@@ -18,22 +18,31 @@ static void	print_tokens_dq_in_oneline(t_deque *dq)
 	while (node)
 	{
 		token = (t_token *)node->content;
-		ft_dprintf(STDERR_FILENO, "%s ", token->str);
+		ft_dprintf(STDERR_FILENO, "%s", token->str);
 		node = node->next;
+		if (node)
+			ft_dprintf(STDERR_FILENO, " ");
 	}
 }
 
 static void	print_token_comamnd_and_redirect(t_ast *ast)
 {
 	if (ast->command)
+	{
+		ft_dprintf(STDERR_FILENO, "command[");
 		print_tokens_dq_in_oneline(ast->command);
+		ft_dprintf(STDERR_FILENO, "]");
+	}
 	if (ast->redirects)
 	{
-		ft_dprintf(STDERR_FILENO, ":");
+		ft_dprintf(STDERR_FILENO, ", redirect[");
 		print_tokens_dq_in_oneline(ast->redirects->list);
+		ft_dprintf(STDERR_FILENO, "], ");
 	}
-	ft_dprintf(STDERR_FILENO, " :prev[%d]in[%d]out[%d] ", \
+	/*
+	ft_dprintf(STDERR_FILENO, "fd: prev[%d]in[%d]out[%d] ", \
 				ast->prev_fd, ast->pipe_fd[READ], ast->pipe_fd[WRITE]);
+	*/
 	ft_dprintf(STDERR_FILENO, "\n");
 }
 
