@@ -23,12 +23,14 @@ static t_result	connect_process_io_fd(t_redirect *redirects, \
 		return (PROCESS_ERROR); //todo
 	if (open_flag == OPEN_FLAG_READ)
 	{
-		close(redirects->in_fd);
+		if (redirects->in_fd != IN_FD_INIT)
+			close(redirects->in_fd);
 		redirects->in_fd = fd;
 	}
 	else if (open_flag == OPEN_FLAG_WRITE)
 	{
-		close(redirects->out_fd);
+		if (redirects->out_fd != IN_FD_INIT)
+			close(redirects->out_fd);
 		redirects->out_fd = fd;
 	}
 	return (SUCCESS);
@@ -40,6 +42,7 @@ static t_result	redirect_token(t_redirect *redirects, \
 {
 	t_result	result;
 
+	result = FAILURE;
 	if (kind == TOKEN_KIND_REDIRECT_IN || kind == TOKEN_KIND_REDIRECT_HEREDOC)
 		result = connect_process_io_fd(redirects, path, OPEN_FLAG_READ);
 	else if (kind == TOKEN_KIND_REDIRECT_OUT \
@@ -53,6 +56,7 @@ t_result	redirect_fd(t_redirect *redirects, t_context *context)
 	t_deque_node	*node;
 	t_token			*token;
 	char			*path;
+	t_token_kind	redirect_kind;
 
 	if (!redirects)
 		return (SUCCESS); //todo
@@ -60,7 +64,8 @@ t_result	redirect_fd(t_redirect *redirects, t_context *context)
 	while (node)
 	{
 		token = (t_token *)node->content;
-		if (!is_token_kind_redirection(token->kind))
+		redirect_kind = token->kind;
+		if (!is_token_kind_redirection(redirect_kind))
 		{
 			context->status = 1; // todo
 			return (FAILURE); // todo: error
@@ -72,7 +77,8 @@ t_result	redirect_fd(t_redirect *redirects, t_context *context)
 		}
 		token = (t_token *)node->next->content;
 		path = token->str;
-		redirect_token(redirects, token->kind, path);
+		redirect_token(redirects, redirect_kind, path);
+		node = node->next;
 		node = node->next;
 	}
 	return (SUCCESS);
