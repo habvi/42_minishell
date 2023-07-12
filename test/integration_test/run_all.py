@@ -1,5 +1,6 @@
 import run_builtin
 import run_pipe
+import run_op
 
 
 BLUE = "\x1b[34m"
@@ -22,6 +23,9 @@ def main():
 
     print_test_title("EXECUTION")
     test_res |= run_pipe.main()
+
+    print_test_title("OPERATION")
+    test_res |= run_op.main()
 
     exit(test_res)
 
