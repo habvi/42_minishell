@@ -54,47 +54,47 @@ typedef struct s_token {
 }	t_token;
 
 /* tokenize */
-t_deque		*tokenize(char *line, t_context *context, t_result *result);
-t_deque		*tokenize_line(char *line);
-char		*get_token_str(char *head, char **end);
-char		*get_token_tail(char *head);
-void		skip_token_delimiter(char **head);
-t_deque_node	*create_token_node(char *token_str, char next_chr); // todo: indent
+t_deque			*tokenize(char *line, t_context *context, t_result *result);
+t_deque			*tokenize_line(char *line);
+char			*get_token_str(char *head, char **end);
+char			*get_token_tail(char *head);
+void			skip_token_delimiter(char **head);
+t_deque_node	*create_token_node(char *token_str, char next_chr);
 
 /* is */
-bool		is_token_str_symbol(const char *str);
-bool		is_token_str_quote(const char *str);
-bool		is_token_str_paren(const char *str);
+bool			is_token_str_symbol(const char *str);
+bool			is_token_str_quote(const char *str);
+bool			is_token_str_paren(const char *str);
 
-bool		is_concat_to_next(char token_head, char next_chr);
+bool			is_concat_to_next(char token_head, char next_chr);
 
-bool		is_token_kind_word(t_token_kind token_kind);
-bool		is_token_kind_redirection(t_token_kind token_kind);
+bool			is_token_kind_word(t_token_kind token_kind);
+bool			is_token_kind_redirection(t_token_kind token_kind);
 
-bool		is_token_kind_and_or_from_node(t_deque_node *token_node);
-bool		is_token_kind_pipe_from_node(t_deque_node *token_node);
-bool		is_token_kind_word_form_node(t_deque_node *token_node);
-bool		is_token_kind_redirection_from_node(t_deque_node *token_node);
+bool			is_token_kind_and_or_from_node(t_deque_node *token_node);
+bool			is_token_kind_pipe_from_node(t_deque_node *token_node);
+bool			is_token_kind_word_form_node(t_deque_node *token_node);
+bool			is_token_kind_redirection_from_node(t_deque_node *token_node);
 
-bool		is_token_kind_command_as_ast_node(t_deque_node *token_node);
-bool		is_token_kind_paren_left_as_ast_node(t_deque_node *token_node);
-bool		is_token_kind_paren_right_as_ast_node(t_deque_node *token_node);
-bool		is_token_kind_subshell_as_ast_node(t_deque_node *token_node);
+bool			is_token_kind_command_as_ast_node(t_deque_node *token_node);
+bool			is_token_kind_paren_left_as_ast_node(t_deque_node *token_node);
+bool			is_token_kind_paren_right_as_ast_node(t_deque_node *token_node);
+bool			is_token_kind_subshell_as_ast_node(t_deque_node *token_node);
 
 /* set, update */
-void		set_token_kinds_all(t_deque *tokens);
-void		set_token_quote_type_all(t_deque *tokens);
-void		remove_quote_in_token_str(t_deque *tokens);
+void			set_token_kinds_all(t_deque *tokens);
+void			set_token_quote_type_all(t_deque *tokens);
+void			remove_quote_in_token_str(t_deque *tokens);
 
 /* validate */
-bool		is_closed_quote_all(t_deque_node *node);
-bool		is_valid_paren_pair_all(t_deque_node *node);
+bool			is_closed_quote_all(t_deque_node *node);
+bool			is_valid_paren_pair_all(t_deque_node *node);
 
 /* init */
-t_token		*init_token_struct(void);
+t_token			*init_token_struct(void);
 
 /* destroy */
-void		del_token(void *content);
-void		*destroy_tokens(t_deque **command, void (*del)(void *));
+void			del_token(void *content);
+void			*destroy_tokens(t_deque **command, void (*del)(void *));
 
 #endif //MS_TOKENIZE_H

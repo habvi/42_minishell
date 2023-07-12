@@ -33,8 +33,7 @@ static char	*get_split_str(char *head, char **end)
 
 // [   aaa  bbb ccc] -> [aaa],[bbb],[ccc]
 // [key1  key2=a  b   c] -> [key1],[key2=a],[b],[c]
-void	word_split_and_add_for_general_cmd(char *token_str, \
-											t_deque *expanded)
+void	word_split_and_add(char *token_str, t_deque *expanded)
 {
 	char			*split_str;
 	char			*end;

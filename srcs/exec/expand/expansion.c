@@ -52,29 +52,12 @@ static void	expand_tokens(t_deque *tokens, t_context *context)
 	}
 }
 
-static bool	is_assignment_command(t_deque *tokens)
-{
-	t_token	*token;
-
-	token = (t_token *)tokens->node;
-	if (!token)
-		return (false);
-	if (ft_streq(token->str, CMD_DECLARE))
-		return (true);
-	if (ft_streq(token->str, CMD_EXPORT))
-		return (true);
-	return (false);
-}
-
 void	expand_variables_inter(t_deque **tokens, t_context *context)
 {
-	bool	is_assign_cmd;
-
-	is_assign_cmd = is_assignment_command(*tokens);
 	expand_tokens(*tokens, context);
 	remove_empty_tokens(*tokens);
 	concat_tokens(*tokens);
-	split_expand_word(tokens, is_assign_cmd);
+	split_expand_word(tokens);
 }
 
 // word splitting: if unquoted, word split by delimiter
