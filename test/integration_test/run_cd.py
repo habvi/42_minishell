@@ -69,6 +69,8 @@ def main():
     ]
     # todo: rm $PWD \n ./minishell \n pwd \n cd ./ ....etc
 
+    # todo: CDPATH test
+
     commands_list += additional_test
 
     # for c in commands_list:
