@@ -33,5 +33,12 @@ t_result	handle_parent_pipes(t_ast *self_node)
 		if (copy_pipe_read_for_next(self_node) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 	}
+	if (is_last_command_node(self_node))
+	{
+		if (self_node->pipe_fd[READ] != IN_FD_INIT)
+			x_close(self_node->pipe_fd[READ]);
+		if (self_node->pipe_fd[WRITE] != OUT_FD_INIT)
+			x_close(self_node->pipe_fd[WRITE]);
+	}
 	return (SUCCESS);
 }

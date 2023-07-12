@@ -34,7 +34,9 @@ static void	connect_redirect_fds(t_ast *self_node)
 static t_result	execute_command_internal(t_ast *self_node, t_context *context)
 {
 	t_result	result;
+	int 		out_copy;
 
+	out_copy = dup(STDOUT_FILENO);
 	expand_variables(self_node, context);
 	result = redirect_fd(self_node->redirects, context);
 	if ((result == PROCESS_ERROR) || (result == FAILURE))
@@ -46,17 +48,21 @@ static t_result	execute_command_internal(t_ast *self_node, t_context *context)
 		execute_single_builtin(self_node, context); // todo: process error?
 	else if (exec_command_each(self_node, context) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
+	x_close(STDOUT_FILENO);
+	x_dup2(out_copy, STDOUT_FILENO);
+	x_close(out_copy);
 	return (SUCCESS);
 }
 
 t_result	execute_command(t_ast *self_node, t_context *context)
 {
-	int	in_copy;
-	int out_copy;
+	// int	in_fd_copy;
+	// int	out_fd_copy;
 
-	in_copy = dup(STDIN_FILENO);
-	out_copy = dup(STDOUT_FILENO);
+	// in_fd_copy = dup(STDIN_FILENO);
+	// out_fd_copy = dup(STDOUT_FILENO);
 
+	// ft_dprintf(2, "%s : in[%d],out[%d]\n", __func__, in_fd_copy, out_fd_copy);
 	if (!self_node)
 		return (SUCCESS);
 	if (exec_handle_left_node(self_node, context) == PROCESS_ERROR)
@@ -66,12 +72,13 @@ t_result	execute_command(t_ast *self_node, t_context *context)
 	if (execute_command_internal(self_node, context) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
 
-	x_close(STDIN_FILENO);
-	x_dup2(in_copy, STDIN_FILENO);
-	x_close(in_copy);
+	// x_close(STDIN_FILENO);
+	// x_dup2(in_fd_copy, STDIN_FILENO);
+	// x_close(in_fd_copy);
 
-	x_close(STDOUT_FILENO);
-	x_dup2(out_copy, STDOUT_FILENO);
-	x_close(out_copy);
+	// x_close(STDOUT_FILENO);
+	// x_dup2(out_fd_copy, STDOUT_FILENO);
+	// x_close(out_fd_copy);
+
 	return (SUCCESS);
 }
