@@ -66,8 +66,8 @@ bool		is_token_str_paren(const char *str);
 
 bool		is_concat_to_next(char token_head, char next_chr);
 
-bool		is_token_kind_word(t_token_kind token_kind);
-bool		is_token_kind_redirection(t_token_kind token_kind);
+bool		is_token_kind_word(const t_token_kind token_kind);
+bool		is_token_kind_redirection(const t_token_kind token_kind);
 
 bool		is_token_kind_and_or_from_node(t_deque_node *token_node);
 bool		is_token_kind_pipe_from_node(t_deque_node *token_node);

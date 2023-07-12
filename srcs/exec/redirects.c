@@ -42,7 +42,7 @@ static t_result	connect_process_io_fd(t_redirect *redirects, \
 }
 
 static t_result	redirect_token(t_redirect *redirects, \
-								t_token_kind kind, \
+								const t_token_kind kind, \
 								const char *path)
 {
 	t_result	result;

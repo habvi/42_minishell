@@ -36,15 +36,14 @@ static void	read_input_save_to_fd(int fd, const char *delimiter)
 	}
 }
 
-static char	*get_heredoc_delimiter(t_deque_node *token_node)
+static char	*get_heredoc_delimiter(const t_deque_node *token_node)
 {
-	t_token	*token;
+	const t_token	*token = (t_token *)token_node->content;
 
-	token = (t_token *)token_node->content;
 	return (token->str);
 }
 
-static t_result	execute_heredoc_each(t_deque_node *token_node, \
+static t_result	execute_heredoc_each(const t_deque_node *token_node, \
 										int *in_fd, \
 										char **filename)
 {
