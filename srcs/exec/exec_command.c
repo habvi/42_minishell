@@ -60,9 +60,11 @@ t_result	exec_command_each(t_ast *self_node, t_context *context)
 	self_node->pid = x_fork();
 	if (self_node->pid == FORK_ERROR)
 		return (PROCESS_ERROR);
-	context->is_interactive = false;
 	if (self_node->pid == CHILD_PID)
+	{
+		context->is_interactive = false;
 		child_process(self_node, context);
+	}
 	else
 	{
 		if (parent_process(self_node, context) == PROCESS_ERROR)
