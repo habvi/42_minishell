@@ -16,6 +16,7 @@ static void	print_err_set_status(const char *arg, \
 	const char	*err_arg;
 	const char	*err_msg;
 
+	*status = CD_ERROR_STATUS;
 	if (!path)
 	{
 		if (!arg || ft_streq(arg, KEY_HOME) || ft_streq(arg, CD_ARG_HOME))
@@ -32,7 +33,6 @@ static void	print_err_set_status(const char *arg, \
 		err_msg = strerror(tmp_err);
 		ft_dprintf(STDERR_FILENO, "%s: %s: %s: %s\n", \
 				SHELL_NAME, CMD_CD, err_arg, err_msg);
-		*status = CD_ERROR_STATUS;
 	}
 }
 
@@ -72,7 +72,7 @@ static void	change_directory(const char *arg, \
 	result = cd_change_dir_to_valid_path(absolute_path, status);
 	if (result == FAILURE)
 	{
-		ft_dprintf(2, "cd: fail to chdir\n"); // todo: tmp
+		ft_dprintf(2, "cd: fail to chdir\n"); // todo: tmp, status...?
 		ft_free(&absolute_path);
 		return ;
 	}
