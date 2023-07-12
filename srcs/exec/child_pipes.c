@@ -3,7 +3,7 @@
 #include "ms_parse.h"
 #include "ft_sys.h"
 
-static t_result	handle_child_pipes_except_first(int prev_fd)
+static t_result	connect_prev_fd_to_stdin(int prev_fd)
 {
 	if (x_close(STDIN_FILENO) == CLOSE_ERROR)
 		return (PROCESS_ERROR);
@@ -14,7 +14,7 @@ static t_result	handle_child_pipes_except_first(int prev_fd)
 	return (SUCCESS);
 }
 
-static t_result	handle_child_pipes_except_last(int pipe_fd[2])
+static t_result	connect_stdout_to_pipe(int pipe_fd[2])
 {
 	if (x_close(pipe_fd[READ]) == CLOSE_ERROR)
 		return (PROCESS_ERROR);
@@ -36,14 +36,14 @@ t_result	handle_child_pipes(t_ast *self_node)
 {
 	const int	prev_fd = self_node->prev_fd;
 
-	if (!is_first_command(prev_fd))
+	if (!is_first_command(prev_fd)) // prev_fd != IN_FD_INIT
 	{
-		if (handle_child_pipes_except_first(prev_fd) == PROCESS_ERROR)
+		if (connect_prev_fd_to_stdin(prev_fd) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 	}
 	if (!is_last_command_node(self_node))
 	{
-		if (handle_child_pipes_except_last(self_node->pipe_fd) == PROCESS_ERROR)
+		if (connect_stdout_to_pipe(self_node->pipe_fd) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 	}
 	return (SUCCESS);
