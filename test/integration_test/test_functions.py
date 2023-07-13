@@ -268,6 +268,7 @@ def put_result(val, m_res, b_res):
         print_color_str(RED, f'[{test_num}. KO]')
         # ko
         val[2] += 1
+
     # test_num
     val[0] += 1
     print()
@@ -342,14 +343,19 @@ def output_test(test_input_list):
     ok = 0
     ko = 0
     val = [test_num, ok, ko]
+    ko_case = []
+    prev_ko = 0
     test_no = 1
 
     for stdin in test_input_list:
         m_res, b_res = run_both(test_no, stdin)
-        put_result(val, m_res, b_res)
+        put_result( val, m_res, b_res)
         test_no += 1
+        if prev_ko != val[2]:
+            ko_case.append(stdin)
+        prev_ko = val[2]
 
-    return put_total_result(val)
+    return put_total_result(val), ko_case
 
 
 def leak_test(test_input_list):
@@ -369,6 +375,18 @@ def leak_test(test_input_list):
 
 # ----------------------------------------------------------
 
+def print_ko_case(test_name, test_res, ko_case):
+    if test_res:
+        print(f"{COLOR_DICT[RED]}#########################################")
+        print("#####            KO CASE            #####")
+        print(f"#########################################{COLOR_DICT['end']}")
+
+        with open(f'ko_case_{test_name}.txt', 'w') as f:
+            f.write(f'KO CASE OF : {test_name}\n')
+            for ko in ko_case:
+                print(ko)
+                f.write(f'{ko}\n')
+
 def test(test_name, test_input_list):
     try:
         with open(BASH_INIT_FILE, "w") as init_file:
@@ -377,8 +395,12 @@ def test(test_name, test_input_list):
         test_res = 0
         print(f' ========================= {test_name} ========================= ')
 
-        test_res |= output_test(test_input_list)
+        output_res, ko_case = output_test(test_input_list)
+        test_res |= output_res
         test_res |= leak_test(test_input_list)
+        print()
+
+        print_ko_case(test_name, test_res, ko_case)
         print()
 
     finally:
