@@ -50,23 +50,37 @@ static void	expand_tokens(t_deque *tokens, t_context *context)
 	}
 }
 
-// todo: void?
+void	expand_variables_inter(t_deque **tokens, t_context *context)
+{
+	expand_tokens(*tokens, context);
+	remove_empty_tokens(*tokens);
+	concat_tokens(*tokens);
+//	split_expand_word(tokens);
+}
+
+void	expand_variables_for_redirect(t_deque *redirect_list, t_context *context)
+{
+	t_deque_node	*list_node;
+	t_redirect		*redirect;
+
+	list_node = redirect_list->node;
+	while (list_node)
+	{
+		redirect = (t_redirect *)list_node->content;
+		if (redirect->kind == TOKEN_KIND_REDIRECT_HEREDOC)
+		{
+			list_node = list_node->next;
+			continue ;
+		}
+		expand_variables_inter(&redirect->tokens, context);
+		list_node = list_node->next;
+	}
+}
+
 // word splitting: if unquoted, word split by delimiter
 t_result	expand_variables(t_ast *self_node, t_context *context)
 {
-	t_redirect	*redirects;
-
-	expand_tokens(self_node->command, context);
-//	split_expand_word(self_node->command);
-	remove_empty_tokens(self_node->command);
-	concat_tokens(self_node->command);
-	redirects = self_node->redirects;
-	if (redirects)
-	{
-		expand_tokens(redirects->list, context);
-//		split_expand_word(redirects->list);
-		remove_empty_tokens(redirects->list);
-		concat_tokens(redirects->list);
-	}
+	expand_variables_inter(&self_node->command, context);
+	expand_variables_for_redirect(self_node->redirect_list, context);
 	return (SUCCESS);
 }
