@@ -28,7 +28,7 @@ static t_token	*create_token_struct(char *token_str, char next_chr)
 	return (token);
 }
 
-static t_deque_node	*create_token_node(char *token_str, char next_chr)
+t_deque_node	*create_token_node(char *token_str, char next_chr)
 {
 	t_token			*token;
 	t_deque_node	*node;
