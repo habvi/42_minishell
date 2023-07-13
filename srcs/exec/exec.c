@@ -7,6 +7,7 @@
 
 static void	connect_redirect_fds(t_ast *self_node)
 {
+//	ft_dprintf(2, "cmd:[%s], connect: proc[IN]:%d, proc[OUT]:%d\n", get_head_token_str(self_node->command), self_node->proc_fd[IN], self_node->proc_fd[OUT]);
 	if (self_node->proc_fd[IN] != IN_FD_INIT)
 	{
 		if (self_node->prev_fd != IN_FD_INIT)

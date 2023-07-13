@@ -1,4 +1,5 @@
 #include <fcntl.h>
+#include <string.h>
 #include "minishell.h"
 #include "ms_exec.h"
 #include "ms_expansion.h"
@@ -15,17 +16,32 @@
 static t_result	connect_process_io_fd(const char *path, int *fd, int open_flag)
 {
 	int	open_fd;
+	int	tmp_err;
 
 	if (open_flag == OPEN_FLAG_READ)
 	{
+		errno = 0;
 		open_fd = open(path, open_flag); // todo: error
+		tmp_err = errno;
+		if (open_fd == OPEN_ERROR)
+		{
+			ft_dprintf(2, "error: %s\n", strerror(tmp_err)); // todo: error
+			return (FAILURE);
+		}
 		if (*fd != IN_FD_INIT)
 			close(*fd); // todo: error
 		*fd = open_fd;
 	}
 	else if (open_flag == OPEN_FLAG_WRITE || open_flag == OPEN_FLAG_APPEND)
 	{
+		errno = 0;
 		open_fd = open(path, open_flag, 0664); // todo: error
+		tmp_err = errno;
+		if (open_fd == OPEN_ERROR)
+		{
+			ft_dprintf(2, "error: %s\n", strerror(tmp_err)); // todo: error
+			return (FAILURE);
+		}
 		if (*fd != OUT_FD_INIT)
 			close(*fd); // todo: error
 		*fd = open_fd;
@@ -86,7 +102,10 @@ t_result	redirect_fd(t_ast *self_node, t_context *context)
 		if (result == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 		if (result == FAILURE)
+		{
 			context->status = 1;
+			return (FAILURE);
+		}
 		node = node->next;
 	}
 	return (SUCCESS);
