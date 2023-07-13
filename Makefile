@@ -79,7 +79,9 @@ SRCS		+=	$(EXEC_DIR)/$(EXPAND_DIR)/concat_tokens.c  \
 				$(EXEC_DIR)/$(EXPAND_DIR)/expand_parameter.c\
 				$(EXEC_DIR)/$(EXPAND_DIR)/expansion.c  \
 				$(EXEC_DIR)/$(EXPAND_DIR)/remove_empty_tokens.c  \
+				$(EXEC_DIR)/$(EXPAND_DIR)/split_expand_word.c  \
 				$(EXEC_DIR)/$(EXPAND_DIR)/substr_before_dollar.c  \
+				$(EXEC_DIR)/$(EXPAND_DIR)/word_split.c  \
 				$(EXEC_DIR)/call_builtin_command.c \
 				$(EXEC_DIR)/child_pipes.c \
 				$(EXEC_DIR)/child_process.c \

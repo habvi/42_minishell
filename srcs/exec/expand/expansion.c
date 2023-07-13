@@ -1,9 +1,11 @@
 #include "minishell.h"
+#include "ms_builtin.h"
 #include "ms_expansion.h"
 #include "ms_tokenize.h"
 #include "ms_parse.h"
 #include "ms_var.h"
 #include "ft_deque.h"
+#include "ft_string.h"
 #include "ft_mem.h"
 
 static void	expand_token(t_token *token, t_context *context)
@@ -59,7 +61,7 @@ static void	expand_variables_inter(t_deque **tokens, t_context *context)
 }
 
 static void	expand_variables_for_redirect(t_deque *redirect_list, \
-										t_context *context)
+											t_context *context)
 {
 	t_deque_node	*list_node;
 	t_redirect		*redirect;
