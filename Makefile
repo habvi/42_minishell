@@ -271,4 +271,9 @@ test_pwd	: all
 test_mix	: all
 	python3 ./test/integration_test/run_mix.py
 
+# test redirects
+.PHONY		: test_redirects
+test_redirects	: all
+	python3 ./test/integration_test/run_redirects.py
+
 -include $(DEPS)
