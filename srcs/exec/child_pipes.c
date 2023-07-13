@@ -31,7 +31,7 @@ static t_result	connect_stdout_to_pipe(int pipe_fd[2], int proc_fd_out)
 	if (x_close(pipe_fd[WRITE]) == CLOSE_ERROR)
 		return (PROCESS_ERROR);
 	return (SUCCESS);
-}./
+}
 
 bool	is_first_command(int prev_fd)
 {
