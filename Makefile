@@ -266,7 +266,17 @@ test_export	: all
 test_pwd	: all
 	python3 ./test/integration_test/run_pwd.py
 
-# test builtin pwd
+# test op paren
+.PHONY		: test_paren
+test_paren	: all
+	python3 ./test/integration_test/run_paren.py
+
+# test op and or
+.PHONY		: test_and_or
+test_and_or	: all
+	python3 ./test/integration_test/run_and_or.py
+
+# test mix
 .PHONY		: test_mix
 test_mix	: all
 	python3 ./test/integration_test/run_mix.py

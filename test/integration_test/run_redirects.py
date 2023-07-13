@@ -1,7 +1,5 @@
 from test_functions import test
 
-PRE_FILE_CHECK = "cat test_infile1  && cat test_infille2 &&"
-
 def main():
     test_res = 0
 
@@ -82,7 +80,6 @@ def main():
     test_res |= test("redirect_out", redirects_out_test)
     # test_res |= test("redirect_out", redirects_append_test)
     # test_res |= test("redirect_out", redirects_heredoc_test)
-
 
     return test_res
 
