@@ -64,6 +64,8 @@ static void	expand_variables_for_redirect(t_deque *redirect_list, \
 	t_deque_node	*list_node;
 	t_redirect		*redirect;
 
+	if (!redirect_list)
+		return ;
 	list_node = redirect_list->node;
 	while (list_node)
 	{
