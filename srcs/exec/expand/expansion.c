@@ -56,6 +56,7 @@ static void	expand_variables_inter(t_deque **tokens, t_context *context)
 	remove_empty_tokens(*tokens);
 	concat_tokens(*tokens);
 	split_expand_word(tokens);
+	expand_wildcard(tokens);
 }
 
 static void	expand_variables_for_redirect(t_deque *redirect_list, \
