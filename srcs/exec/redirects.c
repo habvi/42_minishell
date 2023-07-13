@@ -91,5 +91,3 @@ t_result	redirect_fd(t_ast *self_node, t_context *context)
 	}
 	return (SUCCESS);
 }
-
-

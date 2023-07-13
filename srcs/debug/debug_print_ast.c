@@ -63,19 +63,6 @@ static void	print_token_comamnd_and_redirect(t_ast *ast)
 	ft_dprintf(STDERR_FILENO, "\n");
 }
 
-static char	*get_ast_node_kind_str(t_node_kind node_kind)
-{
-	if (node_kind == NODE_KIND_OP_PIPE)
-		return ("|");
-	if (node_kind == NODE_KIND_OP_OR)
-		return ("||");
-	if (node_kind == NODE_KIND_OP_AND)
-		return ("&&");
-	if (node_kind == NODE_KIND_SUBSHELL)
-		return ("(");
-	return ("");
-}
-
 static void	print_tree_node(t_ast *node, int depth, int is_rhs, char *prefix)
 {
 	if (!node)

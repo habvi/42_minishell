@@ -50,7 +50,7 @@ static void	expand_tokens(t_deque *tokens, t_context *context)
 	}
 }
 
-void	expand_variables_inter(t_deque **tokens, t_context *context)
+static void	expand_variables_inter(t_deque **tokens, t_context *context)
 {
 	expand_tokens(*tokens, context);
 	remove_empty_tokens(*tokens);
@@ -58,7 +58,8 @@ void	expand_variables_inter(t_deque **tokens, t_context *context)
 //	split_expand_word(tokens);
 }
 
-void	expand_variables_for_redirect(t_deque *redirect_list, t_context *context)
+static void	expand_variables_for_redirect(t_deque *redirect_list, \
+										t_context *context)
 {
 	t_deque_node	*list_node;
 	t_redirect		*redirect;

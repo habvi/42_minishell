@@ -57,7 +57,8 @@ static void	move_redirect_file_from_command(t_deque *command, \
 	*token_node = next_node;
 }
 
-static t_redirect	*create_redirect_from_command(t_deque *command, t_deque_node **token_node)
+static t_redirect	*create_redirect_from_command(t_deque *command, \
+													t_deque_node **token_node)
 {
 	t_redirect		*redirect;
 

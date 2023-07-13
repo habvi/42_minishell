@@ -43,7 +43,7 @@ static t_result	execute_heredoc_each(t_redirect *redirect)
 	char			*delimiter;
 	int				fd;
 
-	result = open_heredoc_fd(&fd, &redirect->heredoc_filename); // todo change fd...
+	result = open_heredoc_fd(&fd, &redirect->heredoc_filename);
 	if (result == PROCESS_ERROR)
 		return (PROCESS_ERROR);
 	delimiter = token->str; // don't free

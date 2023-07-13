@@ -46,7 +46,7 @@ static t_result	execute_command_internal(t_ast *self_node, t_context *context)
 t_result	execute_command(t_ast *self_node, t_context *context)
 {
 	int	in_copy;
-	int out_copy;
+	int	out_copy;
 
 	in_copy = dup(STDIN_FILENO);
 	out_copy = dup(STDOUT_FILENO);
