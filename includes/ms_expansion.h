@@ -8,6 +8,7 @@
 # define STR_DOLLAR		"$"
 # define STR_UNDERSCORE	"_"
 # define PARAM_STATUS	'?'
+# define CURRENT_DIR	"."
 
 typedef struct s_ast		t_ast;
 typedef struct s_context	t_context;
@@ -21,5 +22,7 @@ void		remove_empty_tokens(t_deque *tokens);
 void		concat_tokens(t_deque *tokens);
 void		split_expand_word(t_deque **tokens);
 void		word_split_and_add(char *token_str, t_deque *expanded);
+void    	expand_wildcard(t_deque **tokens);
+void    	pattern_matching_and_add(const char *token_str, t_deque *matched_tokens);
 
 #endif //MS_EXPANSION_H
