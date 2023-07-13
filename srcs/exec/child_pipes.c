@@ -41,15 +41,18 @@ bool	is_first_command(int prev_fd)
 t_result	handle_child_pipes(t_ast *self_node)
 {
 	const int	prev_fd = self_node->prev_fd;
+	const int	proc_in = self_node->proc_fd[IN];
+	const int	proc_out = self_node->proc_fd[OUT];
 
 	if (!is_first_command(prev_fd)) // prev_fd != IN_FD_INIT
 	{
-		if (connect_prev_fd_to_stdin(prev_fd, self_node->proc_fd[IN]) == PROCESS_ERROR)
+		if (connect_prev_fd_to_stdin(prev_fd, proc_in) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 	}
 	if (!is_last_command_node(self_node))
 	{
-		if (connect_stdout_to_pipe(self_node->pipe_fd, self_node->proc_fd[OUT]) == PROCESS_ERROR)
+		if (connect_stdout_to_pipe(self_node->pipe_fd, \
+									proc_out) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 	}
 	return (SUCCESS);

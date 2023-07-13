@@ -36,7 +36,6 @@ t_result	handle_parent_pipes(t_ast *self_node)
 	// todo: error
 	if (is_last_command_node(self_node))
 	{
-//		ft_dprintf(2, "%s cmd:%s\n", __func__, get_head_token_str(self_node->command));
 		if (self_node->pipe_fd[READ] != IN_FD_INIT)
 			x_close(self_node->pipe_fd[READ]);
 		if (self_node->pipe_fd[WRITE] != OUT_FD_INIT)

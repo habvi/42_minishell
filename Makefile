@@ -93,6 +93,8 @@ SRCS		+=	$(EXEC_DIR)/$(EXPAND_DIR)/concat_tokens.c  \
 				$(EXEC_DIR)/is_single_builtin.c \
 				$(EXEC_DIR)/parent_pipes.c \
 				$(EXEC_DIR)/parent_process.c \
+				$(EXEC_DIR)/redirect_connect_to_proc.c \
+				$(EXEC_DIR)/redirect_open_fd.c \
 				$(EXEC_DIR)/redirects.c \
 				$(EXEC_DIR)/single_builtin.c \
 
@@ -116,7 +118,8 @@ SRCS		+=	$(PARSE_DIR)/$(HEREDOC_DIR)/create_heredoc_filename.c \
 				$(PARSE_DIR)/move_redirect_from_command.c \
 				$(PARSE_DIR)/new_ast_node.c \
 				$(PARSE_DIR)/parse.c \
-				$(PARSE_DIR)/pre_parse_syntax.c
+				$(PARSE_DIR)/pre_parse_syntax.c \
+				$(PARSE_DIR)/transfer_redirect_from_command.c
 
 PATH_DIR	:=	path
 SRCS		+=	$(PATH_DIR)/create_exec_path.c \
@@ -127,6 +130,7 @@ SRCS		+=	$(PATH_DIR)/create_exec_path.c \
 
 TOKEN_DIR	:=	tokenize
 SRCS		+=	$(TOKEN_DIR)/del_token.c \
+				$(TOKEN_DIR)/get_token_kind.c \
 				$(TOKEN_DIR)/get_token_str.c \
 				$(TOKEN_DIR)/get_token_tail.c \
 				$(TOKEN_DIR)/is_closed_paren.c \

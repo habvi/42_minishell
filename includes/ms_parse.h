@@ -78,6 +78,9 @@ void		dup_command_from_tokens(t_deque *command, \
 void		dup_redirection_from_tokens(t_deque *command, \
 										t_deque_node **token_node);
 char		*get_node_kind_str(t_node_kind kind);
+void		transfer_redirect_from_command(t_deque *command, \
+											t_deque *redirect_list, \
+											t_deque_node **token_node);
 
 /* heredoc */
 t_result	execute_heredoc(t_ast *ast_node);

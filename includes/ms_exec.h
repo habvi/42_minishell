@@ -1,6 +1,7 @@
 #ifndef MS_EXEC_H
 # define MS_EXEC_H
 
+# include <fcntl.h>
 # include <stdbool.h>
 # include <stdint.h>
 # include <unistd.h>
@@ -27,10 +28,12 @@ typedef struct s_deque_node	t_deque_node;
 typedef struct s_redirect	t_redirect;
 typedef struct s_var		t_var;
 
-typedef struct s_fd {
-	int	pipefd[2];
-	int	prev_fd;
-}	t_fd;
+typedef enum e_open_flag
+{
+	OPEN_FOR_IN = O_RDONLY,
+	OPEN_FOR_OUT = O_CREAT | O_WRONLY | O_TRUNC,
+	OPEN_FOR_APPEND = O_CREAT | O_WRONLY | O_APPEND
+}	t_open_flag;
 
 /* call_builtin_command */
 uint8_t			call_builtin_command(const char *const *argv, \
@@ -38,23 +41,15 @@ uint8_t			call_builtin_command(const char *const *argv, \
 
 /* check_command */
 bool			is_first_command(int prev_fd);
-bool			is_last_command(t_deque_node *next_cmd);
 
 /* child_process */
 
 /* exec */
 t_result		execute_command(t_ast *ast, t_context *context);
-t_deque_node	*get_next_command(t_deque_node *cmd, size_t *cmd_size);
-char			**convert_command_to_array(t_deque_node *cmd, \
-											const size_t size);
 uint8_t			execute_external_command(char *const *argv, t_context *context);
-
-/* init */
-void			init_fd(t_fd *fd);
 
 /* is_single_builtin */
 bool			is_command_builtin(const char *cmd);
-bool			is_single_builtin(t_deque_node *cmd);
 
 /* parent */
 
@@ -79,5 +74,8 @@ t_result		exec_handle_right_node(t_ast *self_node, t_context *context);
 
 /* redirects */
 t_result		redirect_fd(t_ast *self_node, t_context *context);
+void			connect_redirect_to_proc(t_ast *self_node);
+t_result		open_redirect_fd_and_save_to_proc(t_redirect *redirect, \
+													int proc_fd[2]);
 
 #endif //MS_EXEC_H
