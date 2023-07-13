@@ -30,7 +30,7 @@ static t_result	execute_command_internal(t_ast *self_node, t_context *context)
 	t_result	result;
 
 	expand_variables(self_node, context);
-	result = redirect_fd(self_node->redirects, context);
+	result = redirect_fd(self_node, context);
 	if ((result == PROCESS_ERROR) || (result == FAILURE))
 		return (result);
 

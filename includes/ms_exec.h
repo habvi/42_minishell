@@ -78,6 +78,6 @@ t_result		exec_handle_left_node(t_ast *self_node, t_context *context);
 t_result		exec_handle_right_node(t_ast *self_node, t_context *context);
 
 /* redirects */
-t_result		redirect_fd(t_redirect *redirects, t_context *context);
+t_result		redirect_fd(t_ast *self_node, t_context *context);
 
 #endif //MS_EXEC_H

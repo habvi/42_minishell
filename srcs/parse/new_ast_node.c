@@ -13,6 +13,7 @@ static t_ast	*init_ast_node(void)
 		ft_abort();
 	new_node->kind = NODE_KIND_NONE;
 	new_node->command = NULL;
+	new_node->redirect_list = NULL;
 	new_node->proc_fd[IN] = IN_FD_INIT;
 	new_node->proc_fd[OUT] = OUT_FD_INIT;
 	new_node->pipe_fd[READ] = IN_FD_INIT;

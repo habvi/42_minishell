@@ -36,53 +36,44 @@ static void	read_input_save_to_fd(int fd, const char *delimiter)
 	}
 }
 
-static char	*get_heredoc_delimiter(t_deque_node *token_node)
+static t_result	execute_heredoc_each(t_redirect *redirect)
 {
-	t_token	*token;
-
-	token = (t_token *)token_node->content;
-	return (token->str);
-}
-
-static t_result	execute_heredoc_each(t_deque_node *token_node, \
-										int *in_fd, \
-										char **filename)
-{
-	const t_token	*token = (t_token *)token_node->content;
+	const t_token	*token = (t_token *)redirect->tokens->node->content;
 	t_result		result;
 	char			*delimiter;
+	int				fd;
 
-	if (token->kind != TOKEN_KIND_REDIRECT_HEREDOC)
-		return (CONTINUE);
-	result = open_heredoc_filedes(in_fd, filename); // todo change fd...
+	result = open_heredoc_fd(&fd, &redirect->heredoc_filename); // todo change fd...
 	if (result == PROCESS_ERROR)
 		return (PROCESS_ERROR);
-	delimiter = get_heredoc_delimiter(token_node->next); // don't free
-	read_input_save_to_fd(*in_fd, delimiter);
+	delimiter = token->str; // don't free
+	read_input_save_to_fd(fd, delimiter);
+	close(fd); //todo:error
 	return (SUCCESS);
 }
 
-static t_result	execute_heredoc_all(t_redirect *redirect)
+static t_result	execute_heredoc_all(t_deque *redirect_list)
 {
-	t_deque_node	*token_node;
-	int				in_fd;
-	char			*filename;
+	t_deque_node	*redirect_node;
 	t_result		result;
+	t_redirect		*redirect;
 
-	if (!redirect)
+	if (!redirect_list)
 		return (SUCCESS);
-	token_node = redirect->list->node;
-	in_fd = IN_FD_INIT;
-	filename = NULL;
-	while (token_node)
+	redirect_node = redirect_list->node;
+	while (redirect_node)
 	{
-		result = execute_heredoc_each(token_node, &in_fd, &filename);
+		redirect = (t_redirect *)redirect_node->content;
+		if (redirect->kind != TOKEN_KIND_REDIRECT_HEREDOC)
+		{
+			redirect_node = redirect_node->next;
+			continue ;
+		}
+		result = execute_heredoc_each(redirect);
 		if (result == PROCESS_ERROR)
 			return (PROCESS_ERROR);
-		token_node = token_node->next;
+		redirect_node = redirect_node->next;
 	}
-	redirect->in_fd = in_fd;
-	redirect->heredoc_filename = filename;
 	return (SUCCESS);
 }
 
@@ -103,7 +94,7 @@ t_result	execute_heredoc(t_ast *ast_node)
 	if (!is_node_kind_exec_heredoc(ast_node->kind))
 		return (SUCCESS);
 	move_redirect_from_command(ast_node);
-	heredoc_result = execute_heredoc_all(ast_node->redirects);
+	heredoc_result = execute_heredoc_all(ast_node->redirect_list);
 	if (heredoc_result == PROCESS_ERROR)
 		return (PROCESS_ERROR);
 	return (SUCCESS);
