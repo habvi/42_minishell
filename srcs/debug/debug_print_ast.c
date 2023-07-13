@@ -25,6 +25,23 @@ static void	print_tokens_dq_in_oneline(t_deque *dq)
 	}
 }
 
+static void	print_redirect_in_oneline(t_deque *dq)
+{
+	t_deque_node	*node;
+	t_redirect		*redirect;
+
+	node = dq->node;
+	while (node)
+	{
+		redirect = (t_redirect *)node->content;
+		ft_dprintf(STDERR_FILENO, "%s ", get_token_kind_str(redirect->kind));
+		print_tokens_dq_in_oneline(redirect->tokens);
+		node = node->next;
+		if (node)
+			ft_dprintf(STDERR_FILENO, " ");
+	}
+}
+
 static void	print_token_comamnd_and_redirect(t_ast *ast)
 {
 	if (ast->command)
@@ -33,10 +50,10 @@ static void	print_token_comamnd_and_redirect(t_ast *ast)
 		print_tokens_dq_in_oneline(ast->command);
 		ft_dprintf(STDERR_FILENO, "]");
 	}
-	if (ast->redirects)
+	if (ast->redirect_list)
 	{
 		ft_dprintf(STDERR_FILENO, ", redirect[");
-		print_tokens_dq_in_oneline(ast->redirects->list);
+		print_redirect_in_oneline(ast->redirect_list);
 		ft_dprintf(STDERR_FILENO, "], ");
 	}
 	/*

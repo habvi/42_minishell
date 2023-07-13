@@ -95,4 +95,7 @@ t_token		*init_token_struct(void);
 void		del_token(void *content);
 void		*destroy_tokens(t_deque **command, void (*del)(void *));
 
+/* debug */
+char		*get_token_kind_str(t_token_kind kind); //tmp, enum
+
 #endif //MS_TOKENIZE_H
