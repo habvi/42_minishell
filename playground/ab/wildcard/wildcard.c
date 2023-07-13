@@ -3,75 +3,77 @@
 #include <string.h>
 #include <stdlib.h>
 
-void print_debug(bool **dp, const char *s, const char *p, const size_t len_s, const size_t len_p)
+static void print_debug(const bool *dp, const char *match_str, const size_t len_t, size_t i)
 {
-	printf("  ");
-	for (int i = 0; i < len_s + 1; i++) {
-		printf("%c ", s[i]);
+	if (i == 1)
+		printf("  ");
+	if (i >= 2)
+		printf("%c ", match_str[i - 2]);
+	for (size_t j = 0; j < len_t + 1; j++) {
+		printf("%d ", dp[j]);
 	}
 	printf("\n");
-
-	for (int i = 0; i < len_p + 1; i++) {
-		for (int j = 0; j < len_s + 1; j++) {
-			printf("%d ", dp[i][j]);
-			if (i + 1 >= 0 && j == len_s)
-				printf("%c"	, p[i - 1]);
-		}
-		printf("\n");
-	}
-	printf("----------------------\n");
 }
 
 /*
-  a b c d e f 
-1 0 0 0 0 0 0 
-0 1 0 0 0 0 0 a
-0 1 1 1 1 1 1 *
-0 0 1 0 0 0 0 b
-0 0 0 1 0 0 0 c
-0 0 0 1 1 1 1 *
-0 0 0 0 1 0 0 d
-0 0 0 0 0 1 0 e
-0 0 0 0 0 0 1 f
+            (target)
+			    a b c d e f 
+(wildcard)	  1 0 0 0 0 0 0 
+			a 0 1 0 0 0 0 0 
+			* 0 1 1 1 1 1 1 
+			b 0 0 1 0 0 0 0 
+			c 0 0 0 1 0 0 0 
+			* 0 0 0 1 1 1 1 
+			d 0 0 0 0 1 0 0 
+			e 0 0 0 0 0 1 0 
+			f 0 0 0 0 0 0 1 
 */
-bool	is_matches_wildcard_and_str(const char *match_str, const char *target_path)
+static bool	is_matches_wildcard_and_str(const char *match_str, const char *target_path)
 {
 	const size_t	len_m = strlen(match_str);
 	const size_t	len_t = strlen(target_path);
 	size_t			i;
 	size_t			j;
-	bool			**dp;
+	bool			*dp;
+	bool			*ndp;
+	bool			answer;
 
-	dp = (bool **)calloc(len_m + 1, sizeof(bool *));
-	i = 0;
-	while (i < len_m + 1)
-	{
-		dp[i] = (bool *)calloc(len_t + 1, sizeof(bool));
-		i++;
+	printf("    ");
+	for (size_t i = 0; i < len_t + 1; i++) {
+		printf("%c ", target_path[i]);
 	}
+	printf("\n");
 
-	dp[0][0] = true;
+	dp = (bool *)calloc(len_t + 1, sizeof(bool));
+	dp[0] = true;
+
 	i = 1;
 	while (i < len_m + 1)
 	{
+		ndp = (bool *)calloc(len_t + 1, sizeof(bool));
 		if (match_str[i - 1] == '*')
-			dp[i][0] = dp[i - 1][0];
+			ndp[0] = dp[0];
 		j = 1;
 		while (j < len_t + 1)
 		{
 			if (match_str[i - 1] == '*')
-				dp[i][j] = dp[i - 1][j] || dp[i][j - 1] || dp[i - 1][j - 1];
+				ndp[j] = ndp[j - 1] || dp[j - 1] || dp[j];
 			else if (target_path[j - 1] == match_str[i - 1])
-				dp[i][j] = dp[i - 1][j - 1];
+				ndp[j] = dp[j - 1];
 			j++;
 		}
+		print_debug(dp, match_str, len_t, i);
+		free(dp);
+		dp = ndp;
 		i++;
 	}
-	print_debug(dp, target_path, match_str, len_t, len_m);
-	return (dp[len_m][len_t]);
+	print_debug(dp, match_str, len_t, i);
+	answer = dp[len_t];
+	free(dp);
+	return (answer);
 }
 
-int    test_wildcard(int no, char *input_wild, char *test_str, bool expected)
+static int    test_wildcard(int no, char *input_wild, char *test_str, bool expected)
 {
     bool    ret = is_matches_wildcard_and_str(input_wild, test_str);
     printf("\n[TEST %02d] wildcard:%-10s, test_str:%-10s, ret:%d, expected:%d, res:%s\n", no, input_wild, test_str, ret, expected, ret == expected ? "\x1b[32mAC\x1b[0m" : "\x1b[31mWA\x1b[0m");
