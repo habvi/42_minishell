@@ -56,10 +56,8 @@ static void	print_token_comamnd_and_redirect(t_ast *ast)
 		print_redirect_in_oneline(ast->redirect_list);
 		ft_dprintf(STDERR_FILENO, "], ");
 	}
-	/*
 	ft_dprintf(STDERR_FILENO, "fd: prev[%d]in[%d]out[%d] ", \
 				ast->prev_fd, ast->pipe_fd[READ], ast->pipe_fd[WRITE]);
-	*/
 	ft_dprintf(STDERR_FILENO, "\n");
 }
 
