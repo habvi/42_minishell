@@ -35,18 +35,18 @@ def main():
                 "ls && echo a b c def",
                 "cd libft && pwd",
                 "cd libft && pwd && cd - && pwd",
-                "unset OLDPWD && cd -", # KO: exit status 0 -> 1
+                "unset OLDPWD && cd -",
                 "echo a && grep a",
                 "ls && grep a",
-                # "exit 1 && echo abc", # KO: print exit
-                # "exit 2 && echo abc", # KO: print exit
-                # "exit 1 && exit 2", # KO: print exit
-                # "exit 2 && exit 5", # KO: print exit
-                # "ls && exit 1 && echo abc", # KO: print exit
-                # "ls && exit 2 && echo abc", # KO: print exit
-                # "ls && exit 2 && exit 1", # KO: print exit
-                # "ls && exit 2 && exit 8", # KO: print exit
-                # "ls && exit 2 && exit 8 && echo abc", # KO: print exit
+                "exit 1 && echo abc",
+                "exit 2 && echo abc",
+                "exit 1 && exit 2",
+                "exit 2 && exit 5",
+                "ls && exit 1 && echo abc",
+                "ls && exit 2 && echo abc",
+                "ls && exit 2 && exit 1",
+                "ls && exit 2 && exit 8",
+                "ls && exit 2 && exit 8 && echo abc",
                 "cd nosuchfile && echo a b",
                 "cd nosuchfile && cat nosuchfile && echo a b",
                 ]
@@ -60,15 +60,15 @@ def main():
                 "unset OLDPWD || cd -",
                 "echo a || grep a",
                 "ls || grep a",
-                # "exit 1 || echo abc", # KO: print exit
-                # "exit 2 || echo abc", # KO: print exit
-                # "exit 1 || exit 2", # KO: print exit
-                # "exit 2 || exit 5", # KO: print exit
-                # "ls || exit 1 || echo abc",
-                # "ls || exit 2 || echo abc",
-                # "ls || exit 2 || exit 1",
-                # "ls || exit 2 || exit 8",
-                # "ls || exit 2 || exit 8 || echo abc",
+                "exit 1 || echo abc",
+                "exit 2 || echo abc",
+                "exit 1 || exit 2",
+                "exit 2 || exit 5",
+                "ls || exit 1 || echo abc",
+                "ls || exit 2 || echo abc",
+                "ls || exit 2 || exit 1",
+                "ls || exit 2 || exit 8",
+                "ls || exit 2 || exit 8 || echo abc",
                 "cd nosuchfile || echo a b",
                 "cd nosuchfile || cat nosuchfile || echo a b",
                 ]
@@ -88,22 +88,22 @@ def main():
                 "echo a && echo b || grep a",
                 "ls || grep a && echo a",
                 "ls && grep a || echo a",
-                # "exit 1 && echo abc || ls", # KO: print exit
-                # "exit 1 || echo abc && ls", # KO: print exit
-                # "ls || exit 1 && echo abc",
-                # "ls && exit 1 || echo abc", # KO: print exit
-                # "ls || exit 2 && echo abc",
-                # "ls && exit 2 || echo abc", # KO: print exit
-                # "ls || exit 2 && exit 1", # KO: print exit
-                # "ls && exit 2 || exit 1", # KO: print exit
-                # "ls || exit 2 && exit 8", # KO: print exit
-                # "ls && exit 2 || exit 8", # KO: print exit
-                # "ls && exit 2 || exit 8 || echo abc", # KO: print exit
-                # "ls || exit 2 && exit 8 || echo abc", # KO: print exit
-                # "ls || exit 2 || exit 8 && echo abc",
-                # "ls || exit 2 && exit 8 && echo abc", # KO: print exit
-                # "ls && exit 2 && exit 8 || echo abc", # KO: print exit
-                # "ls && exit 2 || exit 8 && echo abc", # KO: print exit
+                "exit 1 && echo abc || ls",
+                "exit 1 || echo abc && ls",
+                "ls || exit 1 && echo abc",
+                "ls && exit 1 || echo abc",
+                "ls || exit 2 && echo abc",
+                "ls && exit 2 || echo abc",
+                "ls || exit 2 && exit 1",
+                "ls && exit 2 || exit 1",
+                "ls || exit 2 && exit 8",
+                "ls && exit 2 || exit 8",
+                "ls && exit 2 || exit 8 || echo abc",
+                "ls || exit 2 && exit 8 || echo abc",
+                "ls || exit 2 || exit 8 && echo abc",
+                "ls || exit 2 && exit 8 && echo abc",
+                "ls && exit 2 && exit 8 || echo abc",
+                "ls && exit 2 || exit 8 && echo abc",
                 "cd nosuchfile || echo a b && cd nosuchfile",
                 "cd nosuchfile && echo a b || cd nosuchfile",
                 ]
