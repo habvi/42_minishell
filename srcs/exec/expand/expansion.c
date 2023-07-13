@@ -1,11 +1,9 @@
 #include "minishell.h"
-#include "ms_builtin.h"
 #include "ms_expansion.h"
 #include "ms_tokenize.h"
 #include "ms_parse.h"
 #include "ms_var.h"
 #include "ft_deque.h"
-#include "ft_string.h"
 #include "ft_mem.h"
 
 static void	expand_token(t_token *token, t_context *context)
@@ -57,7 +55,7 @@ static void	expand_variables_inter(t_deque **tokens, t_context *context)
 	expand_tokens(*tokens, context);
 	remove_empty_tokens(*tokens);
 	concat_tokens(*tokens);
-//	split_expand_word(tokens);
+	split_expand_word(tokens);
 }
 
 static void	expand_variables_for_redirect(t_deque *redirect_list, \
@@ -78,6 +76,7 @@ static void	expand_variables_for_redirect(t_deque *redirect_list, \
 			continue ;
 		}
 		expand_variables_inter(&redirect->tokens, context);
+		split_expand_word(&redirect->tokens);
 		list_node = list_node->next;
 	}
 }
