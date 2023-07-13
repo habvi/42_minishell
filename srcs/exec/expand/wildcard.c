@@ -22,7 +22,8 @@ static void	transfer_deque_node_all(t_deque *dst, t_deque *src)
 	}
 }
 
-static void	create_matched_tokens_each(t_deque_node *node, t_deque *matched_tokens)
+static void	create_matched_tokens_each(t_deque_node *node, \
+										t_deque *matched_tokens)
 {
 	t_token	*token;
 	t_deque	*tmp_matched_tokens;
@@ -35,8 +36,8 @@ static void	create_matched_tokens_each(t_deque_node *node, t_deque *matched_toke
 	else
 	{
 		tmp_matched_tokens = get_pattern_matched_filenames(token->str);
-		if (!tmp_matched_tokens)
-			return ; // todo: error need return..?
+		if (!tmp_matched_tokens) // todo: error need return..?
+			return ;
 		if (deque_is_empty(tmp_matched_tokens))
 			deque_add_back(matched_tokens, node);
 		else

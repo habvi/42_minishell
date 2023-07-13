@@ -7,7 +7,9 @@
 #include "ms_result.h"
 #include "ft_deque.h"
 
-static void	add_pattern_matched_filename_each(const char *token_str, const char *filename, t_deque *matched_filenames)
+static void	add_pattern_matched_filename_each(const char *token_str, \
+												const char *filename, \
+												t_deque *matched_filenames)
 {
 	bool			is_matched_filename;
 	char			*dup_filename;
@@ -37,22 +39,24 @@ static t_result	get_next_dirp_in_current(DIR *dirp, struct dirent **dirent)
 }
 
 // todo: return t_result?
-static void	add_pattern_matched_filenames(const char *token_str, t_deque *matched_filenames)
+static void	add_pattern_matched_filenames(const char *token_str, \
+											t_deque *matched_filenames)
 {
-	DIR 			*dirp;
+	DIR				*dirp;
 	struct dirent	*dirent;
 	t_result		result;
 	// t_deque_node	*new_node;
 
 	dirp = opendir(CURRENT_DIR);
-	if (!dirp)
-		return ; // todo: error
+	if (!dirp) // todo: error
+		return ;
 	while (true)
 	{
 		result = get_next_dirp_in_current(dirp, &dirent);
 		if (result == PROCESS_ERROR)
 		{
-			// new_node = create_token_node(token_str, '\0'); // todo: error handle. add or not add
+			// todo: error handle. add or not add
+			// new_node = create_token_node(token_str, '\0');
 			// deque_add_back(matched_tokens, new_node);
 			continue ;
 		}
