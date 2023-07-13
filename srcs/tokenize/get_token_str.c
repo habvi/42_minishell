@@ -4,7 +4,7 @@
 #include "ft_mem.h"
 #include "ft_string.h"
 
-static void	skip_token_delimiter(char **head)
+void	skip_token_delimiter(char **head)
 {
 	while (is_whitespace(**head))
 		(*head)++;
