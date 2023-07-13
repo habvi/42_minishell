@@ -11,7 +11,22 @@ def main():
                  "/bin/echo aaa | /bin/cat -e",
                  "/bin/echo aaa | nothing",
                  ]
-    test_res |= test("multi_pipe", pipe_test)
+
+    pipe_error_test = [
+                    "|",
+                    "| | ",
+                    "| | |",
+                    "echo a | | ",
+                    "| echo a",
+                    "| | echo a",
+                    "echo a | |",
+                    "| | echo a",
+                    "echo a | | echo b"
+                    ]
+
+    # todo: test on
+    # test_res |= test("multi_pipe", pipe_test)
+    test_res |= test("multi_pipe", pipe_error_test)
 
     # stdin = "/bin/echo -e aaa\naacc\nbbb\nbbcc\nccc\naabb\nabc | /bin/grep a | /bin/grep c"
     # m_res, b_res = run_both(stdin)

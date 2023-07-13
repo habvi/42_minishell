@@ -15,7 +15,8 @@ static void	set_context_initial_value(t_context *context)
 // If an error occurs, will not exit.
 static bool	set_is_interactive(void)
 {
-	return (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO));
+	return (true);
+	// return (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO));
 }
 
 // set_default_environ set also PWD, OLDPWD.
