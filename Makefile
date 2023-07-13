@@ -78,6 +78,7 @@ EXPAND_DIR	:=	expand
 SRCS		+=	$(EXEC_DIR)/$(EXPAND_DIR)/concat_tokens.c  \
 				$(EXEC_DIR)/$(EXPAND_DIR)/expand_parameter.c\
 				$(EXEC_DIR)/$(EXPAND_DIR)/expansion.c  \
+				$(EXEC_DIR)/$(EXPAND_DIR)/is_pattern_match.c  \
 				$(EXEC_DIR)/$(EXPAND_DIR)/pattern_matching.c  \
 				$(EXEC_DIR)/$(EXPAND_DIR)/remove_empty_tokens.c  \
 				$(EXEC_DIR)/$(EXPAND_DIR)/split_expand_word.c  \

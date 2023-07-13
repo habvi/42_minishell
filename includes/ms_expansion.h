@@ -24,5 +24,6 @@ void		split_expand_word(t_deque **tokens);
 void		word_split_and_add(char *token_str, t_deque *expanded);
 void    	expand_wildcard(t_deque **tokens);
 t_deque 	*get_pattern_matched_filenames(const char *token_str);
+bool    	is_pattern_match_target_path(const char *match_str, const char *target_path);
 
 #endif //MS_EXPANSION_H

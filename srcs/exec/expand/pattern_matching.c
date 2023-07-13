@@ -2,21 +2,10 @@
 #include <dirent.h>
 #include <sys/types.h>
 #include "minishell.h"
-// #include "ms_builtin.h"
 #include "ms_expansion.h"
 #include "ms_tokenize.h"
 #include "ms_result.h"
 #include "ft_deque.h"
-// #include "ft_mem.h"
-// #include "ft_string.h"
-
-// todo: func name
-static bool longest_common_subsequence(const char *token_str, const char *filename)
-{
-	(void)token_str;
-	(void)filename;
-	return (true);
-}
 
 static void	add_pattern_matched_filename_each(const char *token_str, const char *filename, t_deque *matched_filenames)
 {
@@ -24,7 +13,7 @@ static void	add_pattern_matched_filename_each(const char *token_str, const char 
 	char			*dup_filename;
 	t_deque_node	*new_node;
 
-	is_matched_filename = longest_common_subsequence(token_str, filename);
+	is_matched_filename = is_pattern_match_target_path(token_str, filename);
 	if (is_matched_filename)
 	{
 		dup_filename = x_ft_strdup(filename);
@@ -69,7 +58,7 @@ static void	add_pattern_matched_filenames(const char *token_str, t_deque *matche
 		}
 		if (result == FAILURE)
 			break ;
-		printf("[%hhu], %s\n", dirent->d_type, dirent->d_name);
+		// printf("[%hhu], %s\n", dirent->d_type, dirent->d_name);
 		add_pattern_matched_filename_each(token_str, dirent->d_name, matched_filenames);
 	}
 	closedir(dirp); // todo: error

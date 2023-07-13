@@ -73,5 +73,5 @@ void	expand_wildcard(t_deque **tokens)
 	matched_tokens = create_matched_tokens_all(*tokens);
 	deque_clear_all(tokens, del_token);
 	*tokens = matched_tokens;
-	debug_token_dq(matched_tokens, __func__);
+	// debug_token_dq(matched_tokens, __func__);
 }
