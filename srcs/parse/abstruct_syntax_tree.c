@@ -91,6 +91,8 @@ static t_ast	*create_subshell_node(t_deque_node **token_node, \
 	if (is_token_kind_paren_right_as_ast_node(*token_node))
 	{
 		*token_node = (*token_node)->next;
+		if (ast_node && ast_node->kind == NODE_KIND_SUBSHELL)
+			return (ast_node);
 		ast_node = new_subshell_node(ast_node);
 		set_parent_of_children_node(&ast_node);
 		dup_redirection_from_tokens(ast_node->command, token_node);
