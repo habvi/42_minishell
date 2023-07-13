@@ -12,7 +12,7 @@
 //}	t_token;
 //
 
-static char	*get_token_kind_str(t_token_kind kind)
+char	*get_token_kind_str(t_token_kind kind)
 {
 	if (kind == TOKEN_KIND_WORD)
 		return ("w");

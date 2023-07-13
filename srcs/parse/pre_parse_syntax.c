@@ -31,7 +31,6 @@ bool	is_valid_pre_parse_syntax(t_deque *tokens, \
 	if (!is_valid_pre_parse_syntax_inter(head_node))
 	{
 		set_error_status(context, result);
-		ast_print_error(head_node);
 		return (false);
 	}
 	return (true);

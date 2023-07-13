@@ -56,6 +56,7 @@ typedef struct s_token {
 /* tokenize */
 t_deque			*tokenize(char *line, t_context *context, t_result *result);
 t_deque			*tokenize_line(char *line);
+t_token_kind	get_token_kind(t_deque_node *token_node);
 char			*get_token_str(char *head, char **end);
 char			*get_token_tail(char *head);
 void			skip_token_delimiter(char **head);
@@ -96,5 +97,8 @@ t_token			*init_token_struct(void);
 /* destroy */
 void			del_token(void *content);
 void			*destroy_tokens(t_deque **command, void (*del)(void *));
+
+/* debug */
+char			*get_token_kind_str(t_token_kind kind); //tmp, enum
 
 #endif //MS_TOKENIZE_H

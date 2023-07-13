@@ -5,6 +5,7 @@
 # include <stdint.h>
 # include <unistd.h>
 # include "ms_result.h"
+# include "ms_tokenize.h"
 
 # define HEREDOC_FILE_PREFIX	".pien_"
 # define OPEN_PERMISSION		"0664"
@@ -30,17 +31,17 @@ typedef enum e_node_kind
 
 typedef struct s_redirect
 {
-	t_deque	*list;
-	int		in_fd;
-	int		out_fd;
-	char	*heredoc_filename;
+	t_token_kind	kind;
+	t_deque			*tokens;
+	char			*heredoc_filename;
 }	t_redirect;
 
 struct s_ast
 {
 	t_node_kind	kind;
-	t_deque		*command; // [token1]-[token2]-...
-	t_redirect	*redirects;
+	t_deque		*command;		// [token1]-[token2]-...
+	t_deque		*redirect_list;	// [redirect1]-[redirect2]-...
+	int			proc_fd[2];
 	int			pipe_fd[2];
 	int			prev_fd;
 	pid_t		pid;
@@ -77,12 +78,15 @@ void		dup_command_from_tokens(t_deque *command, \
 void		dup_redirection_from_tokens(t_deque *command, \
 										t_deque_node **token_node);
 char		*get_node_kind_str(t_node_kind kind);
+void		transfer_redirect_from_command(t_deque *command, \
+											t_deque *redirect_list, \
+											t_deque_node **token_node);
 
 /* heredoc */
 t_result	execute_heredoc(t_ast *ast_node);
 void		move_redirect_from_command(t_ast *ast_node);
 char		*create_heredoc_filename(void);
-t_result	open_heredoc_filedes(int *in_fd, char **filename);
+t_result	open_heredoc_fd(int *in_fd, char **filename);
 
 /* is */
 bool		is_node_kind_subshell(t_node_kind node_kind);
@@ -95,5 +99,8 @@ void		destroy_ast_tree(t_ast **root, t_result result);
 /* error */
 void		*ast_print_error(t_deque_node *token_node);
 void		set_error_status(t_context *context, t_result *result);
+
+/* debug */
+char		*get_ast_node_kind_str(t_node_kind node_kind);//tmp enum
 
 #endif //MS_PARSE_H

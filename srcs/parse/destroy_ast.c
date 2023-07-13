@@ -6,17 +6,20 @@
 #include "ft_deque.h"
 #include "ft_mem.h"
 
-static void	destroy_redirects(t_redirect **redirects)
+static void	del_redirect(void *content)
 {
-	if (!redirects || !*redirects)
+	t_redirect	*redirect;
+
+	if (!content)
 		return ;
-	deque_clear_all(&(*redirects)->list, del_token);
-	if ((*redirects)->heredoc_filename)
+	redirect = (t_redirect *)content;
+	deque_clear_all(&redirect->tokens, del_token);
+	if (redirect->heredoc_filename)
 	{
-		unlink((*redirects)->heredoc_filename);
-		ft_free(&(*redirects)->heredoc_filename);
+		unlink(redirect->heredoc_filename);
+		ft_free(&redirect->heredoc_filename);
 	}
-	ft_free(redirects);
+	ft_free(&redirect);
 }
 
 static void	destroy_ast_node(t_ast *root)
@@ -27,8 +30,8 @@ static void	destroy_ast_node(t_ast *root)
 		destroy_ast_node(root->right);
 	if (root->command)
 		deque_clear_all(&root->command, del_token);
-	if (root->redirects)
-		destroy_redirects(&root->redirects);
+	if (root->redirect_list)
+		deque_clear_all(&root->redirect_list, del_redirect);
 	ft_free(&root);
 }
 
