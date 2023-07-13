@@ -6,14 +6,6 @@
 #include "ft_sys.h"
 #include "ft_mem.h"
 
-// todo: error handling
-static void	clean_up_prev_heredoc(int fd, char *filename)
-{
-	close(fd);
-	unlink(filename);
-	ft_free(&filename);
-}
-
 static int	open_file_dup_errno(const char *file, int *tmp_err)
 {
 	int	fd;
@@ -24,17 +16,10 @@ static int	open_file_dup_errno(const char *file, int *tmp_err)
 	return (fd);
 }
 
-static bool	is_prev_heredoc_file_exist(int in_fd)
-{
-	return (in_fd != IN_FD_INIT);
-}
-
 t_result	open_heredoc_fd(int *fd, char **filename)
 {
 	int	tmp_err;
 
-	if (is_prev_heredoc_file_exist(*fd))
-		clean_up_prev_heredoc(*fd, *filename);
 	*filename = create_heredoc_filename();
 	if (!*filename)
 		return (PROCESS_ERROR);
