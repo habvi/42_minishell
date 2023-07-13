@@ -7,6 +7,8 @@
 # include "ms_result.h"
 
 # define CHILD_PID		0
+# define IN				0
+# define OUT			1
 # define READ			0
 # define WRITE			1
 # define NO_OPTION		0

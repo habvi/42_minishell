@@ -41,6 +41,7 @@ struct s_ast
 	t_node_kind	kind;
 	t_deque		*command; // [token1]-[token2]-...
 	t_redirect	*redirects;
+	int			proc_fd[2];
 	int			pipe_fd[2];
 	int			prev_fd;
 	pid_t		pid;

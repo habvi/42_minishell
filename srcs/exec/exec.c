@@ -7,27 +7,21 @@
 
 static void	connect_redirect_fds(t_ast *self_node)
 {
-	t_redirect	*redirects;
-
-	redirects = (t_redirect *)self_node->redirects;
-	if (!redirects)
-		return ;
-//	ft_dprintf(2, "connect: in:%d, out:%d\n", redirects->in_fd, redirects->out_fd);
-	if (redirects->in_fd != IN_FD_INIT)
+	if (self_node->proc_fd[IN] != IN_FD_INIT)
 	{
 		if (self_node->prev_fd != IN_FD_INIT)
 			x_close(self_node->prev_fd); // todo: error
 		self_node->prev_fd = IN_FD_INIT;
 
 		x_close(STDIN_FILENO);
-		x_dup2(redirects->in_fd, STDIN_FILENO);
-		x_close(redirects->in_fd);
+		x_dup2(self_node->proc_fd[IN], STDIN_FILENO);
+		x_close(self_node->proc_fd[IN]);
 	}
-	if (redirects->out_fd != OUT_FD_INIT)
+	if (self_node->proc_fd[OUT] != OUT_FD_INIT)
 	{
 		x_close(STDOUT_FILENO);
-		x_dup2(redirects->out_fd, STDOUT_FILENO);
-		x_close(redirects->out_fd);
+		x_dup2(self_node->proc_fd[OUT], STDOUT_FILENO);
+		x_close(self_node->proc_fd[OUT]);
 	}
 }
 
