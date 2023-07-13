@@ -23,6 +23,6 @@ void		concat_tokens(t_deque *tokens);
 void		split_expand_word(t_deque **tokens);
 void		word_split_and_add(char *token_str, t_deque *expanded);
 void    	expand_wildcard(t_deque **tokens);
-void    	pattern_matching_and_add(const char *token_str, t_deque *matched_tokens);
+t_deque 	*get_pattern_matched_filenames(const char *token_str);
 
 #endif //MS_EXPANSION_H

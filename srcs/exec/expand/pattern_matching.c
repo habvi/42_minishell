@@ -10,20 +10,27 @@
 // #include "ft_mem.h"
 // #include "ft_string.h"
 
-static void	pattern_matching_each(const char *token_str, const char *filename, t_deque *matched_tokens)
+// todo: func name
+static bool longest_common_subsequence(const char *token_str, const char *filename)
 {
-	// t_deque_node	*new_node;
-	// char			*dup_filename;
-
 	(void)token_str;
 	(void)filename;
-	(void)matched_tokens;
-	// longest_common_subsequence(token_str, filename);
-	// if ok
-	// dup_filename = x_ft_strdup(filename);
-	// new_node = create_token_node(dup_filename, '\0'); // todo: next_chr
-	// deque_add_back(matched_tokens, new_node);
-	return ;
+	return (true);
+}
+
+static void	add_pattern_matched_filename_each(const char *token_str, const char *filename, t_deque *matched_filenames)
+{
+	bool			is_matched_filename;
+	char			*dup_filename;
+	t_deque_node	*new_node;
+
+	is_matched_filename = longest_common_subsequence(token_str, filename);
+	if (is_matched_filename)
+	{
+		dup_filename = x_ft_strdup(filename);
+		new_node = create_token_node(dup_filename, '\0'); // todo: next_chr
+		deque_add_back(matched_filenames, new_node);
+	}
 }
 
 // error: only EBADF. just return NULL and go to next.
@@ -40,9 +47,8 @@ static t_result	get_next_dirp_in_current(DIR *dirp, struct dirent **dirent)
 	return (CONTINUE);
 }
 
-// * -> [libft],[srcs],[includes]..
-// in* -> [input.c],[in1],[includes]..
-void	pattern_matching_and_add(const char *token_str, t_deque *matched_tokens)
+// todo: return t_result?
+static void	add_pattern_matched_filenames(const char *token_str, t_deque *matched_filenames)
 {
 	DIR 			*dirp;
 	struct dirent	*dirent;
@@ -57,15 +63,29 @@ void	pattern_matching_and_add(const char *token_str, t_deque *matched_tokens)
 		result = get_next_dirp_in_current(dirp, &dirent);
 		if (result == PROCESS_ERROR)
 		{
-			// new_node = create_token_node(token_str, '\0'); // todo: next_chr
+			// new_node = create_token_node(token_str, '\0'); // todo: error handle. add or not add
 			// deque_add_back(matched_tokens, new_node);
 			continue ;
 		}
 		if (result == FAILURE)
 			break ;
 		printf("[%hhu], %s\n", dirent->d_type, dirent->d_name);
-		pattern_matching_each(token_str, dirent->d_name, matched_tokens);
+		add_pattern_matched_filename_each(token_str, dirent->d_name, matched_filenames);
 	}
-	debug_token_dq(matched_tokens, __func__);
 	closedir(dirp); // todo: error
+}
+
+// * -> [libft],[srcs],[includes]..
+// in* -> [input.c],[in1],[includes]..
+t_deque	*get_pattern_matched_filenames(const char *token_str)
+{
+	t_deque	*matched_filenames;
+
+	matched_filenames = deque_new();
+	if (!matched_filenames)
+		ft_abort();
+	add_pattern_matched_filenames(token_str, matched_filenames);
+	// sort(matched_filenames);
+	// debug_token_dq(matched_filenames, __func__);
+	return (matched_filenames);
 }
