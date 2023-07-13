@@ -4,8 +4,7 @@
 #include "ms_parse.h"
 #include "ft_deque.h"
 
-static void	create_split_tokens_each(t_deque_node *node, \
-										t_deque *expanded)
+static void	create_split_tokens_each(t_deque_node *node, t_deque *expanded)
 {
 	t_token	*token;
 
