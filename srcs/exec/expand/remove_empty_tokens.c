@@ -7,8 +7,8 @@
 // *node != NULL
 static void	remove_empty_tokens_each(t_deque *tokens, t_deque_node **node)
 {
-	t_deque_node	*next;
 	t_token			*token;
+	t_deque_node	*next;
 
 	token = (t_token *)(*node)->content;
 	next = (*node)->next;

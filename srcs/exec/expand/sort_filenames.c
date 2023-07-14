@@ -5,11 +5,9 @@
 static bool	is_left_greater_in_ascii(const t_deque_node *left, \
 										const t_deque_node *right)
 {
-	t_token	*left_token;
-	t_token	*right_token;
+	const t_token	*left_token = (t_token *)left->content;
+	const t_token	*right_token = (t_token *)right->content;
 
-	left_token = (t_token *)left->content;
-	right_token = (t_token *)right->content;
 	return (left != right && ft_strcmp(left_token->str, right_token->str) > 0);
 }
 

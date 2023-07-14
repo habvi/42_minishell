@@ -1,17 +1,17 @@
 #include "ms_tokenize.h"
 #include "ft_string.h"
 
+static bool	is_token_str_word(char token_head)
+{
+	return (!ft_strchr(TOKEN_SYMBOL TOKEN_PAREN TOKEN_DELIM, token_head));
+}
+
 // ((
 static bool	is_concatted_paren(char token_head, char next_chr)
 {
 	if (ft_strchr(TOKEN_PAREN, token_head) && token_head == next_chr)
 		return (true);
 	return (false);
-}
-
-static bool	is_token_str_word(char token_head)
-{
-	return (!ft_strchr(TOKEN_SYMBOL TOKEN_PAREN TOKEN_DELIM, token_head));
 }
 
 // token_str is word = !(symbol && paren)

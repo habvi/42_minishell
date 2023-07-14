@@ -9,13 +9,13 @@
 
 static char	*concat_token_str(t_token *token1, t_token *token2)
 {
-	char			*concat_str;
+	char	*concat_str;
 
 	concat_str = x_ft_strjoin(token1->str, token2->str);
 	return (concat_str);
 }
 
-static bool	*concat_is_quoted_arr(t_token *token1, t_token *token2)
+static bool	*concat_is_quoted_arr(const t_token *token1, const t_token *token2)
 {
 	const size_t	len1 = ft_strlen(token1->str);
 	const size_t	len2 = ft_strlen(token2->str);

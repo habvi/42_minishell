@@ -17,7 +17,7 @@ static void	expand_token(t_token *token, t_context *context)
 	set_is_quoted_value_to_arr(token);
 }
 
-static void	expand_tokens(t_deque *tokens, t_context *context)
+static void	expand_tokens(const t_deque *tokens, t_context *context)
 {
 	t_deque_node	*node;
 	t_token			*token;
