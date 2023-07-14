@@ -2,6 +2,8 @@
 #include "ft_deque.h"
 #include "ft_dprintf.h"
 
+#include <stdlib.h>
+
 // tokenize:[echo], [a], [|], [echo], [b], [&&], [echo], [c]
 
 // typedef struct s_token {
@@ -23,6 +25,8 @@ static void	print_is_quoted_arr(t_token *token)
 {
 	size_t	i;
 
+	if (!token->is_quoted_arr)
+		return ;
 	ft_dprintf(2, "  is_quoted:[");
 	i = 0;
 	while (token->str && token->str[i])
@@ -54,8 +58,8 @@ void	debug_token_dq_node(t_deque_node *node)
 
 void	debug_token_dq(t_deque *deque, const char *str)
 {
-	ft_dprintf(STDERR_FILENO, "deque_print(%d) %s :\n", deque->size, str);
-	if (deque_is_empty(deque))
+	if (!deque || deque_is_empty(deque))
 		return ;
+	ft_dprintf(STDERR_FILENO, "deque_print(%d) %s :\n", deque->size, str);
 	debug_token_dq_node(deque->node);
 }
