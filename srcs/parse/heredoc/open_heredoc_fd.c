@@ -1,22 +1,19 @@
 #include <fcntl.h>
 #include <stdio.h>
-#include "minishell.h"
 #include "ms_parse.h"
-#include "ft_dprintf.h"
 #include "ft_sys.h"
-#include "ft_mem.h"
 
 static int	open_file_dup_errno(const char *file, int *tmp_err)
 {
 	int	fd;
 
 	errno = 0;
-	fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, OPEN_PERMISSION);
+	fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	*tmp_err = errno;
 	return (fd);
 }
 
-t_result	open_heredoc_fd(int *fd, char **filename)
+t_result	create_filename_and_open_heredoc_fd(int *fd, char **filename)
 {
 	int	tmp_err;
 

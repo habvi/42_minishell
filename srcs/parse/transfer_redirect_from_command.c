@@ -39,14 +39,21 @@ static void	move_redirect_file_from_command(t_deque *command, \
 											t_deque_node **token_node, \
 											t_deque *redirect_tokens)
 {
-	t_deque_node	*target_node;
+	t_deque_node	*redirect_node;
 	t_deque_node	*next_node;
+	t_token			*redirect_token;
 
-	target_node = *token_node;
-	next_node = target_node->next;
-	deque_pop_selected_node(command, target_node);
-	deque_add_back(redirect_tokens, target_node);
-	*token_node = next_node;
+	while (true)
+	{
+		redirect_node = *token_node;
+		next_node = redirect_node->next;
+		deque_pop_selected_node(command, redirect_node);
+		deque_add_back(redirect_tokens, redirect_node);
+		*token_node = next_node;
+		redirect_token = (t_token *)redirect_node->content;
+		if (!redirect_token->concat_next)
+			break ;
+	}
 }
 
 static t_redirect	*create_redirect_from_command(t_deque *command, \

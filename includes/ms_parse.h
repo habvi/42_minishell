@@ -84,9 +84,10 @@ void		transfer_redirect_from_command(t_deque *command, \
 
 /* heredoc */
 t_result	execute_heredoc(t_ast *ast_node);
+t_result	execute_heredoc_each(t_redirect *redirect);
 void		move_redirect_from_command(t_ast *ast_node);
 char		*create_heredoc_filename(void);
-t_result	open_heredoc_fd(int *in_fd, char **filename);
+t_result	create_filename_and_open_heredoc_fd(int *fd, char **filename);
 
 /* is */
 bool		is_node_kind_subshell(t_node_kind node_kind);
