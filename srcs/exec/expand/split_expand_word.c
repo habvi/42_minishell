@@ -3,17 +3,22 @@
 #include "ms_tokenize.h"
 #include "ms_parse.h"
 #include "ft_deque.h"
+#include "ft_string.h"
 
 static void	create_split_tokens_each(t_deque_node *node, t_deque *expanded)
 {
 	t_token	*token;
+	char	*str_in_delim;
 
 	token = (t_token *)node->content;
-	if (token->quote != QUOTE_NONE)
+	str_in_delim = ft_find_set_in_str(token->str, TOKEN_DELIM);
+	if (token->quote == QUOTE_SINGLE || token->quote == QUOTE_DOUBLE)
+		deque_add_back(expanded, node);
+	else if (ft_streq(str_in_delim, "\0"))
 		deque_add_back(expanded, node);
 	else
 	{
-		word_split_and_add(token->str, expanded);
+		word_split_and_add(token->str, expanded, token->concat_next);
 		deque_clear_node(&node, del_token);
 	}
 }
@@ -38,9 +43,8 @@ static t_deque	*create_split_tokens_all(t_deque *tokens)
 	return (expanded_tokens);
 }
 
-// tokens=[token1]=[token2]-[token3]=[token4]
-//    ->  [token1token2]-[token3token4]
-// if concat_next=true; next token exist
+// tokens=[word1  word2]
+//    ->  [word1]-[word2]
 void	split_expand_word(t_deque **tokens)
 {
 	t_deque	*expanded;
