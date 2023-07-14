@@ -77,6 +77,7 @@ SRCS		+=	$(DEBUG_DIR)/debug_print_ast.c \
 EXEC_DIR	:=	exec
 EXPAND_DIR	:=	expand
 SRCS		+=	$(EXEC_DIR)/$(EXPAND_DIR)/concat_tokens.c  \
+				$(EXEC_DIR)/$(EXPAND_DIR)/expand_for_heredoc.c\
 				$(EXEC_DIR)/$(EXPAND_DIR)/expand_parameter.c\
 				$(EXEC_DIR)/$(EXPAND_DIR)/expansion.c  \
 				$(EXEC_DIR)/$(EXPAND_DIR)/is_pattern_match.c  \
@@ -108,6 +109,7 @@ SRCS		+=	$(INPUT_DIR)/input.c
 PARSE_DIR	:=	parse
 HEREDOC_DIR	:=	heredoc
 SRCS		+=	$(PARSE_DIR)/$(HEREDOC_DIR)/create_heredoc_filename.c \
+				$(PARSE_DIR)/$(HEREDOC_DIR)/execute_heredoc_each.c \
 				$(PARSE_DIR)/$(HEREDOC_DIR)/heredoc.c \
 				$(PARSE_DIR)/$(HEREDOC_DIR)/open_heredoc_fd.c \
 				$(PARSE_DIR)/abstruct_syntax_tree.c \

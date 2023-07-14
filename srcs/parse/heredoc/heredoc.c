@@ -1,56 +1,7 @@
-#include <stdio.h>
-#include <readline/readline.h>
-#include "minishell.h"
+#include "ms_expansion.h"
 #include "ms_parse.h"
-#include "ms_tokenize.h"
 #include "ft_deque.h"
-#include "ft_dprintf.h"
 #include "ft_hash.h"
-#include "ft_string.h"
-#include "ft_mem.h"
-
-// todo: wanted in warning msg
-static void	read_input_save_to_fd(int fd, const char *delimiter)
-{
-	char	*line;
-
-	rl_outstream = stderr;
-	while (true)
-	{
-		line = readline(HEREDOC_PROMPT);
-		if (!line)
-		{
-			ft_dprintf(STDERR_FILENO, \
-			"%s: %s: %s (wanted `%s')\n", \
-			SHELL_NAME, ERROR_TYPE_WARNING, ERROR_MSG_HEREDOC_EOF, delimiter);
-			break ;
-		}
-		if (ft_streq(line, delimiter))
-		{
-			ft_free(&line);
-			break ;
-		}
-		ft_dprintf(fd, line);
-		ft_dprintf(fd, "\n");
-		ft_free(&line);
-	}
-}
-
-static t_result	execute_heredoc_each(t_redirect *redirect)
-{
-	const t_token	*token = (t_token *)redirect->tokens->node->content;
-	t_result		result;
-	char			*delimiter;
-	int				fd;
-
-	result = open_heredoc_fd(&fd, &redirect->heredoc_filename);
-	if (result == PROCESS_ERROR)
-		return (PROCESS_ERROR);
-	delimiter = token->str; // don't free
-	read_input_save_to_fd(fd, delimiter);
-	close(fd); //todo:error
-	return (SUCCESS);
-}
 
 static t_result	execute_heredoc_all(t_deque *redirect_list)
 {
