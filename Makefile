@@ -105,6 +105,7 @@ SRCS		+=	$(INPUT_DIR)/input.c
 PARSE_DIR	:=	parse
 HEREDOC_DIR	:=	heredoc
 SRCS		+=	$(PARSE_DIR)/$(HEREDOC_DIR)/create_heredoc_filename.c \
+				$(PARSE_DIR)/$(HEREDOC_DIR)/execute_heredoc_each.c \
 				$(PARSE_DIR)/$(HEREDOC_DIR)/heredoc.c \
 				$(PARSE_DIR)/$(HEREDOC_DIR)/open_heredoc_fd.c \
 				$(PARSE_DIR)/abstruct_syntax_tree.c \
