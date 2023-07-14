@@ -1,9 +1,6 @@
 #include "minishell.h"
 #include "ms_expansion.h"
-#include "ms_tokenize.h"
-#include "ms_parse.h"
 #include "ms_var.h"
-#include "ft_deque.h"
 #include "ft_mem.h"
 #include "ft_string.h"
 
@@ -52,7 +49,7 @@ static char	*expand_key(char **str, t_var *var)
 // $_&
 // $_\0
 // $, $8, $$
-char	*expand_parameter(char **str, t_context *context)
+static char	*expand_parameter(char **str, t_context *context)
 {
 	char	*value;
 
@@ -62,4 +59,23 @@ char	*expand_parameter(char **str, t_context *context)
 	else
 		value = expand_key(str, context->var);
 	return (value);
+}
+
+char	*get_expand_token_str(char *str, t_context *context)
+{
+	char	*new_str;
+	char	*joind_str;
+
+	joind_str = NULL;
+	while (*str)
+	{
+		if (*str == CHAR_DOLLAR)
+		{
+			new_str = expand_parameter(&str, context);
+			joind_str = extend_str(joind_str, new_str);
+		}
+		new_str = substr_before_dollar(&str);
+		joind_str = extend_str(joind_str, new_str);
+	}
+	return (joind_str);
 }

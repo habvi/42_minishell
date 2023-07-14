@@ -11,7 +11,7 @@ static int	open_file_dup_errno(const char *file, int *tmp_err)
 	int	fd;
 
 	errno = 0;
-	fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, OPEN_PERMISSION);
+	fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	*tmp_err = errno;
 	return (fd);
 }
