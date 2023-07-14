@@ -13,7 +13,7 @@ char	*x_ft_strdup(const char *str)
 	return (dup);
 }
 
-char	*x_ft_strndup(const char *str, size_t maxlen)
+char	*x_ft_strndup(const char *str, const size_t maxlen)
 {
 	char	*dup;
 
