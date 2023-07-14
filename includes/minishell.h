@@ -60,6 +60,9 @@
 /* utils */
 # define RANDOM_FILENAME	"/dev/urandom"
 # define RANDOM_BUF_SIZE	100
+/* gnl */
+# define BUFFER_SIZE    	1024
+# define LF             	'\n'
 
 typedef struct s_var		t_var;
 typedef struct s_deque		t_deque;
@@ -106,6 +109,8 @@ char		*x_ft_strndup(const char *str, size_t maxlen);
 char		*x_ft_strjoin(char const *s1, char const *s2);
 char		*create_split_src_paths(t_var *var, const char *key);
 char		*get_random_str(const size_t size);
+/* gnl */
+char		*ft_get_next_line(int fd);
 
 /* init */
 void		init_context(t_context *context);

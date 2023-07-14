@@ -5,7 +5,6 @@
 #include "ms_parse.h"
 #include "ms_var.h"
 #include "ft_deque.h"
-#include "ft_gnl.h"
 #include "ft_mem.h"
 
 static bool	is_expand_in_heredoc(t_redirect *redirect)
@@ -27,8 +26,7 @@ static t_result	expand_and_transfer_heredoc(int raw_fd, \
 	expand_line = NULL;
 	while (true)
 	{
-		(void)raw_fd;
-		line = get_next_line(raw_fd);
+		line = ft_get_next_line(raw_fd);
 		if (!line)
 			break ;
 		expand_line = get_expand_token_str(line, context);

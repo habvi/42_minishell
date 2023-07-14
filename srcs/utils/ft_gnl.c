@@ -1,4 +1,9 @@
-#include "ft_gnl_inter.h"
+#include <limits.h>
+#include <stdlib.h>
+#include "minishell.h"
+#include "ft_mem.h"
+#include "ft_string.h"
+#include "ft_sys.h"
 
 static bool	is_new_line(char *str)
 {
@@ -30,11 +35,11 @@ static char	*read_buf(char **saved, int fd, bool *finish_read)
 	char	*buf;
 	ssize_t	read_ret;
 
-	buf = (char *)malloc(sizeof(char) * ((size_t)BUFFER_SIZE + 1));
+	buf = (char *)x_malloc(sizeof(char) * ((size_t)BUFFER_SIZE + 1));
 	if (buf == NULL)
 		return (NULL);
 	read_ret = read(fd, buf, BUFFER_SIZE);
-	if (read_ret == GNL_READ_ERROR)
+	if (read_ret == READ_ERROR)
 		return (ft_free_for_gnl(saved, buf));
 	buf[read_ret] = '\0';
 	if (!read_ret)
@@ -53,7 +58,7 @@ static char	*output(char **saved)
 		return (ft_free_for_gnl(saved, NULL));
 	while (*ps && *ps != LF)
 		ps++;
-	left = ft_substr_for_gnl(*saved, 0, ps - *saved + 1);
+	left = ft_substr(*saved, 0, ps - *saved + 1);
 	if (left == NULL)
 		return (ft_free_for_gnl(saved, NULL));
 	if (*left == '\0')
@@ -63,11 +68,11 @@ static char	*output(char **saved)
 		tail++;
 	if (*ps == LF)
 		ps++;
-	*saved = ft_memmove_for_gnl(*saved, ps, tail - ps + 1);
+	*saved = ft_memmove(*saved, ps, tail - ps + 1);
 	return (left);
 }
 
-char	*get_next_line(int fd)
+char	*ft_get_next_line(int fd)
 {
 	static char	*saved = NULL;
 	bool		finish_read;
