@@ -7,7 +7,7 @@
 
 static bool	is_wildcard_in_token(const char *str)
 {
-	return (ft_strchr_bool(str, '*')); // todo: macro
+	return (ft_strchr_bool(str, WILDCARD));
 }
 
 // not clear src

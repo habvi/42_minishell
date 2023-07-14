@@ -28,6 +28,7 @@
 # define STR_SLASH				"/"
 # define CHR_SLASH				'/'
 # define CHR_NULL				'\0'
+# define EMPTY_STR				"\0"
 
 /* status */
 // tokenize and parse
