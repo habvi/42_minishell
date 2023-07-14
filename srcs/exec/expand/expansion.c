@@ -6,14 +6,12 @@
 #include "ft_deque.h"
 #include "ft_mem.h"
 
-static void	expand_token(t_token *token, t_context *context)
+static char	*get_expand_token_str(char *str, t_context *context)
 {
-	char	*str;
 	char	*new_str;
 	char	*joind_str;
 
 	joind_str = NULL;
-	str = token->str;
 	while (*str)
 	{
 		if (*str == CHAR_DOLLAR)
@@ -24,8 +22,16 @@ static void	expand_token(t_token *token, t_context *context)
 		new_str = substr_before_dollar(&str);
 		joind_str = extend_str(joind_str, new_str);
 	}
+	return (joind_str);
+}
+
+static void	expand_token(t_token *token, t_context *context)
+{
+	char	*expand_str;
+
+	expand_str = get_expand_token_str(token->str, context);
 	ft_free(&token->str);
-	token->str = joind_str;
+	token->str = expand_str;
 }
 
 static void	expand_tokens(t_deque *tokens, t_context *context)
@@ -72,6 +78,7 @@ static void	expand_variables_for_redirect(t_deque *redirect_list, \
 		redirect = (t_redirect *)list_node->content;
 		if (redirect->kind == TOKEN_KIND_REDIRECT_HEREDOC)
 		{
+			expand_for_heredoc(redirect); // todo: PROCESS_ERROR
 			list_node = list_node->next;
 			continue ;
 		}
