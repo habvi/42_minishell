@@ -7,6 +7,7 @@ typedef enum e_result
 	SUCCESS = 0,
 	FAILURE = 1,
 	CONTINUE = 2,
+	BREAK = 3,
 }	t_result;
 
 #endif //MS_RESULT_H

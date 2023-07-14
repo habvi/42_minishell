@@ -32,8 +32,8 @@ static t_result	get_next_dirp_in_current(DIR *dirp, struct dirent **dirent)
 	if (!*dirent)
 	{
 		if (errno)
-			return (PROCESS_ERROR); // todo: print error?
-		return (FAILURE);
+			return (PROCESS_ERROR); // todo: print error
+		return (BREAK);
 	}
 	return (CONTINUE);
 }
@@ -45,27 +45,24 @@ static void	add_pattern_matched_filenames(const char *token_str, \
 	DIR				*dirp;
 	struct dirent	*dirent;
 	t_result		result;
-	// t_deque_node	*new_node;
 
-	dirp = opendir(CURRENT_DIR);
+	dirp = opendir(CURRENT_DIR); // continue: EACCES,ENOENT,ENOTDIR. other : return PROCRSS_ERROR exit minishell
 	if (!dirp) // todo: error
 		return ;
 	while (true)
 	{
 		result = get_next_dirp_in_current(dirp, &dirent);
-		if (result == PROCESS_ERROR)
+		if (result == PROCESS_ERROR) // return PROCRSS_ERROR exit minishell
 		{
-			// todo: error handle. add or not add
-			// new_node = create_token_node(token_str, '\0');
-			// deque_add_back(matched_tokens, new_node);
+			// todo: error handle.
 			continue ;
 		}
-		if (result == FAILURE)
+		if (result == BREAK)
 			break ;
 		// printf("[%hhu], %s\n", dirent->d_type, dirent->d_name);
 		add_pattern_matched_filename_each(token_str, dirent->d_name, matched_filenames);
 	}
-	closedir(dirp); // todo: error
+	closedir(dirp);  // todo: return PROCRSS_ERROR exit minishell
 }
 
 // * -> [libft],[srcs],[includes]..
@@ -77,7 +74,10 @@ t_deque	*get_pattern_matched_filenames(const char *token_str)
 	matched_filenames = deque_new();
 	if (!matched_filenames)
 		ft_abort();
-	add_pattern_matched_filenames(token_str, matched_filenames);
+	// if (dot)
+		//
+	// else  result
+		add_pattern_matched_filenames(token_str, matched_filenames);
 	// sort(matched_filenames);
 	// debug_token_dq(matched_filenames, __func__);
 	return (matched_filenames);
