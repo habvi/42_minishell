@@ -116,7 +116,7 @@ char		*x_ft_strjoin(char const *s1, char const *s2);
 char		*create_split_src_paths(t_var *var, const char *key);
 char		*get_random_str(const size_t size);
 /* gnl */
-char		*ft_get_next_line(int fd);
+char		*ft_get_next_line(int fd, t_result *result);
 
 /* init */
 void		init_context(t_context *context);

@@ -19,14 +19,15 @@ static t_result	expand_and_transfer_heredoc(int raw_fd, \
 											int expand_fd, \
 											t_context *context)
 {
-	char	*line;
-	char	*expand_line;
+	char		*line;
+	char		*expand_line;
+	t_result	result;
 
 	line = NULL;
 	expand_line = NULL;
 	while (true)
 	{
-		line = ft_get_next_line(raw_fd);
+		line = ft_get_next_line(raw_fd, &result); // todo: handle PROCCESS_ERROR
 		if (!line)
 			break ;
 		expand_line = get_expand_token_str(line, context);
