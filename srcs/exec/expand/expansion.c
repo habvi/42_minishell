@@ -5,6 +5,7 @@
 #include "ms_var.h"
 #include "ft_deque.h"
 #include "ft_mem.h"
+#include "ft_string.h"
 
 static void	expand_token(t_token *token, t_context *context)
 {
@@ -13,6 +14,7 @@ static void	expand_token(t_token *token, t_context *context)
 	expand_str = get_expand_token_str(token->str, context);
 	ft_free(&token->str);
 	token->str = expand_str;
+	set_is_quoted_value_to_arr(token);
 }
 
 static void	expand_tokens(t_deque *tokens, t_context *context)
@@ -26,7 +28,8 @@ static void	expand_tokens(t_deque *tokens, t_context *context)
 		while (node)
 		{
 			token = (t_token *)node->content;
-			if (token->quote == QUOTE_SINGLE)
+			if (token->quote == QUOTE_SINGLE \
+			|| !ft_strchr(token->str, CHAR_DOLLAR))
 			{
 				node = node->next;
 				continue ;
@@ -39,10 +42,17 @@ static void	expand_tokens(t_deque *tokens, t_context *context)
 
 static void	expand_variables_inter(t_deque **tokens, t_context *context)
 {
+//	debug_token_dq(*tokens, "before expand");
+//	ft_dprintf(2, "1 tokens:%p\n", *tokens);
 	expand_tokens(*tokens, context);
-	remove_empty_tokens(*tokens);
-	concat_tokens(*tokens);
+//	debug_token_dq(*tokens, "after expand");
 	split_expand_word(tokens);
+//	debug_token_dq(*tokens, "after split");
+	concat_tokens(*tokens);
+	remove_empty_tokens(*tokens);
+//	debug_token_dq(*tokens, "after remove");
+	expand_wildcard(tokens);
+	// debug_token_dq(*tokens, "after wild");
 }
 
 static t_result	expand_variables_for_redirect(t_deque *redirect_list, \

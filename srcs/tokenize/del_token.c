@@ -10,6 +10,7 @@ void	del_token(void *content)
 		return ;
 	token = (t_token *)content;
 	ft_free(&token->str);
+	ft_free(&token->is_quoted_arr);
 	ft_free(&token);
 }
 

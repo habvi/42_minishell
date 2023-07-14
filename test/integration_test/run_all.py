@@ -1,3 +1,5 @@
+import glob
+
 import run_builtin
 import run_pipe
 import run_op
@@ -15,6 +17,16 @@ def print_test_title(title):
     print(RESET)
 
 
+def print_ng_cases(test_res):
+    if not test_res:
+        return
+
+    for file in glob.glob('ko_case_*.txt'):
+        with open(file, 'r') as f:
+            print(f.read())
+    return
+
+
 def main():
     test_res = 0
 
@@ -26,6 +38,8 @@ def main():
 
     print_test_title("OPERATION")
     test_res |= run_op.main()
+
+    print_ng_cases(test_res)
 
     exit(test_res)
 

@@ -35,7 +35,7 @@ void	remove_empty_tokens(t_deque *tokens)
 	while (node)
 	{
 		token = (t_token *)node->content;
-		if (token->quote != QUOTE_NONE)
+		if (token->quote == QUOTE_SINGLE || token->quote == QUOTE_DOUBLE)
 		{
 			node = node->next;
 			continue ;

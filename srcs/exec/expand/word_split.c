@@ -33,11 +33,14 @@ static char	*get_split_str(char *head, char **end)
 
 // [   aaa  bbb ccc] -> [aaa],[bbb],[ccc]
 // [key1  key2=a  b   c] -> [key1],[key2=a],[b],[c]
-void	word_split_and_add(char *token_str, t_deque *expanded)
+void	word_split_and_add(char *token_str, \
+							t_deque *expanded, \
+							bool concat_next)
 {
 	char			*split_str;
 	char			*end;
 	t_deque_node	*node;
+	t_token			*token;
 
 	while (*token_str)
 	{
@@ -48,4 +51,6 @@ void	word_split_and_add(char *token_str, t_deque *expanded)
 		deque_add_back(expanded, node);
 		token_str = end;
 	}
+	token = (t_token *)node->content;
+	token->concat_next = concat_next;
 }
