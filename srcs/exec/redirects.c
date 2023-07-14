@@ -59,6 +59,8 @@ t_result	redirect_fd(t_ast *self_node, t_context *context)
 	result = exec_redirect_all(self_node, context);
 	if (result == FAILURE || result == PROCESS_ERROR)
 		return (result);
-	connect_redirect_to_proc(self_node);
+	result = connect_redirect_to_proc(self_node);
+	if (result == PROCESS_ERROR)
+		return (PROCESS_ERROR);
 	return (SUCCESS);
 }
