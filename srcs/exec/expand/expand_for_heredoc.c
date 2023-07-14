@@ -13,7 +13,7 @@ static bool	is_expand_in_heredoc(t_redirect *redirect)
 	t_token	*token;
 
 	token = (t_token *)redirect->tokens->node->content;
-	return (token->quote != QUOTE_NONE);
+	return (token->quote == QUOTE_NONE);
 }
 
 static t_result	expand_and_transfer_heredoc(int raw_fd, int expand_fd, t_context *context)
