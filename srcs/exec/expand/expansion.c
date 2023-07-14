@@ -5,6 +5,7 @@
 #include "ms_var.h"
 #include "ft_deque.h"
 #include "ft_mem.h"
+#include "ft_string.h"
 
 static void	expand_token(t_token *token, t_context *context)
 {
@@ -27,7 +28,8 @@ static void	expand_tokens(t_deque *tokens, t_context *context)
 		while (node)
 		{
 			token = (t_token *)node->content;
-			if (token->quote == QUOTE_SINGLE)
+			if (token->quote == QUOTE_SINGLE \
+			|| !ft_strchr(token->str, CHAR_DOLLAR))
 			{
 				node = node->next;
 				continue ;
@@ -40,13 +42,15 @@ static void	expand_tokens(t_deque *tokens, t_context *context)
 
 static void	expand_variables_inter(t_deque **tokens, t_context *context)
 {
-	// debug_token_dq(*tokens, "before expand");
+//	debug_token_dq(*tokens, "before expand");
+//	ft_dprintf(2, "1 tokens:%p\n", *tokens);
 	expand_tokens(*tokens, context);
+//	debug_token_dq(*tokens, "after expand");
 	split_expand_word(tokens);
 //	debug_token_dq(*tokens, "after split");
 	concat_tokens(*tokens);
-//	debug_token_dq(*tokens, "after concat");
 	remove_empty_tokens(*tokens);
+//	debug_token_dq(*tokens, "after remove");
 	expand_wildcard(tokens);
 	// debug_token_dq(*tokens, "after wild");
 }
