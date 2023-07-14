@@ -29,13 +29,13 @@ static void	create_matched_tokens_each(t_deque_node *node, \
 	t_deque	*tmp_matched_tokens;
 
 	token = (t_token *)node->content;
-	if (token->quote != QUOTE_NONE)
+	if (token->quote == QUOTE_SINGLE || token->quote == QUOTE_DOUBLE)
 		deque_add_back(matched_tokens, node);
 	else if (!is_wildcard_in_token(token->str))
 		deque_add_back(matched_tokens, node);
 	else
 	{
-		tmp_matched_tokens = get_pattern_matched_filenames(token->str);
+		tmp_matched_tokens = get_pattern_matched_filenames(token);
 		if (!tmp_matched_tokens) // todo: error need return..?
 			return ;
 		if (deque_is_empty(tmp_matched_tokens))
