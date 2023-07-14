@@ -92,7 +92,7 @@ t_deque	*get_pattern_matched_filenames(t_token *token)
 	if (!matched_filenames)
 		ft_abort();
 	add_pattern_matched_files(str, is_quoted_arr, matched_filenames);
-	// sort(matched_filenames);
+	sort_filenames(matched_filenames);
 	// debug_token_dq(matched_filenames, __func__);
 	return (matched_filenames);
 }
