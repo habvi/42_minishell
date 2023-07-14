@@ -45,11 +45,11 @@ typedef enum e_token_kind {
 	TOKEN_KIND_PAREN_RIGHT,
 }	t_token_kind;
 
-//todo: content of concat_next
 typedef struct s_token {
 	char			*str;
 	t_token_kind	kind;
 	t_quote			quote;
+	bool			*is_quoted_arr; // len of is_quoted same as len(str)
 	bool			concat_next;
 }	t_token;
 
@@ -86,6 +86,8 @@ bool			is_token_kind_subshell_as_ast_node(t_deque_node *token_node);
 void			set_token_kinds_all(t_deque *tokens);
 void			set_token_quote_type_all(t_deque *tokens);
 void			remove_quote_in_token_str(t_deque *tokens);
+void			set_is_quoted_arr(t_deque *tokens);
+void			set_is_quoted_value_to_arr(t_token *token);
 
 /* validate */
 bool			is_closed_quote_all(t_deque_node *node);
@@ -100,5 +102,6 @@ void			*destroy_tokens(t_deque **command, void (*del)(void *));
 
 /* debug */
 char			*get_token_kind_str(t_token_kind kind); //tmp, enum
+char			*get_quote_str(t_quote quote);
 
 #endif //MS_TOKENIZE_H

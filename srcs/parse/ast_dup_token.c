@@ -12,6 +12,7 @@ static t_token	*dup_token(t_token *token)
 	new_token->kind = token->kind;
 	new_token->quote = token->quote;
 	new_token->concat_next = token->concat_next;
+	set_is_quoted_value_to_arr(new_token);
 	return (new_token);
 }
 

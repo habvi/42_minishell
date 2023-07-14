@@ -13,6 +13,7 @@ static void	expand_token(t_token *token, t_context *context)
 	expand_str = get_expand_token_str(token->str, context);
 	ft_free(&token->str);
 	token->str = expand_str;
+	set_is_quoted_value_to_arr(token);
 }
 
 static void	expand_tokens(t_deque *tokens, t_context *context)
@@ -39,11 +40,15 @@ static void	expand_tokens(t_deque *tokens, t_context *context)
 
 static void	expand_variables_inter(t_deque **tokens, t_context *context)
 {
+	debug_token_dq(*tokens, "before expand");
 	expand_tokens(*tokens, context);
-	remove_empty_tokens(*tokens);
-	concat_tokens(*tokens);
 	split_expand_word(tokens);
+//	debug_token_dq(*tokens, "after split");
+	concat_tokens(*tokens);
+//	debug_token_dq(*tokens, "after concat");
+	remove_empty_tokens(*tokens);
 	expand_wildcard(tokens);
+	debug_token_dq(*tokens, "after wild");
 }
 
 static void	expand_variables_for_redirect(t_deque *redirect_list, \
