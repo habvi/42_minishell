@@ -86,6 +86,8 @@ bool			is_token_kind_subshell_as_ast_node(t_deque_node *token_node);
 void			set_token_kinds_all(t_deque *tokens);
 void			set_token_quote_type_all(t_deque *tokens);
 void			remove_quote_in_token_str(t_deque *tokens);
+void			set_is_quoted_arr(t_deque *tokens);
+void			set_is_quoted_value_to_arr(t_token *token);
 
 /* validate */
 bool			is_closed_quote_all(t_deque_node *node);
