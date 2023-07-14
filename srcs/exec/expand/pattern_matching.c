@@ -44,7 +44,7 @@ static void	add_pattern_matched_filename_each(const char *token_str, \
 	if (is_matched_filename)
 	{
 		dup_filename = x_ft_strdup(filename);
-		new_node = create_token_node(dup_filename, '\0'); // todo: next_chr
+		new_node = create_token_node(dup_filename, CHR_NULL);
 		deque_add_back(matched_filenames, new_node);
 	}
 }

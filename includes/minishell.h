@@ -29,6 +29,7 @@
 # define CHR_SLASH				'/'
 # define CHR_NULL				'\0'
 # define EMPTY_STR				"\0"
+# define SPACE					' '
 
 /* status */
 // tokenize and parse

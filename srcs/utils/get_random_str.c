@@ -51,7 +51,7 @@ static char	*read_random_str(const int fd, const size_t size)
 			return (ft_free(&buf));
 		i++;
 	}
-	buf[size] = '\0';
+	buf[size] = CHR_NULL;
 	return (buf);
 }
 

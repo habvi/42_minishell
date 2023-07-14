@@ -39,7 +39,7 @@ static char	*read_buf(char **saved, int fd, bool *finish_read, t_result *result)
 		*result = PROCESS_ERROR;
 		return (ft_free_for_gnl(saved, buf));
 	}
-	buf[read_ret] = '\0';
+	buf[read_ret] = CHR_NULL;
 	if (!read_ret)
 		*finish_read = true;
 	return (buf);
@@ -52,14 +52,14 @@ static char	*create_one_line(char **saved)
 	char	*tail;
 
 	ps = *saved;
-	if (ps == NULL || *ps == '\0')
+	if (ps == NULL || *ps == CHR_NULL)
 		return (ft_free_for_gnl(saved, NULL));
 	while (*ps && *ps != LF)
 		ps++;
 	left = x_ft_strndup(*saved, ps - *saved + 1);
 	if (!left)
 		return (ft_free_for_gnl(saved, NULL));
-	if (*left == '\0')
+	if (*left == CHR_NULL)
 		return (ft_free_for_gnl(saved, left));
 	tail = ps;
 	while (*tail)
