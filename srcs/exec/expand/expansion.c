@@ -59,7 +59,7 @@ static void	expand_variables_for_redirect(t_deque *redirect_list, \
 		redirect = (t_redirect *)list_node->content;
 		if (redirect->kind == TOKEN_KIND_REDIRECT_HEREDOC)
 		{
-			expand_for_heredoc(redirect); // todo: PROCESS_ERROR
+			expand_for_heredoc(redirect, context); // todo: PROCESS_ERROR
 			list_node = list_node->next;
 			continue ;
 		}
