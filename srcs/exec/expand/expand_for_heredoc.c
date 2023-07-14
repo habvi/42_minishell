@@ -7,12 +7,12 @@
 #include "ft_deque.h"
 #include "ft_mem.h"
 
-static t_quote	get_token_head_quote_kind(t_deque *tokens)
+static bool	is_expand_in_heredoc(t_redirect *redirect)
 {
 	t_token	*token;
 
-	token = (t_token *)tokens->node->content;
-	return (token->quote);
+	token = (t_token *)redirect->tokens->node->content;
+	return (token->quote != QUOTE_NONE);
 }
 
 static t_result	expand_and_transfer_heredoc(int raw_fd, int expand_fd, t_context *context)
@@ -67,9 +67,10 @@ static t_result	expand_variables_in_heredoc(t_redirect *redirect, t_context *con
 	return (SUCCESS);
 }
 
+// redirect->kind is NODE_KIND_HEREDOC
 t_result	expand_for_heredoc(t_redirect *redirect, t_context *context)
 {
-	if (get_token_head_quote_kind(redirect->tokens) != QUOTE_NONE)
+	if (!is_expand_in_heredoc(redirect))
 		return (SUCCESS);
 	return (expand_variables_in_heredoc(redirect, context));
 }
