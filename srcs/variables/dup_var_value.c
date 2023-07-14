@@ -15,11 +15,7 @@ char	*dup_var_value(const char *const arg)
 	char			*value;
 
 	if (is_operator_exist(*(arg - 1)))
-	{
 		value = ft_substr(arg, 0, len);
-		if (!value)
-			ft_abort();
-	}
 	else// key only
 		value = NULL;
 	return (value);

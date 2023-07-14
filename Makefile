@@ -159,7 +159,8 @@ SRCS		+=	$(UTILS_DIR)/count_array.c \
 				$(UTILS_DIR)/is_valid_path.c \
 				$(UTILS_DIR)/x_ft_itoa.c \
 				$(UTILS_DIR)/x_ft_strdup.c \
-				$(UTILS_DIR)/x_ft_strjoin.c
+				$(UTILS_DIR)/x_ft_strjoin.c \
+				$(UTILS_DIR)/x_ft_substr.c
 
 OBJS_DIR	:=	objs
 OBJS		:=	$(SRCS:%.c=$(OBJS_DIR)/%.o)

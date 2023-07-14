@@ -107,6 +107,7 @@ char		*x_ft_itoa(int n);
 char		*x_ft_strdup(const char *str);
 char		*x_ft_strndup(const char *str, size_t maxlen);
 char		*x_ft_strjoin(char const *s1, char const *s2);
+char		*x_ft_substr(char const *str, const size_t start, size_t len);
 char		*create_split_src_paths(t_var *var, const char *key);
 char		*get_random_str(const size_t size);
 /* gnl */
