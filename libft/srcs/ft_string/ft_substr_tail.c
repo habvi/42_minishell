@@ -1,6 +1,6 @@
 #include "ft_string.h"
 
-char	*ft_substr_tail(char const *s, unsigned int start)
+char	*ft_substr_tail(char const *s, const size_t start)
 {
 	size_t	len_s;
 
