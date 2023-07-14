@@ -45,20 +45,19 @@ static char	*read_buf(char **saved, int fd, bool *finish_read, t_result *result)
 	return (buf);
 }
 
-static char	*create_line(char **saved, t_result *result)
+static char	*create_one_line(char **saved)
 {
 	char	*ps;
 	char	*left;
 	char	*tail;
 
-	(void)result;
 	ps = *saved;
 	if (ps == NULL || *ps == '\0')
 		return (ft_free_for_gnl(saved, NULL));
 	while (*ps && *ps != LF)
 		ps++;
-	left = ft_substr(*saved, 0, ps - *saved + 1);
-	if (!left) // set result
+	left = x_ft_strndup(*saved, ps - *saved + 1);
+	if (!left)
 		return (ft_free_for_gnl(saved, NULL));
 	if (*left == '\0')
 		return (ft_free_for_gnl(saved, left));
@@ -78,7 +77,7 @@ char	*ft_get_next_line(int fd, t_result *result)
 	char		*buf;
 	char		*tmp;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE > INT_MAX)
+	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE > INT_MAX) // todo: result?
 		return (NULL);
 	finish_read = false;
 	while (!finish_read)
@@ -88,11 +87,9 @@ char	*ft_get_next_line(int fd, t_result *result)
 		buf = read_buf(&saved, fd, &finish_read, result);
 		if (!buf)
 			return (ft_free_for_gnl(&saved, NULL));
-		tmp = ft_strjoin(saved, buf);
+		tmp = x_ft_strjoin(saved, buf);
 		ft_free_for_gnl(&saved, buf);
-		if (!tmp)
-			ft_abort();
 		saved = tmp;
 	}
-	return (create_line(&saved, result));
+	return (create_one_line(&saved));
 }
