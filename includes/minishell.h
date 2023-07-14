@@ -83,6 +83,12 @@ void		debug_token_dq_node(t_deque_node *node);
 void		debug_print_ast_tree(t_ast *root, const char *str);
 char		*get_tree_symbol(bool is_rhs);
 char		get_tree_space(bool is_rhs);
+void		debug_print_dp_target_str(const char *target_path, \
+										const size_t len_target);
+void		debug_print_each_dp(const bool *dp, \
+								const char *match_str, \
+								const size_t len_t, \
+								size_t i);
 
 /* destroy */
 void		destroy_context(t_context context);

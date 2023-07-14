@@ -70,6 +70,7 @@ SRCS		+=	$(VAR_DIR)/add.c \
 DEBUG_DIR	:=	debug
 SRCS		+=	$(DEBUG_DIR)/debug_print_ast.c \
 				$(DEBUG_DIR)/debug_print_ast_sub.c \
+				$(DEBUG_DIR)/debug_print_dp_table.c \
 				$(DEBUG_DIR)/debug_token_dq.c \
 				$(DEBUG_DIR)/debug_token_dq_sub.c \
 				$(DEBUG_DIR)/put.c
