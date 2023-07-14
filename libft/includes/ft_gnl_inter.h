@@ -8,7 +8,6 @@
 # include "ft_string.h"
 
 # define BUFFER_SIZE    1024
-# define MY_OPEN_MAX    1024
 # define LF             '\n'
 # define GNL_READ_ERROR (-1)
 

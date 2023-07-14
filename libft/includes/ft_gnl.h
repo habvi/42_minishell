@@ -4,6 +4,6 @@
 # include "ft_gnl_inter.h"
 
 // get_next_line.c
-char	*get_next_line(const int fd);
+char	*get_next_line(int fd);
 
 #endif
