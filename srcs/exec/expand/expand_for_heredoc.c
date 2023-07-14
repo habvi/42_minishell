@@ -25,9 +25,12 @@ static t_result	expand_and_transfer_heredoc(int raw_fd, \
 
 	line = NULL;
 	expand_line = NULL;
+	result = SUCCESS;
 	while (true)
 	{
-		line = ft_get_next_line(raw_fd, &result); // todo: handle PROCCESS_ERROR
+		line = ft_get_next_line(raw_fd, &result);
+		if (result == PROCESS_ERROR)
+			return (PROCESS_ERROR);
 		if (!line)
 			break ;
 		expand_line = get_expand_token_str(line, context);
@@ -35,7 +38,7 @@ static t_result	expand_and_transfer_heredoc(int raw_fd, \
 		ft_free(&line);
 		ft_free(&expand_line);
 	}
-	return (SUCCESS);
+	return (result);
 }
 
 static t_result	expand_variables_in_heredoc(t_redirect *redirect, \
@@ -46,6 +49,7 @@ static t_result	expand_variables_in_heredoc(t_redirect *redirect, \
 	char		*new_filename;
 	t_result	result;
 
+	result = SUCCESS;
 	raw_fd = open(redirect->heredoc_filename, O_RDONLY);
 	if (raw_fd == OPEN_ERROR)
 		return (PROCESS_ERROR); // todo: error?
@@ -60,7 +64,7 @@ static t_result	expand_variables_in_heredoc(t_redirect *redirect, \
 	unlink(redirect->heredoc_filename); // todo: error
 	ft_free(&redirect->heredoc_filename);
 	redirect->heredoc_filename = new_filename;
-	return (SUCCESS);
+	return (result);
 }
 
 // redirect->kind is NODE_KIND_HEREDOC
