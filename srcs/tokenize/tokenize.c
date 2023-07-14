@@ -51,6 +51,7 @@ t_deque	*tokenize(char *line, t_context *context, t_result *result)
 	}
 	set_token_quote_type_all(tokens);
 	remove_quote_in_token_str(tokens);
+	set_is_quoted_arr(tokens);
 	// debug_token_dq(tokens, "tokenize");
 	return (tokens);
 }

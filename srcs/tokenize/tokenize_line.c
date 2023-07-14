@@ -35,6 +35,7 @@ t_deque_node	*create_token_node(char *token_str, char next_chr)
 	t_deque_node	*node;
 
 	token = create_token_struct(token_str, next_chr);
+	set_is_quoted_value_to_arr(token);
 	node = deque_node_new(token);
 	if (!node)
 		ft_abort();
