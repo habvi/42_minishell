@@ -14,6 +14,7 @@ t_token	*init_token_struct(void)
 	token->str = NULL;
 	token->kind = TOKEN_KIND_WORD;
 	token->quote = QUOTE_NONE;
+	token->is_quoted_arr = NULL;
 	token->concat_next = false;
 	return (token);
 }
