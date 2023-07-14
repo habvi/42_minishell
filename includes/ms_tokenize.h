@@ -102,5 +102,6 @@ void			*destroy_tokens(t_deque **command, void (*del)(void *));
 
 /* debug */
 char			*get_token_kind_str(t_token_kind kind); //tmp, enum
+char			*get_quote_str(t_quote quote);
 
 #endif //MS_TOKENIZE_H
