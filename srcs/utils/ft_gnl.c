@@ -77,8 +77,6 @@ char	*ft_get_next_line(int fd, t_result *result)
 	char		*buf;
 	char		*tmp;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE > INT_MAX) // todo: result?
-		return (NULL);
 	finish_read = false;
 	while (!finish_read)
 	{
