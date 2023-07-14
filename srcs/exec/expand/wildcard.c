@@ -22,6 +22,7 @@ static void	transfer_deque_node_all(t_deque *dst, t_deque *src)
 	}
 }
 
+// tmp_matched_tokens != NULL
 static void	create_matched_tokens_each(t_deque_node *node, \
 										t_deque *matched_tokens)
 {
@@ -29,24 +30,18 @@ static void	create_matched_tokens_each(t_deque_node *node, \
 	t_deque	*tmp_matched_tokens;
 
 	token = (t_token *)node->content;
-	if (token->quote == QUOTE_SINGLE || token->quote == QUOTE_DOUBLE)
-		deque_add_back(matched_tokens, node);
-	else if (!is_wildcard_in_token(token->str))
-		deque_add_back(matched_tokens, node);
-	else
+	if (token->quote == QUOTE_NONE && is_wildcard_in_token(token->str))
 	{
 		tmp_matched_tokens = get_pattern_matched_filenames(token);
-		if (!tmp_matched_tokens) // todo: error need return..?
-			return ;
-		if (deque_is_empty(tmp_matched_tokens))
-			deque_add_back(matched_tokens, node);
-		else
+		if (!deque_is_empty(tmp_matched_tokens))
 		{
 			transfer_deque_node_all(matched_tokens, tmp_matched_tokens);
 			deque_clear_node(&node, del_token);
 		}
-		deque_clear_all(&tmp_matched_tokens, del_token); // only tmp's head
+		deque_clear_all(&tmp_matched_tokens, del_token); // remain only head
+		return ;
 	}
+	deque_add_back(matched_tokens, node);
 }
 
 static t_deque	*create_matched_tokens_all(t_deque *tokens)
