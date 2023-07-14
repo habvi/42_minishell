@@ -5,7 +5,6 @@
 #include "ms_parse.h"
 #include "ms_var.h"
 #include "ft_deque.h"
-#include "ft_gnl.h"
 #include "ft_mem.h"
 
 static bool	is_expand_in_heredoc(t_redirect *redirect)
@@ -20,15 +19,18 @@ static t_result	expand_and_transfer_heredoc(int raw_fd, \
 											int expand_fd, \
 											t_context *context)
 {
-	char	*line;
-	char	*expand_line;
+	char		*line;
+	char		*expand_line;
+	t_result	result;
 
 	line = NULL;
 	expand_line = NULL;
+	result = SUCCESS;
 	while (true)
 	{
-		(void)raw_fd;
-		line = get_next_line(raw_fd);
+		line = ft_get_next_line(raw_fd, &result);
+		if (result == PROCESS_ERROR)
+			return (PROCESS_ERROR);
 		if (!line)
 			break ;
 		expand_line = get_expand_token_str(line, context);
@@ -36,7 +38,7 @@ static t_result	expand_and_transfer_heredoc(int raw_fd, \
 		ft_free(&line);
 		ft_free(&expand_line);
 	}
-	return (SUCCESS);
+	return (result);
 }
 
 static t_result	expand_variables_in_heredoc(t_redirect *redirect, \
@@ -47,6 +49,7 @@ static t_result	expand_variables_in_heredoc(t_redirect *redirect, \
 	char		*new_filename;
 	t_result	result;
 
+	result = SUCCESS;
 	raw_fd = open(redirect->heredoc_filename, O_RDONLY);
 	if (raw_fd == OPEN_ERROR)
 		return (PROCESS_ERROR); // todo: error?
@@ -61,7 +64,7 @@ static t_result	expand_variables_in_heredoc(t_redirect *redirect, \
 	unlink(redirect->heredoc_filename); // todo: error
 	ft_free(&redirect->heredoc_filename);
 	redirect->heredoc_filename = new_filename;
-	return (SUCCESS);
+	return (result);
 }
 
 // redirect->kind is NODE_KIND_HEREDOC

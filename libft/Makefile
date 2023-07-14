@@ -168,13 +168,6 @@ SYS_SRC	:=	$(SYS_DIR)/x_access.c \
 			$(SYS_DIR)/x_write.c
 
 #--------------------------------------------
-# gnl
-#--------------------------------------------
-GNL_DIR	:=	ft_gnl
-GNL_SRC	:=	$(GNL_DIR)/get_next_line.c \
-			$(GNL_DIR)/get_next_line_utils.c
-
-#--------------------------------------------
 NAME		:=	libft.a
 
 SRCS_DIR	:=	srcs
@@ -189,8 +182,7 @@ OBJS		:=	$(DEQUE_SRC:%.c=$(OBJS_DIR)/%.o) \
 				$(STRING_SRC:%.c=$(OBJS_DIR)/%.o) \
 				$(FT_DPRINTF_SRC:%.c=$(OBJS_DIR)/%.o) \
 				$(SYS_SRC:%.c=$(OBJS_DIR)/%.o) \
-				$(HASH_SRC:%.c=$(OBJS_DIR)/%.o) \
-				$(GNL_SRC:%.c=$(OBJS_DIR)/%.o)
+				$(HASH_SRC:%.c=$(OBJS_DIR)/%.o)
 
 #--------------------------------------------
 INCLUDES_DIR	:=	includes

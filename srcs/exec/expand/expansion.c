@@ -45,21 +45,24 @@ static void	expand_variables_inter(t_deque **tokens, t_context *context)
 	split_expand_word(tokens);
 }
 
-static void	expand_variables_for_redirect(t_deque *redirect_list, \
-											t_context *context)
+static t_result	expand_variables_for_redirect(t_deque *redirect_list, \
+												t_context *context)
 {
 	t_deque_node	*list_node;
 	t_redirect		*redirect;
+	t_result		result;
 
 	if (!redirect_list)
-		return ;
+		return (SUCCESS);
 	list_node = redirect_list->node;
 	while (list_node)
 	{
 		redirect = (t_redirect *)list_node->content;
 		if (redirect->kind == TOKEN_KIND_REDIRECT_HEREDOC)
 		{
-			expand_for_heredoc(redirect, context); // todo: PROCESS_ERROR
+			result = expand_for_heredoc(redirect, context);
+			if (result == PROCESS_ERROR)
+				return (PROCESS_ERROR);
 			list_node = list_node->next;
 			continue ;
 		}
@@ -67,12 +70,16 @@ static void	expand_variables_for_redirect(t_deque *redirect_list, \
 		split_expand_word(&redirect->tokens);
 		list_node = list_node->next;
 	}
+	return (SUCCESS);
 }
 
 // word splitting: if unquoted, word split by delimiter
 t_result	expand_variables(t_ast *self_node, t_context *context)
 {
+	t_result	result;
+
+	result = SUCCESS;
 	expand_variables_inter(&self_node->command, context);
-	expand_variables_for_redirect(self_node->redirect_list, context);
-	return (SUCCESS);
+	result = expand_variables_for_redirect(self_node->redirect_list, context);
+	return (result);
 }

@@ -1,16 +1,16 @@
-#include "ft_gnl_inter.h"
+#include <limits.h>
+#include <stdlib.h>
+#include "minishell.h"
+#include "ms_result.h"
+#include "ft_mem.h"
+#include "ft_string.h"
+#include "ft_sys.h"
 
 static bool	is_new_line(char *str)
 {
-	if (str == NULL)
+	if (!str)
 		return (false);
-	while (*str)
-	{
-		if (*str == LF)
-			return (true);
-		str++;
-	}
-	return (false);
+	return (ft_strchr_bool(str, LF));
 }
 
 static void	*ft_free_for_gnl(char **saved, char *ps)
@@ -25,24 +25,27 @@ static void	*ft_free_for_gnl(char **saved, char *ps)
 	return (NULL);
 }
 
-static char	*read_buf(char **saved, int fd, bool *finish_read)
+static char	*read_buf(char **saved, int fd, bool *finish_read, t_result *result)
 {
 	char	*buf;
 	ssize_t	read_ret;
 
-	buf = (char *)malloc(sizeof(char) * ((size_t)BUFFER_SIZE + 1));
-	if (buf == NULL)
-		return (NULL);
+	buf = (char *)x_malloc(sizeof(char) * ((size_t)BUFFER_SIZE + 1));
+	if (!buf)
+		ft_abort();
 	read_ret = read(fd, buf, BUFFER_SIZE);
-	if (read_ret == GNL_READ_ERROR)
+	if (read_ret == READ_ERROR)
+	{
+		*result = PROCESS_ERROR;
 		return (ft_free_for_gnl(saved, buf));
+	}
 	buf[read_ret] = '\0';
 	if (!read_ret)
 		*finish_read = true;
 	return (buf);
 }
 
-static char	*output(char **saved)
+static char	*create_one_line(char **saved)
 {
 	char	*ps;
 	char	*left;
@@ -53,8 +56,8 @@ static char	*output(char **saved)
 		return (ft_free_for_gnl(saved, NULL));
 	while (*ps && *ps != LF)
 		ps++;
-	left = ft_substr_for_gnl(*saved, 0, ps - *saved + 1);
-	if (left == NULL)
+	left = x_ft_strndup(*saved, ps - *saved + 1);
+	if (!left)
 		return (ft_free_for_gnl(saved, NULL));
 	if (*left == '\0')
 		return (ft_free_for_gnl(saved, left));
@@ -63,32 +66,28 @@ static char	*output(char **saved)
 		tail++;
 	if (*ps == LF)
 		ps++;
-	*saved = ft_memmove_for_gnl(*saved, ps, tail - ps + 1);
+	*saved = ft_memmove(*saved, ps, tail - ps + 1);
 	return (left);
 }
 
-char	*get_next_line(int fd)
+char	*ft_get_next_line(int fd, t_result *result)
 {
 	static char	*saved = NULL;
 	bool		finish_read;
 	char		*buf;
 	char		*tmp;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE > INT_MAX)
-		return (NULL);
 	finish_read = false;
 	while (!finish_read)
 	{
 		if (is_new_line(saved))
 			break ;
-		buf = read_buf(&saved, fd, &finish_read);
-		if (buf == NULL)
+		buf = read_buf(&saved, fd, &finish_read, result);
+		if (!buf)
 			return (ft_free_for_gnl(&saved, NULL));
-		tmp = ft_strjoin(saved, buf);
+		tmp = x_ft_strjoin(saved, buf);
 		ft_free_for_gnl(&saved, buf);
-		if (tmp == NULL)
-			return (NULL);
 		saved = tmp;
 	}
-	return (output(&saved));
+	return (create_one_line(&saved));
 }

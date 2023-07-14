@@ -31,13 +31,12 @@ static size_t	get_key_len(const char *const s)
 // abc=ddd     =       abc+=def
 // 0123        0       01234
 //    ^len     ^len       ^len
+// arg != NULL
 char	*dup_var_key(const char *const arg, size_t *len)
 {
 	char	*key;
 
 	*len = get_key_len(arg);
-	key = ft_substr(arg, 0, *len);
-	if (!key)
-		ft_abort();
+	key = x_ft_substr(arg, 0, *len);
 	return (key);
 }
