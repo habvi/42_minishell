@@ -10,6 +10,7 @@
 # define STR_UNDERSCORE	"_"
 # define PARAM_STATUS	'?'
 # define CURRENT_DIR	"."
+# define HIDDEN_FILE	'.'
 # define WILDCARD		'*'
 
 typedef struct s_ast		t_ast;

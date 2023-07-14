@@ -8,6 +8,27 @@
 #include "ft_deque.h"
 #include "ft_string.h"
 
+// error: only EBADF. just return NULL and go to next.
+static t_result	get_next_dirp_in_current(DIR *dirp, struct dirent **dirent)
+{
+	errno = 0;
+	*dirent = readdir(dirp);
+	if (!*dirent)
+	{
+		if (errno)
+			return (PROCESS_ERROR); // todo: print error
+		return (BREAK);
+	}
+	return (CONTINUE);
+}
+
+bool	is_hidden_file(const char *str)
+{
+	if (!str)
+		return (false);
+	return (str[0] == HIDDEN_FILE);
+}
+
 static void	add_pattern_matched_filename_each(const char *token_str, \
 												const char *filename, \
 												const bool *is_quoted_arr, \
@@ -28,24 +49,10 @@ static void	add_pattern_matched_filename_each(const char *token_str, \
 	}
 }
 
-// error: only EBADF. just return NULL and go to next.
-static t_result	get_next_dirp_in_current(DIR *dirp, struct dirent **dirent)
-{
-	errno = 0;
-	*dirent = readdir(dirp);
-	if (!*dirent)
-	{
-		if (errno)
-			return (PROCESS_ERROR); // todo: print error
-		return (BREAK);
-	}
-	return (CONTINUE);
-}
-
 // todo: return t_result?
-static void	add_pattern_matched_filenames(const char *token_str, \
-											const bool *is_quoted_arr, \
-											t_deque *matched_filenames)
+static void	add_pattern_matched_files(const char *token_str, \
+										const bool *is_quoted_arr, \
+										t_deque *matched_filenames)
 {
 	DIR				*dirp;
 	struct dirent	*dirent;
@@ -65,7 +72,8 @@ static void	add_pattern_matched_filenames(const char *token_str, \
 		}
 		if (result == BREAK)
 			break ;
-		// printf("[%hhu], %s\n", dirent->d_type, dirent->d_name);
+		if (!is_hidden_file(token_str) && is_hidden_file(dirent->d_name))
+			continue ;
 		add_pattern_matched_filename_each(\
 				token_str, dirent->d_name, is_quoted_arr, matched_filenames);
 	}
@@ -83,10 +91,7 @@ t_deque	*get_pattern_matched_filenames(t_token *token)
 	matched_filenames = deque_new();
 	if (!matched_filenames)
 		ft_abort();
-	// if (dot)
-		//
-	// else  result
-	add_pattern_matched_filenames(str, is_quoted_arr, matched_filenames);
+	add_pattern_matched_files(str, is_quoted_arr, matched_filenames);
 	// sort(matched_filenames);
 	// debug_token_dq(matched_filenames, __func__);
 	return (matched_filenames);
