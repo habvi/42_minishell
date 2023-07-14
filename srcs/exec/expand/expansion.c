@@ -22,21 +22,19 @@ static void	expand_tokens(const t_deque *tokens, t_context *context)
 	t_deque_node	*node;
 	t_token			*token;
 
-	if (tokens)
+	if (!tokens)
+		return ;
+	node = tokens->node;
+	while (node)
 	{
-		node = tokens->node;
-		while (node)
+		token = (t_token *)node->content;
+		if (token->quote == QUOTE_SINGLE || !ft_strchr(token->str, CHAR_DOLLAR))
 		{
-			token = (t_token *)node->content;
-			if (token->quote == QUOTE_SINGLE \
-			|| !ft_strchr(token->str, CHAR_DOLLAR))
-			{
-				node = node->next;
-				continue ;
-			}
-			expand_token(token, context);
 			node = node->next;
+			continue ;
 		}
+		expand_token(token, context);
+		node = node->next;
 	}
 }
 
@@ -55,7 +53,7 @@ static void	expand_variables_inter(t_deque **tokens, t_context *context)
 	// debug_token_dq(*tokens, "after wild");
 }
 
-static t_result	expand_variables_for_redirect(t_deque *redirect_list, \
+static t_result	expand_variables_for_redirect(const t_deque *redirect_list, \
 												t_context *context)
 {
 	t_deque_node	*list_node;
