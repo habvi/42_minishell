@@ -1,12 +1,12 @@
 #include "ms_tokenize.h"
 #include "ft_deque.h"
 
-bool	is_token_kind_word(t_token_kind token_kind)
+bool	is_token_kind_word(const t_token_kind token_kind)
 {
 	return (token_kind == TOKEN_KIND_WORD);
 }
 
-bool	is_token_kind_redirection(t_token_kind token_kind)
+bool	is_token_kind_redirection(const t_token_kind token_kind)
 {
 	if (token_kind == TOKEN_KIND_REDIRECT_IN)
 		return (true);

@@ -1,7 +1,7 @@
 #include "ms_tokenize.h"
 #include "ft_deque.h"
 
-bool	is_token_kind_and_or_from_node(t_deque_node *token_node)
+bool	is_token_kind_and_or_from_node(const t_deque_node *token_node)
 {
 	t_token			*token;
 	t_token_kind	kind;
@@ -13,7 +13,7 @@ bool	is_token_kind_and_or_from_node(t_deque_node *token_node)
 	return (kind == TOKEN_KIND_OP_AND || kind == TOKEN_KIND_OP_OR);
 }
 
-bool	is_token_kind_pipe_from_node(t_deque_node *token_node)
+bool	is_token_kind_pipe_from_node(const t_deque_node *token_node)
 {
 	t_token			*token;
 	t_token_kind	kind;
@@ -25,7 +25,7 @@ bool	is_token_kind_pipe_from_node(t_deque_node *token_node)
 	return (kind == TOKEN_KIND_OP_PIPE);
 }
 
-bool	is_token_kind_command_as_ast_node(t_deque_node *token_node)
+bool	is_token_kind_command_as_ast_node(const t_deque_node *token_node)
 {
 	t_token			*token;
 	t_token_kind	kind;
@@ -41,7 +41,7 @@ bool	is_token_kind_command_as_ast_node(t_deque_node *token_node)
 	return (false);
 }
 
-bool	is_token_kind_redirection_from_node(t_deque_node *token_node)
+bool	is_token_kind_redirection_from_node(const t_deque_node *token_node)
 {
 	t_token			*token;
 	t_token_kind	kind;

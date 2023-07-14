@@ -12,7 +12,7 @@ static bool	is_valid_redirect_syntax_each(const t_token *cur_token, \
 	return (false);
 }
 
-static t_token	*get_next_token(t_deque_node *cur_node)
+static t_token	*get_next_token(const t_deque_node *cur_node)
 {
 	if (!cur_node->next)
 		return (NULL);

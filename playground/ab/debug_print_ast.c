@@ -5,8 +5,6 @@
 #include "ft_deque.h"
 #include "ft_dprintf.h"
 
-// todo: norm error this file
-
 // gcc srcs/tokenize/*.c srcs/parse/*.c srcs/utils/*.c srcs/builtin/*.c srcs/variables/*.c  libft/libft.a -Iincludes -Ilibft/includes && ./a.out
 
 #define MAX_DEPTH	100

@@ -42,7 +42,7 @@ t_result	exec_redirect_all(t_ast *self_node, t_context *context)
 			return (PROCESS_ERROR);
 		if (result == FAILURE)
 		{
-			context->status = 1;
+			context->status = 1; // todo: macro
 			return (FAILURE);
 		}
 		node = node->next;
