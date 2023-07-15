@@ -37,7 +37,7 @@ static void	read_input_save_to_fd(int fd, const char *delimiter)
 	}
 }
 
-static bool	is_quote_token_exist(t_deque *tokens)
+static bool	is_quote_token_exist(const t_deque *tokens)
 {
 	bool			has_quote;
 	t_deque_node	*token_node;

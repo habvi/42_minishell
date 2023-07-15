@@ -14,7 +14,7 @@ static void	create_split_tokens_each(t_deque_node *node, t_deque *expanded)
 	str_in_delim = ft_find_set_in_str(token->str, TOKEN_DELIM);
 	if (token->quote == QUOTE_SINGLE || token->quote == QUOTE_DOUBLE)
 		deque_add_back(expanded, node);
-	else if (ft_streq(str_in_delim, "\0"))
+	else if (ft_streq(str_in_delim, EMPTY_STR))
 		deque_add_back(expanded, node);
 	else
 	{

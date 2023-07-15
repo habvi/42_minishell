@@ -1,3 +1,4 @@
+#include "minishell.h"
 #include "ms_tokenize.h"
 #include "ft_string.h"
 
@@ -28,7 +29,7 @@ static char	*get_token_quote_tail(char *head)
 	char	set[2];
 
 	set[0] = *head;
-	set[1] = '\0';
+	set[1] = CHR_NULL;
 	head++;
 	tail = ft_find_set_in_str(head, set);
 	if (*tail)

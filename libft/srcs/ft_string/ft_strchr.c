@@ -2,9 +2,8 @@
 
 char	*ft_strchr(char *s, int int_c)
 {
-	char	c;
+	const char	c = (const char)int_c;
 
-	c = (char)int_c;
 	while (*s)
 	{
 		if (*s == c)
@@ -18,9 +17,8 @@ char	*ft_strchr(char *s, int int_c)
 
 bool	ft_strchr_bool(const char *s, int int_c)
 {
-	char	c;
+	const char	c = (const char)int_c;
 
-	c = (char)int_c;
 	while (*s)
 	{
 		if (*s == c)

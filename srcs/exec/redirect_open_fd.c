@@ -8,6 +8,7 @@
 #include "ft_deque.h"
 #include "ft_sys.h"
 
+// todo: error, macro
 static int	open_redirect_fd(const char *path, \
 								t_open_flag open_flag, \
 								int *tmp_err)
@@ -23,18 +24,24 @@ static int	open_redirect_fd(const char *path, \
 	return (open_fd);
 }
 
-static void	close_proc_in_fd(int proc_in_fd)
+// todo: error, x_ ?
+static t_result	close_proc_in_fd(int proc_in_fd)
 {
 	if (proc_in_fd == IN_FD_INIT)
-		return ;
-	close(proc_in_fd); // todo:error
+		return (SUCCESS);
+	if (close(proc_in_fd) == CLOSE_ERROR)
+		return (PROCESS_ERROR);
+	return (SUCCESS);
 }
 
-static void	close_proc_out_fd(int proc_out_fd)
+// todo: error, x_ ?
+static t_result	close_proc_out_fd(int proc_out_fd)
 {
 	if (proc_out_fd == OUT_FD_INIT)
-		return ;
-	close(proc_out_fd); // todo:error
+		return (SUCCESS);
+	if (close(proc_out_fd) == CLOSE_ERROR)
+		return (PROCESS_ERROR);
+	return (SUCCESS);
 }
 
 static t_result	connect_proc_io_fd(const char *path, \
@@ -51,9 +58,15 @@ static t_result	connect_proc_io_fd(const char *path, \
 		return (FAILURE);
 	}
 	if (open_flag == OPEN_FOR_IN)
-		close_proc_in_fd(*proc_fd);
+	{
+		if (close_proc_in_fd(*proc_fd) == CLOSE_ERROR)
+			return (PROCESS_ERROR);
+	}
 	else
-		close_proc_out_fd(*proc_fd);
+	{
+		if (close_proc_out_fd(*proc_fd) == CLOSE_ERROR)
+			return (PROCESS_ERROR);
+	}
 	*proc_fd = open_fd;
 	return (SUCCESS);
 }
@@ -79,8 +92,8 @@ t_result	open_redirect_fd_and_save_to_proc(t_redirect *redirect, \
 	}
 	if (result == FAILURE)
 	{
-		close_proc_in_fd(proc_fd[IN]);
-		close_proc_out_fd(proc_fd[OUT]);
+		close_proc_in_fd(proc_fd[IN]); // todo: error
+		close_proc_out_fd(proc_fd[OUT]); // todo: error
 	}
 	return (result);
 }

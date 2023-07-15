@@ -6,15 +6,14 @@
 #include "ft_string.h"
 #include "ft_sys.h"
 
-static bool	get_is_quoted_value(t_quote quote)
+static bool	get_is_quoted_value(const t_quote quote)
 {
 	return (quote != QUOTE_NONE);
 }
 
 void	set_is_quoted_value_to_arr(t_token *token)
 {
-	const char		*token_str = token->str;
-	const size_t	len = ft_strlen(token_str);
+	const size_t	len = ft_strlen(token->str);
 	bool			*is_quoted_arr;
 	bool			is_quoted_value;
 

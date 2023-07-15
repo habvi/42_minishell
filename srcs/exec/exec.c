@@ -5,24 +5,32 @@
 #include "ms_result.h"
 #include "ft_sys.h"
 
-static void	copy_stdio_fd(int *stdin_copy, int *stdout_copy)
+static t_result	copy_stdio_fd(int *stdin_copy, int *stdout_copy)
 {
-	// todo: error
 	*stdin_copy = dup(STDIN_FILENO);
+	if (*stdin_copy == DUP_ERROR)
+		return (PROCESS_ERROR);
 	*stdout_copy = dup(STDOUT_FILENO);
+	if (*stdout_copy == DUP_ERROR)
+		return (PROCESS_ERROR);
+	return (SUCCESS);
 }
 
-static void	restore_stdio_fd(int stdin_copy, int stdout_copy)
+static t_result	restore_stdio_fd(int stdin_copy, int stdout_copy)
 {
-	// todo: error
-	x_close(STDIN_FILENO);
-	x_dup2(stdin_copy, STDIN_FILENO);
-	x_close(stdin_copy);
-
-	// todo: error
-	x_close(STDOUT_FILENO);
-	x_dup2(stdout_copy, STDOUT_FILENO);
-	x_close(stdout_copy);
+	if (x_close(STDIN_FILENO) == CLOSE_ERROR)
+		return (PROCESS_ERROR);
+	if (x_dup2(stdin_copy, STDIN_FILENO) == DUP_ERROR)
+		return (PROCESS_ERROR);
+	if (x_close(stdin_copy) == CLOSE_ERROR)
+		return (PROCESS_ERROR);
+	if (x_close(STDOUT_FILENO) == CLOSE_ERROR)
+		return (PROCESS_ERROR);
+	if (x_dup2(stdout_copy, STDOUT_FILENO) == DUP_ERROR)
+		return (PROCESS_ERROR);
+	if (x_close(stdout_copy) == CLOSE_ERROR)
+		return (PROCESS_ERROR);
+	return (SUCCESS);
 }
 
 static bool	is_node_executable(t_ast *ast_node)
@@ -41,7 +49,9 @@ static t_result	execute_command_internal(t_ast *self_node, t_context *context)
 	int			stdin_copy;
 	int			stdout_copy;
 
-	copy_stdio_fd(&stdin_copy, &stdout_copy);
+	result = copy_stdio_fd(&stdin_copy, &stdout_copy);
+	if (result == PROCESS_ERROR)
+		return (PROCESS_ERROR);
 	expand_variables(self_node, context);
 	result = redirect_fd(self_node, context);
 	if ((result == PROCESS_ERROR) || (result == FAILURE))
@@ -54,7 +64,9 @@ static t_result	execute_command_internal(t_ast *self_node, t_context *context)
 		if (result == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 	}
-	restore_stdio_fd(stdin_copy, stdout_copy);
+	result = restore_stdio_fd(stdin_copy, stdout_copy);
+	if (result == PROCESS_ERROR)
+		return (PROCESS_ERROR);
 	return (SUCCESS);
 }
 
