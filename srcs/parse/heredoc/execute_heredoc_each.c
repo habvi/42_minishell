@@ -11,7 +11,6 @@
 #include "ft_sys.h"
 #include "ft_mem.h"
 
-// todo: wanted in warning msg
 static void	read_input_save_to_fd(int fd, const char *delimiter)
 {
 	char	*line;
@@ -30,8 +29,7 @@ static void	read_input_save_to_fd(int fd, const char *delimiter)
 			ft_free(&line);
 			break ;
 		}
-		ft_dprintf(fd, line);
-		ft_dprintf(fd, "\n");
+		ft_dprintf(fd, "%s\n", line);
 		ft_free(&line);
 	}
 }

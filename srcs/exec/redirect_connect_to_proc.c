@@ -10,7 +10,7 @@ t_result	connect_redirect_to_proc(t_ast *self_node)
 	{
 		if (self_node->prev_fd != IN_FD_INIT)
 		{
-			if (x_close(self_node->prev_fd) == CLOSE_ERROR) // todo: error
+			if (x_close(self_node->prev_fd) == CLOSE_ERROR)
 				return (PROCESS_ERROR);
 		}
 		self_node->prev_fd = IN_FD_INIT;

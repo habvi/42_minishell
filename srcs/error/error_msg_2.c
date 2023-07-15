@@ -14,3 +14,13 @@ void	puterr_heredoc_wanted_eof(const char *delimiter)
 			"%s: %s: %s (wanted `%s')\n", \
 			SHELL_NAME, ERROR_TYPE_WARNING, ERROR_MSG_HEREDOC_EOF, delimiter);
 }
+
+void	puterr_whom_cmd_arg_msg(const char *for_whom,
+								const char *cmd, \
+								const char *const arg, \
+								const char *msg)
+{
+	ft_dprintf(STDERR_FILENO, \
+			"%s: %s: %s: %s\n", \
+			for_whom, cmd, arg, msg);
+}

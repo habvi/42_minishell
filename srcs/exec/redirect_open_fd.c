@@ -8,7 +8,6 @@
 #include "ft_deque.h"
 #include "ft_sys.h"
 
-// todo: error, macro
 static int	open_redirect_fd(const char *path, \
 								t_open_flag open_flag, \
 								int *tmp_err)
@@ -52,7 +51,11 @@ static t_result	connect_proc_io_fd(const char *path, \
 	open_fd = open_redirect_fd(path, open_flag, &open_errno);
 	if (open_fd == OPEN_ERROR)
 	{
-		ft_dprintf(2, "%s: %s: %s\n", SHELL_NAME, path, strerror(open_errno));
+		puterr_cmd_msg(path, strerror(open_errno));
+		if (close_proc_in_fd(proc_fd[IN]) == PROCESS_ERROR)
+			return (PROCESS_ERROR);
+		if (close_proc_out_fd(proc_fd[OUT]) == PROCESS_ERROR)
+			return (PROCESS_ERROR);
 		return (FAILURE);
 	}
 	if (open_flag == OPEN_FOR_IN)
@@ -87,11 +90,6 @@ t_result	open_redirect_fd_and_save_to_proc(t_redirect *redirect, \
 	{
 		path = redirect->heredoc_filename;
 		result = connect_proc_io_fd(path, &proc_fd[IN], OPEN_FOR_IN);
-	}
-	if (result == FAILURE)
-	{
-		close_proc_in_fd(proc_fd[IN]); // todo: error
-		close_proc_out_fd(proc_fd[OUT]); // todo: error
 	}
 	return (result);
 }

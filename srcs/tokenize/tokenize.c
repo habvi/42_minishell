@@ -44,7 +44,7 @@ t_deque	*tokenize(char *line, t_context *context, t_result *result)
 	set_token_kinds_all(tokens);
 	if (!is_valid_tokens_syntax(tokens->node))
 	{
-		context->status = SYNTAX_ERROR; // todo: print syntax error
+		context->status = SYNTAX_ERROR;
 		*result = FAILURE;
 		destroy_tokens(&tokens, del_token);
 		return (NULL);

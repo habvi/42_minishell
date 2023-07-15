@@ -105,7 +105,7 @@ char		*input_line(void);
 size_t		count_argv(const char *const *argc);
 char		*extend_str(char *left, char *right);
 void		ft_abort(void);
-char		*get_working_directory(char *for_whom);
+char		*get_working_directory(const char *for_whom);
 bool		is_valid_key(const char *word);
 bool		is_valid_head(const char c);
 bool		is_valid_after_head(const char c);
@@ -155,4 +155,9 @@ void		puterr_cmd_msg_set_status(const char *const cmd, \
 bool		puterr_msg_quoted_arg_ret_bool(const char *msg, \
 											const char *const arg, \
 											bool ret);
+void		puterr_whom_cmd_arg_msg(const char *for_whom, \
+									const char *cmd, \
+									const char *const arg, \
+									const char *msg);
+
 #endif //MINISHELL_H

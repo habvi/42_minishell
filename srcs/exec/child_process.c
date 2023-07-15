@@ -41,9 +41,7 @@ static uint8_t	execute_command_in_child(t_ast *self_node, t_context *context)
 	else if (self_node->kind == NODE_KIND_SUBSHELL)
 		status = execute_subshell(self_node, context);
 	else
-	{
 		status = execute_external_command((char *const *)argv, context);
-	}
 	free_2d_array(&argv);
 	return (status);
 }
@@ -58,5 +56,5 @@ void	child_process(t_ast *self_node, t_context *context)
 	if (handle_child_pipes(self_node) == PROCESS_ERROR)
 		exit(EXIT_FAILURE);
 	status = execute_command_in_child(self_node, context);
-	exit (status);
+	exit(status);
 }

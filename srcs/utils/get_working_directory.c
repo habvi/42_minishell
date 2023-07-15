@@ -42,7 +42,7 @@ static char	*get_current_path(int *tmp_err)
 }
 
 /* ref: get_working_directory() in bash/builtins/common.c L623 */
-char	*get_working_directory(char *for_whom)
+char	*get_working_directory(const char *for_whom)
 {
 	char	*cwd;
 	int		tmp_err;
@@ -50,12 +50,11 @@ char	*get_working_directory(char *for_whom)
 	cwd = get_current_path(&tmp_err);
 	if (tmp_err)
 	{
-		// todo: tmp
-		ft_dprintf(STDERR_FILENO, \
-		"%s: %s: %s: %s\n", \
-		for_whom, ERROR_MSG_RETRIEVE_CWD, ERROR_MSG_GETCWD, strerror(tmp_err));
+		puterr_whom_cmd_arg_msg(for_whom, \
+								ERROR_MSG_RETRIEVE_CWD, \
+								ERROR_MSG_GETCWD, \
+								strerror(tmp_err));
 		ft_free(&cwd);
-		// (todo) sh: 0: getcwd() failed: No such file or directory
 		return (NULL);
 	}
 	return (cwd);

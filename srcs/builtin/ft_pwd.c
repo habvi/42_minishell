@@ -37,7 +37,7 @@ uint8_t	ft_pwd(const char *const *argv, t_context *context)
 		return (status);
 	pwd = get_pwd(context);
 	if (!pwd)
-		return (EXIT_FAILURE); // todo:tmp
+		return (EXIT_FAILURE);
 	ft_dprintf(STDOUT_FILENO, "%s\n", pwd);
 	ft_free(&pwd);
 	return (status);

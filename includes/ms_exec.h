@@ -21,8 +21,9 @@
 # define STATUS_CMD_NOT_FOUND		127
 # define REDIRECT_ONLY_SUCCESS		0
 
-# define ERROR_MSG_NO_SUCH_FILE		"No such file or directory"
-# define ERROR_MSG_CMD_NOT_FOUND	"command not found"
+# define ERROR_MSG_NO_SUCH_FILE			"No such file or directory"
+# define ERROR_MSG_CMD_NOT_FOUND		"command not found"
+# define ERROR_MSG_AMBIGUOUS_REDIRECT	"ambiguous redirect"
 
 typedef struct s_ast		t_ast;
 typedef struct s_context	t_context;

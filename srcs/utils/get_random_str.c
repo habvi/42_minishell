@@ -62,13 +62,11 @@ char	*get_random_str(const size_t size)
 
 	errno = 0;
 	fd = x_open(RANDOM_FILENAME, O_RDONLY);
-	if (fd == -1)
-	{
-		strerror(errno); // todo: tmp
+	if (fd == OPEN_ERROR)
 		return (NULL);
-	}
 	random_str = read_random_str(fd, size);
-	close(fd); // todo: error...?
+	if (x_close(fd) == CLOSE_ERROR)
+		return (NULL);
 	if (!random_str)
 		return (NULL);
 	return (random_str);
