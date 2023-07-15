@@ -3,6 +3,7 @@
 #include "ms_expansion.h"
 #include "ms_parse.h"
 #include "ft_deque.h"
+#include "ft_mem.h"
 
 static bool	is_ambiguous_redirect(t_redirect *redirect)
 {
@@ -11,15 +12,24 @@ static bool	is_ambiguous_redirect(t_redirect *redirect)
 	return (redirect->tokens->size != 1);
 }
 
-static t_result	exec_redirect_each(t_redirect *redirect, int proc_fd[2])
+static t_result	exec_redirect_each(t_redirect *redirect, \
+									int proc_fd[2], \
+									t_context *context)
 {
 	t_result	result;
+	char		*original_token;
 
+	original_token = x_ft_strdup(get_head_token_str(redirect->tokens));
+	expand_processing(&redirect->tokens, context);
+	split_expand_word(&redirect->tokens);
 	if (is_ambiguous_redirect(redirect))
 	{
-		ft_dprintf(2, "error: ambiguous redirect\n");
+		context->status = STATUS_REDIRECT_FAILURE;
+		puterr_cmd_msg(original_token, ERROR_MSG_AMBIGUOUS);
+		ft_free(&original_token);
 		return (FAILURE);
 	}
+	ft_free(&original_token);
 	result = open_redirect_fd_and_save_to_proc(redirect, proc_fd);
 	return (result);
 }
@@ -27,24 +37,32 @@ static t_result	exec_redirect_each(t_redirect *redirect, int proc_fd[2])
 // OK [redirect_symbol]-[file]
 // NG [redirect_symbol]-[redirect_symbol]: dropped $var
 //    [redirect_symbol]-[file]-[file]    : splitted $var
-t_result	exec_redirect_all(t_ast *self_node, t_context *context)
+
+// redirect_list != NULL
+static t_result	expand_and_exec_redirect_all(t_ast *self_node, \
+												t_context *context)
 {
 	t_deque_node	*node;
 	t_result		result;
+	t_redirect		*redirect;
 
-	if (!self_node->redirect_list)
-		return (SUCCESS); //todo
 	node = self_node->redirect_list->node;
 	while (node)
 	{
-		result = exec_redirect_each(node->content, self_node->proc_fd);
+		redirect = (t_redirect *)node->content;
+		if (redirect->kind == TOKEN_KIND_REDIRECT_HEREDOC)
+		{
+			result = expand_for_heredoc(redirect, context);
+			if (result == PROCESS_ERROR)
+				return (PROCESS_ERROR);
+			node = node->next;
+			continue ;
+		}
+		result = exec_redirect_each(node->content, self_node->proc_fd, context);
 		if (result == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 		if (result == FAILURE)
-		{
-			context->status = 1; // todo: macro
 			return (FAILURE);
-		}
 		node = node->next;
 	}
 	return (SUCCESS);
@@ -56,7 +74,7 @@ t_result	redirect_fd(t_ast *self_node, t_context *context)
 
 	if (!self_node->redirect_list)
 		return (SUCCESS);
-	result = exec_redirect_all(self_node, context);
+	result = expand_and_exec_redirect_all(self_node, context);
 	if (result == FAILURE || result == PROCESS_ERROR)
 		return (result);
 	result = connect_redirect_to_proc(self_node);
