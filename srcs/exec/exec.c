@@ -49,11 +49,9 @@ static t_result	execute_command_internal(t_ast *self_node, t_context *context)
 	int			stdin_copy;
 	int			stdout_copy;
 
-	result = copy_stdio_fd(&stdin_copy, &stdout_copy);
-	if (result == PROCESS_ERROR)
+	if (copy_stdio_fd(&stdin_copy, &stdout_copy) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
-	result = expand_variables(self_node, context);
-	if (result == PROCESS_ERROR)
+	if (expand_variables(self_node, context) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
 	result = redirect_fd(self_node, context);
 	if ((result == PROCESS_ERROR) || (result == FAILURE))
@@ -66,8 +64,7 @@ static t_result	execute_command_internal(t_ast *self_node, t_context *context)
 		if (result == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 	}
-	result = restore_stdio_fd(stdin_copy, stdout_copy);
-	if (result == PROCESS_ERROR)
+	if (restore_stdio_fd(stdin_copy, stdout_copy) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
 	return (SUCCESS);
 }

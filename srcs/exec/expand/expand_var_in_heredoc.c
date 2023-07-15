@@ -48,29 +48,30 @@ static t_result	open_heredoc_fds(int *raw_fd, \
 	return (result);
 }
 
-// todo: close(fd) fail, unlink(file)...?
-static t_result	clear_expand_in_heredoc(int raw_fd, \
-										int expand_fd, \
-										char **filename, \
+static t_result	clear_expand_in_heredoc(int old_fd, \
+										int new_fd, \
+										char **old_filename, \
 										char **new_filename)
 {
-	if (x_close(raw_fd) == CLOSE_ERROR)
+	if (x_close(old_fd) == CLOSE_ERROR)
 	{
-		x_close(expand_fd);
+		x_close(new_fd);
 		x_unlink(*new_filename);
-		return (PROCESS_ERROR);
-	}
-	if (x_close(expand_fd) == CLOSE_ERROR)
-	{
 		ft_free(new_filename);
 		return (PROCESS_ERROR);
 	}
-	if (x_unlink(*filename) == UNLINK_ERROR)
+	if (x_close(new_fd) == CLOSE_ERROR)
 	{
+		x_unlink(*new_filename);
 		ft_free(new_filename);
 		return (PROCESS_ERROR);
 	}
-	ft_free(filename);
+	if (x_unlink(*old_filename) == UNLINK_ERROR)
+	{
+		x_unlink(*new_filename);
+		ft_free(new_filename);
+		return (PROCESS_ERROR);
+	}
 	return (SUCCESS);
 }
 
@@ -97,6 +98,7 @@ t_result	expand_variables_in_heredoc(t_redirect *redirect, \
 										&new_filename);
 	if (result == PROCESS_ERROR)
 		return (PROCESS_ERROR);
+	ft_free(&redirect->heredoc_filename);
 	redirect->heredoc_filename = new_filename;
 	return (result);
 }
