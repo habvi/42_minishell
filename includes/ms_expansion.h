@@ -22,8 +22,8 @@ typedef struct s_deque		t_deque;
 typedef struct s_redirect	t_redirect;
 typedef struct s_token		t_token;
 
-void		expand_variable_of_cmd_tokens(t_ast *self_node, t_context *context);
-void		expand_processing(t_deque **tokens, t_context *context);
+t_result	expand_variable_of_cmd_tokens(t_ast *self_node, t_context *context);
+t_result	expand_processing(t_deque **tokens, t_context *context);
 char		*get_expand_token_str(char *str, t_context *context);
 char		*substr_before_dollar(char **str);
 void		remove_empty_tokens(t_deque *tokens);
@@ -32,8 +32,8 @@ void		split_expand_word(t_deque **tokens);
 void		word_split_and_add(char *token_str, \
 								t_deque *expanded, \
 								bool concat_next);
-void		expand_wildcard(t_deque **tokens);
-t_deque		*get_pattern_matched_filenames(t_token *token);
+t_result	expand_wildcard(t_deque **tokens);
+t_deque		*get_pattern_matched_filenames(t_token *token, t_result *result);
 bool		is_pattern_match_target_path(const char *match_str, \
 											const size_t len_match, \
 											const char *target_path, \

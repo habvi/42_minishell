@@ -49,8 +49,7 @@ static void	add_pattern_matched_filename_each(const char *token_str, \
 	}
 }
 
-// todo: return t_result?
-static void	add_pattern_matched_files(const char *token_str, \
+static t_result	add_pattern_matched_files(const char *token_str, \
 										const bool *is_quoted_arr, \
 										t_deque *matched_filenames)
 {
@@ -61,15 +60,12 @@ static void	add_pattern_matched_files(const char *token_str, \
 	// continue: EACCES,ENOENT,ENOTDIR. other : return PROCRSS_ERROR exit
 	dirp = opendir(CURRENT_DIR);
 	if (!dirp) // todo: error
-		return ;
+		return (PROCESS_ERROR);
 	while (true)
 	{
 		result = get_next_dirp_in_current(dirp, &dirent);
 		if (result == PROCESS_ERROR) // return PROCRSS_ERROR exit minishell
-		{
-			// todo: error handle.
-			continue ;
-		}
+			return (PROCESS_ERROR);
 		if (result == BREAK)
 			break ;
 		if (!is_hidden_file(token_str) && is_hidden_file(dirent->d_name))
@@ -77,12 +73,13 @@ static void	add_pattern_matched_files(const char *token_str, \
 		add_pattern_matched_filename_each(\
 				token_str, dirent->d_name, is_quoted_arr, matched_filenames);
 	}
-	closedir(dirp); // todo: return PROCRSS_ERROR exit minishell
+	result = closedir(dirp); // todo: return PROCRSS_ERROR exit minishell
+	return (result);
 }
 
 // * -> [libft],[srcs],[includes]..
 // in* -> [input.c],[in1],[includes]..
-t_deque	*get_pattern_matched_filenames(t_token *token)
+t_deque	*get_pattern_matched_filenames(t_token *token, t_result *result)
 {
 	t_deque		*matched_filenames;
 	const char	*str = token->str;
@@ -91,7 +88,9 @@ t_deque	*get_pattern_matched_filenames(t_token *token)
 	matched_filenames = deque_new();
 	if (!matched_filenames)
 		ft_abort();
-	add_pattern_matched_files(str, is_quoted_arr, matched_filenames);
+	*result = add_pattern_matched_files(str, is_quoted_arr, matched_filenames);
+	if (*result == PROCESS_ERROR)
+		return (NULL);
 	sort_filenames(matched_filenames);
 	// debug_token_dq(matched_filenames, __func__);
 	return (matched_filenames);

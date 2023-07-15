@@ -47,7 +47,8 @@ static t_result	execute_command_internal(t_ast *self_node, t_context *context)
 {
 	t_result	result;
 
-	expand_variable_of_cmd_tokens(self_node, context);
+	if (expand_variable_of_cmd_tokens(self_node, context) == PROCESS_ERROR)
+		return (PROCESS_ERROR);
 	result = redirect_fd(self_node, context);
 	if ((result == PROCESS_ERROR) || (result == FAILURE))
 	{

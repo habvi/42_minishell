@@ -23,16 +23,19 @@ static void	transfer_deque_node_all(t_deque *dst, t_deque *src)
 }
 
 // tmp_matched_tokens != NULL
-static void	create_matched_tokens_each(t_deque_node *node, \
-										t_deque *matched_tokens)
+static t_result	create_matched_tokens_each(t_deque_node *node, \
+											t_deque *matched_tokens)
 {
-	t_token	*token;
-	t_deque	*tmp_matched_tokens;
+	t_token		*token;
+	t_deque		*tmp_matched_tokens;
+	t_result	result;
 
 	token = (t_token *)node->content;
 	if (token->quote == QUOTE_NONE && is_wildcard_in_token(token->str))
 	{
-		tmp_matched_tokens = get_pattern_matched_filenames(token);
+		tmp_matched_tokens = get_pattern_matched_filenames(token, &result);
+		if (result == PROCESS_ERROR)
+			return (PROCESS_ERROR);
 		if (!deque_is_empty(tmp_matched_tokens))
 		{
 			transfer_deque_node_all(matched_tokens, tmp_matched_tokens);
@@ -40,12 +43,13 @@ static void	create_matched_tokens_each(t_deque_node *node, \
 		}
 		deque_add_back(matched_tokens, node);
 		deque_clear_all(&tmp_matched_tokens, del_token); // remain only head
-		return ;
+		return (SUCCESS);
 	}
 	deque_add_back(matched_tokens, node);
+	return (SUCCESS);
 }
 
-static t_deque	*create_matched_tokens_all(t_deque *tokens)
+static t_deque	*create_matched_tokens_all(t_deque *tokens, t_result *result)
 {
 	t_deque			*matched_tokens;
 	t_deque_node	*node;
@@ -56,19 +60,26 @@ static t_deque	*create_matched_tokens_all(t_deque *tokens)
 	while (!deque_is_empty(tokens))
 	{
 		node = deque_pop_front(tokens);
-		create_matched_tokens_each(node, matched_tokens);
+		*result = create_matched_tokens_each(node, matched_tokens);
+		if (*result == PROCESS_ERROR)
+			return (NULL);
 	}
 	return (matched_tokens);
 }
 
-void	expand_wildcard(t_deque **tokens)
+t_result	expand_wildcard(t_deque **tokens)
 {
-	t_deque	*matched_tokens;
+	t_result	result;
+	t_deque		*matched_tokens;
 
 	if (!*tokens)
-		return ;
-	matched_tokens = create_matched_tokens_all(*tokens);
+		return (SUCCESS);
+	result = SUCCESS;
+	matched_tokens = create_matched_tokens_all(*tokens, &result);
+	if (result == PROCESS_ERROR)
+		return (PROCESS_ERROR);
 	deque_clear_all(tokens, del_token);
 	*tokens = matched_tokens;
 	// debug_token_dq(matched_tokens, __func__);
+	return (SUCCESS);
 }
