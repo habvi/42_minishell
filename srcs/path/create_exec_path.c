@@ -14,13 +14,18 @@ static bool	is_slash_in_argv(const char *const argv_head)
 	return (false);
 }
 
+static bool	is_empty_command(const char *const command)
+{
+	return (command && !*command);
+}
+
 // access(PATH[i] + "/" " command)
 static char	*search_command_path(const char *const command, t_var *var)
 {
 	char	*env_path;
 	char	*exec_path;
 
-	if (command && !*command)
+	if (is_empty_command(command))
 		return (NULL);
 	env_path = create_split_src_paths(var, KEY_PATH);
 	exec_path = create_executable_path(env_path, command);
