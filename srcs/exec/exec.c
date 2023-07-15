@@ -43,6 +43,7 @@ static bool	is_node_executable(t_ast *ast_node)
 	return (kind == NODE_KIND_COMMAND || kind == NODE_KIND_SUBSHELL);
 }
 
+// execute_single_builtin() not return t_result
 static t_result	execute_command_internal(t_ast *self_node, t_context *context)
 {
 	t_result	result;
@@ -62,7 +63,7 @@ static t_result	execute_command_internal(t_ast *self_node, t_context *context)
 		return (result);
 	}
 	if (is_single_builtin_command(self_node))
-		execute_single_builtin(self_node, context); // todo: process error?
+		execute_single_builtin(self_node, context);
 	else if (is_node_executable(self_node))
 	{
 		result = exec_command_each(self_node, context);

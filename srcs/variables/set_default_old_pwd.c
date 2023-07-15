@@ -27,7 +27,7 @@ static void	check_and_rm_invalid_oldpwd_path(t_var *var)
 		return ;
 	if (!is_valid_old_pwd_path(dup_path))
 	{
-		var->unset(var, KEY_OLDPWD); //todo: erase t_var_info
+		var->unset(var, KEY_OLDPWD);
 		set_old_pwd_key_only(var);
 	}
 	ft_free(&dup_path);

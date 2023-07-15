@@ -4,12 +4,13 @@
 #include "ft_dprintf.h"
 #include "ft_mem.h"
 
+// for not pur error message, use access. not x_access.
 static bool	is_accessible_command(const char *path)
 {
 	int	ret;
 
 	errno = 0;
-	ret = access(path, X_OK); // todo: x?
+	ret = access(path, X_OK);
 	if (ret != ACCESS_ERROR)
 		return (true);
 	if (errno == EACCES)

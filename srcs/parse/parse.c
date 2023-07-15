@@ -33,7 +33,6 @@ static void	*destroy_tokens_and_ast(t_deque **tokens, \
 	return (NULL);
 }
 
-// todo: return
 // always free tokens
 t_ast	*parse(t_deque **tokens, t_context *context, t_result *result)
 {

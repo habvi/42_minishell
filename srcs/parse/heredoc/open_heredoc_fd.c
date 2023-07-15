@@ -1,30 +1,30 @@
 #include <fcntl.h>
 #include <stdio.h>
+#include "minishell.h"
 #include "ms_parse.h"
-#include "ft_sys.h"
 #include "ft_mem.h"
 
-static int	open_file_dup_errno(const char *file, int *tmp_err)
+static int	open_file_dup_errno(const char *file)
 {
 	int	fd;
 
-	errno = 0;
 	fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, OPEN_PERMISSION);
-	*tmp_err = errno;
+	if (fd == OPEN_ERROR)
+	{
+		perror("open");
+		return (OPEN_ERROR);
+	}
 	return (fd);
 }
 
 t_result	create_filename_and_open_heredoc_fd(int *fd, char **filename)
 {
-	int	tmp_err;
-
 	*filename = create_heredoc_filename();
 	if (!*filename)
 		return (PROCESS_ERROR);
-	*fd = open_file_dup_errno(*filename, &tmp_err);
-	if (tmp_err == ENOMEM)
+	*fd = open_file_dup_errno(*filename);
+	if (*fd == OPEN_ERROR)
 	{
-		perror("open"); // todo: msg
 		ft_free(filename);
 		return (PROCESS_ERROR);
 	}
