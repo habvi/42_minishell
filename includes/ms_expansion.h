@@ -14,7 +14,7 @@
 # define WILDCARD		'*'
 # define ASSIGN_SYMBOL	'='
 
-# define IS_QUOTED		(true)
+# define IS_QUOTED		1
 
 typedef struct s_ast		t_ast;
 typedef struct s_context	t_context;

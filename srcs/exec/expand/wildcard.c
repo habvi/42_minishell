@@ -5,7 +5,7 @@
 #include "ft_dprintf.h"
 #include "ft_string.h"
 
-static bool is_valid_wildcard_in_token(t_token *token)
+static bool	is_valid_wildcard_in_token(t_token *token)
 {
 	size_t		i;
 	const char	*token_str = token->str;
