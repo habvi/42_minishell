@@ -154,7 +154,7 @@ void		puterr_cmd_msg_set_status(const char *const cmd, \
 bool		puterr_msg_quoted_arg_ret_bool(const char *msg, \
 											const char *const arg, \
 											bool ret);
-void		puterr_whom_cmd_arg_msg(const char *for_whom,
+void		puterr_whom_cmd_arg_msg(const char *for_whom, \
 									const char *cmd, \
 									const char *const arg, \
 									const char *msg);

@@ -7,7 +7,6 @@
 #include "ft_string.h"
 #include "ft_mem.h"
 
-// todo: tmp func
 static void	print_err_set_status(const char *arg, \
 									const char *path, \
 									int tmp_err, \
