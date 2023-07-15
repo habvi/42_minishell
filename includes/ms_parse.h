@@ -8,7 +8,7 @@
 # include "ms_tokenize.h"
 
 # define HEREDOC_FILE_PREFIX	".pien_"
-# define OPEN_PERMISSION		"0664"
+# define OPEN_PERMISSION		(0664)
 # define RANDOM_STR_SIZE		50
 
 # define AST_STATUS_SUCCESS		0

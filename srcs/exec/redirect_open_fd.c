@@ -19,7 +19,7 @@ static int	open_redirect_fd(const char *path, \
 	if (open_flag == OPEN_FOR_IN)
 		open_fd = open(path, open_flag);
 	else
-		open_fd = open(path, open_flag, 0664);
+		open_fd = open(path, open_flag, OPEN_PERMISSION);
 	*tmp_err = errno;
 	return (open_fd);
 }
