@@ -8,6 +8,7 @@
 #include "ft_dprintf.h"
 #include "ft_hash.h"
 #include "ft_string.h"
+#include "ft_sys.h"
 #include "ft_mem.h"
 
 // todo: wanted in warning msg
@@ -90,6 +91,7 @@ t_result	execute_heredoc_each(t_redirect *redirect)
 	token = redirect->tokens->node->content;
 	delimiter = token->str; // don't free
 	read_input_save_to_fd(fd, delimiter);
-	close(fd); //todo:error
+	if (x_close(fd) == CLOSE_ERROR)
+		return (PROCESS_ERROR);
 	return (SUCCESS);
 }
