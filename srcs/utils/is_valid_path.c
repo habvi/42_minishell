@@ -39,3 +39,14 @@ bool	is_valid_path(const char *path, int *tmp_err)
 		return (true);
 	return (false);
 }
+
+bool	is_a_directory(const char *path)
+{
+	int	tmp_err;
+
+	if (test_opendir(path, &tmp_err))
+		return (true);
+	if (is_permission_denied(tmp_err))
+		return (true);
+	return (false);
+}
