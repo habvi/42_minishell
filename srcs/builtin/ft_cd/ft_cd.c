@@ -16,7 +16,6 @@ static void	print_err_set_status(const char *arg, \
 	const char	*err_arg;
 	const char	*err_msg;
 
-	*status = CD_ERROR_STATUS;
 	if (!path)
 	{
 		if (!arg || ft_streq(arg, KEY_HOME) || ft_streq(arg, CD_ARG_HOME))
@@ -24,16 +23,14 @@ static void	print_err_set_status(const char *arg, \
 		else
 			err_arg = KEY_OLDPWD;
 		err_msg = ERROR_MSG_NOT_SET;
-		ft_dprintf(STDERR_FILENO, "%s: %s: %s %s\n", \
-				SHELL_NAME, CMD_CD, err_arg, err_msg);
 	}
 	else
 	{
 		err_arg = path;
 		err_msg = strerror(tmp_err);
-		ft_dprintf(STDERR_FILENO, "%s: %s: %s: %s\n", \
-				SHELL_NAME, CMD_CD, err_arg, err_msg);
 	}
+	puterr_cmd_arg_msg(CMD_CD, err_arg, err_msg);
+	*status = CD_ERROR_STATUS;
 }
 
 static bool	is_valid_cd_path(const char *path, int *tmp_err)
@@ -73,6 +70,7 @@ static void	change_directory(const char *arg, \
 	if (result == FAILURE)
 	{
 		ft_dprintf(2, "cd: fail to chdir\n"); // todo: tmp, status...?
+
 		ft_free(&absolute_path);
 		return ;
 	}
@@ -94,7 +92,7 @@ uint8_t	ft_cd(const char *const *argv, t_context *context)
 	if (args > 1)
 	{
 		status = TOO_MANY_ARG_STATUS;
-		// print_error(); // todo
+		puterr_cmd_msg(CMD_CD, ERROR_MSG_TOO_MANY_ARG);
 		return (status);
 	}
 	change_directory(argv[i], context, &status);
