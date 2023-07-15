@@ -3,6 +3,7 @@
 
 # include <stdbool.h>
 # include <stddef.h>
+# include <dirent.h>
 # include "ms_result.h"
 
 # define CHAR_DOLLAR	'$'
@@ -38,6 +39,9 @@ bool		is_pattern_match_target_path(const char *match_str, \
 											const size_t len_match, \
 											const char *target_path, \
 											const bool *is_quoted_arr);
+t_result	open_current_directory(DIR **dirp);
+t_result	get_next_dirp_in_current(DIR *dirp, struct dirent **dirent);
+t_result	close_current_directory(DIR *dirp);
 void		sort_filenames(t_deque *tokens);
 t_result	expand_for_heredoc(t_redirect *redirect, t_context *context);
 t_result	expand_variables_in_heredoc(t_redirect *redirect, \

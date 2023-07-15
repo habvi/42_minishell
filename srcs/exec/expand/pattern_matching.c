@@ -1,5 +1,4 @@
 #include <errno.h>
-#include <dirent.h>
 #include <sys/types.h>
 #include "minishell.h"
 #include "ms_expansion.h"
@@ -8,20 +7,6 @@
 #include "ft_deque.h"
 #include "ft_string.h"
 #include "ft_sys.h"
-
-// error: only EBADF. just return NULL and go to next.
-static t_result	get_next_dirp_in_current(DIR *dirp, struct dirent **dirent)
-{
-	errno = 0;
-	*dirent = x_readdir(dirp);
-	if (!*dirent)
-	{
-		if (errno)
-			return (PROCESS_ERROR);
-		return (BREAK);
-	}
-	return (CONTINUE);
-}
 
 bool	is_hidden_file(const char *str)
 {
@@ -48,28 +33,6 @@ static void	add_pattern_matched_filename_each(const char *token_str, \
 		new_node = create_token_node(dup_filename, CHR_NULL);
 		deque_add_back(matched_filenames, new_node);
 	}
-}
-
-// not use x_opendir because not all error return PROCESS_ERROR.
-t_result	open_current_directory(DIR **dirp)
-{
-	errno = 0;
-	*dirp = opendir(CURRENT_DIR);
-	if (!*dirp)
-	{
-		if (errno == EACCES || errno == ENOENT || errno == ENOTDIR)
-			return (CONTINUE);
-		perror("opendir");
-		return (PROCESS_ERROR);
-	}
-	return (SUCCESS);
-}
-
-t_result	close_current_directory(DIR *dirp)
-{
-	if (x_closedir(dirp) == CLOSEDIR_ERROR)
-		return (PROCESS_ERROR);
-	return (SUCCESS);
 }
 
 static t_result	add_pattern_matched_files(const char *token_str, \

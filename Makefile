@@ -84,6 +84,7 @@ SRCS		+=	$(ERROR_DIR)/error_msg_1.c \
 EXEC_DIR	:=	exec
 EXPAND_DIR	:=	expand
 SRCS		+=	$(EXEC_DIR)/$(EXPAND_DIR)/concat_tokens.c  \
+				$(EXEC_DIR)/$(EXPAND_DIR)/dirp.c\
 				$(EXEC_DIR)/$(EXPAND_DIR)/expand_for_heredoc.c\
 				$(EXEC_DIR)/$(EXPAND_DIR)/expand_parameter.c\
 				$(EXEC_DIR)/$(EXPAND_DIR)/expand_var_in_heredoc.c\
