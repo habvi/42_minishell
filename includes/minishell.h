@@ -35,9 +35,8 @@
 // tokenize and parse
 # define SYNTAX_ERROR				2
 # define ERROR_MSG_SYNTAX			"syntax error near unexpected token"
-# define ERROR_SYNTAX_DEFAULT_ARG	"newline"
+# define SYNTAX_DEFAULT_ARG			"newline"
 # define ERROR_TYPE_WARNING			"warning"
-# define ERROR_MSG_WARNING			"warning"
 # define ERROR_MSG_HEREDOC_EOF		"here-document delimited by end-of-file"
 
 /* size */

@@ -30,8 +30,7 @@ bool	is_closed_quote_all(t_deque_node *node)
 		token = (t_token *)node->content;
 		if (!is_closed_quote_each_token(token->str))
 		{
-			ft_dprintf(STDERR_FILENO, "quote error[%s] %s\n", \
-			token->str, ERROR_MSG_SYNTAX); // todo: print
+			puterr_msg_quoted_arg(ERROR_MSG_SYNTAX, SYNTAX_DEFAULT_ARG);
 			return (false);
 		}
 		node = node->next;

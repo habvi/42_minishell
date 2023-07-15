@@ -21,9 +21,7 @@ static void	read_input_save_to_fd(int fd, const char *delimiter)
 		line = readline(HEREDOC_PROMPT);
 		if (!line)
 		{
-			ft_dprintf(STDERR_FILENO, \
-			"%s: %s: %s (wanted `%s')\n", \
-			SHELL_NAME, ERROR_TYPE_WARNING, ERROR_MSG_HEREDOC_EOF, delimiter);
+			puterr_heredoc_wanted_eof(delimiter);
 			break ;
 		}
 		if (ft_streq(line, delimiter))
