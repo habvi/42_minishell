@@ -10,16 +10,16 @@ static bool	is_parenthesis_concatenated(t_token *token)
 	return (false);
 }
 
-bool	is_parenthesis_concatenated_all(t_deque_node *node)
+bool	is_parenthesis_concatenated_all(t_deque_node **node)
 {
 	t_token	*token;
 
-	while (node)
+	while (*node)
 	{
-		token = (t_token *)node->content;
+		token = (t_token *)(*node)->content;
 		if (is_parenthesis_concatenated(token))
 			return (false);
-		node = node->next;
+		*node = (*node)->next;
 	}
 	return (true);
 }
