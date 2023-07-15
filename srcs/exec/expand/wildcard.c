@@ -38,6 +38,7 @@ static void	create_matched_tokens_each(t_deque_node *node, \
 			transfer_deque_node_all(matched_tokens, tmp_matched_tokens);
 			deque_clear_node(&node, del_token);
 		}
+		deque_add_back(matched_tokens, node);
 		deque_clear_all(&tmp_matched_tokens, del_token); // remain only head
 		return ;
 	}
