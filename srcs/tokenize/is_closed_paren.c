@@ -14,12 +14,6 @@ static bool	is_valid_paren_each_token(const t_token_kind kind, \
 	return (*left >= *right);
 }
 
-static bool	print_error_msg_return_false(void)
-{
-	ft_dprintf(STDERR_FILENO, "%s\n", "tokenize paren error"); // todo: print
-	return (false);
-}
-
 // if error, status set tokanize().
 bool	is_valid_paren_pair_all(t_deque_node *node)
 {
@@ -38,10 +32,12 @@ bool	is_valid_paren_pair_all(t_deque_node *node)
 			continue ;
 		}
 		if (!is_valid_paren_each_token(token->kind, &left, &right))
-			return (print_error_msg_return_false());
+			return (puterr_msg_quoted_arg_ret_bool(\
+				ERROR_MSG_SYNTAX, token->str, false));
 		node = node->next;
 	}
 	if (left != right)
-		return (print_error_msg_return_false());
+		return (puterr_msg_quoted_arg_ret_bool(\
+			ERROR_MSG_SYNTAX, SYNTAX_DEFAULT_ARG, false));
 	return (true);
 }

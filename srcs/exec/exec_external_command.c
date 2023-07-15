@@ -15,20 +15,6 @@ static uint8_t	set_execve_status(int tmp_err)
 	return (1);// todo:tmp
 }
 
-static void	error_cmd_not_found(char *const cmd, t_context *context)
-{
-	context->status = STATUS_CMD_NOT_FOUND;
-	ft_dprintf(STDERR_FILENO, "%s: %s: %s\n", \
-					SHELL_NAME, cmd, ERROR_MSG_CMD_NOT_FOUND);
-}
-
-static void	error_execve(char *const cmd, int tmp_err, t_context *context)
-{
-	context->status = set_execve_status(tmp_err);
-	ft_dprintf(STDERR_FILENO, "%s: %s: %s\n", \
-					SHELL_NAME, cmd, strerror(tmp_err));
-}
-
 uint8_t	execute_external_command(char *const *argv, t_context *context)
 {
 	char	*exec_path;
@@ -41,14 +27,16 @@ uint8_t	execute_external_command(char *const *argv, t_context *context)
 	exec_path = create_exec_path((const char *const *)argv, var);
 	if (!exec_path)
 	{
-		error_cmd_not_found(argv[0], context);
+		puterr_cmd_msg_set_status(\
+		argv[0], ERROR_MSG_CMD_NOT_FOUND, context, STATUS_CMD_NOT_FOUND);
 		ft_free(&exec_path);
 		return (context->status);
 	}
 	envp = var->convert_to_envp(var);
 	errno = 0;
 	if (execve(exec_path, (char *const *)argv, envp) == EXECVE_ERROR)
-		error_execve(argv[0], errno, context);
+		puterr_cmd_msg_set_status(\
+		argv[0], strerror(errno), context, set_execve_status(errno));
 	ft_free(&exec_path);
 	free_2d_array(&envp);
 	return (context->status);

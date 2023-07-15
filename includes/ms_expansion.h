@@ -36,5 +36,7 @@ bool		is_pattern_match_target_path(const char *match_str, \
 											const bool *is_quoted_arr);
 void		sort_filenames(t_deque *tokens);
 t_result	expand_for_heredoc(t_redirect *redirect, t_context *context);
+t_result	expand_variables_in_heredoc(t_redirect *redirect, \
+										t_context *context);
 
 #endif //MS_EXPANSION_H

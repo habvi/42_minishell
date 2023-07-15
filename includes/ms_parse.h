@@ -8,7 +8,7 @@
 # include "ms_tokenize.h"
 
 # define HEREDOC_FILE_PREFIX	".pien_"
-# define OPEN_PERMISSION		"0664"
+# define OPEN_PERMISSION		(0664)
 # define RANDOM_STR_SIZE		50
 
 # define AST_STATUS_SUCCESS		0
@@ -56,8 +56,8 @@ t_ast		*parse(t_deque **tokens, t_context *context, t_result *result);
 bool		is_valid_pre_parse_syntax(t_deque *tokens, \
 										t_context *context, \
 										t_result *result);
-bool		is_parenthesis_concatenated_all(t_deque_node *node);
-bool		is_valid_redirect_syntax_all(t_deque_node *node);
+bool		is_parenthesis_concatenated_all(t_deque_node **node);
+bool		is_valid_redirect_syntax_all(t_deque_node **node);
 
 /* ast */
 t_ast		*create_operator_list_node(t_deque_node **token_node, \

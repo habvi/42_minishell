@@ -8,6 +8,7 @@
 #include "ft_dprintf.h"
 #include "ft_hash.h"
 #include "ft_string.h"
+#include "ft_sys.h"
 #include "ft_mem.h"
 
 // todo: wanted in warning msg
@@ -21,9 +22,7 @@ static void	read_input_save_to_fd(int fd, const char *delimiter)
 		line = readline(HEREDOC_PROMPT);
 		if (!line)
 		{
-			ft_dprintf(STDERR_FILENO, \
-			"%s: %s: %s (wanted `%s')\n", \
-			SHELL_NAME, ERROR_TYPE_WARNING, ERROR_MSG_HEREDOC_EOF, delimiter);
+			puterr_heredoc_wanted_eof(delimiter);
 			break ;
 		}
 		if (ft_streq(line, delimiter))
@@ -90,6 +89,7 @@ t_result	execute_heredoc_each(t_redirect *redirect)
 	token = redirect->tokens->node->content;
 	delimiter = token->str; // don't free
 	read_input_save_to_fd(fd, delimiter);
-	close(fd); //todo:error
+	if (x_close(fd) == CLOSE_ERROR)
+		return (PROCESS_ERROR);
 	return (SUCCESS);
 }

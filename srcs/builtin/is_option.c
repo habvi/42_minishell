@@ -56,10 +56,7 @@ bool	is_valid_option(const char *const *argv, uint8_t *status, size_t *i)
 	if (is_option(argv[*i], CMD_OPTION_MARKER))
 	{
 		*status = INVALID_OPTION;
-		// print_error(cmd_name, message); // todo
-		ft_dprintf(STDERR_FILENO, "%s: %s: %c%c: %s\n", SHELL_NAME, \
-					argv[0], CMD_OPTION_MARKER, argv[*i][1], \
-					ERROR_MSG_INVALID_OP);
+		puterr_arg_op_msg(argv[0], argv[*i][1]);
 		return (false);
 	}
 	if (is_end_of_option(argv[*i]))
