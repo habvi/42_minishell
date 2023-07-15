@@ -17,7 +17,7 @@ static t_result	exec_redirect_each(t_redirect *redirect, int proc_fd[2])
 
 	if (is_ambiguous_redirect(redirect))
 	{
-		ft_dprintf(2, "error: ambiguous redirect\n");
+		puterr_cmd_msg("tmp", ERROR_MSG_AMBIGUOUS_REDIRECT); // todo: origin arg
 		return (FAILURE);
 	}
 	result = open_redirect_fd_and_save_to_proc(redirect, proc_fd);
