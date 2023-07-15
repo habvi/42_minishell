@@ -5,6 +5,7 @@
 # include <stddef.h>
 # include <stdint.h>
 # include "ms_result.h"
+# include "ms_builtin.h"
 
 /* declare */
 # define DECLARE		"declare"
@@ -70,6 +71,10 @@ void		var_declare_all(const char *const *args, \
 t_result	var_declare_arg(const char *const arg, t_var *var, t_var_attr attr);
 t_var_info	*var_create_var_info_by_value_attr(const char *value, \
 												t_var_attr attr);
+t_result	var_separate_key_value_op(const char *const arg, \
+										char **key, \
+										char **value, \
+										t_env_op *op);
 char		*dup_var_key(const char *const arg, size_t *len);
 char		*dup_var_value(const char *const arg);
 
