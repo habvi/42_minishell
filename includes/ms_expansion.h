@@ -13,13 +13,17 @@
 # define HIDDEN_FILE	'.'
 # define WILDCARD		'*'
 
+# define ERROR_MSG_AMBIGUOUS		"ambiguous redirect"
+# define STATUS_REDIRECT_FAILURE	1
+
 typedef struct s_ast		t_ast;
 typedef struct s_context	t_context;
 typedef struct s_deque		t_deque;
 typedef struct s_redirect	t_redirect;
 typedef struct s_token		t_token;
 
-t_result	expand_variables(t_ast *self_node, t_context *context);
+void		expand_variable_of_cmd_tokens(t_ast *self_node, t_context *context);
+void		expand_processing(t_deque **tokens, t_context *context);
 char		*get_expand_token_str(char *str, t_context *context);
 char		*substr_before_dollar(char **str);
 void		remove_empty_tokens(t_deque *tokens);

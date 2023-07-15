@@ -247,6 +247,7 @@ t		: all
 # test all
 .PHONY		: test_all
 test_all	: all
+	$(shell rm ko_case_*.txt)
 	python3 ./test/integration_test/run_all.py
 
 # test multi pipe
