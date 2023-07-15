@@ -15,8 +15,11 @@
 # define NO_OPTION		0
 
 # define STATUS_PERMISSION			126
+# define STATUS_IS_A_DIRECTORY		126
+# define STATUS_NOT_A_DIRECTORY		126
 # define STATUS_NO_SUCH_FILE		127
 # define STATUS_CMD_NOT_FOUND		127
+# define REDIRECT_ONLY_SUCCESS		0
 
 # define ERROR_MSG_NO_SUCH_FILE		"No such file or directory"
 # define ERROR_MSG_CMD_NOT_FOUND	"command not found"
