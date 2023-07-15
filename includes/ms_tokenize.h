@@ -21,6 +21,7 @@
 
 # define SINGLE_QUOTE_CHR	'\''
 # define DOUBLE_QUOTE_CHR	'\"'
+# define AND_CHR			'&'
 
 typedef struct s_deque		t_deque;
 typedef struct s_deque_node	t_deque_node;
