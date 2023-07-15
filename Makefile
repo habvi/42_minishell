@@ -21,7 +21,8 @@ endif
 MKDIR		:=	mkdir -p
 
 SRCS_DIR	:=	srcs
-SRCS		:=	destroy.c \
+SRCS		:=	analyze_minishell_option.c \
+				destroy.c \
 				init.c \
 				main.c \
 				repl.c
