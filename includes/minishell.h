@@ -33,6 +33,7 @@
 # define SPACE					' '
 
 # define OPTION_FORCED_INTERACTIVE	'i'
+# define INVALID_OPTION				2
 
 /* status */
 // tokenize and parse

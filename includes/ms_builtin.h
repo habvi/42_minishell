@@ -46,7 +46,6 @@
 # define TOO_MANY_ARG_STATUS	1
 
 # define NOT_A_VALID_IDENTIFIER	1
-# define INVALID_OPTION			2
 
 # define CD_ERROR_STATUS		1
 
