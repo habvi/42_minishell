@@ -13,9 +13,9 @@ static void	set_context_initial_value(t_context *context)
 }
 
 // If an error occurs, will not exit.
-static bool	set_is_interactive(bool is_is_forced_interactive)
+static bool	set_is_interactive(bool is_forced_interactive)
 {
-	if (is_is_forced_interactive)
+	if (is_forced_interactive)
 		return (true);
 	return (isatty(STDIN_FILENO) && isatty(STDOUT_FILENO));
 }

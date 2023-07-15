@@ -18,9 +18,7 @@ static void	skip_while_valid_option(char ***argv, bool *is_forced_interactive)
 	}
 }
 
-t_result	analyze_option(int argc, \
-								char **argv, \
-								bool *is_forced_interactive)
+t_result	analyze_option(int argc, char **argv, bool *is_forced_interactive)
 {
 	*is_forced_interactive = false;
 	if (argc == 1)
