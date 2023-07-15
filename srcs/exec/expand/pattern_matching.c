@@ -7,16 +7,17 @@
 #include "ms_result.h"
 #include "ft_deque.h"
 #include "ft_string.h"
+#include "ft_sys.h"
 
 // error: only EBADF. just return NULL and go to next.
 static t_result	get_next_dirp_in_current(DIR *dirp, struct dirent **dirent)
 {
 	errno = 0;
-	*dirent = readdir(dirp);
+	*dirent = x_readdir(dirp);
 	if (!*dirent)
 	{
 		if (errno)
-			return (PROCESS_ERROR); // todo: print error
+			return (PROCESS_ERROR);
 		return (BREAK);
 	}
 	return (CONTINUE);
@@ -49,6 +50,28 @@ static void	add_pattern_matched_filename_each(const char *token_str, \
 	}
 }
 
+// not use x_opendir because not all error return PROCESS_ERROR.
+t_result	open_current_directory(DIR **dirp)
+{
+	errno = 0;
+	*dirp = opendir(CURRENT_DIR);
+	if (!*dirp)
+	{
+		if (errno == EACCES || errno == ENOENT || errno == ENOTDIR)
+			return (CONTINUE);
+		perror("opendir");
+		return (PROCESS_ERROR);
+	}
+	return (SUCCESS);
+}
+
+t_result	close_current_directory(DIR *dirp)
+{
+	if (x_closedir(dirp) == CLOSEDIR_ERROR)
+		return (PROCESS_ERROR);
+	return (SUCCESS);
+}
+
 static t_result	add_pattern_matched_files(const char *token_str, \
 										const bool *is_quoted_arr, \
 										t_deque *matched_filenames)
@@ -57,14 +80,13 @@ static t_result	add_pattern_matched_files(const char *token_str, \
 	struct dirent	*dirent;
 	t_result		result;
 
-	// continue: EACCES,ENOENT,ENOTDIR. other : return PROCRSS_ERROR exit
-	dirp = opendir(CURRENT_DIR);
-	if (!dirp) // todo: error
+	result = open_current_directory(&dirp);
+	if (result == PROCESS_ERROR)
 		return (PROCESS_ERROR);
 	while (true)
 	{
 		result = get_next_dirp_in_current(dirp, &dirent);
-		if (result == PROCESS_ERROR) // return PROCRSS_ERROR exit minishell
+		if (result == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 		if (result == BREAK)
 			break ;
@@ -73,7 +95,7 @@ static t_result	add_pattern_matched_files(const char *token_str, \
 		add_pattern_matched_filename_each(\
 				token_str, dirent->d_name, is_quoted_arr, matched_filenames);
 	}
-	result = closedir(dirp); // todo: return PROCRSS_ERROR exit minishell
+	result = close_current_directory(dirp);
 	return (result);
 }
 
