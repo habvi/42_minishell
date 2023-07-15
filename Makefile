@@ -94,6 +94,7 @@ SRCS		+=	$(EXEC_DIR)/$(EXPAND_DIR)/concat_tokens.c  \
 				$(EXEC_DIR)/$(EXPAND_DIR)/sort_filenames.c  \
 				$(EXEC_DIR)/$(EXPAND_DIR)/split_expand_word.c  \
 				$(EXEC_DIR)/$(EXPAND_DIR)/substr_before_dollar.c  \
+				$(EXEC_DIR)/$(EXPAND_DIR)/update_is_quoted_arr_for_wildcard.c  \
 				$(EXEC_DIR)/$(EXPAND_DIR)/wildcard.c  \
 				$(EXEC_DIR)/$(EXPAND_DIR)/word_split.c  \
 				$(EXEC_DIR)/call_builtin_command.c \

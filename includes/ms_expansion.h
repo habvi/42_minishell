@@ -12,6 +12,9 @@
 # define CURRENT_DIR	"."
 # define HIDDEN_FILE	'.'
 # define WILDCARD		'*'
+# define ASSIGN_SYMBOL	'='
+
+# define IS_QUOTED		(true)
 
 typedef struct s_ast		t_ast;
 typedef struct s_context	t_context;
@@ -38,5 +41,6 @@ void		sort_filenames(t_deque *tokens);
 t_result	expand_for_heredoc(t_redirect *redirect, t_context *context);
 t_result	expand_variables_in_heredoc(t_redirect *redirect, \
 										t_context *context);
+void		update_is_quoted_arr_for_wildcard(t_deque *tokens);
 
 #endif //MS_EXPANSION_H
