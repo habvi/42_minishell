@@ -19,13 +19,18 @@ static bool	is_empty_command(const char *const command)
 	return (command && !*command);
 }
 
+static bool	is_command_dot(const char *const command)
+{
+	return (ft_streq(PATH_DOT, command) || ft_streq(PATH_DOT_DOT, command));
+}
+
 // access(PATH[i] + "/" " command)
 static char	*search_command_path(const char *const command, t_var *var)
 {
 	char	*env_path;
 	char	*exec_path;
 
-	if (is_empty_command(command))
+	if (is_empty_command(command) || is_command_dot(command))
 		return (NULL);
 	env_path = create_split_src_paths(var, KEY_PATH);
 	exec_path = create_executable_path(env_path, command);
