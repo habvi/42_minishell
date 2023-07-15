@@ -47,9 +47,6 @@ static t_result	execute_command_internal(t_ast *self_node, t_context *context)
 {
 	t_result	result;
 
-
-	if (copy_stdio_fd(&stdin_copy, &stdout_copy) == PROCESS_ERROR)
-		return (PROCESS_ERROR);
 	if (expand_variables(self_node, context) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
 	result = redirect_fd(self_node, context);
