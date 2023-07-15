@@ -51,7 +51,16 @@ static t_result	execute_command_internal(t_ast *self_node, t_context *context)
 		return (PROCESS_ERROR);
 	result = redirect_fd(self_node, context);
 	if ((result == PROCESS_ERROR) || (result == FAILURE))
+	{
+		if (self_node->prev_fd != IN_FD_INIT)
+		{
+			if (x_close(self_node->prev_fd) == CLOSE_ERROR)
+				return (PROCESS_ERROR);
+		}
+		if (self_node->parent)
+			self_node->parent->prev_fd = IN_FD_INIT;
 		return (result);
+	}
 	if (is_single_builtin_command(self_node))
 		execute_single_builtin(self_node, context); // todo: process error?
 	else if (is_node_executable(self_node))
