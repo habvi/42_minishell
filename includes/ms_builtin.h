@@ -104,7 +104,7 @@ bool		is_whitespace(char c);
 // cd
 char		*cd_set_path(const char *arg, t_var *var, bool *is_print_path);
 t_result	cd_change_dir_to_valid_path(const char *absolute_path, \
-										uint8_t *status);
+										int *tmp_err);
 void		cd_update_pwd(char *path, t_context *context);
 // canonicalize
 char		*cd_canonicalize_path(const char *path, const char *internal_pwd);

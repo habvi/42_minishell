@@ -7,13 +7,13 @@ SRCS		=	test_exit.c \
 				./../../../srcs/builtin/ft_exit.c \
 				./../../../srcs/builtin/str_to_legal_number.c \
 				./../../../srcs/utils/count_array.c \
-				./../../../srcs/error/error_msg.c
+				./../../../srcs/error/error_msg_1.c
 
 OBJS		=	test_exit.o \
 				ft_exit.o \
 				str_to_legal_number.o \
 				count_array.o \
-				error_msg.o
+				error_msg_1.o
 
 
 LIBFT_DIR	=	./../../../libft

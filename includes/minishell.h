@@ -141,10 +141,12 @@ void		puterr_cmd_msg(const char *const arg, const char *msg);
 void		puterr_cmd_arg_msg(const char *cmd, \
 								const char *const arg, \
 								const char *msg);
+void		puterr_cmd_arg_msg_wo_colon(const char *cmd, \
+										const char *const arg, \
+										const char *msg);
 void		puterr_msg_quoted_arg(const char *msg, const char *const arg);
 void		puterr_arg_op_msg(const char *const arg, const char op);
 void		puterr_heredoc_wanted_eof(const char *delimiter);
-
 void		puterr_cmd_msg_set_status(const char *const cmd, \
 										const char *msg, \
 										t_context *context, \

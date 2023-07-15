@@ -14,7 +14,6 @@ static void	print_err_set_status(const char *arg, \
 									uint8_t *status)
 {
 	const char	*err_arg;
-	const char	*err_msg;
 
 	if (!path)
 	{
@@ -22,14 +21,10 @@ static void	print_err_set_status(const char *arg, \
 			err_arg = KEY_HOME;
 		else
 			err_arg = KEY_OLDPWD;
-		err_msg = ERROR_MSG_NOT_SET;
+		puterr_cmd_arg_msg_wo_colon(CMD_CD, err_arg, ERROR_MSG_NOT_SET);
 	}
 	else
-	{
-		err_arg = path;
-		err_msg = strerror(tmp_err);
-	}
-	puterr_cmd_arg_msg(CMD_CD, err_arg, err_msg);
+		puterr_cmd_arg_msg(CMD_CD, path, strerror(tmp_err));
 	*status = CD_ERROR_STATUS;
 }
 
@@ -51,11 +46,10 @@ static void	change_directory(const char *arg, \
 								t_context *context, \
 								uint8_t *status)
 {
-	char		*path;
-	int			tmp_err;
-	char		*absolute_path;
-	t_result	result;
-	bool		is_print_path;
+	char	*path;
+	int		tmp_err;
+	char	*absolute_path;
+	bool	is_print_path;
 
 	path = cd_set_path(arg, context->var, &is_print_path);
 	if (!is_valid_cd_path(path, &tmp_err))
@@ -66,11 +60,10 @@ static void	change_directory(const char *arg, \
 	}
 	absolute_path = cd_canonicalize_path(path, context->internal_pwd);
 	ft_free(&path);
-	result = cd_change_dir_to_valid_path(absolute_path, status);
-	if (result == FAILURE)
+	if (cd_change_dir_to_valid_path(absolute_path, &tmp_err) == FAILURE)
 	{
-		ft_dprintf(2, "cd: fail to chdir\n"); // todo: tmp, status...?
-
+		puterr_cmd_arg_msg(CMD_CD, arg, strerror(tmp_err));
+		*status = CD_ERROR_STATUS;
 		ft_free(&absolute_path);
 		return ;
 	}
