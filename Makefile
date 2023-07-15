@@ -75,11 +75,18 @@ SRCS		+=	$(DEBUG_DIR)/debug_print_ast.c \
 				$(DEBUG_DIR)/debug_token_dq_sub.c \
 				$(DEBUG_DIR)/put.c
 
+ERROR_DIR	:=	error
+SRCS		+=	$(ERROR_DIR)/error_msg_1.c \
+				$(ERROR_DIR)/error_msg_2.c \
+				$(ERROR_DIR)/error_msg_ret.c \
+				$(ERROR_DIR)/error_msg_set_status.c
+
 EXEC_DIR	:=	exec
 EXPAND_DIR	:=	expand
 SRCS		+=	$(EXEC_DIR)/$(EXPAND_DIR)/concat_tokens.c  \
 				$(EXEC_DIR)/$(EXPAND_DIR)/expand_for_heredoc.c\
 				$(EXEC_DIR)/$(EXPAND_DIR)/expand_parameter.c\
+				$(EXEC_DIR)/$(EXPAND_DIR)/expand_var_in_heredoc.c\
 				$(EXEC_DIR)/$(EXPAND_DIR)/expansion.c  \
 				$(EXEC_DIR)/$(EXPAND_DIR)/is_pattern_match.c  \
 				$(EXEC_DIR)/$(EXPAND_DIR)/pattern_matching.c  \
@@ -296,5 +303,10 @@ test_mix	: all
 .PHONY		: test_redirects
 test_redirects	: all
 	python3 ./test/integration_test/run_redirects.py
+
+# test error
+.PHONY		: test_error
+test_error	: all
+	python3 ./test/integration_test/run_error.py
 
 -include $(DEPS)

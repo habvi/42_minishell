@@ -20,6 +20,7 @@
 # define PIPE_ERROR		(-1)
 # define READ_ERROR		(-1)
 # define WAIT_ERROR		(-1)
+# define UNLINK_ERROR	(-1)
 # define UNREACHABLE	(-1)
 
 # define STR_PATH_DELIMITER		":"
@@ -35,9 +36,8 @@
 // tokenize and parse
 # define SYNTAX_ERROR				2
 # define ERROR_MSG_SYNTAX			"syntax error near unexpected token"
-# define ERROR_SYNTAX_DEFAULT_ARG	"newline"
+# define SYNTAX_DEFAULT_ARG			"newline"
 # define ERROR_TYPE_WARNING			"warning"
-# define ERROR_MSG_WARNING			"warning"
 # define ERROR_MSG_HEREDOC_EOF		"here-document delimited by end-of-file"
 
 /* size */
@@ -136,4 +136,22 @@ char		*create_valid_path_by_judge(char *paths, \
 										const char *const arg, \
 										bool (*judge)(const char *path));
 
+/* error msg */
+void		puterr_cmd_msg(const char *const arg, const char *msg);
+void		puterr_cmd_arg_msg(const char *cmd, \
+								const char *const arg, \
+								const char *msg);
+void		puterr_cmd_arg_msg_wo_colon(const char *cmd, \
+										const char *const arg, \
+										const char *msg);
+void		puterr_msg_quoted_arg(const char *msg, const char *const arg);
+void		puterr_arg_op_msg(const char *const arg, const char op);
+void		puterr_heredoc_wanted_eof(const char *delimiter);
+void		puterr_cmd_msg_set_status(const char *const cmd, \
+										const char *msg, \
+										t_context *context, \
+										uint8_t status);
+bool		puterr_msg_quoted_arg_ret_bool(const char *msg, \
+											const char *const arg, \
+											bool ret);
 #endif //MINISHELL_H

@@ -46,16 +46,21 @@ static bool	is_node_executable(t_ast *ast_node)
 static t_result	execute_command_internal(t_ast *self_node, t_context *context)
 {
 	t_result	result;
-	int			stdin_copy;
-	int			stdout_copy;
 
-	result = copy_stdio_fd(&stdin_copy, &stdout_copy);
-	if (result == PROCESS_ERROR)
+	if (expand_variables(self_node, context) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
-	expand_variables(self_node, context);
 	result = redirect_fd(self_node, context);
 	if ((result == PROCESS_ERROR) || (result == FAILURE))
+	{
+		if (self_node->prev_fd != IN_FD_INIT)
+		{
+			if (x_close(self_node->prev_fd) == CLOSE_ERROR)
+				return (PROCESS_ERROR);
+		}
+		if (self_node->parent)
+			self_node->parent->prev_fd = IN_FD_INIT;
 		return (result);
+	}
 	if (is_single_builtin_command(self_node))
 		execute_single_builtin(self_node, context); // todo: process error?
 	else if (is_node_executable(self_node))
@@ -64,21 +69,25 @@ static t_result	execute_command_internal(t_ast *self_node, t_context *context)
 		if (result == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 	}
-	result = restore_stdio_fd(stdin_copy, stdout_copy);
-	if (result == PROCESS_ERROR)
-		return (PROCESS_ERROR);
 	return (SUCCESS);
 }
 
 t_result	execute_command(t_ast *self_node, t_context *context)
 {
+	t_result	result;
+	int			stdin_copy;
+	int			stdout_copy;
+
 	if (!self_node)
 		return (SUCCESS);
 	if (exec_handle_left_node(self_node, context) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
 	if (exec_handle_right_node(self_node, context) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
-	if (execute_command_internal(self_node, context) == PROCESS_ERROR)
+	if (copy_stdio_fd(&stdin_copy, &stdout_copy) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
-	return (SUCCESS);
+	result = execute_command_internal(self_node, context);
+	if (restore_stdio_fd(stdin_copy, stdout_copy) == PROCESS_ERROR)
+		return (PROCESS_ERROR);
+	return (result);
 }
