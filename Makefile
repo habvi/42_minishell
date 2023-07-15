@@ -302,4 +302,9 @@ test_mix	: all
 test_redirects	: all
 	python3 ./test/integration_test/run_redirects.py
 
+# test error
+.PHONY		: test_error
+test_error	: all
+	python3 ./test/integration_test/run_error.py
+
 -include $(DEPS)

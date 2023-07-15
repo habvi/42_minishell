@@ -3,6 +3,7 @@ import glob
 import run_builtin
 import run_pipe
 import run_op
+import run_error
 
 
 BLUE = "\x1b[34m"
@@ -38,6 +39,9 @@ def main():
 
     print_test_title("OPERATION")
     test_res |= run_op.main()
+
+    print_test_title("ERROR")
+    test_res |= run_error.main()
 
     print_ng_cases(test_res)
 
