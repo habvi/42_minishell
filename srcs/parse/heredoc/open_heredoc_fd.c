@@ -12,7 +12,7 @@ static int	open_file_dup_errno(const char *file)
 	if (fd == OPEN_ERROR)
 	{
 		perror("open");
-		return (PROCESS_ERROR);
+		return (OPEN_ERROR);
 	}
 	return (fd);
 }
