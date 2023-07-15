@@ -6,6 +6,7 @@
 #include "ms_var.h"
 #include "ft_deque.h"
 #include "ft_mem.h"
+#include "ft_sys.h"
 
 static bool	is_expand_in_heredoc(t_redirect *redirect)
 {
@@ -41,6 +42,44 @@ static t_result	expand_and_transfer_heredoc(int raw_fd, \
 	return (result);
 }
 
+static t_result	open_heredoc_fds(int *raw_fd, \
+									int *expand_fd, \
+									const char *raw_filename, \
+									char **new_filename)
+{
+	t_result	result;
+
+	*raw_fd = x_open(raw_filename, O_RDONLY);
+	if (*raw_fd == OPEN_ERROR)
+		return (PROCESS_ERROR);
+	result = create_filename_and_open_heredoc_fd(expand_fd, new_filename);
+	return (result);
+}
+
+// todo: close(fd) fail, unlink(file)...?
+static t_result	clear_expand_in_heredoc(int raw_fd, int expand_fd, char *filename, char **new_filename)
+{
+	if (x_close(raw_fd) == CLOSE_ERROR)
+	{
+		x_close(expand_fd);
+		x_unlink(filename);
+		x_unlink(*new_filename);
+		return (PROCESS_ERROR);
+	}
+	if (x_close(expand_fd) == CLOSE_ERROR)
+	{
+		ft_free(new_filename);
+		return (PROCESS_ERROR);
+	}
+	if (x_unlink(filename) == UNLINK_ERROR)
+	{
+		ft_free(new_filename);
+		return (PROCESS_ERROR);
+	}
+	ft_free(new_filename);
+	return (SUCCESS);
+}
+
 static t_result	expand_variables_in_heredoc(t_redirect *redirect, \
 											t_context *context)
 {
@@ -49,20 +88,15 @@ static t_result	expand_variables_in_heredoc(t_redirect *redirect, \
 	char		*new_filename;
 	t_result	result;
 
-	result = SUCCESS;
-	raw_fd = open(redirect->heredoc_filename, O_RDONLY);
-	if (raw_fd == OPEN_ERROR)
-		return (PROCESS_ERROR); // todo: error?
-	result = create_filename_and_open_heredoc_fd(&expand_fd, &new_filename);
+	result = open_heredoc_fds(&raw_fd, &expand_fd, redirect->heredoc_filename, &new_filename);
 	if (result == PROCESS_ERROR)
-		return (PROCESS_ERROR); // todo: error?
+		return (PROCESS_ERROR);
 	result = expand_and_transfer_heredoc(raw_fd, expand_fd, context);
 	if (result == PROCESS_ERROR)
-		return (PROCESS_ERROR); // todo: error?
-	close(raw_fd); // todo: error
-	close(expand_fd); // todo: error
-	unlink(redirect->heredoc_filename); // todo: error
-	ft_free(&redirect->heredoc_filename);
+		return (PROCESS_ERROR);
+	result = clear_expand_in_heredoc(raw_fd, expand_fd, redirect->heredoc_filename, &new_filename);
+	if (result == PROCESS_ERROR)
+		return (PROCESS_ERROR);
 	redirect->heredoc_filename = new_filename;
 	return (result);
 }

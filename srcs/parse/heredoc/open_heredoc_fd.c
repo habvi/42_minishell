@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "ms_parse.h"
 #include "ft_sys.h"
+#include "ft_mem.h"
 
 static int	open_file_dup_errno(const char *file, int *tmp_err)
 {
@@ -24,6 +25,7 @@ t_result	create_filename_and_open_heredoc_fd(int *fd, char **filename)
 	if (tmp_err == ENOMEM)
 	{
 		perror("open"); // todo: msg
+		ft_free(filename);
 		return (PROCESS_ERROR);
 	}
 	return (SUCCESS);
