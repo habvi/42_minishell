@@ -40,17 +40,14 @@ static void	expand_tokens(const t_deque *tokens, t_context *context)
 
 static void	expand_variables_inter(t_deque **tokens, t_context *context)
 {
-//	debug_token_dq(*tokens, "before expand");
-//	ft_dprintf(2, "1 tokens:%p\n", *tokens);
 	expand_tokens(*tokens, context);
-//	debug_token_dq(*tokens, "after expand");
 	split_expand_word(tokens);
-//	debug_token_dq(*tokens, "after split");
 	concat_tokens(*tokens);
 	remove_empty_tokens(*tokens);
 //	debug_token_dq(*tokens, "after remove");
+	update_is_quoted_arr_for_wildcard(*tokens);
+//	debug_token_dq(*tokens, "after update");
 	expand_wildcard(tokens);
-	// debug_token_dq(*tokens, "after wild");
 }
 
 static t_result	expand_variables_for_redirect(const t_deque *redirect_list, \

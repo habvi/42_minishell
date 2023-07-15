@@ -5,9 +5,22 @@
 #include "ft_dprintf.h"
 #include "ft_string.h"
 
-static bool	is_wildcard_in_token(const char *str)
+static bool is_valid_wildcard_in_token(t_token *token)
 {
-	return (ft_strchr_bool(str, WILDCARD));
+	size_t		i;
+	const char	*token_str = token->str;
+	const bool	*quoted_arr = token->is_quoted_arr;
+
+	if (!token_str)
+		return (false);
+	i = 0;
+	while (token_str[i])
+	{
+		if ((token_str[i] == WILDCARD) && !quoted_arr[i])
+			return (true);
+		i++;
+	}
+	return (false);
 }
 
 // not clear src
@@ -30,7 +43,7 @@ static void	create_matched_tokens_each(t_deque_node *node, \
 	t_deque	*tmp_matched_tokens;
 
 	token = (t_token *)node->content;
-	if (token->quote == QUOTE_NONE && is_wildcard_in_token(token->str))
+	if (is_valid_wildcard_in_token(token))
 	{
 		tmp_matched_tokens = get_pattern_matched_filenames(token);
 		if (!deque_is_empty(tmp_matched_tokens))
