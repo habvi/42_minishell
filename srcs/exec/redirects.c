@@ -21,21 +21,9 @@ static t_result	exec_redirect_each(t_redirect *redirect, \
 									t_context *context)
 {
 	t_result	result;
-	char		*original_token;
 	int			open_errno;
 	char		*path;
 
-	original_token = x_ft_strdup(get_head_token_str(redirect->tokens));
-	expand_processing(&redirect->tokens, context);
-	split_expand_word(&redirect->tokens);
-	if (is_ambiguous_redirect(redirect))
-	{
-		context->status = STATUS_REDIRECT_FAILURE;
-		puterr_cmd_msg(original_token, ERROR_MSG_AMBIGUOUS);
-		ft_free(&original_token);
-		return (FAILURE);
-	}
-	ft_free(&original_token);
 	result = open_redirect_fd_and_save_to_proc(redirect, proc_fd, &open_errno);
 	if (result == FAILURE)
 	{
@@ -46,6 +34,40 @@ static t_result	exec_redirect_each(t_redirect *redirect, \
 	return (result);
 }
 
+static t_result	expand_for_redirect_file(t_redirect *redirect, \
+										t_context *context)
+{
+	char		*original_token;
+	t_result	result;
+
+	original_token = x_ft_strdup(get_head_token_str(redirect->tokens));
+	expand_processing(&redirect->tokens, context);
+	split_expand_word(&redirect->tokens);
+	result = is_ambiguous_redirect(redirect);
+	if (result == FAILURE)
+	{
+		context->status = STATUS_REDIRECT_FAILURE;
+		puterr_cmd_msg(original_token, ERROR_MSG_AMBIGUOUS);
+	}
+	ft_free(&original_token);
+	return (result);
+}
+
+static t_result	expand_for_redirect(t_redirect *redirect, \
+									t_context *context)
+{
+	if (redirect->kind == TOKEN_KIND_REDIRECT_HEREDOC)
+	{
+		if (expand_for_heredoc(redirect, context) == PROCESS_ERROR)
+			return (PROCESS_ERROR);
+	}
+	else
+	{
+		if (expand_for_redirect_file(redirect, context) == FAILURE)
+			return (FAILURE);
+	}
+	return (SUCCESS);
+}
 // OK [redirect_symbol]-[file]
 // NG [redirect_symbol]-[redirect_symbol]: dropped $var
 //    [redirect_symbol]-[file]-[file]    : splitted $var
@@ -62,16 +84,12 @@ static t_result	expand_and_exec_redirect_all(t_ast *self_node, \
 	while (node)
 	{
 		redirect = (t_redirect *)node->content;
-		if (redirect->kind == TOKEN_KIND_REDIRECT_HEREDOC)
-		{
-			if (expand_for_heredoc(redirect, context) == PROCESS_ERROR)
-				return (PROCESS_ERROR);
-		}
+		result = expand_for_redirect(redirect, context);
+		if (result == FAILURE || result == PROCESS_ERROR)
+			return (result);
 		result = exec_redirect_each(node->content, self_node->proc_fd, context);
-		if (result == PROCESS_ERROR)
-			return (PROCESS_ERROR);
-		if (result == FAILURE)
-			return (FAILURE);
+		if (result == FAILURE || result == PROCESS_ERROR)
+			return (result);
 		node = node->next;
 	}
 	return (SUCCESS);
