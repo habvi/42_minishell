@@ -52,11 +52,8 @@ static t_result	expand_and_exec_redirect_all(t_ast *self_node, \
 		redirect = (t_redirect *)node->content;
 		if (redirect->kind == TOKEN_KIND_REDIRECT_HEREDOC)
 		{
-			result = expand_for_heredoc(redirect, context);
-			if (result == PROCESS_ERROR)
+			if (expand_for_heredoc(redirect, context) == PROCESS_ERROR)
 				return (PROCESS_ERROR);
-			node = node->next;
-			continue ;
 		}
 		result = exec_redirect_each(node->content, self_node->proc_fd, context);
 		if (result == PROCESS_ERROR)
