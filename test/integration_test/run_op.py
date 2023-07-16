@@ -9,7 +9,7 @@ def main():
     test_res |= run_and_or.main()
     test_res |= run_mix.main()
     test_res |= run_paren.main()
-    # test_res |= run_redirects.main()
+    test_res |= run_redirects.main()
 
     return test_res
 

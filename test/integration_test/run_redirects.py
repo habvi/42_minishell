@@ -7,22 +7,34 @@ def main():
                     "<",
                     "< <",
                     "< < <",
-                    "< nosuchfile",
+                    "< nosuchfile", # KO status
                     "nosuchfile <",
-                    "echo < nosuchfile",
+                    "echo < nosuchfile", # KO status
                     "< < nosuchfile",
                     "< nosuchfile <",
                     "< |",
-                    "< nosuchfile &&",
-                    "< nosuchfile && < nosuchfile",
+                    # "< nosuchfile &&",
+                    "< nosuchfile && < nosuchfile", # KO 2line, status
                     "< nosuchfile && nosuchfile1 <",
                     "nosuchfile < && nosuchfile1 <",
                     "nosuchfile < && < nosuchfile1",
-                    "< nosuchfile && < nosuchfile1 < nosuchfile2",
+                    "< nosuchfile && < nosuchfile1 < nosuchfile2", # KO 2line, status
                     ]
 
     redirects_out_error_test = [
-
+                    ">",
+                    "> >",
+                    "> > >",
+                    "nosuchfile >",
+                    "> > nosuchfile",
+                    "> nosuchfile >",
+                    "> |",
+                    # "> nosuchfile &&",
+                    # "> nosuchfile && > nosuchfile",
+                    # "> nosuchfile && nosuchfile1 >",
+                    # "nosuchfile > && nosuchfile1 >",
+                    # "nosuchfile > && > nosuchfile1",
+                    # "> nosuchfile && > nosuchfile1 > nosuchfile2",
                     ]
 
     redirects_in_test =[
@@ -74,8 +86,8 @@ def main():
         
                     ]
 
-    # test_res |= test("redirect_in_error", redirects_in_error_test)
-    # test_res |= test("redirect_out_error", redirects_out_error_test)
+    test_res |= test("redirect_in_error", redirects_in_error_test)
+    test_res |= test("redirect_out_error", redirects_out_error_test)
     test_res |= test("redirect_in", redirects_in_test)
     test_res |= test("redirect_out", redirects_out_test)
     # test_res |= test("redirect_out", redirects_append_test)

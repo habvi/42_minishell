@@ -17,7 +17,7 @@ def main():
                  "export __=bbbb",
                  "export OK1=ok1 -NG=ng OK2=ok2",
                  "env | grep -v ^_ | sort",  # tmp
-                 "export -option KEU=value",
+                #  "export -option KEU=value", # bash print usage
                  "env | grep -v ^_ | sort",  # tmp
                  "unset A1",
                  ]
