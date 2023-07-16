@@ -48,15 +48,6 @@ static t_result	connect_proc_io_fd(const char *path, \
 {
 	int	open_fd;
 
-	open_fd = open_redirect_fd(path, open_flag, open_errno);
-	if (open_fd == OPEN_ERROR)
-	{
-		if (close_proc_in_fd(proc_fd[IN]) == PROCESS_ERROR)
-			return (PROCESS_ERROR);
-		if (close_proc_out_fd(proc_fd[OUT]) == PROCESS_ERROR)
-			return (PROCESS_ERROR);
-		return (FAILURE);
-	}
 	if (open_flag == OPEN_FOR_IN)
 	{
 		if (close_proc_in_fd(*proc_fd) == CLOSE_ERROR)
@@ -67,6 +58,9 @@ static t_result	connect_proc_io_fd(const char *path, \
 		if (close_proc_out_fd(*proc_fd) == CLOSE_ERROR)
 			return (PROCESS_ERROR);
 	}
+	open_fd = open_redirect_fd(path, open_flag, open_errno);
+	if (open_fd == OPEN_ERROR)
+		return (FAILURE);
 	*proc_fd = open_fd;
 	return (SUCCESS);
 }
@@ -90,6 +84,13 @@ t_result	open_redirect_fd_and_save_to_proc(t_redirect *redirect, \
 	{
 		path = redirect->heredoc_filename;
 		result = connect_proc_io_fd(path, &proc_fd[IN], OPEN_FOR_IN, err);
+	}
+	if (result != SUCCESS)
+	{
+		if (close_proc_in_fd(proc_fd[IN]) == PROCESS_ERROR)
+			return (PROCESS_ERROR);
+		if (close_proc_out_fd(proc_fd[OUT]) == PROCESS_ERROR)
+			return (PROCESS_ERROR);
 	}
 	return (result);
 }

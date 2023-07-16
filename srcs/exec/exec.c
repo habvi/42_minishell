@@ -13,8 +13,8 @@ static t_result	copy_stdio_fd(int *stdin_copy, \
 {
 	const char	*command = get_head_token_str(self_node->command);
 
-	*stdin_copy = STDIO_COPY_INIT;
-	*stdout_copy = STDIO_COPY_INIT;
+	*stdin_copy = IN_FD_INIT;
+	*stdout_copy = OUT_FD_INIT;
 	if (ft_streq(command, CMD_EXIT))
 		return (SUCCESS);
 	*stdin_copy = dup(STDIN_FILENO);
@@ -28,20 +28,25 @@ static t_result	copy_stdio_fd(int *stdin_copy, \
 
 static t_result	restore_stdio_fd(int stdin_copy, int stdout_copy)
 {
-	if (stdin_copy == STDIO_COPY_INIT && stdout_copy == STDIO_COPY_INIT)
-		return (SUCCESS);
-	if (x_close(STDIN_FILENO) == CLOSE_ERROR)
-		return (PROCESS_ERROR);
-	if (x_dup2(stdin_copy, STDIN_FILENO) == DUP_ERROR)
-		return (PROCESS_ERROR);
-	if (x_close(stdin_copy) == CLOSE_ERROR)
-		return (PROCESS_ERROR);
-	if (x_close(STDOUT_FILENO) == CLOSE_ERROR)
-		return (PROCESS_ERROR);
-	if (x_dup2(stdout_copy, STDOUT_FILENO) == DUP_ERROR)
-		return (PROCESS_ERROR);
-	if (x_close(stdout_copy) == CLOSE_ERROR)
-		return (PROCESS_ERROR);
+	if (stdin_copy != IN_FD_INIT)
+	{
+		if (x_close(STDIN_FILENO) == CLOSE_ERROR)
+			return (PROCESS_ERROR);
+		if (x_dup2(stdin_copy, STDIN_FILENO) == DUP_ERROR)
+			return (PROCESS_ERROR);
+		if (x_close(stdin_copy) == CLOSE_ERROR)
+			return (PROCESS_ERROR);
+
+	}
+	if (stdout_copy != OUT_FD_INIT)
+	{
+		if (x_close(STDOUT_FILENO) == CLOSE_ERROR)
+			return (PROCESS_ERROR);
+		if (x_dup2(stdout_copy, STDOUT_FILENO) == DUP_ERROR)
+			return (PROCESS_ERROR);
+		if (x_close(stdout_copy) == CLOSE_ERROR)
+			return (PROCESS_ERROR);
+	}
 	return (SUCCESS);
 }
 
