@@ -26,7 +26,7 @@ def main():
 
     # todo: test on
     # test_res |= test("multi_pipe", pipe_test)
-    test_res |= test("multi_pipe", pipe_error_test)
+    test_res |= test("multi_pipe", pipe_error_test, False)
 
     # stdin = "/bin/echo -e aaa\naacc\nbbb\nbbcc\nccc\naabb\nabc | /bin/grep a | /bin/grep c"
     # m_res, b_res = run_both(stdin)

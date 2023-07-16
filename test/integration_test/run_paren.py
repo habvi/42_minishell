@@ -46,10 +46,10 @@ def main():
                 "( ( echo a b c ) )",
                 ]
 
-    test_res |= test("paren", pass_paren_error_test)
+    test_res |= test("paren", pass_paren_error_test, False)
     # todo: on
     # test_res |= test("paren", not_pass_yet_paren_error_test)
-    test_res |= test("paren", paren_test)
+    test_res |= test("paren", paren_test, False)
 
     return test_res
 
