@@ -4,7 +4,9 @@
 #include "ft_string.h"
 #include "ms_var.h"
 
-static bool	is_valid_option_for_env(const char *const *argv, uint8_t *status, size_t *i)
+static bool	is_valid_option_for_env(const char *const *argv, \
+									uint8_t *status, \
+									size_t *i)
 {
 	if (is_option(argv[*i], CMD_OPTION_MARKER))
 	{
@@ -14,6 +16,15 @@ static bool	is_valid_option_for_env(const char *const *argv, uint8_t *status, si
 	}
 	if (is_end_of_option(argv[*i]))
 		(*i)++;
+	return (true);
+}
+
+static bool	is_valid_argument_for_env(const char *const *argv, const size_t i)
+{
+	if (argv[i] && !ft_streq(argv[i], "-"))
+		return (false);
+	if (argv[i] && argv[i + 1])
+		return (false);
 	return (true);
 }
 
@@ -27,7 +38,7 @@ uint8_t	ft_env(const char *const *argv, t_var *var)
 	i = 1;
 	if (!is_valid_option_for_env(argv, &status, &i))
 		return (status);
-	if ((argv[i] && !ft_streq(argv[i], "-")) || (argv[i] && argv[i + 1]))
+	if (!is_valid_argument_for_env(argv, i))
 	{
 		status = TOO_MANY_ARG_STATUS;
 		puterr_env_argument(argv[i]);
