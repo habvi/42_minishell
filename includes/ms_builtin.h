@@ -120,6 +120,6 @@ void		handle_double_slash_path(const char *path, char **absolute_path);
 char		*convert_path_elems_to_absolute_path(t_deque *path_elems);
 char		*search_cdpath(const char *arg, t_var *var, bool *is_print_path);
 
-bool		is_absolute_path(const char *path); // todo : move header..?
+bool		is_absolute_path(const char *path);
 
 #endif //MS_BUILTIN_H
