@@ -13,8 +13,8 @@ static t_result	copy_stdio_fd(int *stdin_copy, \
 {
 	const char	*command = get_head_token_str(self_node->command);
 
-	*stdin_copy = -1;
-	*stdout_copy = -1;
+	*stdin_copy = STDIO_COPY_INIT;
+	*stdout_copy = STDIO_COPY_INIT;
 	if (ft_streq(command, CMD_EXIT))
 		return (SUCCESS);
 	*stdin_copy = dup(STDIN_FILENO);
@@ -28,7 +28,7 @@ static t_result	copy_stdio_fd(int *stdin_copy, \
 
 static t_result	restore_stdio_fd(int stdin_copy, int stdout_copy)
 {
-	if (stdin_copy == -1 && stdout_copy == -1)
+	if (stdin_copy == STDIO_COPY_INIT && stdout_copy == STDIO_COPY_INIT)
 		return (SUCCESS);
 	if (x_close(STDIN_FILENO) == CLOSE_ERROR)
 		return (PROCESS_ERROR);
