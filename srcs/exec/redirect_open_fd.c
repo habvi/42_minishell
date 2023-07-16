@@ -43,15 +43,14 @@ static t_result	close_proc_out_fd(int proc_out_fd)
 
 static t_result	connect_proc_io_fd(const char *path, \
 									int *proc_fd, \
-									t_open_flag open_flag)
+									t_open_flag open_flag, \
+									int *open_errno)
 {
 	int	open_fd;
-	int	open_errno;
 
-	open_fd = open_redirect_fd(path, open_flag, &open_errno);
+	open_fd = open_redirect_fd(path, open_flag, open_errno);
 	if (open_fd == OPEN_ERROR)
 	{
-		puterr_cmd_msg(path, strerror(open_errno));
 		if (close_proc_in_fd(proc_fd[IN]) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 		if (close_proc_out_fd(proc_fd[OUT]) == PROCESS_ERROR)
@@ -73,7 +72,8 @@ static t_result	connect_proc_io_fd(const char *path, \
 }
 
 t_result	open_redirect_fd_and_save_to_proc(t_redirect *redirect, \
-												int proc_fd[2])
+												int proc_fd[2], \
+												int *err)
 {
 	const t_token	*token = redirect->tokens->node->content;
 	t_result		result;
@@ -81,15 +81,15 @@ t_result	open_redirect_fd_and_save_to_proc(t_redirect *redirect, \
 
 	path = token->str;
 	if (redirect->kind == TOKEN_KIND_REDIRECT_IN)
-		result = connect_proc_io_fd(path, &proc_fd[IN], OPEN_FOR_IN);
+		result = connect_proc_io_fd(path, &proc_fd[IN], OPEN_FOR_IN, err);
 	else if (redirect->kind == TOKEN_KIND_REDIRECT_OUT)
-		result = connect_proc_io_fd(path, &proc_fd[OUT], OPEN_FOR_OUT);
+		result = connect_proc_io_fd(path, &proc_fd[OUT], OPEN_FOR_OUT, err);
 	else if (redirect->kind == TOKEN_KIND_REDIRECT_APPEND)
-		result = connect_proc_io_fd(token->str, &proc_fd[OUT], OPEN_FOR_APPEND);
+		result = connect_proc_io_fd(path, &proc_fd[OUT], OPEN_FOR_APPEND, err);
 	else
 	{
 		path = redirect->heredoc_filename;
-		result = connect_proc_io_fd(path, &proc_fd[IN], OPEN_FOR_IN);
+		result = connect_proc_io_fd(path, &proc_fd[IN], OPEN_FOR_IN, err);
 	}
 	return (result);
 }
