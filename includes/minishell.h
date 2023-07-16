@@ -82,6 +82,7 @@ typedef struct s_context
 	char	*internal_pwd;
 	uint8_t	status;
 	uint8_t	is_return;
+	size_t	ast_depth;
 }	t_context;
 
 // temporarily here ...

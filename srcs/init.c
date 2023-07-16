@@ -10,6 +10,7 @@ static void	set_context_initial_value(t_context *context)
 	context->internal_pwd = NULL;
 	context->is_interactive = false;
 	context->status = EXIT_SUCCESS;
+	context->ast_depth = 0;
 }
 
 // If an error occurs, will not exit.

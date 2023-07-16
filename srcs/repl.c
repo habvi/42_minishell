@@ -15,6 +15,7 @@ t_result	read_eval_print_loop(t_context *context)
 	while (true)
 	{
 		context->is_return = false;
+		context->ast_depth = 0;
 		result = SUCCESS;
 		line = input_line();
 		if (!line)
