@@ -15,7 +15,9 @@ static void	unset_args(const char *const *args, t_var *var, uint8_t *status)
 		else
 		{
 			*status = NOT_A_VALID_IDENTIFIER;
-			puterr_cmd_arg_msg(CMD_UNSET, args[i], ERROR_MSG_NOT_VALID_ID);
+			puterr_cmd_quoted_arg_msg(CMD_UNSET, \
+										args[i], \
+										ERROR_MSG_NOT_VALID_ID);
 		}
 		i++;
 	}
