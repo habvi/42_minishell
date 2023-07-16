@@ -77,12 +77,8 @@ static t_result	expand_and_exec_redirect_all(t_ast *self_node, \
 	return (SUCCESS);
 }
 
-t_result	close_exit_fd(t_ast *self_node)
+t_result	close_prod_fd_id_exit(t_ast *self_node)
 {
-	const char	*command = get_head_token_str(self_node->command);
-
-	if (!ft_streq(command, CMD_EXIT))
-		return (SUCCESS);
 	if (self_node->proc_fd[IN] != IN_FD_INIT)
 	{
 		if (x_close(self_node->proc_fd[IN]) == PROCESS_ERROR)
@@ -98,6 +94,7 @@ t_result	close_exit_fd(t_ast *self_node)
 
 t_result	redirect_fd(t_ast *self_node, t_context *context)
 {
+	const char	*command = get_head_token_str(self_node->command);
 	t_result	result;
 
 	if (!self_node->redirect_list)
@@ -105,10 +102,14 @@ t_result	redirect_fd(t_ast *self_node, t_context *context)
 	result = expand_and_exec_redirect_all(self_node, context);
 	if (result == FAILURE || result == PROCESS_ERROR)
 		return (result);
+	if (ft_streq(command, CMD_EXIT))
+	{
+		if (close_prod_fd_id_exit(self_node) == PROCESS_ERROR)
+			return (PROCESS_ERROR);
+		return (SUCCESS);
+	}
 	result = connect_redirect_to_proc(self_node);
 	if (result == PROCESS_ERROR)
-		return (PROCESS_ERROR);
-	if (close_exit_fd(self_node) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
 	return (SUCCESS);
 }

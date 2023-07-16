@@ -76,6 +76,9 @@ uint8_t	ft_exit(const char *const *argv, t_context *context)
 		ft_dprintf(STDERR_FILENO, "%s\n", CMD_EXIT);
 	put_exit_err(argv[EXIT_ARG_IDX], arg_result);
 	if (!is_exit(arg_result))
+	{
+		context->is_return = true;
 		return (status);
+	}
 	exit(status);
 }
