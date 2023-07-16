@@ -34,14 +34,20 @@ bool	is_arg_option(const char *arg, char marker, char op_chr)
 
 // option is `-[^-]`
 // `--` is not option
+// `--x` is not option
 bool	is_option(const char *word, char marker)
 {
 	if (!word)
 		return (false);
 	if (word[0] != marker)
 		return (false);
-	if (!word[1] || word[1] == marker)
+	if (!word[1])
 		return (false);
+	if (ft_strncmp(word, END_OF_CMD_OPTION, 2) == 0)
+	{
+		if (!word[2])
+			return (false);
+	}
 	return (true);
 }
 
@@ -51,6 +57,7 @@ bool	is_end_of_option(const char *word)
 	return (ft_streq(word, END_OF_CMD_OPTION));
 }
 
+// in minishell, the presence of an option causes an invalid option error
 bool	is_valid_option(const char *const *argv, uint8_t *status, size_t *i)
 {
 	if (is_option(argv[*i], CMD_OPTION_MARKER))
