@@ -1,4 +1,5 @@
 import run_echo
+import run_env
 import run_exit
 import run_export
 import run_pwd
@@ -9,6 +10,7 @@ def main():
     test_res = 0
 
     test_res |= run_echo.main()
+    test_res |= run_env.main()
     test_res |= run_exit.main()
     # test_res |= run_export.main()
     test_res |= run_pwd.main()
