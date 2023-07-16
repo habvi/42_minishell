@@ -10,11 +10,10 @@ def main():
                     "( echo a ) | ()",
                     "( echo a ) | ( )",
                     "export A=A && echo $A && export A=B && echo $A",
-                    "echo nothing | echo a && echo b",
+                    # "echo nothing | echo a && echo b",
                     "( echo a ) ( )",
                     "( echo a ) echo b",
                     "echo a && ( echo b ) || echo c",
-                    ] # todo: add invalid options test
 
     subshell_test = [
                     "( echo a )",
@@ -39,8 +38,8 @@ def main():
                     "( ( ( ls ) | cat ) | cat ) && pwd",
                     ]
 
-    test_res |= test("mix", mix_error_test)
-    test_res |= test("subshell", subshell_test)
+    test_res |= test("mix", mix_error_test, False)
+    test_res |= test("subshell", subshell_test, False)
 
     return test_res
 

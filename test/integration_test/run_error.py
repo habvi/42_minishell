@@ -43,7 +43,7 @@ def main():
 
     error_test = syntax_err + exec_err
 
-    test_res |= test("error", error_test)
+    test_res |= test("error", error_test, False)
 
     return test_res
 

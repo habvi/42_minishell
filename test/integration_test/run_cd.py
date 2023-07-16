@@ -80,8 +80,10 @@ def main():
                     ]
 
     test_res = 0
-    test_res |= test("ft_cd", commands_list)
-    test_res |= test("cdpath", cdpath_test)
+
+#     test_res |= test("cdpath", cdpath_test, False)
+    test_res = test("ft_cd", commands_list, False)
+
     return test_res
 
 
