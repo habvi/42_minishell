@@ -147,6 +147,9 @@ void		puterr_cmd_msg(const char *const arg, const char *msg);
 void		puterr_cmd_arg_msg(const char *cmd, \
 								const char *const arg, \
 								const char *msg);
+void		puterr_cmd_quoted_arg_msg(const char *cmd, \
+										const char *const arg, \
+										const char *msg);
 void		puterr_cmd_arg_msg_wo_colon(const char *cmd, \
 										const char *const arg, \
 										const char *msg);
