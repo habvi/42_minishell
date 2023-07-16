@@ -277,27 +277,20 @@ def put_result(val, m_res, b_res, status_only):
 
     val[TEST_NO_IDX] += 1
     print()
-
-
-LEAK_OK = 1
-LEAK_KO = 2
-LEAK_SKIP = 3
-
-
 def put_leak_result(val_leak, m_res, b_res):
     test_num, _, _, _ = val_leak
     if m_res is None or b_res is None:
         print_color_str(YELLOW, f'[{test_num}. valgrind not found]')
         # skip
-        val_leak[LEAK_SKIP] += 1
+        val_leak[SKIP_IDX] += 1
     elif (m_res == False):
         print_color_str(GREEN, f'[{test_num}. OK]')
         # ok
-        val_leak[LEAK_OK] += 1
+        val_leak[OK_IDX] += 1
     else:
         print_color_str(RED, f'[{test_num}. KO]')
         # ko
-        val_leak[LEAK_KO] += 1
+        val_leak[KO_IDX] += 1
     # test_num
     val_leak[0] += 1
     print()
@@ -353,8 +346,6 @@ def output_test(test_input_list, status_only):
     test_no = 1
 
     for stdin in test_input_list:
-        m_res, b_res = run_both(test_no, stdin)
-        put_result( val, m_res, b_res)
         m_res, b_res = run_both(test_no, stdin, status_only)
         put_result(val, m_res, b_res, status_only)
         test_no += 1
@@ -384,9 +375,11 @@ def leak_test(test_input_list):
 
 def print_ko_case(test_name, test_res, ko_case):
     if test_res:
-        print(f"{COLOR_DICT[RED]}#########################################")
+        print(f"{COLOR_DICT[RED]}"
+              "#########################################")
         print("#####            KO CASE            #####")
-        print(f"#########################################{COLOR_DICT['end']}")
+        print("#########################################"
+              f"{COLOR_DICT['end']}")
 
         with open(f'ko_case_{test_name}.txt', 'w') as f:
             f.write(f'KO CASE OF : {test_name}\n')
