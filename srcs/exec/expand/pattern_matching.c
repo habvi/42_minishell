@@ -43,14 +43,19 @@ static t_result	add_pattern_matched_files(const char *token_str, \
 	struct dirent	*dirent;
 	t_result		result;
 
-	result = open_current_directory(&dirp);
-	if (result == PROCESS_ERROR)
+	if (open_current_directory(&dirp) == PROCESS_ERROR)
+	{
+		close_current_directory(dirp);
 		return (PROCESS_ERROR);
+	}
 	while (true)
 	{
 		result = get_next_dirp_in_current(dirp, &dirent);
 		if (result == PROCESS_ERROR)
+		{
+			close_current_directory(dirp);
 			return (PROCESS_ERROR);
+		}
 		if (result == BREAK)
 			break ;
 		if (!is_hidden_file(token_str) && is_hidden_file(dirent->d_name))
@@ -58,8 +63,7 @@ static t_result	add_pattern_matched_files(const char *token_str, \
 		add_pattern_matched_filename_each(\
 				token_str, dirent->d_name, is_quoted_arr, matched_filenames);
 	}
-	result = close_current_directory(dirp);
-	return (result);
+	return (close_current_directory(dirp));
 }
 
 // * -> [libft],[srcs],[includes]..
@@ -75,7 +79,10 @@ t_deque	*get_pattern_matched_filenames(t_token *token, t_result *result)
 		ft_abort();
 	*result = add_pattern_matched_files(str, is_quoted_arr, matched_filenames);
 	if (*result == PROCESS_ERROR)
+	{
+		deque_clear_all(&matched_filenames, del_token);
 		return (NULL);
+	}
 	sort_filenames(matched_filenames);
 	// debug_token_dq(matched_filenames, __func__);
 	return (matched_filenames);

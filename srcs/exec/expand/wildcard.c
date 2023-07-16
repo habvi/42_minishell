@@ -35,7 +35,10 @@ static t_result	create_matched_tokens_each(t_deque_node *node, \
 	{
 		tmp_matched_tokens = get_pattern_matched_filenames(token, &result);
 		if (result == PROCESS_ERROR)
+		{
+			deque_clear_node(&node, del_token);
 			return (PROCESS_ERROR);
+		}
 		if (!deque_is_empty(tmp_matched_tokens))
 		{
 			transfer_deque_node_all(matched_tokens, tmp_matched_tokens);
@@ -62,7 +65,10 @@ static t_deque	*create_matched_tokens_all(t_deque *tokens, t_result *result)
 		node = deque_pop_front(tokens);
 		*result = create_matched_tokens_each(node, matched_tokens);
 		if (*result == PROCESS_ERROR)
+		{
+			deque_clear_all(&matched_tokens, del_token);
 			return (NULL);
+		}
 	}
 	return (matched_tokens);
 }
