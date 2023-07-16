@@ -74,14 +74,12 @@ static void	create_heredoc_delimiter(t_deque *tokens)
 
 t_result	execute_heredoc_each(t_redirect *redirect)
 {
-	t_result		result;
 	t_token			*token;
 	char			*delimiter;
 	int				fd;
 
-	result = create_filename_and_open_heredoc_fd(&fd, \
-											&redirect->heredoc_filename);
-	if (result == PROCESS_ERROR)
+	if (create_filename_and_open_heredoc_fd(\
+		&fd, &redirect->heredoc_filename) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
 	create_heredoc_delimiter(redirect->tokens);
 	token = redirect->tokens->node->content;

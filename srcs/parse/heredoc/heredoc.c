@@ -6,7 +6,6 @@
 static t_result	execute_heredoc_all(t_deque *redirect_list)
 {
 	t_deque_node	*redirect_node;
-	t_result		result;
 	t_redirect		*redirect;
 
 	if (!redirect_list)
@@ -20,8 +19,7 @@ static t_result	execute_heredoc_all(t_deque *redirect_list)
 			redirect_node = redirect_node->next;
 			continue ;
 		}
-		result = execute_heredoc_each(redirect);
-		if (result == PROCESS_ERROR)
+		if (execute_heredoc_each(redirect) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 		redirect_node = redirect_node->next;
 	}
@@ -30,7 +28,6 @@ static t_result	execute_heredoc_all(t_deque *redirect_list)
 
 t_result	execute_heredoc(t_ast *ast_node)
 {
-	t_result	heredoc_result;
 	t_result	left_result;
 	t_result	right_result;
 
@@ -45,8 +42,7 @@ t_result	execute_heredoc(t_ast *ast_node)
 	if (!is_node_kind_exec_heredoc(ast_node->kind))
 		return (SUCCESS);
 	move_redirect_from_command(ast_node);
-	heredoc_result = execute_heredoc_all(ast_node->redirect_list);
-	if (heredoc_result == PROCESS_ERROR)
+	if (execute_heredoc_all(ast_node->redirect_list) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
 	return (SUCCESS);
 }
