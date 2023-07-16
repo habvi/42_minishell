@@ -16,28 +16,6 @@ def main():
                     "echo a && ( echo b ) || echo c",
                     ]
 
-    different_result_from_bash_test = [
-                    "&",
-                    "&&&",
-                    "& &",
-                    "a &&",
-                    "echo a & &&",
-                    "echo a |",
-                    "echo a ||",
-                    "~a",
-                    "echo $-",
-                    "echo $_",
-                    "export -a",
-                    "(())",
-                    "((()))",
-                    "(()())",
-                    "((()()))",
-                    "<< aaa",
-                    "<<a () <<b",
-                    "<<a ||| <<b",
-                    "echo a | (e) >a && a ||",
-                    ]
-
     subshell_test = [
                     "( echo a )",
                     "( echo a ) | cat",
@@ -61,8 +39,7 @@ def main():
                     "( ( ( ls ) | cat ) | cat ) && pwd",
                     ]
 
-    # test_res |= test("mix", mix_error_test)
-    # test_res |= test("different", different_result_from_bash_test)
+    test_res |= test("mix", mix_error_test)
     test_res |= test("subshell", subshell_test)
 
     return test_res

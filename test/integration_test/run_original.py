@@ -1,0 +1,37 @@
+from test_functions import test
+
+
+def main():
+    test_res = 0
+    different_result_from_bash_test = [
+                    "&",
+                    "&&&",
+                    "& &",
+                    "a &&",
+                    "echo a & &&",
+                    "echo a |",
+                    "echo a ||",
+                    "~a",
+                    "echo $-",
+                    "echo $_",
+                    "export -a",
+                    "(())",
+                    "((()))",
+                    "(()())",
+                    "((()()))",
+                    "<< aaa",
+                    "<<a () <<b",
+                    "<<a ||| <<b",
+                    "echo a | (e) >a && a ||",
+                    "$$",
+                    "$$$",
+                    "$_",
+                    ]
+
+    test_res |= test("different", different_result_from_bash_test)
+
+    return test_res
+
+
+if __name__ == '__main__':
+    main()

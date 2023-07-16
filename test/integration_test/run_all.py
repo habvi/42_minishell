@@ -4,6 +4,7 @@ import run_builtin
 import run_pipe
 import run_op
 import run_error
+import run_original
 
 
 BLUE = "\x1b[34m"
@@ -42,6 +43,9 @@ def main():
 
     print_test_title("ERROR")
     test_res |= run_error.main()
+
+    # print_test_title("ORIGINAL")
+    # test_res |= run_original.main()
 
     print_ng_cases(test_res)
 

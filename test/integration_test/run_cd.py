@@ -69,15 +69,19 @@ def main():
     ]
     # todo: rm $PWD \n ./minishell \n pwd \n cd ./ ....etc
 
-    # todo: CDPATH test
-
     commands_list += additional_test
-
     # for c in commands_list:
     #     print(c)
     #     print("----------------")
 
-    test_res = test("ft_cd", commands_list)
+    # todo: CDPATH test
+    cdpath_test = [
+        
+                    ]
+
+    test_res = 0
+    test_res |= test("ft_cd", commands_list)
+    test_res |= test("cdpath", cdpath_test)
     return test_res
 
 
