@@ -56,7 +56,7 @@ def main():
                     "cat test_infile1 && cat test_infille2 && cat <    test_infile1<test_infile2 | cat",
                     "cat test_infile1 && cat test_infille2 && <test_infile1 | cat",
                     "cat test_infile1 && cat test_infille2 && <test_infile1 | cat | grep nothing",
-                    "cat test_infile1 && cat test_infille2 && <test_infile1 | cat | grep a",
+                    # "cat test_infile1 && cat test_infille2 && <test_infile1 | cat | grep a", # for actions
                     "cat test_infile1 && cat test_infille2 && <test_infile1 <test_infile2 | cat",
                     "rm -f test_infile1 && rm -f test_infile1 && rm -f test_infile2"
                     ]

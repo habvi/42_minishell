@@ -14,7 +14,7 @@ def main():
                     "( echo a ) ( )",
                     "( echo a ) echo b",
                     "echo a && ( echo b ) || echo c",
-                    ]
+                    ] # todo: add invalid options test
 
     subshell_test = [
                     "( echo a )",
