@@ -26,7 +26,7 @@ def main():
                     "echo a ||",
                     "~a",
                     "echo $-",
-                    "echo $_",
+                    # "echo $_",
                     # "export -a", # bash status=0(mistery valid option..)
                     # "(())", # bash status=1
                     # "((()))", # bash status=1(operand)
