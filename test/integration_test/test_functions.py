@@ -23,6 +23,11 @@ STDERR = 1
 STATUS = 2
 IS_EXITED = 3
 
+TEST_NO_IDX = 0
+OK_IDX = 1
+KO_IDX = 2
+SKIP_IDX = 3
+
 # ----------------------------------------------------------
 # color
 WHITE = "white"
@@ -235,9 +240,9 @@ def run_shell(name, stdin, cmd, prompt_pfx, err_pfx):
     return None
 
 
-def run_both(test_no, stdin):
+def run_both(test_no, stdin, status_only):
     print_cmd = get_cmd_string_for_output(stdin)
-    print(f'{"-" * 50} TEST NO.{test_no} {"-" * 50} ', end='\n')
+    print(f'{"-" * 50} TEST NO.{test_no} {"<STATUS ONLY>" if status_only else ""} {"-" * 50} ', end='\n')
     print(f' input cmd:[{print_cmd}]', end='\n')
     res_minishell = run_shell("minishell",
                               stdin,
@@ -255,23 +260,22 @@ def run_both(test_no, stdin):
 
 # ----------------------------------------------------------
 # put
-def put_result(val, m_res, b_res):
+def put_result(val, m_res, b_res, status_only):
     test_num, _, _ = val
     if m_res is None or b_res is None:
         print_color_str(RED, f'[{test_num}. timeout]')
-        # ko
-        val[2] += 1
-    elif m_res == b_res:
+        val[KO_IDX] += 1
+    elif not status_only and m_res == b_res:
         print_color_str(GREEN, f'[{test_num}. OK]')
-        # ok
-        val[1] += 1
+        val[OK_IDX] += 1
+    elif status_only and m_res[STATUS] == b_res[STATUS]:
+        print_color_str(GREEN, f'[{test_num}. OK]')
+        val[OK_IDX] += 1
     else:
         print_color_str(RED, f'[{test_num}. KO]')
-        # ko
-        val[2] += 1
+        val[KO_IDX] += 1
 
-    # test_num
-    val[0] += 1
+    val[TEST_NO_IDX] += 1
     print()
 
 
@@ -339,7 +343,7 @@ def put_total_result(val):
 
 # ----------------------------------------------------------
 
-def output_test(test_input_list):
+def output_test(test_input_list, status_only):
     test_num = 1
     ok = 0
     ko = 0
@@ -351,6 +355,8 @@ def output_test(test_input_list):
     for stdin in test_input_list:
         m_res, b_res = run_both(test_no, stdin)
         put_result( val, m_res, b_res)
+        m_res, b_res = run_both(test_no, stdin, status_only)
+        put_result(val, m_res, b_res, status_only)
         test_no += 1
         if prev_ko != val[2]:
             ko_case.append(stdin)
@@ -388,15 +394,15 @@ def print_ko_case(test_name, test_res, ko_case):
                 print(ko)
                 f.write(f'{ko}\n')
 
-def test(test_name, test_input_list):
+def test(test_name, test_input_list, status_only):
     try:
         with open(BASH_INIT_FILE, "w") as init_file:
             init_file.write(f'PS1="{BASH_PROMPT_PREFIX} "')
 
         test_res = 0
-        print(f' ========================= {test_name} ========================= ')
+        print(f' ========================= TEST : [{test_name} {" STATUS ONLY" if status_only else ""}] ========================= ')
 
-        output_res, ko_case = output_test(test_input_list)
+        output_res, ko_case = output_test(test_input_list, status_only)
         test_res |= output_res
         test_res |= leak_test(test_input_list)
         print()
