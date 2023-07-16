@@ -21,6 +21,7 @@
 # define READ_ERROR		(-1)
 # define WAIT_ERROR		(-1)
 # define UNLINK_ERROR	(-1)
+# define CLOSEDIR_ERROR	(-1)
 # define UNREACHABLE	(-1)
 
 # define STR_PATH_DELIMITER		":"

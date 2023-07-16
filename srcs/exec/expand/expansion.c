@@ -38,17 +38,20 @@ static void	expand_tokens(const t_deque *tokens, t_context *context)
 	}
 }
 
-void	expand_processing(t_deque **tokens, t_context *context)
+t_result	expand_processing(t_deque **tokens, t_context *context)
 {
+	t_result	result;
+
 	expand_tokens(*tokens, context);
 	split_expand_word(tokens);
 	concat_tokens(*tokens);
 	remove_empty_tokens(*tokens);
-	expand_wildcard(tokens);
+	result = expand_wildcard(tokens);
+	return (result);
 }
 
 // word splitting: if unquoted, word split by delimiter
-void	expand_variable_of_cmd_tokens(t_ast *self_node, t_context *context)
+t_result	expand_variable_of_cmd_tokens(t_ast *self_node, t_context *context)
 {
-	expand_processing(&self_node->command, context);
+	return (expand_processing(&self_node->command, context));
 }
