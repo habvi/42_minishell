@@ -16,6 +16,8 @@ MINISHELL_ERROR_PREFIX = "minishell: "
 BASH_PROMPT_PREFIX = "bash "
 BASH_ERROR_PREFIX = "bash: "
 GITHUB_ERROR_PREFIX = ["cannot set terminal", "no job"]
+BASH_DROP_WORDS = ["usage:"]
+
 
 VALGRIND = "valgrind"
 VALGRIND_OP = " --track-fds=yes "
@@ -26,10 +28,18 @@ STDERR = 1
 STATUS = 2
 IS_EXITED = 3
 
+# output test res
 TEST_NO_IDX = 0
 OK_IDX = 1
 KO_IDX = 2
 SKIP_IDX = 3
+
+# valgrind test res
+VAL_TEST_NO_IDX = 0
+VAL_OK_IDX = 1
+VAL_LEAK_NG_IDX = 2
+VAL_FD_NG_IDX = 3
+VAL_SKIP_IDX = 4
 
 # ----------------------------------------------------------
 # color
@@ -200,6 +210,19 @@ def remove_error_prefix(err_list, error_prefix):
     return ret
 
 
+def remove_drop_words(err_list, drop_words):
+    ret = []
+    for err in err_list:
+        drop = False
+        for word in drop_words:
+            if word in err:
+                drop = True
+        if not drop:
+            ret.append(err)
+
+    return ret
+
+
 def remove_github_error(err_list, err_prefixes):
     ret = []
     for err in err_list:
@@ -220,6 +243,7 @@ def get_eval_stderr(stderr, prompt_prefix, error_prefix):
 
     err_list = remove_prompt_prefix(errors, prompt_prefix)
     err_list = remove_error_prefix(err_list, error_prefix)
+    err_list = remove_drop_words(err_list, BASH_DROP_WORDS)
     err_list = remove_github_error(err_list, GITHUB_ERROR_PREFIX)
 
     return err_list
@@ -321,13 +345,6 @@ def put_result(val, m_res, b_res, status_only):
     val[TEST_NO_IDX] += 1
     print()
 
-# val_result = [test_num, leak_ng, fd_ng, skip]
-
-VAL_TEST_NO_IDX = 0
-VAL_OK_IDX = 1
-VAL_LEAK_NG_IDX = 2
-VAL_FD_NG_IDX = 3
-VAL_SKIP_IDX = 4
 
 def put_valgrind_result(val_res, m_res):
     test_num, _, _, _, _= val_res

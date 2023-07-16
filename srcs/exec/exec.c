@@ -1,12 +1,22 @@
 #include "minishell.h"
+#include "ms_builtin.h"
 #include "ms_exec.h"
 #include "ms_expansion.h"
 #include "ms_parse.h"
 #include "ms_result.h"
 #include "ft_sys.h"
+#include "ft_string.h"
 
-static t_result	copy_stdio_fd(int *stdin_copy, int *stdout_copy)
+static t_result	copy_stdio_fd(int *stdin_copy, \
+								int *stdout_copy, \
+								t_ast *self_node)
 {
+	const char	*command = get_head_token_str(self_node->command);
+
+	*stdin_copy = STDIO_COPY_INIT;
+	*stdout_copy = STDIO_COPY_INIT;
+	if (ft_streq(command, CMD_EXIT))
+		return (SUCCESS);
 	*stdin_copy = dup(STDIN_FILENO);
 	if (*stdin_copy == DUP_ERROR)
 		return (PROCESS_ERROR);
@@ -18,6 +28,8 @@ static t_result	copy_stdio_fd(int *stdin_copy, int *stdout_copy)
 
 static t_result	restore_stdio_fd(int stdin_copy, int stdout_copy)
 {
+	if (stdin_copy == STDIO_COPY_INIT && stdout_copy == STDIO_COPY_INIT)
+		return (SUCCESS);
 	if (x_close(STDIN_FILENO) == CLOSE_ERROR)
 		return (PROCESS_ERROR);
 	if (x_dup2(stdin_copy, STDIN_FILENO) == DUP_ERROR)
@@ -85,7 +97,7 @@ t_result	execute_command(t_ast *self_node, t_context *context)
 		return (PROCESS_ERROR);
 	if (exec_handle_right_node(self_node, context) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
-	if (copy_stdio_fd(&stdin_copy, &stdout_copy) == PROCESS_ERROR)
+	if (copy_stdio_fd(&stdin_copy, &stdout_copy, self_node) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
 	result = execute_command_internal(self_node, context);
 	if (restore_stdio_fd(stdin_copy, stdout_copy) == PROCESS_ERROR)
