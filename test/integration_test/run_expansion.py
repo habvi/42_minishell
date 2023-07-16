@@ -49,9 +49,9 @@ def main():
                     ] # todo more test
 
 
-    # test_res |= test("word_splitting", word_splitting_test)
-    # test_res |= test("wildcard", wildcard_test)
-    test_res |= test("expansion", expansion_test)
+    # test_res |= test("word_splitting", word_splitting_test, False)
+    # test_res |= test("wildcard", wildcard_test, False)
+    test_res |= test("expansion", expansion_test, False)
 
     return test_res
 

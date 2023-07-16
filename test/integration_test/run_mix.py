@@ -14,6 +14,7 @@ def main():
                     "( echo a ) ( )",
                     "( echo a ) echo b",
                     "echo a && ( echo b ) || echo c",
+                    ]
 
     subshell_test = [
                     "( echo a )",
