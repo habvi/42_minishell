@@ -4,7 +4,8 @@ import subprocess
 
 # ----------------------------------------------------------
 # OUT_FILE = "pipe_test_out.txt"
-PATH_MINISHELL = "./minishell"
+PATH_MINISHELL = ["./minishell", "-i"]
+PATH_MINISHELL_LEAK = "./minishell"
 BASH_INIT_FILE = 'bash_init_file'
 PATH_BASH = ["/bin/bash", "--init-file", BASH_INIT_FILE, "-i"]
 PATH_BASH_LEAK = "bash"
@@ -125,7 +126,7 @@ def run_both_with_valgrind(stdin):
     if shutil.which("valgrind") is None:
         return None, None
 
-    leak_res_minishell = run_minishell_with_valgrind(stdin, PATH_MINISHELL)
+    leak_res_minishell = run_minishell_with_valgrind(stdin, PATH_MINISHELL_LEAK)
     leak_res_bash = run_bash_with_valgrind(stdin, PATH_BASH_LEAK)
     return leak_res_minishell, leak_res_bash
 
