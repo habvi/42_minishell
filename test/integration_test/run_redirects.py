@@ -7,9 +7,9 @@ def main():
                     "<",
                     "< <",
                     "< < <",
-                    "< nosuchfile", # KO status
+                    "< nosuchfile",
                     "nosuchfile <",
-                    "echo < nosuchfile", # KO status
+                    "echo < nosuchfile",
                     "< < nosuchfile",
                     "< nosuchfile <",
                     "< |",
@@ -19,7 +19,7 @@ def main():
                     "nosuchfile < && nosuchfile1 <",
                     "nosuchfile < && < nosuchfile1",
                     "< nosuchfile && < nosuchfile1 < nosuchfile2", # KO 2line, status
-                    ]
+                    ] # todo more test
 
     redirects_out_error_test = [
                     ">",
@@ -35,7 +35,7 @@ def main():
                     # "nosuchfile > && nosuchfile1 >",
                     # "nosuchfile > && > nosuchfile1",
                     # "> nosuchfile && > nosuchfile1 > nosuchfile2",
-                    ]
+                    ] # todo more test
 
     redirects_in_test =[
                     "echo aa >test_infile1 && echo bb > test_infile2",
@@ -80,11 +80,11 @@ def main():
 
     redirects_append_test = [
         
-                    ]
+                    ] # todo more test
 
     redirects_heredoc_test = [
         
-                    ]
+                    ] # todo more test
 
     test_res |= test("redirect_in_error", redirects_in_error_test)
     test_res |= test("redirect_out_error", redirects_out_error_test)

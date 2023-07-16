@@ -26,7 +26,7 @@ def main():
                     "$$",
                     "$$$",
                     "$_",
-                    ]
+                    ] # todo more test
 
     test_res |= test("different", different_result_from_bash_test)
 

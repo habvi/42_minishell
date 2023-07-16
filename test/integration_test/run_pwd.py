@@ -9,7 +9,14 @@ def main():
                 "pwd a b c",
                 "pwd 1 2 3",
                 "pwd pwd",
-                 ]  # add more test after implement cd
+                "cd - && pwd",
+                "cd libft && pwd",
+                "cd libft/ && pwd",
+                "cd /libft && pwd",
+                "cd /libft/ && pwd",
+                "mkdir -p testdir && cd testdir && chmod 000 $PWD && pwd",
+                "mkdir -p testdir && cd testdir && rmdir $PWD && pwd",
+                 ]  # todo: add more test after implement cd
 
     test_res |= test("ft_pwd", pwd_test)
 

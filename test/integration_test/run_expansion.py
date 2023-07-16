@@ -42,10 +42,11 @@ def main():
 
                     "$PWD",
                     "echo $PWD",
-                    "export TEST=libft && cd $TEST && pwd && unset TEST",
-                    "export TEST=libft && cd \"$TEST\" && pwd && unset TEST",
-                    "export TEST=libft && cd \'$TEST\' && pwd && unset TEST",
-                    ]
+                    "cd $HOME && pwd",
+                    "export TEST=libft && cd $TEST && pwd",
+                    "export TEST=libft && cd \"$TEST\" && pwd",
+                    "export TEST=libft && cd \'$TEST\' && pwd",
+                    ] # todo more test
 
 
     # test_res |= test("word_splitting", word_splitting_test)
