@@ -46,7 +46,6 @@
 # define TOO_MANY_ARG_STATUS	1
 
 # define NOT_A_VALID_IDENTIFIER	1
-# define INVALID_OPTION			2
 
 # define CD_ERROR_STATUS		1
 
@@ -55,6 +54,7 @@
 # define ERROR_MSG_TOO_MANY_ARG	"too many arguments"
 # define ERROR_MSG_REQUIRED_NUM	"numeric argument required"
 # define ERROR_MSG_INVALID_OP	"invalid option"
+# define ERROR_MSG_INVALID_ARG	"invalid argument"
 # define ERROR_MSG_NOT_VALID_ID	"not a valid identifier"
 # define ERROR_MSG_NOT_SET		"not set"
 

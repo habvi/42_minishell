@@ -33,6 +33,9 @@
 # define EMPTY_STR				"\0"
 # define SPACE					' '
 
+# define OPTION_FORCED_INTERACTIVE	'i'
+# define INVALID_OPTION				2
+
 /* status */
 // tokenize and parse
 # define SYNTAX_ERROR				2
@@ -124,7 +127,8 @@ char		*get_random_str(const size_t size);
 char		*ft_get_next_line(int fd, t_result *result);
 
 /* init */
-void		init_context(t_context *context);
+void		init_context(t_context *context, bool is_forced_interactive);
+t_result	analyze_option(int argc, char **argv, bool *is_forced_interactive);
 
 /* repl */
 t_result	read_eval_print_loop(t_context *context);
