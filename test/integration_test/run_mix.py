@@ -63,7 +63,7 @@ def main():
 
     # test_res |= test("mix", mix_error_test)
     # test_res |= test("different", different_result_from_bash_test)
-    test_res |= test("subshell", subshell_test)
+    test_res |= test("subshell", subshell_test, False)
 
     return test_res
 

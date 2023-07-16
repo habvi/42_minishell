@@ -77,7 +77,7 @@ def main():
     #     print(c)
     #     print("----------------")
 
-    test_res = test("ft_cd", commands_list)
+    test_res = test("ft_cd", commands_list, False)
     return test_res
 
 
