@@ -1,6 +1,5 @@
 #include "minishell.h"
 #include "ms_builtin.h"
-#include "ft_dprintf.h"
 #include "ft_string.h"
 
 // return true if valid option exist

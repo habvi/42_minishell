@@ -161,6 +161,9 @@ void		puterr_whom_cmd_arg_msg(const char *for_whom, \
 									const char *msg);
 void		puterr_arg_op_msg(const char *const arg, const char op);
 void		puterr_heredoc_wanted_eof(const char *delimiter);
+void		puterr_env_option(const char *const arg);
+void		puterr_env_argument(const char *const arg);
+
 // set
 void		puterr_cmd_msg_set_status(const char *const cmd, \
 										const char *msg, \

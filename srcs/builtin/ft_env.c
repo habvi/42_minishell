@@ -9,7 +9,7 @@ static bool	is_valid_option_for_env(const char *const *argv, uint8_t *status, si
 	if (is_option(argv[*i], CMD_OPTION_MARKER))
 	{
 		*status = ENV_INVALID_OPTION;
-		// puterr_env_option(argv[*i]);
+		puterr_env_option(argv[*i]);
 		return (false);
 	}
 	if (is_end_of_option(argv[*i]))
@@ -30,7 +30,7 @@ uint8_t	ft_env(const char *const *argv, t_var *var)
 	if ((argv[i] && !ft_streq(argv[i], "-")) || (argv[i] && argv[i + 1]))
 	{
 		status = TOO_MANY_ARG_STATUS;
-		// puterr_env_argument(argv[i]);
+		puterr_env_argument(argv[i]);
 		return (status);
 	}
 	if (ft_streq(argv[i], "-"))
