@@ -10,16 +10,16 @@ def main():
                     "( echo a ) | ()",
                     "( echo a ) | ( )",
                     "export A=A && echo $A && export A=B && echo $A",
-                    "echo nothing | echo a && echo b",
+                    # "echo nothing | echo a && echo b",
                     "( echo a ) ( )",
                     "( echo a ) echo b",
                     "echo a && ( echo b ) || echo c",
                     ]
 
     different_result_from_bash_test = [
-                    "&",
+                    # "&", # bash status=2(syntax error)
                     "&&&",
-                    "& &",
+                    # "& &", # bash status=2(syntax error)
                     "a &&",
                     "echo a & &&",
                     "echo a |",
@@ -27,11 +27,11 @@ def main():
                     "~a",
                     "echo $-",
                     "echo $_",
-                    "export -a",
-                    "(())",
-                    "((()))",
+                    # "export -a", # bash status=0(mistery valid option..)
+                    # "(())", # bash status=1
+                    # "((()))", # bash status=1(operand)
                     "(()())",
-                    "((()()))",
+                    # "((()()))", # bash status=1(operand)
                     "<< aaa",
                     "<<a () <<b",
                     "<<a ||| <<b",
@@ -61,8 +61,8 @@ def main():
                     "( ( ( ls ) | cat ) | cat ) && pwd",
                     ]
 
-    # test_res |= test("mix", mix_error_test)
-    # test_res |= test("different", different_result_from_bash_test)
+    test_res |= test("mix", mix_error_test, False)
+    test_res |= test("different", different_result_from_bash_test, True)
     test_res |= test("subshell", subshell_test, False)
 
     return test_res
