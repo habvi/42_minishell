@@ -88,6 +88,13 @@ static t_ast	*create_subshell_node(t_deque_node **token_node, \
 
 	if (is_token_kind_paren_left_as_ast_node(*token_node))
 	{
+		context->ast_depth++;
+		// ft_dprintf(1, "subshell depth: %d\n", context->ast_depth);
+		if (context->ast_depth >= AST_DEPTH_LIMIT)
+		{
+			*status = 2; // todo: same number to SYNTAX ERROR (is ok..?)
+			return (NULL);
+		}
 		*token_node = (*token_node)->next;
 		if (is_token_kind_paren_right_as_ast_node(*token_node))
 			return (NULL);

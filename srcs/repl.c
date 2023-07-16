@@ -24,7 +24,9 @@ t_result	read_eval_print_loop(t_context *context)
 		if (result == FAILURE)
 			continue ;
 		ast = parse(&tokens, context, &result);
-		if (result == FAILURE)
+		if (result == PROCESS_ERROR) // todo: handle heredoc's PROCESS_ERROR?
+			break ; //destroy?
+		if (result == FAILURE) // CONTINUE -> continue, FAILURE -> put arg & exit(2) minishell ?
 			continue ;
 		result = execute_command(ast, context);
 //		debug_print_ast_tree(ast, "repl");

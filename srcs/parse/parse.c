@@ -14,7 +14,7 @@ static t_ast	*create_ast(t_deque *tokens, \
 	ast_status = AST_STATUS_SUCCESS;
 	head_node = tokens->node;
 	ast = create_operator_list_node(&head_node, &ast_status, context);
-	if (head_node || ast_status == SYNTAX_ERROR)
+	if (head_node || ast_status == SYNTAX_ERROR) // todo: same status ast_depth error
 	{
 		set_error_status(context, result);
 		ast_print_error(head_node);

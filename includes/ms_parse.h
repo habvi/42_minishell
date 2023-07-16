@@ -12,6 +12,7 @@
 # define RANDOM_STR_SIZE		50
 
 # define AST_STATUS_SUCCESS		0
+# define AST_DEPTH_LIMIT		100 // todo: set limit
 
 typedef struct s_context	t_context;
 typedef struct s_deque		t_deque;
