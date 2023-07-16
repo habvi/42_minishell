@@ -22,7 +22,7 @@ def main():
                  "unset A1",
                  ]
 
-    test_res |= test("ft_export", echo_test)
+    test_res |= test("ft_export", echo_test, False)
 
     return test_res
 

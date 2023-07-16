@@ -69,7 +69,7 @@ def main():
                  "exit \r\r42",
                  ]  # add more test after update tokenizer
 
-    test_res |= test("ft_exit", exit_test)
+    test_res |= test("ft_exit", exit_test, False)
 
     return test_res
 
