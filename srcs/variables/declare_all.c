@@ -20,7 +20,9 @@ void	var_declare_all(const char *const *args, \
 		if (result == FAILURE)
 		{
 			*status = NOT_A_VALID_IDENTIFIER;
-			puterr_cmd_arg_msg(CMD_EXPORT, args[i], ERROR_MSG_NOT_VALID_ID);
+			puterr_cmd_quoted_arg_msg(CMD_EXPORT, \
+										args[i], \
+										ERROR_MSG_NOT_VALID_ID);
 		}
 		i++;
 	}

@@ -34,3 +34,13 @@ void	puterr_msg_quoted_arg(const char *msg, const char *const arg)
 				"%s: %s `%s'\n", \
 				SHELL_NAME, msg, arg);
 }
+
+void	puterr_cmd_quoted_arg_msg(const char *cmd, \
+								const char *const arg, \
+								const char *msg)
+{
+	ft_dprintf(STDERR_FILENO, \
+			"%s: %s: `%s': %s\n", \
+			SHELL_NAME, cmd, arg, msg);
+
+}

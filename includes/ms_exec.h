@@ -80,6 +80,7 @@ t_result		exec_handle_right_node(t_ast *self_node, t_context *context);
 t_result		redirect_fd(t_ast *self_node, t_context *context);
 t_result		connect_redirect_to_proc(t_ast *self_node);
 t_result		open_redirect_fd_and_save_to_proc(t_redirect *redirect, \
-													int proc_fd[2]);
+													int proc_fd[2], \
+													int *open_errno);
 
 #endif //MS_EXEC_H
