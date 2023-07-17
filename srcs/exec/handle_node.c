@@ -14,7 +14,7 @@ t_result	exec_handle_left_node(t_ast *self_node, t_context *context)
 {
 	if (!is_matching_condition_of_traverse_left_node(self_node))
 		return (SUCCESS);
-	if (execute_command(self_node->left, context) == PROCESS_ERROR)
+	if (execute_command_recursive(self_node->left, context) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
 	if (self_node->kind == NODE_KIND_OP_PIPE && self_node->right)
 		self_node->right->prev_fd = self_node->prev_fd;
@@ -49,7 +49,7 @@ t_result	exec_handle_right_node(t_ast *self_node, t_context *context)
 {
 	if (!is_matching_condition_of_traverse_right_node(self_node, context))
 		return (SUCCESS);
-	if (execute_command(self_node->right, context) == PROCESS_ERROR)
+	if (execute_command_recursive(self_node->right, context) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
 	if (self_node->kind == NODE_KIND_OP_PIPE && self_node->parent)
 		self_node->parent->prev_fd = self_node->prev_fd;

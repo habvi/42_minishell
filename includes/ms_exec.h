@@ -54,6 +54,7 @@ bool			is_first_command(int prev_fd);
 t_result		execute_command(t_ast **self_node, \
 								t_context *context, \
 								t_result heredoc_result);
+t_result		execute_command_recursive(t_ast *self_node, t_context *context);
 uint8_t			execute_external_command(char *const *argv, t_context *context);
 
 /* is_single_builtin */

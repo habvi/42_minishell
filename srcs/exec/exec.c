@@ -90,26 +90,38 @@ static t_result	execute_command_internal(t_ast *self_node, t_context *context)
 	return (SUCCESS);
 }
 
-t_result	execute_command(t_ast **self_node, \
-							t_context *context, \
-							t_result heredoc_result)
+t_result	execute_command_recursive(t_ast *self_node, t_context *context)
 {
 	t_result	result;
 	int			stdin_copy;
 	int			stdout_copy;
 
-	if (heredoc_result == PROCESS_ERROR)
-		return (PROCESS_ERROR);
-	if (!*self_node)
+	if (!self_node)
 		return (SUCCESS);
-	if (exec_handle_left_node(*self_node, context) == PROCESS_ERROR)
+	if (exec_handle_left_node(self_node, context) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
-	if (exec_handle_right_node(*self_node, context) == PROCESS_ERROR)
+	if (exec_handle_right_node(self_node, context) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
-	if (copy_stdio_fd(&stdin_copy, &stdout_copy, *self_node) == PROCESS_ERROR)
+	if (copy_stdio_fd(&stdin_copy, &stdout_copy, self_node) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
-	result = execute_command_internal(*self_node, context);
+	result = execute_command_internal(self_node, context);
 	if (restore_stdio_fd(stdin_copy, stdout_copy) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
 	return (result);
+}
+
+t_result	execute_command(t_ast **self_node, \
+							t_context *context, \
+							t_result heredoc_result)
+{
+	t_result	exec_result;
+
+	if (heredoc_result == PROCESS_ERROR)
+	{
+		destroy_ast_node_recursive(self_node);
+		return (PROCESS_ERROR);
+	}
+	exec_result = execute_command_recursive(*self_node, context);
+	destroy_ast_tree(self_node, exec_result);
+	return (exec_result);
 }
