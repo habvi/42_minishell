@@ -1,4 +1,4 @@
-#include <sys/wait.h>
+#include <stdlib.h>
 #include "minishell.h"
 #include "ms_exec.h"
 #include "ms_tokenize.h"
@@ -28,7 +28,7 @@ static bool	is_executable_right_node(t_ast *self_node, t_context *context)
 		return (false);
 	if (!is_node_kind_and_or(self_node->kind))
 		return (true);
-	if (self_node->kind == NODE_KIND_OP_AND && context->status == 0)
+	if (self_node->kind == NODE_KIND_OP_AND && context->status == EXIT_SUCCESS)
 		return (true);
 	if (self_node->kind == NODE_KIND_OP_OR && context->status != EXIT_SUCCESS)
 		return (true);

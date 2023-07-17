@@ -77,7 +77,7 @@ static t_result	expand_and_exec_redirect_all(t_ast *self_node, \
 	return (SUCCESS);
 }
 
-t_result	close_prod_fd_if_exit(t_ast *self_node)
+t_result	close_prod_fd_for_exit_command(t_ast *self_node)
 {
 	if (self_node->proc_fd[IN] != IN_FD_INIT)
 	{
@@ -104,7 +104,7 @@ t_result	redirect_fd(t_ast *self_node, t_context *context)
 		return (result);
 	if (ft_streq(command, CMD_EXIT))
 	{
-		if (close_prod_fd_id_exit(self_node) == PROCESS_ERROR)
+		if (close_prod_fd_for_exit_command(self_node) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 		return (SUCCESS);
 	}
