@@ -24,7 +24,7 @@ static uint8_t	execute_subshell(t_ast *self_node, t_context *context)
 
 	root_node = self_node->left;
 	root_node->parent = NULL; //todo: NULL?
-	result = execute_command(root_node, context);
+	result = execute_command_recursive(root_node, context);
 	if (result == PROCESS_ERROR)
 		return (EXIT_FAILURE);
 	return (context->status);

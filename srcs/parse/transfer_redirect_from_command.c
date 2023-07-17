@@ -1,23 +1,9 @@
 #include "minishell.h"
+#include "ms_exec.h"
 #include "ms_parse.h"
 #include "ms_tokenize.h"
 #include "ft_deque.h"
 #include "ft_sys.h"
-
-static t_redirect	*init_redirect(void)
-{
-	t_redirect	*redirect;
-
-	redirect = (t_redirect *)x_malloc(sizeof(t_redirect) * 1);
-	if (!redirect)
-		ft_abort();
-	redirect->kind = TOKEN_KIND_WORD;
-	redirect->tokens = deque_new();
-	if (!redirect->tokens)
-		ft_abort();
-	redirect->heredoc_filename = NULL;
-	return (redirect);
-}
 
 static t_token_kind	get_redirect_kind_and_clear_node(t_deque *command, \
 													t_deque_node **token_node)
