@@ -16,4 +16,4 @@
 # norm.py
 norm_out.txt
 
-integration_test/__pycache__
+integration_test/**/__pycache__
