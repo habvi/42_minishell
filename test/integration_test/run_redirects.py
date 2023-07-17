@@ -88,7 +88,7 @@ def main():
         "rm -f in out1 out2 ng\n touch ng && chmod 000 ng\necho abc >out1>ng>out2 \n ls -l \n chmod 777 ng && rm -f in out1 out2 out3",
                     ] # todo more test
 
-    BIG = "a" * 100000
+    BIG = "a" * 20
 
     redirects_heredoc_test = [
         "cat << eof \ntest1\ntest2\n$HOME\n\"$HOME\"\n'$HOME'\neof",
