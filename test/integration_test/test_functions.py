@@ -18,9 +18,14 @@ BASH_ERROR_PREFIX = "bash: "
 GITHUB_ERROR_PREFIX = ["cannot set terminal", "no job"]
 BASH_DROP_WORDS = ["usage:"]
 
-
 VALGRIND = "valgrind"
 VALGRIND_OP = " --track-fds=yes "
+
+# valgrind str
+DEFINITELY = "definitely"
+INDIRECTLY = "indirectly"
+POSSIBLY = "possibly"
+FD_FLAG = "DESCRIPTORS:"
 
 # ----------------------------------------------------------
 STDOUT = 0
@@ -76,7 +81,7 @@ def get_leak_bytes(line):
 
     leak_bytes = 0
     for i in range(len_split):
-        for lost in ("definitely", "indirectly", "possibly"):
+        for lost in (DEFINITELY, INDIRECTLY, POSSIBLY):
             if split[i] == lost and i + 2 < len_split and split[i + 2].isdigit():
                 leak_bytes = int(split[i + 2])
                 # print(f'lost:{lost}, leak:[{split[i + 2]}]')
@@ -93,13 +98,13 @@ def get_valgrind_leak_summary(stderr):
 
     for line in reversed(val_results):
         # print(f'reversed_line:{line}')
-        if "definitely" in line:
+        if DEFINITELY in line:
             sum_bytes += get_leak_bytes(line)
             checked[0] = 1
-        if "indirectly" in line:
+        if INDIRECTLY in line:
             sum_bytes += get_leak_bytes(line)
             checked[1] = 1
-        if "possibly" in line:
+        if POSSIBLY in line:
             sum_bytes += get_leak_bytes(line)
             checked[2] = 1
 
@@ -118,7 +123,7 @@ def get_open_fd(line):
     # print(f'line:{line}, split:{split}')
     fd = 0
     for i in range(len_split):
-        if split[i] == "DESCRIPTORS:" and split[i + 1].isdigit():
+        if split[i] == FD_FLAG and split[i + 1].isdigit():
             fd = int(split[i + 1])
             # print(f'fd:{split[i + 1]}')
             break
@@ -132,7 +137,7 @@ def get_valgrind_fd_at_exit(stderr):
     fd_at_exit = 0
 
     for line in reversed(val_results):
-        if "FILE DESCRIPTORS:" in line:
+        if FD_FLAG in line:
             fd_at_exit = get_open_fd(line)
             break
 
