@@ -51,7 +51,14 @@ bool			is_first_command(int prev_fd);
 /* child_process */
 
 /* exec */
-t_result		execute_command(t_ast *ast, t_context *context);
+t_result		execute_command(t_ast **self_node, \
+								t_context *context, \
+								t_result heredoc_result);
+t_result		execute_command_recursive(t_ast *self_node, t_context *context);
+t_result		copy_stdio_fd(int *stdin_copy, \
+								int *stdout_copy, \
+								const t_ast *self_node);
+t_result		restore_stdio_fd(int stdin_copy, int stdout_copy);
 uint8_t			execute_external_command(char *const *argv, t_context *context);
 
 /* is_single_builtin */
@@ -67,9 +74,9 @@ t_result		handle_parent_pipes(t_ast *self_node);
 t_result		parent_process(t_ast *self_node, t_context *context);
 t_result		exec_command_each(t_ast *self_node, t_context *context);
 void			execute_single_builtin(t_ast *self_node, t_context *context);
-bool			is_single_builtin_command(t_ast *self_node);
+bool			is_single_builtin_command(const t_ast *self_node);
 bool			is_last_command_node(t_ast *self_node);
-char			*get_head_token_str(t_deque *command);
+char			*get_head_token_str(const t_deque *command);
 
 t_result		get_last_command_status(pid_t pid, \
 										int *wait_status, \
@@ -79,6 +86,8 @@ t_result		exec_handle_left_node(t_ast *self_node, t_context *context);
 t_result		exec_handle_right_node(t_ast *self_node, t_context *context);
 
 /* redirects */
+t_redirect		*init_redirect(void);
+void			del_redirect(void *content);
 t_result		redirect_fd(t_ast *self_node, t_context *context);
 t_result		connect_redirect_to_proc(t_ast *self_node);
 t_result		open_redirect_fd_and_save_to_proc(t_redirect *redirect, \

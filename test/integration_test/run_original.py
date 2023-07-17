@@ -12,7 +12,9 @@ def main():
                     "echo a |",
                     "echo a ||",
                     "~a",
+                    "$-",
                     "echo $-",
+                    "$_",
                     "echo $_",
                     "export -a",
                     "(())",
@@ -26,6 +28,16 @@ def main():
                     "$$",
                     "$$$",
                     "$_",
+                    # redirect in
+                    "echo aa >test_infile1 && echo bb > test_infile2",
+                    "cat test_infile1 && cat test_infille2 && <test_infile1 | cat | grep a",
+                    "rm -f test_infile1 && rm -f test_infile1 && rm -f test_infile2",
+                    # redirect out
+                    "echo aa >test_outfile1 && cat test_outfile1",
+                    "echo ff >test_outfile1 | cat test_outfile1 && cat test_outfile1",
+                    "rm -f test_outfile1 && rm -f test_outfile1 && rm -f test_outfile2",
+                    
+                    
                     ] # todo more test
 
     test_res |= test("different", different_result_from_bash_test, False)

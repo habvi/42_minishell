@@ -96,6 +96,7 @@ bool		is_node_kind_and_or(t_node_kind node_kind);
 
 /* destroy */
 void		destroy_ast_tree(t_ast **root, t_result result);
+void		destroy_ast_node_recursive(t_ast **root);
 
 /* error */
 void		*ast_print_error(t_deque_node *token_node);
