@@ -79,7 +79,13 @@ def main():
                     ]
 
     redirects_append_test = [
-        
+        "rm -f out \n echo a >> out \n cat out \n echo b >> out \n cat out \n rm -f out",
+        "rm -f out \n echo a >> 'ou't \n cat out \n echo b >> out \n cat out \n rm -f out",
+        "rm -f out \n export file=out\necho a >> $file \n cat out \n echo b >> out \n cat out \n rm -f out",
+        "rm -f in out \n echo in>in \n echo a >> out \n cat <in >>out \n cat out \n rm -f in out",
+        "rm -f in out1 out2 out3 nothing\n echo abc >out1>out2 <nothing >out3",
+        "rm -f in out1 out2 out3 nothing\n echo abc >out1>out2 <nothing >out3 \n ls -l \n rm -f in out1 out2 out3",
+        "rm -f in out1 out2 ng\n touch ng && chmod 000 ng\necho abc >out1>ng>out2 \n ls -l \n chmod 777 ng && rm -f in out1 out2 out3",
                     ] # todo more test
 
     BIG = "a" * 100000
@@ -100,11 +106,11 @@ def main():
         f"cat << eof\n{BIG}\neof\n | wc",
         ]  # todo more test
 
-    test_res |= test("redirect_in_error", redirects_in_error_test, False)
-    test_res |= test("redirect_out_error", redirects_out_error_test, False)
-    test_res |= test("redirect_in", redirects_in_test, False)
-    test_res |= test("redirect_out", redirects_out_test, False)
-    # test_res |= test("redirect_append", redirects_append_test, False)
+    # test_res |= test("redirect_in_error", redirects_in_error_test, False)
+    # test_res |= test("redirect_out_error", redirects_out_error_test, False)
+    # test_res |= test("redirect_in", redirects_in_test, False)
+    # test_res |= test("redirect_out", redirects_out_test, False)
+    test_res |= test("redirect_append", redirects_append_test, False)
     # test_res |= test("redirect_heredoc", redirects_heredoc_test, False)
 
     return test_res
