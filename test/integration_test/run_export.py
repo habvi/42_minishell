@@ -1,31 +1,28 @@
 from test_functions import test
 
-# PRINT_CMD = "export | grep -v ^_ | grep -v SHLVL | grep -v PS1 | grep -v MAKE_TERMERR | grep -v MAKE_TERMOUT | grep -v ^$ | tr -d \'\\\'"
-PRINT_CMD = "export | grep -v ^_ | grep -v SHLVL | grep -v PS1 | grep -v MAKE_TERMERR | grep -v MAKE_TERMOUT"
+# todo : add exit at last, because bash prints exit shell exit, minishell does not implement now
+PRINT_CMD = "unset PS1 && export | grep -v ^_ | grep -v SHLVL | grep -v PS1 | grep -v MAKE_TERMERR | grep -v MAKE_TERMOUT"
+PRINT_EXIT_CMD = PRINT_CMD + " && exit"
 
 def main():
     test_res = 0
-    echo_test = ["export A1=a1",
-                 PRINT_CMD,
-                 "export B1=b1 B2=b2",
-                 PRINT_CMD,
-                 "export A1+=a1",
-                 "export A2+=a2",
-                 PRINT_CMD,
-                 "export C1=c1 C1 C1=",
-                 "export _",
-                 "export _=",
-                 "export _=aaaa",
-                 "export __=bbbb",
-                 "export OK1=ok1 -NG=ng OK2=ok2",
-                 PRINT_CMD,
-                 # "export -option KEU=value",
-                 # PRINT_CMD,
-                 "env | grep -v ^_ | sort",  # tmp
-                #  "export -option KEU=value", # bash print usage
-                 "env | grep -v ^_ | sort",  # tmp
-                 "unset A1",
-                 ]
+    echo_test = [
+        f"export A1=a1 \n {PRINT_EXIT_CMD}",
+        f"export A1=a1 A1 A1+=a2\n {PRINT_EXIT_CMD}",
+        f"export A1 A1+=a1 \n {PRINT_EXIT_CMD}",
+        f"export A1=a1 A1+= \n {PRINT_EXIT_CMD}",
+        f"export A1=a1 A1= \n {PRINT_EXIT_CMD}",
+        f"export A1=a1 \n export A1+=a2 \n {PRINT_EXIT_CMD}",
+        f"export A1=a1 \n export A1+=$A1 \n {PRINT_EXIT_CMD}",
+        f"export OK1=ok1 NG1++ OK2 OK3=ok3$OK1 OK4=$OK1 OK5=\"$OK1\" \n {PRINT_EXIT_CMD}",
+        f"export NG1~ ng*ngngngng \n {PRINT_EXIT_CMD}",
+        f"export LC_COLLATE=C && export a* \n {PRINT_EXIT_CMD}",
+        f"export LC_COLLATE=C && export * \n {PRINT_EXIT_CMD}",
+        # f"export A=\"a   b   c\" \n echo $A \n echo \"$A\" {PRINT_EXIT_CMD}", # bug PS1
+        # f"export A=\"a   b   c\" \n export B=$A     \n echo $B \n echo \"$B\" \n {PRINT_EXIT_CMD}", # word splitting
+        f"export A=\"a   b   c\" \n export B=\"$A\" \n echo $B \n echo \"$B\" \n {PRINT_EXIT_CMD}",
+        f"export A=\"a   b   c\"'d   e' \n export B=\"$A\" \n echo $B \n echo \"$B\" \n {PRINT_EXIT_CMD}",
+    ]
 
     test_res |= test("ft_export", echo_test, False)
 
