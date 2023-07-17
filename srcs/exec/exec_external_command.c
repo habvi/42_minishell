@@ -1,4 +1,5 @@
 #include <errno.h>
+#include <stdlib.h>
 #include <string.h>
 #include "minishell.h"
 #include "ms_exec.h"
@@ -14,7 +15,7 @@ static uint8_t	set_execve_status(int tmp_err)
 		return (STATUS_NOT_A_DIRECTORY); // 126
 	if (tmp_err == ENOENT)
 		return (STATUS_NO_SUCH_FILE); // 127
-	return (1);// todo:tmp
+	return (EXIT_FAILURE);
 }
 
 static uint8_t	err_cmd_not_found_and_ret_status(const char *const cmd, \

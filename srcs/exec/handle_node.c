@@ -1,4 +1,4 @@
-#include <sys/wait.h>
+#include <stdlib.h>
 #include "minishell.h"
 #include "ms_exec.h"
 #include "ms_tokenize.h"
@@ -22,21 +22,23 @@ t_result	exec_handle_left_node(t_ast *self_node, t_context *context)
 }
 
 // &&, ||
-static bool	is_executable_right_node(t_ast *self_node, uint8_t status)
+static bool	is_executable_right_node(t_ast *self_node, t_context *context)
 {
+	if (context->is_return)
+		return (false);
 	if (!is_node_kind_and_or(self_node->kind))
 		return (true);
-	if (self_node->kind == NODE_KIND_OP_AND && status == 0)
+	if (self_node->kind == NODE_KIND_OP_AND && context->status == EXIT_SUCCESS)
 		return (true);
-	if (self_node->kind == NODE_KIND_OP_OR && status != 0)
+	if (self_node->kind == NODE_KIND_OP_OR && context->status != EXIT_SUCCESS)
 		return (true);
 	return (false);
 }
 
 static bool	is_matching_condition_of_traverse_right_node(t_ast *self_node, \
-															uint8_t status)
+															t_context *context)
 {
-	if (!is_executable_right_node(self_node, status))
+	if (!is_executable_right_node(self_node, context))
 		return (false);
 	if (self_node->kind != NODE_KIND_SUBSHELL && self_node->right)
 		return (true);
@@ -45,8 +47,7 @@ static bool	is_matching_condition_of_traverse_right_node(t_ast *self_node, \
 
 t_result	exec_handle_right_node(t_ast *self_node, t_context *context)
 {
-	if (!is_matching_condition_of_traverse_right_node(self_node, \
-														context->status))
+	if (!is_matching_condition_of_traverse_right_node(self_node, context))
 		return (SUCCESS);
 	if (execute_command(self_node->right, context) == PROCESS_ERROR)
 		return (PROCESS_ERROR);

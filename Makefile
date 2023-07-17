@@ -87,6 +87,7 @@ EXPAND_DIR	:=	expand
 SRCS		+=	$(EXEC_DIR)/$(EXPAND_DIR)/concat_tokens.c  \
 				$(EXEC_DIR)/$(EXPAND_DIR)/dirp.c\
 				$(EXEC_DIR)/$(EXPAND_DIR)/expand_for_heredoc.c\
+				$(EXEC_DIR)/$(EXPAND_DIR)/expand_for_redirect.c\
 				$(EXEC_DIR)/$(EXPAND_DIR)/expand_parameter.c\
 				$(EXEC_DIR)/$(EXPAND_DIR)/expand_var_in_heredoc.c\
 				$(EXEC_DIR)/$(EXPAND_DIR)/expansion.c  \
@@ -316,5 +317,16 @@ test_error	: all
 .PHONY		: test_env
 test_env	: all
 	python3 ./test/integration_test/run_env.py
+
+# test expansion
+.PHONY		: test_expansion
+test_expansion	: all
+	python3 ./test/integration_test/run_expansion.py
+
+# test original
+.PHONY		: test_original
+test_original	: all
+	python3 ./test/integration_test/run_original.py
+
 
 -include $(DEPS)
