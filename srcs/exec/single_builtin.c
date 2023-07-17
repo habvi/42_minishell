@@ -6,7 +6,7 @@
 #include "ft_deque.h"
 #include "ft_mem.h"
 
-char	*get_head_token_str(t_deque *command)
+char	*get_head_token_str(const t_deque *command)
 {
 	t_token	*token;
 
@@ -19,7 +19,7 @@ char	*get_head_token_str(t_deque *command)
 }
 
 // &&, ||, subshell, command, (ex |)
-bool	is_single_builtin_command(t_ast *self_node)
+bool	is_single_builtin_command(const t_ast *self_node)
 {
 	const t_ast	*parent_node = self_node->parent;
 	char		*cmd;
