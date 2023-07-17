@@ -23,6 +23,8 @@
 # define DOUBLE_QUOTE_CHR	'\"'
 # define AND_CHR			'&'
 
+# define LIMIT_DEPTH		5000
+
 typedef struct s_deque		t_deque;
 typedef struct s_deque_node	t_deque_node;
 typedef struct s_context	t_context;
@@ -97,7 +99,7 @@ void			set_is_quoted_value_to_arr(t_token *token);
 
 /* validate */
 bool			is_closed_quote_all(t_deque_node *node);
-bool			is_valid_paren_pair_all(t_deque_node *node);
+bool			is_valid_paren_all(t_deque_node *node);
 
 /* init */
 t_token			*init_token_struct(void);

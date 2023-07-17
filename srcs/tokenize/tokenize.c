@@ -29,7 +29,7 @@ static bool	is_valid_tokens_syntax(t_deque_node *node)
 {
 	if (!is_closed_quote_all(node))
 		return (false);
-	if (!is_valid_paren_pair_all(node))
+	if (!is_valid_paren_all(node))
 		return (false);
 	return (true);
 }
