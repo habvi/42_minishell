@@ -84,5 +84,7 @@ t_result		connect_redirect_to_proc(t_ast *self_node);
 t_result		open_redirect_fd_and_save_to_proc(t_redirect *redirect, \
 													int proc_fd[2], \
 													int *open_errno);
+t_result		close_proc_in_fd(int proc_in_fd);
+t_result		close_proc_out_fd(int proc_out_fd);
 
 #endif //MS_EXEC_H
