@@ -25,9 +25,8 @@ t_result	read_eval_print_loop(t_context *context)
 		ast = parse(&tokens, context, &result);
 		if (result == FAILURE)
 			continue ;
-		result = execute_command(ast, context);
+		result = execute_command(&ast, context, result);
 //		debug_print_ast_tree(ast, "repl");
-		destroy_ast_tree(&ast, result);
 		if (result == PROCESS_ERROR)
 			break ;
 	}
