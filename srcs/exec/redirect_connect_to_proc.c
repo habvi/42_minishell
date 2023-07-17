@@ -35,9 +35,14 @@ static t_result	connect_redirect_out_to_proc(int out_fd)
 t_result	connect_redirect_to_proc(t_ast *self_node)
 {
 	if (self_node->proc_fd[IN] != IN_FD_INIT)
-		return (connect_redirect_in_to_proc(&self_node->prev_fd, \
-											self_node->proc_fd[IN]));
+	{
+		if (connect_redirect_in_to_proc(&self_node->prev_fd, self_node->proc_fd[IN]) == PROCESS_ERROR)
+			return (PROCESS_ERROR);
+	}
 	if (self_node->proc_fd[OUT] != OUT_FD_INIT)
-		return (connect_redirect_out_to_proc(self_node->proc_fd[OUT]));
+	{
+		if (connect_redirect_out_to_proc(self_node->proc_fd[OUT]) == PROCESS_ERROR)
+			return (PROCESS_ERROR);
+	}
 	return (SUCCESS);
 }
