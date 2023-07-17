@@ -24,3 +24,17 @@ void	puterr_whom_cmd_arg_msg(const char *for_whom,
 			"%s: %s: %s: %s\n", \
 			for_whom, cmd, arg, msg);
 }
+
+void	puterr_env_option(const char *const arg)
+{
+	ft_dprintf(STDERR_FILENO, \
+				"%s: %s '%s'\n", \
+				CMD_ENV, ERROR_MSG_INVALID_OP, arg);
+}
+
+void	puterr_env_argument(const char *const arg)
+{
+	ft_dprintf(STDERR_FILENO, \
+				"%s: ‘%s’: %s\n", \
+				CMD_ENV, arg, ERROR_MSG_INVALID_ARG);
+}

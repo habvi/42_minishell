@@ -10,7 +10,7 @@ def main():
                  "/bin/echo aaa | /bin/grep a",
                  "/bin/echo aaa | /bin/cat -e",
                  "/bin/echo aaa | nothing",
-                 ]
+                 ] # todo more test
 
     pipe_error_test = [
                     "|",

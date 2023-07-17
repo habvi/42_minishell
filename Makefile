@@ -312,4 +312,20 @@ test_redirects	: all
 test_error	: all
 	python3 ./test/integration_test/run_error.py
 
+# test env
+.PHONY		: test_env
+test_env	: all
+	python3 ./test/integration_test/run_env.py
+
+# test expansion
+.PHONY		: test_expansion
+test_expansion	: all
+	python3 ./test/integration_test/run_expansion.py
+
+# test original
+.PHONY		: test_original
+test_original	: all
+	python3 ./test/integration_test/run_original.py
+
+
 -include $(DEPS)

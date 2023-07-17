@@ -20,22 +20,6 @@ def main():
                     "echo a ( ) ( ) echo b"
                     ]
 
-    not_pass_yet_paren_error_test = [
-                    "(",
-                    "((",
-                    "(((",
-                    "((((",
-                    ")",
-                    "))",
-                    ")))",
-                    "))))",
-                    "())",
-                    "(()",
-                    "((())",
-                    "(()) echo a",
-                    "echo a (())",
-                    ]
-
     paren_test = [
                 "(echo abc)",
                 "(echo a b c)",
@@ -46,10 +30,26 @@ def main():
                 "( ( echo a b c ) )",
                 ]
 
+    not_pass_yet_paren_error_test = [
+                    # "(",
+                    # "((",
+                    # "(((",
+                    # "((((",
+                    ")",
+                    "))",
+                    ")))",
+                    "))))",
+                    "())",
+                    # "(()",
+                    # "((())",
+                    # "(()) echo a",
+                    "echo a (())",
+                    ]
+
     test_res |= test("paren", pass_paren_error_test, False)
-    # todo: on
-    # test_res |= test("paren", not_pass_yet_paren_error_test)
+    test_res |= test("paren", not_pass_yet_paren_error_test, False)
     test_res |= test("paren", paren_test, False)
+
 
     return test_res
 
