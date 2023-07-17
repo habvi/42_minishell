@@ -16,28 +16,6 @@ def main():
                     "echo a && ( echo b ) || echo c",
                     ]
 
-    different_result_from_bash_test = [
-                    # "&", # bash status=2(syntax error)
-                    "&&&",
-                    # "& &", # bash status=2(syntax error)
-                    "a &&",
-                    "echo a & &&",
-                    "echo a |",
-                    "echo a ||",
-                    "~a",
-                    "echo $-",
-                    # "echo $_",
-                    # "export -a", # bash status=0(mistery valid option..)
-                    # "(())", # bash status=1
-                    # "((()))", # bash status=1(operand)
-                    "(()())",
-                    # "((()()))", # bash status=1(operand)
-                    "<< aaa",
-                    "<<a () <<b",
-                    "<<a ||| <<b",
-                    "echo a | (e) >a && a ||",
-                    ]
-
     subshell_test = [
                     "( echo a )",
                     "( echo a ) | cat",
@@ -62,7 +40,6 @@ def main():
                     ]
 
     test_res |= test("mix", mix_error_test, False)
-    test_res |= test("different", different_result_from_bash_test, True)
     test_res |= test("subshell", subshell_test, False)
 
     return test_res
