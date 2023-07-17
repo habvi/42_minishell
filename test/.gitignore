@@ -2,6 +2,7 @@
 
 # directries
 !integration_test
+!integration_test/**
 !unit_test
 !unit_test/**/
 
@@ -15,4 +16,4 @@
 # norm.py
 norm_out.txt
 
-integration_test/__pycache__
+integration_test/**/__pycache__

@@ -1,4 +1,4 @@
-from test_functions import test
+from test_function.test_functions import test
 
 # todo : add exit at last, because bash prints exit shell exit, minishell does not implement now
 PRINT_CMD = "unset PS1 && export | grep -v ^_ | grep -v SHLVL | grep -v PS1 | grep -v MAKE_TERMERR | grep -v MAKE_TERMOUT"

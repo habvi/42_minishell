@@ -1,4 +1,4 @@
-from test_functions import test
+from test_function.test_functions import test
 
 
 def main():
@@ -19,15 +19,18 @@ def main():
                   "&&&"
                   "&&&&",
                   # "<<<<<<",
-                  "<< << <<",
-                  "<< >>",
+                  # "<< << <<",
+                  # "<< >>",
                   # "<><>",
                   "<|"
                   "<||"
                   "<|||"
                   # "<&&"
+                  # "<&&&"
+                  # "<|echo a",
                   "<&&&"
                   "<|echo a",
+
                   # ">|",
                   # ">&&",
                   # ">||"

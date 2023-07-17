@@ -1,5 +1,5 @@
 from itertools import combinations
-from test_functions import test
+from test_function.test_functions import test
 
 DISPLAY_CMD = "declare -p | /bin/grep PWD | /bin/grep -v _="
 
