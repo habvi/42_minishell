@@ -3,13 +3,13 @@ from test_functions import test
 
 def main():
     test_res = 0
-    pipe_test = ["/bin/ls -l",
-                 "/bin/echo abcde",
-                 "/bin/echo aaa bbb\n/bin/ls",
-                 "/bin/echo aa\n/bin/echo bb\n/bin/echo ccc",
-                 "/bin/echo aaa | /bin/grep a",
-                 "/bin/echo aaa | /bin/cat -e",
-                 "/bin/echo aaa | nothing",
+    pipe_test = ["ls -l",
+                 "echo abcde",
+                 "echo aaa bbb\nls",
+                 "echo aa\necho bb\necho ccc",
+                 "echo aaa | grep a",
+                 "echo aaa | cat -e",
+                 "echo aaa | nothing",
                  ] # todo more test
 
     pipe_error_test = [
@@ -25,14 +25,14 @@ def main():
                     ]
 
     # todo: test on
-    # test_res |= test("multi_pipe", pipe_test)
+    test_res |= test("multi_pipe", pipe_test, False)
     test_res |= test("multi_pipe", pipe_error_test, False)
 
-    # stdin = "/bin/echo -e aaa\naacc\nbbb\nbbcc\nccc\naabb\nabc | /bin/grep a | /bin/grep c"
+    # stdin = "echo -e aaa\naacc\nbbb\nbbcc\nccc\naabb\nabc | grep a | grep c"
     # m_res, b_res = run_both(stdin)
     # put_result(val, m_res, b_res)
 
-    # stdin = "/bin/cat | /bin/ls"
+    # stdin = "cat | ls"
     # m_res, b_res = run_both(stdin)
     # put_result(val, m_res, b_res)
 
