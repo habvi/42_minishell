@@ -4,8 +4,7 @@ from test_functions import test
 def main():
 
     test_res = 0
-    exit_test = [
-                "tty",
+    exit_test = ["tty",
                 "exit",
                  "exit 0",
                  "exit 1",
@@ -67,6 +66,9 @@ def main():
                  "exit \f42",
                  "exit \r42",
                  "exit \r\r42",
+                 "exit 1 1 1 && exit 2 2 2 || exit 3",
+                 "echo a >in && <in exit 1 1 1 <in >out && rm in out  && exit 2 2 2",
+                 " exit 1 | exit 2 | exit 3 && echo a || echo b && exit 1 1 1 || echo 42 && echo hello >out"
                  ]  # add more test after update tokenizer
 
     test_res |= test("ft_exit", exit_test, False)

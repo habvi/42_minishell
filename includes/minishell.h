@@ -81,6 +81,7 @@ typedef struct s_context
 	bool	is_interactive;
 	char	*internal_pwd;
 	uint8_t	status;
+	bool	is_return;
 }	t_context;
 
 // temporarily here ...

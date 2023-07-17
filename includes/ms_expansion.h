@@ -46,5 +46,6 @@ void		sort_filenames(t_deque *tokens);
 t_result	expand_for_heredoc(t_redirect *redirect, t_context *context);
 t_result	expand_variables_in_heredoc(t_redirect *redirect, \
 										t_context *context);
-
+t_result	expand_for_redirect(t_redirect *redirect, \
+									t_context *context);
 #endif //MS_EXPANSION_H
