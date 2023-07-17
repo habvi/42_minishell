@@ -51,7 +51,9 @@ bool			is_first_command(int prev_fd);
 /* child_process */
 
 /* exec */
-t_result		execute_command(t_ast *ast, t_context *context);
+t_result		execute_command(t_ast **self_node, \
+								t_context *context, \
+								t_result heredoc_result);
 uint8_t			execute_external_command(char *const *argv, t_context *context);
 
 /* is_single_builtin */

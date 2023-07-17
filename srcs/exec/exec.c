@@ -90,21 +90,25 @@ static t_result	execute_command_internal(t_ast *self_node, t_context *context)
 	return (SUCCESS);
 }
 
-t_result	execute_command(t_ast *self_node, t_context *context)
+t_result	execute_command(t_ast **self_node, \
+							t_context *context, \
+							t_result heredoc_result)
 {
 	t_result	result;
 	int			stdin_copy;
 	int			stdout_copy;
 
-	if (!self_node)
+	if (heredoc_result == PROCESS_ERROR)
+		return (PROCESS_ERROR);
+	if (!*self_node)
 		return (SUCCESS);
-	if (exec_handle_left_node(self_node, context) == PROCESS_ERROR)
+	if (exec_handle_left_node(*self_node, context) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
-	if (exec_handle_right_node(self_node, context) == PROCESS_ERROR)
+	if (exec_handle_right_node(*self_node, context) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
-	if (copy_stdio_fd(&stdin_copy, &stdout_copy, self_node) == PROCESS_ERROR)
+	if (copy_stdio_fd(&stdin_copy, &stdout_copy, *self_node) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
-	result = execute_command_internal(self_node, context);
+	result = execute_command_internal(*self_node, context);
 	if (restore_stdio_fd(stdin_copy, stdout_copy) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
 	return (result);
