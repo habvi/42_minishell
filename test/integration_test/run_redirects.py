@@ -13,12 +13,12 @@ def main():
                     "< < nosuchfile",
                     "< nosuchfile <",
                     "< |",
-                    # "< nosuchfile &&",
-                    "< nosuchfile && < nosuchfile", # KO 2line, status
+                    # "< nosuchfile &&", # original
+                    "< nosuchfile && < nosuchfile",
                     "< nosuchfile && nosuchfile1 <",
                     "nosuchfile < && nosuchfile1 <",
                     "nosuchfile < && < nosuchfile1",
-                    "< nosuchfile && < nosuchfile1 < nosuchfile2", # KO 2line, status
+                    "< nosuchfile && < nosuchfile1 < nosuchfile2",
                     ] # todo more test
 
     redirects_out_error_test = [
