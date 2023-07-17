@@ -30,7 +30,7 @@ static bool	is_executable_right_node(t_ast *self_node, t_context *context)
 		return (true);
 	if (self_node->kind == NODE_KIND_OP_AND && context->status == 0)
 		return (true);
-	if (self_node->kind == NODE_KIND_OP_OR && context->status != 0)
+	if (self_node->kind == NODE_KIND_OP_OR && context->status != EXIT_SUCCESS)
 		return (true);
 	return (false);
 }
