@@ -55,6 +55,10 @@ t_result		execute_command(t_ast **self_node, \
 								t_context *context, \
 								t_result heredoc_result);
 t_result		execute_command_recursive(t_ast *self_node, t_context *context);
+t_result		copy_stdio_fd(int *stdin_copy, \
+								int *stdout_copy, \
+								const t_ast *self_node);
+t_result		restore_stdio_fd(int stdin_copy, int stdout_copy);
 uint8_t			execute_external_command(char *const *argv, t_context *context);
 
 /* is_single_builtin */

@@ -98,6 +98,7 @@ SRCS		+=	$(EXEC_DIR)/$(EXPAND_DIR)/concat_tokens.c  \
 				$(EXEC_DIR)/$(EXPAND_DIR)/substr_before_dollar.c  \
 				$(EXEC_DIR)/$(EXPAND_DIR)/wildcard.c  \
 				$(EXEC_DIR)/$(EXPAND_DIR)/word_split.c  \
+				$(EXEC_DIR)/backup_fd.c \
 				$(EXEC_DIR)/call_builtin_command.c \
 				$(EXEC_DIR)/child_pipes.c \
 				$(EXEC_DIR)/child_process.c \
