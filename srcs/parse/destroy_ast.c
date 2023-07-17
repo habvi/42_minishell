@@ -6,23 +6,7 @@
 #include "ft_deque.h"
 #include "ft_mem.h"
 
-static void	del_redirect(void *content)
-{
-	t_redirect	*redirect;
-
-	if (!content)
-		return ;
-	redirect = (t_redirect *)content;
-	deque_clear_all(&redirect->tokens, del_token);
-	if (redirect->heredoc_filename)
-	{
-		unlink(redirect->heredoc_filename);
-		ft_free(&redirect->heredoc_filename);
-	}
-	ft_free(&redirect);
-}
-
-static void	destroy_ast_node(t_ast *root)
+static void	destroy_ast_node_recursive(t_ast *root)
 {
 	if (root->left)
 		destroy_ast_node(root->left);

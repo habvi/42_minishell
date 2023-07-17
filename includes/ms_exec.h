@@ -79,6 +79,8 @@ t_result		exec_handle_left_node(t_ast *self_node, t_context *context);
 t_result		exec_handle_right_node(t_ast *self_node, t_context *context);
 
 /* redirects */
+t_redirect		*init_redirect(void);
+void			del_redirect(void *content);
 t_result		redirect_fd(t_ast *self_node, t_context *context);
 t_result		connect_redirect_to_proc(t_ast *self_node);
 t_result		open_redirect_fd_and_save_to_proc(t_redirect *redirect, \

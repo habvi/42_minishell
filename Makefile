@@ -110,6 +110,7 @@ SRCS		+=	$(EXEC_DIR)/$(EXPAND_DIR)/concat_tokens.c  \
 				$(EXEC_DIR)/parent_pipes.c \
 				$(EXEC_DIR)/parent_process.c \
 				$(EXEC_DIR)/redirect_connect_to_proc.c \
+				$(EXEC_DIR)/redirect_init_del.c \
 				$(EXEC_DIR)/redirect_open_fd.c \
 				$(EXEC_DIR)/redirects.c \
 				$(EXEC_DIR)/single_builtin.c \
