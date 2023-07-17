@@ -2,6 +2,7 @@
 
 # directries
 !integration_test
+!integration_test/**
 !unit_test
 !unit_test/**/
 
