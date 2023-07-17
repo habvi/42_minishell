@@ -177,12 +177,12 @@ def put_result(stdin, val, m_res, b_res, status_only, ko_case):
     elif not status_only and m_res == b_res:
         print_color_str(GREEN, f'[{test_num}. OK]')
         val[OK_IDX] += 1
-        ko_case.append([stdin, m_res, b_res])
     elif status_only and m_res[STATUS_IDX] == b_res[STATUS_IDX]:
         print_color_str(GREEN, f'[{test_num}. OK]')
         val[OK_IDX] += 1
     else:
         print_color_str(RED, f'[{test_num}. KO]')
+        ko_case.append([stdin, m_res, b_res])
         val[KO_IDX] += 1
 
     val[TEST_NO_IDX] += 1

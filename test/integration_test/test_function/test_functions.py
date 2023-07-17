@@ -98,6 +98,7 @@ def save_ko_out(test_name, out_ko_case, val_ko_case):
                 stdin, m_res, b_res = ko
                 write_out_to_file("minishell", stdin, m_res, f)
                 write_out_to_file("bash", stdin, b_res, f)
+                f.write(f'{"-" * 100}\n')
 
         if len(val_ko_case):
             f.write(f'[LEAK or FD KO CASE OF : {test_name}]\n')
