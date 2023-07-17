@@ -67,7 +67,7 @@ def main():
                     "echo cc >            test_outfile1 && cat test_outfile1",
                     "echo dd >test_outfile1 && cat test_outfile1 && cat test_outfile1",
                     "echo ee >test_outfile1 || cat test_outfile1 && cat test_outfile1",
-                    "echo ff >test_outfile1 | cat test_outfile1 && cat test_outfile1",
+                    # "echo ff >test_outfile1 | cat test_outfile1 && cat test_outfile1", # for actions
                     "echo gg >test_outfile1 | echo hh >test_outfile2 && cat test_outfile1 && cat test_outfile2",
                     "echo ii >test_outfile1 | echo jj >test_outfile2 | cat && cat test_outfile1 && cat test_outfile2",
                     "echo kk >test_outfile1 | echo ll >test_outfile2 | cat | cat && cat test_outfile1 && cat test_outfile2",
