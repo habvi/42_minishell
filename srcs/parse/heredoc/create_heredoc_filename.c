@@ -23,7 +23,7 @@ static bool	is_file_creatable(const char *filepath)
 
 	errno = 0;
 	ret = access(filepath, F_OK);
-	if (ret == ACCESS_ERROR && errno == ENOENT) //todo
+	if (ret == ACCESS_ERROR && errno == ENOENT)
 		return (true);
 	return (false);
 }
