@@ -6,7 +6,9 @@
 #include "ft_string.h"
 #include "ft_sys.h"
 
-t_result	copy_stdio_fd(int *stdin_copy, int *stdout_copy, const t_ast *self_node)
+t_result	copy_stdio_fd(int *stdin_copy, \
+							int *stdout_copy, \
+							const t_ast *self_node)
 {
 	const char	*command = get_head_token_str(self_node->command);
 

@@ -74,9 +74,9 @@ t_result		handle_parent_pipes(t_ast *self_node);
 t_result		parent_process(t_ast *self_node, t_context *context);
 t_result		exec_command_each(t_ast *self_node, t_context *context);
 void			execute_single_builtin(t_ast *self_node, t_context *context);
-bool			is_single_builtin_command(t_ast *self_node);
+bool			is_single_builtin_command(const t_ast *self_node);
 bool			is_last_command_node(t_ast *self_node);
-char			*get_head_token_str(t_deque *command);
+char			*get_head_token_str(const t_deque *command);
 
 t_result		get_last_command_status(pid_t pid, \
 										int *wait_status, \

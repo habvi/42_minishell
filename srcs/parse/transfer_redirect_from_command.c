@@ -1,4 +1,5 @@
 #include "minishell.h"
+#include "ms_exec.h"
 #include "ms_parse.h"
 #include "ms_tokenize.h"
 #include "ft_deque.h"
