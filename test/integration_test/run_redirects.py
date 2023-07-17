@@ -106,12 +106,12 @@ def main():
         f"cat << eof\n{BIG}\neof\n | wc",
         ]  # todo more test
 
-    # test_res |= test("redirect_in_error", redirects_in_error_test, False)
-    # test_res |= test("redirect_out_error", redirects_out_error_test, False)
-    # test_res |= test("redirect_in", redirects_in_test, False)
-    # test_res |= test("redirect_out", redirects_out_test, False)
+    test_res |= test("redirect_in_error", redirects_in_error_test, False)
+    test_res |= test("redirect_out_error", redirects_out_error_test, False)
+    test_res |= test("redirect_in", redirects_in_test, False)
+    test_res |= test("redirect_out", redirects_out_test, False)
     test_res |= test("redirect_append", redirects_append_test, False)
-    # test_res |= test("redirect_heredoc", redirects_heredoc_test, False)
+    test_res |= test("redirect_heredoc", redirects_heredoc_test, False)
 
     return test_res
 
