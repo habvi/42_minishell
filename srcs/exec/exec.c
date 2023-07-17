@@ -5,6 +5,18 @@
 #include "ms_result.h"
 #include "ft_sys.h"
 
+static t_result	close_fd_for_redirect_failed(t_ast *self_node)
+{
+	if (self_node->prev_fd != IN_FD_INIT)
+	{
+		if (x_close(self_node->prev_fd) == CLOSE_ERROR)
+			return (PROCESS_ERROR);
+	}
+	if (self_node->parent)
+		self_node->parent->prev_fd = IN_FD_INIT;
+	return (SUCCESS);
+}
+
 static bool	is_node_executable(t_ast *ast_node)
 {
 	t_node_kind	kind;
@@ -25,13 +37,8 @@ static t_result	execute_command_internal(t_ast *self_node, t_context *context)
 	result = redirect_fd(self_node, context);
 	if ((result == PROCESS_ERROR) || (result == FAILURE))
 	{
-		if (self_node->prev_fd != IN_FD_INIT)
-		{
-			if (x_close(self_node->prev_fd) == CLOSE_ERROR)
-				return (PROCESS_ERROR);
-		}
-		if (self_node->parent)
-			self_node->parent->prev_fd = IN_FD_INIT;
+		if (close_fd_for_redirect_failed(self_node) == PROCESS_ERROR)
+			return (PROCESS_ERROR);
 		return (result);
 	}
 	if (is_single_builtin_command(self_node))
