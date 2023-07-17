@@ -37,7 +37,8 @@ static char	*expand_key(char **str, t_var *var)
 	key = x_ft_strndup(head, tail - head);
 	if (ft_streq(key, STR_UNDERSCORE))
 	{
-		(*str)++;
+		if (**str)
+			(*str)++;
 		return (strcat_after_dollar(key));
 	}
 	value = var->get_value(var, key);
