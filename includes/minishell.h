@@ -167,9 +167,5 @@ void		puterr_cmd_msg_set_status(const char *const cmd, \
 										const char *msg, \
 										t_context *context, \
 										uint8_t status);
-// ret
-bool		puterr_msg_quoted_arg_ret_bool(const char *msg, \
-											const char *const arg, \
-											bool ret);
 
 #endif //MINISHELL_H
