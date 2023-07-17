@@ -120,38 +120,21 @@ def get_cmd_string_for_output(stdin):
     return print_cmd
 
 
-def run_shell(name, stdin, cmd, prompt_pfx, err_pfx):
+def run_shell(stdin, cmd, prompt_pfx, err_pfx):
     output_result = run_cmd(stdin, cmd)
     if output_result:
-        print(f'=== {name} ===')
-        print(f' stdin  : [{stdin}]')
-        print(f' stdout : [{COLOR_DICT[CYAN] + output_result[STDOUT_IDX] + COLOR_DICT["end"]}]')
         errors = get_eval_stderr(output_result[STDERR_IDX], prompt_pfx, err_pfx)
-        print(" stderr : [", end='')
-        for i in range(len(errors)):
-            print(COLOR_DICT[MAGENTA] + errors[i] + COLOR_DICT["end"], end='')
-            if i + 1 < len(errors):
-                print()
-        print("]")
-        print(f' status : {output_result[STATUS_IDX]}')
-        print(f' exited : {output_result[IS_EXITED_IDX]}')
-        print()
         output_result[STDERR_IDX] = errors
         return output_result
     return None
 
 
-def run_both(test_no, stdin, status_only):
-    print_cmd = get_cmd_string_for_output(stdin)
-    print(f'{"-" * 50} TEST NO.{test_no} {"<STATUS ONLY>" if status_only else ""} {"-" * 50} ', end='\n')
-    print(f' input cmd:[{print_cmd}]', end='\n')
-    res_minishell = run_shell("minishell",
-                              stdin,
+def run_both(stdin):
+    res_minishell = run_shell(stdin,
                               PATH_MINISHELL,
                               MINISHELL_PROMPT_PREFIX,
                               MINISHELL_ERROR_PREFIX)
-    res_bash = run_shell("bash",
-                         stdin,
+    res_bash = run_shell(stdin,
                          PATH_BASH,
                          BASH_PROMPT_PREFIX,
                          BASH_ERROR_PREFIX)
@@ -160,8 +143,33 @@ def run_both(test_no, stdin, status_only):
 
 
 # ----------------------------------------------------------
-# put
-def put_result(val, m_res, b_res, status_only):
+
+def put_title(stdin, test_no, status_only):
+    print_cmd = get_cmd_string_for_output(stdin)
+    print(f'{"-" * 50} TEST NO.{test_no} {"<STATUS ONLY>" if status_only else ""} {"-" * 50} ', end='\n')
+    print(f' input cmd:[{print_cmd}]', end='\n')
+
+
+def put_output(name, stdin, output_result):
+    print(f'=== {name} ===')
+    print(f' stdin  : [{stdin}]')
+    print(f' stdout : [{COLOR_DICT[CYAN] + output_result[STDOUT_IDX] + COLOR_DICT["end"]}]')
+    print(" stderr : [", end='')
+
+    for err_out in output_result[STDERR_IDX]:
+        print(COLOR_DICT[MAGENTA] + err_out + COLOR_DICT["end"])
+
+    # for i in range(len(output_result[STDERR_IDX])):
+    #     print(COLOR_DICT[MAGENTA] + output_result[STDERR_IDX][i] + COLOR_DICT["end"], end='')
+    #     if i + 1 < len(output_result[STDERR_IDX]):
+    #         print()
+    print("]")
+    print(f' status : {output_result[STATUS_IDX]}')
+    print(f' exited : {output_result[IS_EXITED_IDX]}')
+    print()
+
+
+def put_result(stdin, val, m_res, b_res, status_only, ko_case):
     test_num, _, _ = val
     if m_res is None or b_res is None:
         print_color_str(RED, f'[{test_num}. timeout]')
@@ -169,6 +177,7 @@ def put_result(val, m_res, b_res, status_only):
     elif not status_only and m_res == b_res:
         print_color_str(GREEN, f'[{test_num}. OK]')
         val[OK_IDX] += 1
+        ko_case.append([stdin, m_res, b_res])
     elif status_only and m_res[STATUS_IDX] == b_res[STATUS_IDX]:
         print_color_str(GREEN, f'[{test_num}. OK]')
         val[OK_IDX] += 1
@@ -179,6 +188,15 @@ def put_result(val, m_res, b_res, status_only):
     val[TEST_NO_IDX] += 1
     print()
 
+
+# put
+def put_output_and_result(test_no, stdin, val, m_res, b_res, status_only, ko_case):
+    put_title(stdin, test_no, status_only)
+
+    put_output("minishell", stdin, m_res)
+    put_output("bash", stdin, b_res)
+
+    put_result(stdin, val, m_res, b_res, status_only, ko_case)
 
 
 def put_total_result(val):
@@ -205,16 +223,12 @@ def output_test(test_input_list, status_only):
     ko = 0
     val = [test_num, ok, ko]
     ko_case = []
-    prev_ko = 0
     test_no = 1
 
     for stdin in test_input_list:
-        m_res, b_res = run_both(test_no, stdin, status_only)
-        put_result(val, m_res, b_res, status_only)
+        m_res, b_res = run_both(stdin)
+        put_output_and_result(test_no, stdin, val, m_res, b_res, status_only, ko_case)
         test_no += 1
-        if prev_ko != val[2]:
-            ko_case.append(stdin)
-        prev_ko = val[2]
 
     return put_total_result(val), ko_case
 
