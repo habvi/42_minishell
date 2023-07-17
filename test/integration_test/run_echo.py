@@ -45,7 +45,7 @@ def main():
                  # "echo 12345678901234567890123456789012345678901234567890123456789012345678",
                  ]
 
-    test_res |= test("ft_echo", echo_test)
+    test_res |= test("ft_echo", echo_test, False)
 
     return test_res
 

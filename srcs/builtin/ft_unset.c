@@ -13,7 +13,12 @@ static void	unset_args(const char *const *args, t_var *var, uint8_t *status)
 		if (is_valid_key(args[i]))
 			var->unset(var, args[i]);
 		else
-			*status = NOT_A_VALID_IDENTIFIER; // print error
+		{
+			*status = NOT_A_VALID_IDENTIFIER;
+			puterr_cmd_quoted_arg_msg(CMD_UNSET, \
+										args[i], \
+										ERROR_MSG_NOT_VALID_ID);
+		}
 		i++;
 	}
 }

@@ -1,9 +1,11 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <stdio.h>
 # include <stdbool.h>
 # include <stddef.h>
 # include <stdint.h>
+
 # include "ms_result.h"
 # include "ft_dprintf.h"
 
@@ -18,6 +20,8 @@
 # define PIPE_ERROR		(-1)
 # define READ_ERROR		(-1)
 # define WAIT_ERROR		(-1)
+# define UNLINK_ERROR	(-1)
+# define CLOSEDIR_ERROR	(-1)
 # define UNREACHABLE	(-1)
 
 # define STR_PATH_DELIMITER		":"
@@ -25,14 +29,19 @@
 # define STR_CURRENT_PATH		"./"
 # define STR_SLASH				"/"
 # define CHR_SLASH				'/'
+# define CHR_NULL				'\0'
+# define EMPTY_STR				"\0"
+# define SPACE					' '
+
+# define OPTION_FORCED_INTERACTIVE	'i'
+# define INVALID_OPTION				2
 
 /* status */
 // tokenize and parse
 # define SYNTAX_ERROR				2
 # define ERROR_MSG_SYNTAX			"syntax error near unexpected token"
-# define ERROR_SYNTAX_DEFAULT_ARG	"newline"
+# define SYNTAX_DEFAULT_ARG			"newline"
 # define ERROR_TYPE_WARNING			"warning"
-# define ERROR_MSG_WARNING			"warning"
 # define ERROR_MSG_HEREDOC_EOF		"here-document delimited by end-of-file"
 
 /* size */
@@ -54,6 +63,13 @@
 # define IN_FD_INIT		STDIN_FILENO
 # define OUT_FD_INIT	STDOUT_FILENO
 
+/* utils */
+# define RANDOM_FILENAME	"/dev/urandom"
+# define RANDOM_BUF_SIZE	100
+/* gnl */
+# define BUFFER_SIZE    	1024
+# define LF             	'\n'
+
 typedef struct s_var		t_var;
 typedef struct s_deque		t_deque;
 typedef struct s_deque_node	t_deque_node;
@@ -65,6 +81,7 @@ typedef struct s_context
 	bool	is_interactive;
 	char	*internal_pwd;
 	uint8_t	status;
+	bool	is_return;
 }	t_context;
 
 // temporarily here ...
@@ -76,6 +93,12 @@ void		debug_token_dq_node(t_deque_node *node);
 void		debug_print_ast_tree(t_ast *root, const char *str);
 char		*get_tree_symbol(bool is_rhs);
 char		get_tree_space(bool is_rhs);
+void		debug_print_dp_target_str(const char *target_path, \
+										const size_t len_target);
+void		debug_print_each_dp(const bool *dp, \
+								const char *match_str, \
+								const size_t len_t, \
+								size_t i);
 
 /* destroy */
 void		destroy_context(t_context context);
@@ -87,20 +110,26 @@ char		*input_line(void);
 size_t		count_argv(const char *const *argc);
 char		*extend_str(char *left, char *right);
 void		ft_abort(void);
-char		*get_working_directory(char *for_whom);
+char		*get_working_directory(const char *for_whom);
 bool		is_valid_key(const char *word);
 bool		is_valid_head(const char c);
 bool		is_valid_after_head(const char c);
 bool		is_valid_path(const char *path, int *tmp_err);
+bool		is_a_directory(const char *path);
 bool		test_opendir_strict(const char *path);
 char		*x_ft_itoa(int n);
 char		*x_ft_strdup(const char *str);
-char		*x_ft_strndup(const char *str, size_t maxlen);
+char		*x_ft_strndup(const char *str, const size_t maxlen);
 char		*x_ft_strjoin(char const *s1, char const *s2);
+char		*x_ft_substr(char const *str, const size_t start, size_t len);
 char		*create_split_src_paths(t_var *var, const char *key);
+char		*get_random_str(const size_t size);
+/* gnl */
+char		*ft_get_next_line(int fd, t_result *result);
 
 /* init */
-void		init_context(t_context *context);
+void		init_context(t_context *context, bool is_forced_interactive);
+t_result	analyze_option(int argc, char **argv, bool *is_forced_interactive);
 
 /* repl */
 t_result	read_eval_print_loop(t_context *context);
@@ -113,5 +142,37 @@ char		*create_exec_path(const char *const *argv, t_var *var);
 char		*create_valid_path_by_judge(char *paths, \
 										const char *const arg, \
 										bool (*judge)(const char *path));
+
+/* error msg */
+// arg, msg
+void		puterr_cmd_msg(const char *const arg, const char *msg);
+void		puterr_cmd_arg_msg(const char *cmd, \
+								const char *const arg, \
+								const char *msg);
+void		puterr_cmd_quoted_arg_msg(const char *cmd, \
+										const char *const arg, \
+										const char *msg);
+void		puterr_cmd_arg_msg_wo_colon(const char *cmd, \
+										const char *const arg, \
+										const char *msg);
+void		puterr_msg_quoted_arg(const char *msg, const char *const arg);
+void		puterr_whom_cmd_arg_msg(const char *for_whom, \
+									const char *cmd, \
+									const char *const arg, \
+									const char *msg);
+void		puterr_arg_op_msg(const char *const arg, const char op);
+void		puterr_heredoc_wanted_eof(const char *delimiter);
+void		puterr_env_option(const char *const arg);
+void		puterr_env_argument(const char *const arg);
+
+// set
+void		puterr_cmd_msg_set_status(const char *const cmd, \
+										const char *msg, \
+										t_context *context, \
+										uint8_t status);
+// ret
+bool		puterr_msg_quoted_arg_ret_bool(const char *msg, \
+											const char *const arg, \
+											bool ret);
 
 #endif //MINISHELL_H

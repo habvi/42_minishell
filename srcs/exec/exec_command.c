@@ -36,21 +36,9 @@ bool	is_last_command_node(t_ast *self_node)
 	return (false);
 }
 
-static bool	is_node_executable(t_ast *ast_node)
-{
-	t_node_kind	kind;
-
-	if (!ast_node)
-		return (false);
-	kind = ast_node->kind;
-	return (kind == NODE_KIND_COMMAND || kind == NODE_KIND_SUBSHELL);
-}
-
 // !single builtin commands, &&, ||, |, ()
 t_result	exec_command_each(t_ast *self_node, t_context *context)
 {
-	if (!is_node_executable(self_node))
-		return (SUCCESS);
 	// no need new pipe, when parent is subshell node (ittan ignore builtin..)
 	if (self_node->parent && self_node->parent->kind == NODE_KIND_OP_PIPE)
 	{
@@ -60,9 +48,11 @@ t_result	exec_command_each(t_ast *self_node, t_context *context)
 	self_node->pid = x_fork();
 	if (self_node->pid == FORK_ERROR)
 		return (PROCESS_ERROR);
-	context->is_interactive = false;
 	if (self_node->pid == CHILD_PID)
+	{
+		context->is_interactive = false;
 		child_process(self_node, context);
+	}
 	else
 	{
 		if (parent_process(self_node, context) == PROCESS_ERROR)

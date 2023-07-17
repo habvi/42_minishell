@@ -18,36 +18,47 @@ static void	print_tokens_dq_in_oneline(t_deque *dq)
 	while (node)
 	{
 		token = (t_token *)node->content;
-		ft_dprintf(STDERR_FILENO, "%s ", token->str);
+		ft_dprintf(STDERR_FILENO, "%s", token->str);
 		node = node->next;
+		if (node)
+			ft_dprintf(STDERR_FILENO, " ");
+	}
+}
+
+static void	print_redirect_in_oneline(t_deque *dq)
+{
+	t_deque_node	*node;
+	t_redirect		*redirect;
+
+	node = dq->node;
+	while (node)
+	{
+		redirect = (t_redirect *)node->content;
+		ft_dprintf(STDERR_FILENO, "%s ", get_token_kind_str(redirect->kind));
+		print_tokens_dq_in_oneline(redirect->tokens);
+		node = node->next;
+		if (node)
+			ft_dprintf(STDERR_FILENO, " ");
 	}
 }
 
 static void	print_token_comamnd_and_redirect(t_ast *ast)
 {
 	if (ast->command)
-		print_tokens_dq_in_oneline(ast->command);
-	if (ast->redirects)
 	{
-		ft_dprintf(STDERR_FILENO, ":");
-		print_tokens_dq_in_oneline(ast->redirects->list);
+		ft_dprintf(STDERR_FILENO, "command[");
+		print_tokens_dq_in_oneline(ast->command);
+		ft_dprintf(STDERR_FILENO, "]");
 	}
-	ft_dprintf(STDERR_FILENO, " :prev[%d]in[%d]out[%d] ", \
+	if (ast->redirect_list)
+	{
+		ft_dprintf(STDERR_FILENO, ", redirect[");
+		print_redirect_in_oneline(ast->redirect_list);
+		ft_dprintf(STDERR_FILENO, "], ");
+	}
+	ft_dprintf(STDERR_FILENO, "fd: prev[%d]in[%d]out[%d] ", \
 				ast->prev_fd, ast->pipe_fd[READ], ast->pipe_fd[WRITE]);
 	ft_dprintf(STDERR_FILENO, "\n");
-}
-
-static char	*get_ast_node_kind_str(t_node_kind node_kind)
-{
-	if (node_kind == NODE_KIND_OP_PIPE)
-		return ("|");
-	if (node_kind == NODE_KIND_OP_OR)
-		return ("||");
-	if (node_kind == NODE_KIND_OP_AND)
-		return ("&&");
-	if (node_kind == NODE_KIND_SUBSHELL)
-		return ("(");
-	return ("");
 }
 
 static void	print_tree_node(t_ast *node, int depth, int is_rhs, char *prefix)

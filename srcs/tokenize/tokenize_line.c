@@ -14,6 +14,7 @@ t_token	*init_token_struct(void)
 	token->str = NULL;
 	token->kind = TOKEN_KIND_WORD;
 	token->quote = QUOTE_NONE;
+	token->is_quoted_arr = NULL;
 	token->concat_next = false;
 	return (token);
 }
@@ -28,12 +29,13 @@ static t_token	*create_token_struct(char *token_str, char next_chr)
 	return (token);
 }
 
-static t_deque_node	*create_token_node(char *token_str, char next_chr)
+t_deque_node	*create_token_node(char *token_str, char next_chr)
 {
 	t_token			*token;
 	t_deque_node	*node;
 
 	token = create_token_struct(token_str, next_chr);
+	set_is_quoted_value_to_arr(token);
 	node = deque_node_new(token);
 	if (!node)
 		ft_abort();

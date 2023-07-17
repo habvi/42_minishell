@@ -5,67 +5,53 @@
 #include "ms_var.h"
 #include "ft_deque.h"
 #include "ft_mem.h"
+#include "ft_string.h"
 
 static void	expand_token(t_token *token, t_context *context)
 {
-	char	*str;
-	char	*new_str;
-	char	*joind_str;
+	char	*expand_str;
 
-	joind_str = NULL;
-	str = token->str;
-	while (*str)
-	{
-		if (*str == CHAR_DOLLAR)
-		{
-			new_str = expand_parameter(&str, context);
-			joind_str = extend_str(joind_str, new_str);
-		}
-		new_str = substr_before_dollar(&str);
-		joind_str = extend_str(joind_str, new_str);
-	}
+	expand_str = get_expand_token_str(token->str, context);
 	ft_free(&token->str);
-	token->str = joind_str;
+	token->str = expand_str;
+	set_is_quoted_value_to_arr(token);
 }
 
-static void	expand_tokens(t_deque *tokens, t_context *context)
+static void	expand_tokens(const t_deque *tokens, t_context *context)
 {
 	t_deque_node	*node;
 	t_token			*token;
 
-	if (tokens)
+	if (!tokens)
+		return ;
+	node = tokens->node;
+	while (node)
 	{
-		node = tokens->node;
-		while (node)
+		token = (t_token *)node->content;
+		if (token->quote == QUOTE_SINGLE || !ft_strchr(token->str, CHAR_DOLLAR))
 		{
-			token = (t_token *)node->content;
-			if (token->quote == QUOTE_SINGLE)
-			{
-				node = node->next;
-				continue ;
-			}
-			expand_token(token, context);
 			node = node->next;
+			continue ;
 		}
+		expand_token(token, context);
+		node = node->next;
 	}
 }
 
-// word splitting: if unquoted, word split by delimiter
-t_result	expand_variables(t_ast *self_node, t_context *context)
+t_result	expand_processing(t_deque **tokens, t_context *context)
 {
-	t_redirect	*redirects;
+	t_result	result;
 
-	expand_tokens(self_node->command, context);
-//	split_expand_word(self_node->command);
-	remove_empty_tokens(self_node->command);
-	concat_tokens(self_node->command);
-	redirects = self_node->redirects;
-	if (redirects)
-	{
-		expand_tokens(redirects->list, context);
-//		split_expand_word(redirects->list);
-		remove_empty_tokens(redirects->list);
-		concat_tokens(redirects->list);
-	}
-	return (SUCCESS);
+	expand_tokens(*tokens, context);
+	split_expand_word(tokens);
+	concat_tokens(*tokens);
+	remove_empty_tokens(*tokens);
+	result = expand_wildcard(tokens);
+	return (result);
+}
+
+// word splitting: if unquoted, word split by delimiter
+t_result	expand_variable_of_cmd_tokens(t_ast *self_node, t_context *context)
+{
+	return (expand_processing(&self_node->command, context));
 }

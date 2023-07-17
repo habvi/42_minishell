@@ -1,16 +1,17 @@
+#include <stdbool.h>
+#include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-#include <stdbool.h>
 #include "minishell.h"
 
 static bool	is_empty_line(const char *line)
 {
-	return (line[0] == '\0');
+	return (line[0] == CHR_NULL);
 }
 
 static bool	is_ignorespace(const char *line)
 {
-	return (line[0] == ' ');
+	return (line[0] == SPACE);
 }
 
 static void	add_accept_line_to_history(const char *line)

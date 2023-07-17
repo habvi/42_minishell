@@ -10,9 +10,7 @@ static void	remove_quote_in_token_str_each(t_token *token)
 	const size_t	len = ft_strlen(token->str);
 	char			*quote_removed;
 
-	quote_removed = ft_substr(token->str, 1, len - 2);
-	if (!quote_removed)
-		ft_abort();
+	quote_removed = x_ft_substr(token->str, 1, len - 2);
 	ft_free(&token->str);
 	token->str = quote_removed;
 }

@@ -21,9 +21,13 @@ def main():
                  PRINT_CMD,
                  # "export -option KEU=value",
                  # PRINT_CMD,
+                 "env | grep -v ^_ | sort",  # tmp
+                #  "export -option KEU=value", # bash print usage
+                 "env | grep -v ^_ | sort",  # tmp
+                 "unset A1",
                  ]
 
-    test_res |= test("ft_export", echo_test)
+    test_res |= test("ft_export", echo_test, False)
 
     return test_res
 

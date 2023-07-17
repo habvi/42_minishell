@@ -1,5 +1,10 @@
+import glob
+
 import run_builtin
 import run_pipe
+import run_op
+import run_error
+import run_original
 
 
 BLUE = "\x1b[34m"
@@ -14,6 +19,16 @@ def print_test_title(title):
     print(RESET)
 
 
+def print_ng_cases(test_res):
+    if not test_res:
+        return
+
+    for file in glob.glob('ko_case_*.txt'):
+        with open(file, 'r') as f:
+            print(f.read())
+    return
+
+
 def main():
     test_res = 0
 
@@ -22,6 +37,17 @@ def main():
 
     print_test_title("EXECUTION")
     test_res |= run_pipe.main()
+
+    print_test_title("OPERATION")
+    test_res |= run_op.main()
+
+    print_test_title("ERROR")
+    test_res |= run_error.main()
+
+    # print_test_title("ORIGINAL")
+    # test_res |= run_original.main()
+
+    print_ng_cases(test_res)
 
     exit(test_res)
 

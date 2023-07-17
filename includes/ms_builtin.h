@@ -44,9 +44,9 @@
 
 # define NON_NUMERIC_ARG_STATUS	2
 # define TOO_MANY_ARG_STATUS	1
+# define ENV_INVALID_OPTION		125
 
 # define NOT_A_VALID_IDENTIFIER	1
-# define INVALID_OPTION			2
 
 # define CD_ERROR_STATUS		1
 
@@ -55,6 +55,7 @@
 # define ERROR_MSG_TOO_MANY_ARG	"too many arguments"
 # define ERROR_MSG_REQUIRED_NUM	"numeric argument required"
 # define ERROR_MSG_INVALID_OP	"invalid option"
+# define ERROR_MSG_INVALID_ARG	"invalid argument"
 # define ERROR_MSG_NOT_VALID_ID	"not a valid identifier"
 # define ERROR_MSG_NOT_SET		"not set"
 
@@ -104,7 +105,7 @@ bool		is_whitespace(char c);
 // cd
 char		*cd_set_path(const char *arg, t_var *var, bool *is_print_path);
 t_result	cd_change_dir_to_valid_path(const char *absolute_path, \
-										uint8_t *status);
+										int *tmp_err);
 void		cd_update_pwd(char *path, t_context *context);
 // canonicalize
 char		*cd_canonicalize_path(const char *path, const char *internal_pwd);
@@ -120,6 +121,6 @@ void		handle_double_slash_path(const char *path, char **absolute_path);
 char		*convert_path_elems_to_absolute_path(t_deque *path_elems);
 char		*search_cdpath(const char *arg, t_var *var, bool *is_print_path);
 
-bool		is_absolute_path(const char *path); // todo : move header..?
+bool		is_absolute_path(const char *path);
 
 #endif //MS_BUILTIN_H

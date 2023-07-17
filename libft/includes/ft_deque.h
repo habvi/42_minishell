@@ -25,7 +25,7 @@ void			deque_clear_all(t_deque **deque, void (*del)(void *));
 void			deque_clear_node(t_deque_node **node, void (*del)(void *));
 
 /* is_empty */
-bool			deque_is_empty(t_deque *deque);
+bool			deque_is_empty(const t_deque *deque);
 
 /* pop */
 t_deque_node	*deque_pop_back(t_deque *deque);

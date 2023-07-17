@@ -9,7 +9,7 @@ t_node_kind	convert_kind_token_to_node(t_deque_node *token_node)
 	t_token_kind	token_kind;
 
 	if (!token_node)
-		return (0);//todo: tmp
+		return (NODE_KIND_NONE);
 	token = token_node->content;
 	token_kind = token->kind;
 	if (token_kind == TOKEN_KIND_OP_PIPE)
@@ -24,5 +24,5 @@ t_node_kind	convert_kind_token_to_node(t_deque_node *token_node)
 		return (NODE_KIND_SUBSHELL);
 	if (token_kind == TOKEN_KIND_WORD)
 		return (NODE_KIND_COMMAND);
-	return (NODE_KIND_NONE); //todo: tmp
+	return (NODE_KIND_NONE);
 }

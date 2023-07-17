@@ -1,44 +1,18 @@
-#include <limits.h>
+#include <errno.h>
 #include "minishell.h"
 #include "ms_parse.h"
-#include "ft_dprintf.h"
-#include "ft_hash.h"
-#include "ft_sys.h"
 #include "ft_mem.h"
 
-static int	count_up_seed_num(void)
+static char	*create_hidden_filename(void)
 {
-	static int	num;
-
-	num++;
-	return (num);
-}
-
-static char	*create_hidden_filename(const char *hash_str, const char *seed_str)
-{
-	char	*filename;
+	char	*random_str;
 	char	*hidden_filename;
 
-	filename = x_ft_strjoin(hash_str, seed_str);
-	hidden_filename = x_ft_strjoin(HEREDOC_FILE_PREFIX, filename);
-	ft_free(&filename);
-	return (hidden_filename);
-}
-
-static char	*create_hidden_filename_based_on_hash(void)
-{
-	const int	seed = count_up_seed_num();
-	size_t		hash;
-	char		*seed_str;
-	char		*hash_str;
-	char		*hidden_filename;
-
-	seed_str = x_ft_itoa(seed);
-	hash = hs_gen_fnv((const unsigned char *)seed_str, (size_t)INT_MAX);
-	hash_str = x_ft_itoa((int)hash);
-	hidden_filename = create_hidden_filename(hash_str, seed_str);
-	ft_free(&seed_str);
-	ft_free(&hash_str);
+	random_str = get_random_str((size_t)RANDOM_STR_SIZE);
+	if (!random_str)
+		return (NULL);
+	hidden_filename = x_ft_strjoin(HEREDOC_FILE_PREFIX, random_str);
+	ft_free(&random_str);
 	return (hidden_filename);
 }
 
@@ -49,19 +23,21 @@ static bool	is_file_creatable(const char *filepath)
 
 	errno = 0;
 	ret = access(filepath, F_OK);
-	if (ret == ACCESS_ERROR && errno == ENOENT) //todo
+	if (ret == ACCESS_ERROR && errno == ENOENT)
 		return (true);
 	return (false);
 }
 
-// filename = <hash> + num -> itoa
+// filename = .prefix + random_str
 char	*create_heredoc_filename(void)
 {
 	char	*filename;
 
 	while (true)
 	{
-		filename = create_hidden_filename_based_on_hash();
+		filename = create_hidden_filename();
+		if (!filename)
+			return (NULL);
 		if (is_file_creatable(filename))
 			break ;
 		ft_free(&filename);

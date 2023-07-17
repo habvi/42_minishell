@@ -39,19 +39,12 @@ static uint8_t	get_exit_status(const char *arg, \
 	return ((uint8_t)(long_num & BYTE_MASK));
 }
 
-// todo: print_error tmp?
 static void	put_exit_err(const char *arg, t_exit_arg res)
 {
 	if (res == RETURN_TOO_MANY_NUMERIC_ARG)
-	{
-		ft_dprintf(STDERR_FILENO, "%s: %s: %s\n", \
-					SHELL_NAME, CMD_EXIT, ERROR_MSG_TOO_MANY_ARG);
-	}
+		puterr_cmd_msg(CMD_EXIT, ERROR_MSG_TOO_MANY_ARG);
 	else if (res == EXIT_NON_NUMERIC_ARG)
-	{
-		ft_dprintf(STDERR_FILENO, "%s: %s: %s: %s\n", \
-					SHELL_NAME, CMD_EXIT, arg, ERROR_MSG_REQUIRED_NUM);
-	}
+		puterr_cmd_arg_msg(CMD_EXIT, arg, ERROR_MSG_REQUIRED_NUM);
 }
 
 static bool	is_exit(t_exit_arg res)
@@ -83,6 +76,9 @@ uint8_t	ft_exit(const char *const *argv, t_context *context)
 		ft_dprintf(STDERR_FILENO, "%s\n", CMD_EXIT);
 	put_exit_err(argv[EXIT_ARG_IDX], arg_result);
 	if (!is_exit(arg_result))
+	{
+		context->is_return = true;
 		return (status);
+	}
 	exit(status);
 }

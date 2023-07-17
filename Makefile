@@ -1,13 +1,28 @@
 
 NAME		:=	minishell
 
+UNAME 		:= $(shell uname)
+
 CC			:=	cc
-CFLAGS		:=	-Wall -Wextra -Werror -MMD -MP -pedantic
-RL_FLAGS	:=	-lreadline
+
+CFLAGS		:=	-Wall -Wextra -Werror -MMD -MP
+ifeq ($(UNAME), Linux)
+	CFLAGS	+=	-pedantic
+endif
+
+ifeq ($(UNAME), Linux)
+	RL_FLAGS	:=	-lreadline
+else
+ifeq ($(UNAME), Darwin)
+	RL_FLAGS	:= -L$(shell brew --prefix readline)/lib -lreadline
+endif
+endif
+
 MKDIR		:=	mkdir -p
 
 SRCS_DIR	:=	srcs
-SRCS		:=	destroy.c \
+SRCS		:=	analyze_minishell_option.c \
+				destroy.c \
 				init.c \
 				main.c \
 				repl.c
@@ -56,16 +71,34 @@ SRCS		+=	$(VAR_DIR)/add.c \
 DEBUG_DIR	:=	debug
 SRCS		+=	$(DEBUG_DIR)/debug_print_ast.c \
 				$(DEBUG_DIR)/debug_print_ast_sub.c \
+				$(DEBUG_DIR)/debug_print_dp_table.c \
 				$(DEBUG_DIR)/debug_token_dq.c \
+				$(DEBUG_DIR)/debug_token_dq_sub.c \
 				$(DEBUG_DIR)/put.c
+
+ERROR_DIR	:=	error
+SRCS		+=	$(ERROR_DIR)/error_msg_1.c \
+				$(ERROR_DIR)/error_msg_2.c \
+				$(ERROR_DIR)/error_msg_ret.c \
+				$(ERROR_DIR)/error_msg_set_status.c
 
 EXEC_DIR	:=	exec
 EXPAND_DIR	:=	expand
 SRCS		+=	$(EXEC_DIR)/$(EXPAND_DIR)/concat_tokens.c  \
+				$(EXEC_DIR)/$(EXPAND_DIR)/dirp.c\
+				$(EXEC_DIR)/$(EXPAND_DIR)/expand_for_heredoc.c\
+				$(EXEC_DIR)/$(EXPAND_DIR)/expand_for_redirect.c\
 				$(EXEC_DIR)/$(EXPAND_DIR)/expand_parameter.c\
+				$(EXEC_DIR)/$(EXPAND_DIR)/expand_var_in_heredoc.c\
 				$(EXEC_DIR)/$(EXPAND_DIR)/expansion.c  \
+				$(EXEC_DIR)/$(EXPAND_DIR)/is_pattern_match.c  \
+				$(EXEC_DIR)/$(EXPAND_DIR)/pattern_matching.c  \
 				$(EXEC_DIR)/$(EXPAND_DIR)/remove_empty_tokens.c  \
+				$(EXEC_DIR)/$(EXPAND_DIR)/sort_filenames.c  \
+				$(EXEC_DIR)/$(EXPAND_DIR)/split_expand_word.c  \
 				$(EXEC_DIR)/$(EXPAND_DIR)/substr_before_dollar.c  \
+				$(EXEC_DIR)/$(EXPAND_DIR)/wildcard.c  \
+				$(EXEC_DIR)/$(EXPAND_DIR)/word_split.c  \
 				$(EXEC_DIR)/call_builtin_command.c \
 				$(EXEC_DIR)/child_pipes.c \
 				$(EXEC_DIR)/child_process.c \
@@ -77,6 +110,9 @@ SRCS		+=	$(EXEC_DIR)/$(EXPAND_DIR)/concat_tokens.c  \
 				$(EXEC_DIR)/is_single_builtin.c \
 				$(EXEC_DIR)/parent_pipes.c \
 				$(EXEC_DIR)/parent_process.c \
+				$(EXEC_DIR)/redirect_connect_to_proc.c \
+				$(EXEC_DIR)/redirect_open_fd.c \
+				$(EXEC_DIR)/redirects.c \
 				$(EXEC_DIR)/single_builtin.c \
 
 INPUT_DIR	:=	input
@@ -85,6 +121,7 @@ SRCS		+=	$(INPUT_DIR)/input.c
 PARSE_DIR	:=	parse
 HEREDOC_DIR	:=	heredoc
 SRCS		+=	$(PARSE_DIR)/$(HEREDOC_DIR)/create_heredoc_filename.c \
+				$(PARSE_DIR)/$(HEREDOC_DIR)/execute_heredoc_each.c \
 				$(PARSE_DIR)/$(HEREDOC_DIR)/heredoc.c \
 				$(PARSE_DIR)/$(HEREDOC_DIR)/open_heredoc_fd.c \
 				$(PARSE_DIR)/abstruct_syntax_tree.c \
@@ -99,7 +136,8 @@ SRCS		+=	$(PARSE_DIR)/$(HEREDOC_DIR)/create_heredoc_filename.c \
 				$(PARSE_DIR)/move_redirect_from_command.c \
 				$(PARSE_DIR)/new_ast_node.c \
 				$(PARSE_DIR)/parse.c \
-				$(PARSE_DIR)/pre_parse_syntax.c
+				$(PARSE_DIR)/pre_parse_syntax.c \
+				$(PARSE_DIR)/transfer_redirect_from_command.c
 
 PATH_DIR	:=	path
 SRCS		+=	$(PATH_DIR)/create_exec_path.c \
@@ -110,6 +148,7 @@ SRCS		+=	$(PATH_DIR)/create_exec_path.c \
 
 TOKEN_DIR	:=	tokenize
 SRCS		+=	$(TOKEN_DIR)/del_token.c \
+				$(TOKEN_DIR)/get_token_kind.c \
 				$(TOKEN_DIR)/get_token_str.c \
 				$(TOKEN_DIR)/get_token_tail.c \
 				$(TOKEN_DIR)/is_closed_paren.c \
@@ -120,6 +159,7 @@ SRCS		+=	$(TOKEN_DIR)/del_token.c \
 				$(TOKEN_DIR)/is_token_kind_from_node_subshell.c \
 				$(TOKEN_DIR)/is_token_str.c \
 				$(TOKEN_DIR)/remove_quote.c \
+				$(TOKEN_DIR)/set_is_quoted_arr.c \
 				$(TOKEN_DIR)/set_token_kind.c \
 				$(TOKEN_DIR)/set_token_quote_all.c \
 				$(TOKEN_DIR)/tokenize.c \
@@ -129,12 +169,15 @@ UTILS_DIR	:=	utils
 SRCS		+=	$(UTILS_DIR)/count_array.c \
 				$(UTILS_DIR)/extend_str.c \
 				$(UTILS_DIR)/ft_abort.c \
+				$(UTILS_DIR)/ft_gnl.c \
+				$(UTILS_DIR)/get_random_str.c \
 				$(UTILS_DIR)/get_working_directory.c \
 				$(UTILS_DIR)/is_valid_key.c \
 				$(UTILS_DIR)/is_valid_path.c \
 				$(UTILS_DIR)/x_ft_itoa.c \
 				$(UTILS_DIR)/x_ft_strdup.c \
-				$(UTILS_DIR)/x_ft_strjoin.c
+				$(UTILS_DIR)/x_ft_strjoin.c \
+				$(UTILS_DIR)/x_ft_substr.c
 
 OBJS_DIR	:=	objs
 OBJS		:=	$(SRCS:%.c=$(OBJS_DIR)/%.o)
@@ -147,7 +190,11 @@ ifdef SANI
 endif
 
 INCLUDES_DIR	:=	includes
-INCLUDES		:=	-I./$(INCLUDES_DIR)/ -I$(LIBFT_DIR)/$(INCLUDES_DIR)/
+INCLUDES	:=	-I./$(INCLUDES_DIR)/ -I$(LIBFT_DIR)/$(INCLUDES_DIR)/
+ifeq ($(UNAME), Darwin)
+	INCLUDES	+=	-I$(shell brew --prefix readline)/include
+endif
+
 DEPS			:=	$(OBJS:.o=.d)
 
 .PHONY	: all
@@ -203,6 +250,7 @@ t		: all
 # test all
 .PHONY		: test_all
 test_all	: all
+	$(shell rm ko_case_*.txt)
 	python3 ./test/integration_test/run_all.py
 
 # test multi pipe
@@ -240,9 +288,45 @@ test_export	: all
 test_pwd	: all
 	python3 ./test/integration_test/run_pwd.py
 
-# test builtin pwd
+# test op paren
+.PHONY		: test_paren
+test_paren	: all
+	python3 ./test/integration_test/run_paren.py
+
+# test op and or
+.PHONY		: test_and_or
+test_and_or	: all
+	python3 ./test/integration_test/run_and_or.py
+
+# test mix
 .PHONY		: test_mix
 test_mix	: all
 	python3 ./test/integration_test/run_mix.py
+
+# test redirects
+.PHONY		: test_redirects
+test_redirects	: all
+	python3 ./test/integration_test/run_redirects.py
+
+# test error
+.PHONY		: test_error
+test_error	: all
+	python3 ./test/integration_test/run_error.py
+
+# test env
+.PHONY		: test_env
+test_env	: all
+	python3 ./test/integration_test/run_env.py
+
+# test expansion
+.PHONY		: test_expansion
+test_expansion	: all
+	python3 ./test/integration_test/run_expansion.py
+
+# test original
+.PHONY		: test_original
+test_original	: all
+	python3 ./test/integration_test/run_original.py
+
 
 -include $(DEPS)

@@ -34,7 +34,7 @@ char	*get_next_path(char **path_list)
 	tail = head;
 	while (*tail && *tail != CHR_PATH_DELIMITER)
 		tail++;
-	path = ft_strndup(head, tail - head); // todo: x_
+	path = x_ft_strndup(head, tail - head);
 	if (*tail)
 		tail++;
 	*path_list = tail;

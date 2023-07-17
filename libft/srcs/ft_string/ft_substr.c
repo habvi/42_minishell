@@ -1,6 +1,6 @@
 #include "ft_string.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substr(char const *s, const size_t start, const size_t len)
 {
 	size_t	len_s;
 

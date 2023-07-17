@@ -12,7 +12,7 @@ static bool	is_valid_redirect_syntax_each(const t_token *cur_token, \
 	return (false);
 }
 
-static t_token	*get_next_token(t_deque_node *cur_node)
+static t_token	*get_next_token(const t_deque_node *cur_node)
 {
 	if (!cur_node->next)
 		return (NULL);
@@ -20,18 +20,21 @@ static t_token	*get_next_token(t_deque_node *cur_node)
 }
 
 // format: op word, word needed
-bool	is_valid_redirect_syntax_all(t_deque_node *node)
+bool	is_valid_redirect_syntax_all(t_deque_node **node)
 {
 	t_token	*cur_token;
 	t_token	*next_token;
 
-	while (node)
+	while (*node)
 	{
-		cur_token = (t_token *)node->content;
-		next_token = get_next_token(node);
+		cur_token = (t_token *)(*node)->content;
+		next_token = get_next_token(*node);
 		if (!is_valid_redirect_syntax_each(cur_token, next_token))
+		{
+			*node = (*node)->next;
 			return (false);
-		node = node->next;
+		}
+		*node = (*node)->next;
 	}
 	return (true);
 }
