@@ -77,7 +77,7 @@ static t_result	expand_and_exec_redirect_all(t_ast *self_node, \
 	return (SUCCESS);
 }
 
-t_result	close_prod_fd_id_exit(t_ast *self_node)
+t_result	close_prod_fd_if_exit(t_ast *self_node)
 {
 	if (self_node->proc_fd[IN] != IN_FD_INIT)
 	{
