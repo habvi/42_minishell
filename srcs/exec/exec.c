@@ -5,7 +5,7 @@
 #include "ms_result.h"
 #include "ft_sys.h"
 
-static t_result	close_fd_for_redirect_failed(t_ast *self_node)
+static t_result	close_prev_fd_for_redirect_failed(t_ast *self_node)
 {
 	if (self_node->prev_fd != IN_FD_INIT)
 	{
@@ -25,15 +25,15 @@ static bool	is_node_executable(t_ast *self_node)
 	return (kind == NODE_KIND_COMMAND || kind == NODE_KIND_SUBSHELL);
 }
 
-static t_result	execute_builtin_or_external_command(t_ast *self_node, t_context *context)
+static t_result	execute_builtin_or_external_command(t_ast *self_node, t_context *context, t_result redirect_result)
 {
 	t_result	result;
 
 	if (is_single_builtin_command(self_node))
-		execute_single_builtin(self_node, context);
+		execute_single_builtin(self_node, context, redirect_result);
 	else if (is_node_executable(self_node))
 	{
-		result = exec_command_each(self_node, context);
+		result = exec_command_each(self_node, context, redirect_result);
 		if (result == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 	}
@@ -41,7 +41,7 @@ static t_result	execute_builtin_or_external_command(t_ast *self_node, t_context 
 }
 
 // execute_single_builtin() not return t_result
-static t_result	execute_command_internal(t_ast *self_node, t_context *context)
+static t_result	execute_command_internal(t_ast *self_node, t_context *context, t_result redirect_result)
 {
 	t_result	result;
 	int			stdin_copy;
@@ -49,12 +49,13 @@ static t_result	execute_command_internal(t_ast *self_node, t_context *context)
 
 	if (backup_stdio_fd(&stdin_copy, &stdout_copy, self_node) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
-	result = execute_builtin_or_external_command(self_node, context);
+	result = execute_builtin_or_external_command(self_node, context, redirect_result);
 	if (restore_stdio_fd(stdin_copy, stdout_copy) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
 	return (result);
 }
 
+// todo: fail_fd = -1
 static t_result	expand_and_redirect(t_ast *self_node, t_context *context)
 {
 	t_result	result;
@@ -64,7 +65,7 @@ static t_result	expand_and_redirect(t_ast *self_node, t_context *context)
 	result = redirect_fd(self_node, context);
 	if ((result == PROCESS_ERROR) || (result == FAILURE))
 	{
-		if (close_fd_for_redirect_failed(self_node) == PROCESS_ERROR)
+		if (close_prev_fd_for_redirect_failed(self_node) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 	}
 	return (result);
@@ -72,7 +73,7 @@ static t_result	expand_and_redirect(t_ast *self_node, t_context *context)
 
 t_result	execute_command_recursive(t_ast *self_node, t_context *context)
 {
-	t_result	result;
+	t_result	redirect_result;
 
 	if (!self_node)
 		return (SUCCESS);
@@ -80,10 +81,10 @@ t_result	execute_command_recursive(t_ast *self_node, t_context *context)
 		return (PROCESS_ERROR);
 	if (exec_handle_right_node(self_node, context) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
-	result = expand_and_redirect(self_node, context);
-	if ((result == PROCESS_ERROR) || (result == FAILURE))
-		return (result);
-	if (execute_command_internal(self_node, context) == PROCESS_ERROR)
+	redirect_result = expand_and_redirect(self_node, context);
+	if (redirect_result == PROCESS_ERROR)
+		return (PROCESS_ERROR);
+	if (execute_command_internal(self_node, context, redirect_result) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
 	return (SUCCESS);
 }
@@ -100,6 +101,7 @@ t_result	execute_command(t_ast **self_node, \
 		return (PROCESS_ERROR);
 	}
 	exec_result = execute_command_recursive(*self_node, context);
+	debug_print_ast_tree(*self_node, "exec");
 	destroy_ast_tree(self_node, exec_result);
 	return (exec_result);
 }

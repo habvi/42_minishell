@@ -37,7 +37,7 @@ bool	is_last_command_node(t_ast *self_node)
 }
 
 // !single builtin commands, &&, ||, |, ()
-t_result	exec_command_each(t_ast *self_node, t_context *context)
+t_result	exec_command_each(t_ast *self_node, t_context *context, t_result redirect_result)
 {
 	// no need new pipe, when parent is subshell node (ittan ignore builtin..)
 	if (self_node->parent && self_node->parent->kind == NODE_KIND_OP_PIPE)
@@ -51,7 +51,7 @@ t_result	exec_command_each(t_ast *self_node, t_context *context)
 	if (self_node->pid == CHILD_PID)
 	{
 		context->is_interactive = false;
-		child_process(self_node, context);
+		child_process(self_node, context, redirect_result);
 	}
 	else
 	{

@@ -6,6 +6,7 @@
 
 static t_result	connect_redirect_in_to_proc(int *prev_fd, int in_fd)
 {
+	ft_dprintf(2, " %s prev:%d, proc_in:%d\n", __func__, *prev_fd, in_fd);
 	if (*prev_fd != IN_FD_INIT)
 	{
 		if (x_close(*prev_fd) == CLOSE_ERROR)
@@ -23,6 +24,7 @@ static t_result	connect_redirect_in_to_proc(int *prev_fd, int in_fd)
 
 static t_result	connect_redirect_out_to_proc(int out_fd)
 {
+	ft_dprintf(2, " %s proc_out:%d\n", __func__, out_fd);
 	if (x_close(STDOUT_FILENO) == CLOSE_ERROR)
 		return (PROCESS_ERROR);
 	if (x_dup2(out_fd, STDOUT_FILENO) == DUP_ERROR)
@@ -34,35 +36,32 @@ static t_result	connect_redirect_out_to_proc(int out_fd)
 
 bool	is_use_redirect_in(int proc_in_fd)
 {
-	return (proc_in_fd != IN_FD_INIT);
+	return (proc_in_fd != IN_FD_INIT && proc_in_fd != REDIRECT_FAILURE);
 }
 
 bool	is_use_redirect_out(int proc_out_fd)
 {
-	return (proc_out_fd != OUT_FD_INIT);
+	return (proc_out_fd != OUT_FD_INIT && proc_out_fd != REDIRECT_FAILURE);
 }
 
-t_result	connect_redirect_to_proc(t_ast *self_node)
+t_result	connect_redirect_to_proc(int *prev_fd, int proc_fd[2])
 {
-	if (is_use_redirect_in(self_node->proc_fd[IN]))
+	ft_dprintf(2, "%s prev:%d, proc(%d, %d)\n", __func__, *prev_fd, proc_fd[IN], proc_fd[OUT]);
+	if (is_use_redirect_in(proc_fd[IN]))
 	{
-		if (connect_redirect_in_to_proc(\
-			&self_node->prev_fd, self_node->proc_fd[IN]) == PROCESS_ERROR)
+		if (connect_redirect_in_to_proc(prev_fd, proc_fd[IN]) == PROCESS_ERROR)
 		{
-			close_proc_out_fd(&self_node->proc_fd[OUT]);
+			close_proc_out_fd(&proc_fd[OUT]);
 			return (PROCESS_ERROR);
 		}
-//		self_node->proc_fd[IN] = REDIRECT_USED;
 	}
-	if (is_use_redirect_out(self_node->proc_fd[OUT]))
+	if (is_use_redirect_out(proc_fd[OUT]))
 	{
-		if (connect_redirect_out_to_proc(\
-			self_node->proc_fd[OUT]) == PROCESS_ERROR)
+		if (connect_redirect_out_to_proc(proc_fd[OUT]) == PROCESS_ERROR)
 		{
-			close_proc_in_fd(&self_node->proc_fd[IN]);
+			close_proc_in_fd(&proc_fd[IN]);
 			return (PROCESS_ERROR);
 		}
-//		self_node->proc_fd[OUT] = REDIRECT_USED;
 	}
 	return (SUCCESS);
 }

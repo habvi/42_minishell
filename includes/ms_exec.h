@@ -72,11 +72,11 @@ bool			is_command_builtin(const char *cmd);
 /* ast */
 char			**convert_command_to_argv(t_deque *command);
 t_result		handle_child_pipes(t_ast *self_node);
-void			child_process(t_ast *self_node, t_context *context);
+void			child_process(t_ast *self_node, t_context *context, t_result redirect_result);
 t_result		handle_parent_pipes(t_ast *self_node);
 t_result		parent_process(t_ast *self_node, t_context *context);
-t_result		exec_command_each(t_ast *self_node, t_context *context);
-void			execute_single_builtin(t_ast *self_node, t_context *context);
+t_result		exec_command_each(t_ast *self_node, t_context *context, t_result redirect_result);
+void			execute_single_builtin(t_ast *self_node, t_context *context, t_result redirect_result);
 bool			is_single_builtin_command(const t_ast *self_node);
 bool			is_last_command_node(t_ast *self_node);
 char			*get_head_token_str(const t_deque *command);
@@ -92,7 +92,7 @@ t_result		exec_handle_right_node(t_ast *self_node, t_context *context);
 t_redirect		*init_redirect(void);
 void			del_redirect(void *content);
 t_result		redirect_fd(t_ast *self_node, t_context *context);
-t_result		connect_redirect_to_proc(t_ast *self_node);
+t_result		connect_redirect_to_proc(int *prev_fd, int proc_fd[2]);
 t_result		open_redirect_fd_and_save_to_proc(t_redirect *redirect, \
 													int proc_fd[2], \
 													int *open_errno);
