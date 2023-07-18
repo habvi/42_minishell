@@ -99,15 +99,15 @@ def main():
         "cat <<eof1<<eof2\neof11\neof\neof1\neof22\n$HOME$hoge$PWD\neof2\n",
         "rm -f out1 out2\ncat << eof>out1>out2 \ntest1\ntest2\n$HOME\n\"$HOME\"\n'$HOME'\neof\ncat out1\ncatou2\nrm -f out1 out2",
         "cat -e << 'eof' \ntest1\ntest2\n$HOME\n\"$HOME\"\n'$HOME'\neof",
-        "cat -e << '' \ntest1\ntest2\n$HOME\n\"$HOME\"\n'$HOME'\n\n",
+        "cat -e << '' \ntest1\ntest2\n$HOME\n\"$HOME\"\n'$HOME'\n\'\'\n\"\"\n\n",
         "cat -e << \"\" \ntest1\ntest2\n$HOME\n\"$HOME\"\n'$HOME'\n\n",
-        "cat << $HOME \ntest1\ntest2\n$HOME\n\"$HOME\"\n'$HOME'\n$HOME",
-        "cat << '$HOME' \ntest1\ntest2\n$HOME\n\"$HOME\"\n'$HOME'\n$HOME",
-        "cat << \"$HOME\" \ntest1\ntest2\n$HOME\n\"$HOME\"\n'$HOME'\n$HOME$USER$hoge $huga$PWD",
-        "cat << $nothing \ntest1\n\ntest2\n$HOME\n\"$HOME\"\n'$HOME'\n$nothing",
+        "cat << $HOME \ntest1\ntest2\n$HOMEee\n\"$HOME\"\n'$HOME'\n$HOME",
+        "cat << '$HOME' \ntest1\ntest2\n$HOMEee\n\"$HOME\"\n'$HOME'\n$HOME",
+        "cat << \"$HOME\" \ntest1\ntest2\n$HOMEee\n\"$HOME\"\n'$HOME'\n$HOME$USER$hoge $huga$PWD\n$HOME",
+        "cat << $nothing \ntest1\n\ntest2\n$HOMEee\n\"$HOME\"\n'$HOME'\n$nothing",
         "cat -e << 'e'o\"f\" \ntest1\n\ntest2\n$?$HOME$?\n\"$HOME\"\n'$HOME'\neof",
         "cat << a\n$HOME\"\"\n\n        '$hoge'$hoge\n '\n\"\na",
-        f"cat << eof\n{BIG}\neof\n | wc",
+        f"cat << eof | wc \n{BIG}\neof\n",
         ]  # todo more test
 
     test_res |= test("redirect_in_error", redirects_in_error_test, False)
