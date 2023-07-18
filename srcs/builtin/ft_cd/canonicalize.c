@@ -49,6 +49,8 @@ char	*cd_canonicalize_path(const char *path, const char *internal_pwd)
 	t_deque	*path_elems;
 	char	*absolute_path;
 
+	// if (!internal_pwd)
+	// 	return (); // todo: for unset PWD & ./minishell
 	path_elems = allocate_path_elems();
 	path_elems = separate_path_and_join(path, internal_pwd, path_elems);
 	erase_unnecessary_path_elem(&path_elems);

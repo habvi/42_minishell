@@ -19,7 +19,7 @@ static void	add_split_path_to_path_elems(t_deque *path_elems, char **split_path)
 	}
 }
 
-static void	split_and_add_dq(t_deque *path_elems, const char *path)
+void	split_and_add_dq(t_deque *path_elems, const char *path)
 {
 	char	**split_path;
 
