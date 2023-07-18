@@ -21,6 +21,9 @@
 # define STATUS_CMD_NOT_FOUND		127
 # define REDIRECT_ONLY_SUCCESS		0
 
+# define DEV_STDIN_PATH		"/dev/stdin"
+# define DEV_STDOUT_PATH	"/dev/stdout"
+
 # define STDIO_COPY_INIT	(-1)
 
 # define ERROR_MSG_NO_SUCH_FILE			"No such file or directory"
