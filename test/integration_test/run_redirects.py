@@ -19,6 +19,7 @@ def main():
                     "nosuchfile < && nosuchfile1 <",
                     "nosuchfile < && < nosuchfile1",
                     "< nosuchfile && < nosuchfile1 < nosuchfile2",
+                    "cat -e < /dev/stdin\naaa\nbbb\nccc"
                     ] # todo more test
 
     redirects_out_error_test = [
@@ -35,6 +36,9 @@ def main():
                     # "nosuchfile > && nosuchfile1 >",
                     # "nosuchfile > && > nosuchfile1",
                     # "> nosuchfile && > nosuchfile1 > nosuchfile2",
+                    "echo hello >/dev/stdout",
+                    "echo hello >/dev/stdout | cat -e",
+                    "echo hello </dev/stdin | cat >/dev/stdout | cat -e"
                     ] # todo more test
 
     redirects_in_test =[

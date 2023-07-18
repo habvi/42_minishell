@@ -7,6 +7,7 @@
 #include "ms_parse.h"
 #include "ft_deque.h"
 #include "ft_sys.h"
+#include "ft_string.h"
 
 static int	open_redirect_fd(const char *path, \
 								t_open_flag open_flag, \
@@ -15,6 +16,11 @@ static int	open_redirect_fd(const char *path, \
 	int	open_fd;
 
 	errno = 0;
+	*tmp_err = 0;
+	if (ft_streq(path, DEV_STDIN_PATH))
+		return (STDIN_FILENO);
+	if (ft_streq(path, DEV_STDOUT_PATH))
+		return (STDOUT_FILENO);
 	if (open_flag == OPEN_FOR_IN)
 		open_fd = open(path, open_flag);
 	else
