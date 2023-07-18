@@ -11,6 +11,7 @@ static bool	is_command_not_used_redirect(const char *command)
 	return (ft_streq(command, CMD_EXIT));
 }
 
+// can't use is_use_redirect_in/out..., causes input file is output file...??
 t_result	backup_stdio_fd(int *stdin_copy, \
 							int *stdout_copy, \
 							const t_ast *self_node)
