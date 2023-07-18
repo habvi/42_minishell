@@ -99,7 +99,7 @@ t_result	redirect_fd(t_ast *self_node, t_context *context)
 			return (PROCESS_ERROR);
 		return (SUCCESS);
 	}
-	result = connect_redirect_to_proc(self_node);
+	result = connect_redirect_to_proc(&self_node->prev_fd, self_node->proc_fd);
 	if (result == PROCESS_ERROR)
 		return (PROCESS_ERROR);
 	return (SUCCESS);

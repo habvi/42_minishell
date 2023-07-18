@@ -6,6 +6,11 @@
 #include "ft_string.h"
 #include "ft_sys.h"
 
+static bool	is_command_not_used_redirect(const char *command)
+{
+	return (ft_streq(command, CMD_EXIT));
+}
+
 t_result	backup_stdio_fd(int *stdin_copy, \
 							int *stdout_copy, \
 							const t_ast *self_node)
@@ -14,7 +19,7 @@ t_result	backup_stdio_fd(int *stdin_copy, \
 
 	*stdin_copy = IN_FD_INIT;
 	*stdout_copy = OUT_FD_INIT;
-	if (ft_streq(command, CMD_EXIT))
+	if (is_command_not_used_redirect(command))
 		return (SUCCESS);
 	*stdin_copy = x_dup(STDIN_FILENO);
 	if (*stdin_copy == DUP_ERROR)
