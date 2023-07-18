@@ -41,45 +41,45 @@ def main():
                     "echo hello </dev/stdin | cat >/dev/stdout | cat -e"
                     ] # todo more test
 
+    RMFILES = "rm -f test_infile1 && rm -f test_infile1 && rm -f test_infile2"
     redirects_in_test =[
-                    "echo aa >test_infile1 && echo bb > test_infile2",
-                    "cat test_infile1 && cat test_infille2 && cat <test_infile1",
-                    "cat test_infile1 && cat test_infille2 && cat < test_infile1",
-                    "cat test_infile1 && cat test_infille2 && cat <     test_infile1",
-                    "cat test_infile1 && cat test_infille2 && cat <test_infile1 && cat<test_infile1",
-                    "cat test_infile1 && cat test_infille2 && cat <test_infile1 && cat<test_infile2",
-                    "cat test_infile1 && cat test_infille2 && cat <test_infile1 || cat<test_infile1",
-                    "cat test_infile1 && cat test_infille2 && cat <test_infile1 || cat<test_infile2",
-                    "cat test_infile1 && cat test_infille2 && cat <test_infile1 | cat<test_infile2",
-                    "cat test_infile1 && cat test_infille2 && cat<test_infile1 | cat <test_infile2",
-                    "cat test_infile1 && cat test_infille2 && cat <test_infile1 | cat <test_infile2 | cat",
-                    "cat test_infile1 && cat test_infille2 && cat <test_infile1 | cat <test_infile2 | cat | cat",
-                    "cat test_infile1 && cat test_infille2 && cat <test_infile1 <test_infile2 | cat",
-                    "cat test_infile1 && cat test_infille2 && cat <test_infile1 <test_infile1 | cat",
-                    "cat test_infile1 && cat test_infille2 && cat <test_infile2 | cat <test_infile2 <test_infile1 | cat | cat",
-                    "cat test_infile1 && cat test_infille2 && cat <    test_infile1<test_infile2 | cat",
-                    "cat test_infile1 && cat test_infille2 && <test_infile1 | cat",
-                    "cat test_infile1 && cat test_infille2 && <test_infile1 | cat | grep nothing",
+                    f"{RMFILES} \n echo aa >test_infile1 && echo bb > test_infile2\n{RMFILES}",
+                    f"cat test_infile1 && cat test_infille2 && cat <test_infile1\n{RMFILES}",
+                    f"cat test_infile1 && cat test_infille2 && cat < test_infile1\n{RMFILES}",
+                    f"cat test_infile1 && cat test_infille2 && cat <     test_infile1\n{RMFILES}",
+                    f"cat test_infile1 && cat test_infille2 && cat <test_infile1 && cat<test_infile1\n{RMFILES}",
+                    f"cat test_infile1 && cat test_infille2 && cat <test_infile1 && cat<test_infile2\n{RMFILES}",
+                    f"cat test_infile1 && cat test_infille2 && cat <test_infile1 || cat<test_infile1\n{RMFILES}",
+                    f"cat test_infile1 && cat test_infille2 && cat <test_infile1 || cat<test_infile2\n{RMFILES}",
+                    f"cat test_infile1 && cat test_infille2 && cat <test_infile1 | cat<test_infile2\n{RMFILES}",
+                    f"cat test_infile1 && cat test_infille2 && cat<test_infile1 | cat <test_infile2\n{RMFILES}",
+                    f"cat test_infile1 && cat test_infille2 && cat <test_infile1 | cat <test_infile2 | cat\n{RMFILES}",
+                    f"cat test_infile1 && cat test_infille2 && cat <test_infile1 | cat <test_infile2 | cat | cat\n{RMFILES}",
+                    f"cat test_infile1 && cat test_infille2 && cat <test_infile1 <test_infile2 | cat\n{RMFILES}",
+                    f"cat test_infile1 && cat test_infille2 && cat <test_infile1 <test_infile1 | cat\n{RMFILES}",
+                    f"cat test_infile1 && cat test_infille2 && cat <test_infile2 | cat <test_infile2 <test_infile1 | cat | cat\n{RMFILES}",
+                    f"cat test_infile1 && cat test_infille2 && cat <    test_infile1<test_infile2 | cat\n{RMFILES}",
+                    f"cat test_infile1 && cat test_infille2 && <test_infile1 | cat\n{RMFILES}",
+                    f"cat test_infile1 && cat test_infille2 && <test_infile1 | cat | grep nothing\n{RMFILES}",
                     # "cat test_infile1 && cat test_infille2 && <test_infile1 | cat | grep a", # for actions
-                    "cat test_infile1 && cat test_infille2 && <test_infile1 <test_infile2 | cat",
-                    "rm -f test_infile1 && rm -f test_infile1 && rm -f test_infile2"
+                    f"cat test_infile1 && cat test_infille2 && <test_infile1 <test_infile2 | cat \n{RMFILES}",
+                    # "rm -f test_infile1 && rm -f test_infile1 && rm -f test_infile2"
                     ]
 
     redirects_out_test = [
-                    "echo aa >test_outfile1 && cat test_outfile1",
-                    "echo bb > test_outfile1 && cat test_outfile1",
-                    "echo cc >            test_outfile1 && cat test_outfile1",
-                    "echo dd >test_outfile1 && cat test_outfile1 && cat test_outfile1",
-                    "echo ee >test_outfile1 || cat test_outfile1 && cat test_outfile1",
+                    f"{RMFILES} \n echo aa >test_outfile1 && cat test_outfile1\n{RMFILES}",
+                    f"echo bb > test_outfile1 && cat test_outfile1\n{RMFILES}",
+                    f"echo cc >            test_outfile1 && cat test_outfile1\n{RMFILES}",
+                    f"echo dd >test_outfile1 && cat test_outfile1 && cat test_outfile1\n{RMFILES}",
+                    f"echo ee >test_outfile1 || cat test_outfile1 && cat test_outfile1\n{RMFILES}",
                     # "echo ff >test_outfile1 | cat test_outfile1 && cat test_outfile1", # for actions
-                    "echo gg >test_outfile1 | echo hh >test_outfile2 && cat test_outfile1 && cat test_outfile2",
-                    "echo ii >test_outfile1 | echo jj >test_outfile2 | cat && cat test_outfile1 && cat test_outfile2",
-                    "echo kk >test_outfile1 | echo ll >test_outfile2 | cat | cat && cat test_outfile1 && cat test_outfile2",
-                    "echo mm >test_outfile1 < test_outfile2 | cat && cat test_outfile1 && cat test_outfile2",
-                    "echo nn >    test_outfile1 <test_outfile2 | cat && cat test_outfile1 && cat test_outfile2",
-                    ">test_outfile1 echo oo | cat && cat test_outfile1",
-                    ">test_outfile1 >test_outfile2     echo pp | cat && cat test_outfile1 && cat test_outfile2",
-                    "rm -f test_outfile1 && rm -f test_outfile1 && rm -f test_outfile2"
+                    f"echo gg >test_outfile1 | echo hh >test_outfile2 && cat test_outfile1 && cat test_outfile2\n{RMFILES}",
+                    f"echo ii >test_outfile1 | echo jj >test_outfile2 | cat && cat test_outfile1 && cat test_outfile2\n{RMFILES}",
+                    f"echo kk >test_outfile1 | echo ll >test_outfile2 | cat | cat && cat test_outfile1 && cat test_outfile2\n{RMFILES}",
+                    f"echo mm >test_outfile1 < test_outfile2 | cat && cat test_outfile1 && cat test_outfile2\n{RMFILES}",
+                    f"echo nn >    test_outfile1 <test_outfile2 | cat && cat test_outfile1 && cat test_outfile2\n{RMFILES}",
+                    f">test_outfile1 echo oo | cat && cat test_outfile1\n{RMFILES}",
+                    f">test_outfile1 >test_outfile2     echo pp | cat && cat test_outfile1 && cat test_outfile2\n{RMFILES}",
                     ]
 
     redirects_append_test = [
@@ -108,8 +108,8 @@ def main():
         "cat -e << 'e'o\"f\" \ntest1\n\ntest2\n$?$HOME$?\n\"$HOME\"\n'$HOME'\neof",
         "cat << a\n$HOME\"\"\n\n        '$hoge'$hoge\n '\n\"\na",
         f"cat << eof | wc \n{BIG}\neof\n",
+        "<no |<no <<eof <no cat -e && <<eof2 cat -e\ntest1\n$HOME\neof\ntest2\n$HOME\neof2\n",
         ]  # todo more test
-
     test_res |= test("redirect_in_error", redirects_in_error_test, False)
     test_res |= test("redirect_out_error", redirects_out_error_test, False)
     test_res |= test("redirect_in", redirects_in_test, False)
