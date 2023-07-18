@@ -13,7 +13,8 @@ static bool	is_node_executable(t_ast *ast_node)
 }
 
 // execute_single_builtin() not return t_result
-static t_result	execute_builtin_or_external_command(t_ast *self_node, t_context *context)
+static t_result	execute_builtin_or_external_command(t_ast *self_node, \
+													t_context *context)
 {
 	t_result	redirect_result;
 
@@ -26,7 +27,8 @@ static t_result	execute_builtin_or_external_command(t_ast *self_node, t_context 
 		execute_single_builtin(self_node, context, redirect_result);
 	else if (is_node_executable(self_node))
 	{
-		if (exec_command_each(self_node, context, redirect_result) == PROCESS_ERROR)
+		if (exec_command_each(\
+				self_node, context, redirect_result) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 	}
 	return (SUCCESS);

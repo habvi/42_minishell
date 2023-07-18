@@ -34,7 +34,9 @@ bool	is_single_builtin_command(const t_ast *self_node)
 	return (true);
 }
 
-void	execute_single_builtin(t_ast *self_node, t_context *context, t_result redirect_result)
+void	execute_single_builtin(t_ast *self_node, \
+								t_context *context, \
+								t_result redirect_result)
 {
 	char	**argv;
 

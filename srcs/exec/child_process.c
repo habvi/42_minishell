@@ -47,7 +47,9 @@ static uint8_t	execute_command_in_child(t_ast *self_node, t_context *context)
 }
 
 // if execve erorr, no need for auto perror.
-void	child_process(t_ast *self_node, t_context *context, t_result redirect_result)
+void	child_process(t_ast *self_node, \
+						t_context *context, \
+						t_result redirect_result)
 {
 	uint8_t	status;
 
