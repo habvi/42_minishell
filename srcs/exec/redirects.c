@@ -8,6 +8,12 @@
 #include "ft_string.h"
 #include "ft_sys.h"
 
+static void	assign_failure_fd_to_proc_fds(int proc_fd[2])
+{
+	proc_fd[IN] = REDIRECT_FAILURE;
+	proc_fd[OUT] = REDIRECT_FAILURE;
+}
+
 static t_result	exec_redirect_each(t_redirect *redirect, \
 									int proc_fd[2], \
 									t_context *context)
@@ -31,6 +37,7 @@ static t_result	exec_redirect_each(t_redirect *redirect, \
 //    [redirect_symbol]-[file]-[file]    : splitted $var
 
 // redirect_list != NULL
+// if redirect failure, proc_fd[IN/OUT] = (-1)
 static t_result	expand_and_exec_redirect_all(t_ast *self_node, \
 												t_context *context)
 {
@@ -44,10 +51,18 @@ static t_result	expand_and_exec_redirect_all(t_ast *self_node, \
 		redirect = (t_redirect *)node->content;
 		result = expand_for_redirect(redirect, context);
 		if (result == FAILURE || result == PROCESS_ERROR)
+		{
+			// init_fd to fail_fd
+			assign_failure_fd_to_proc_fds(self_node->proc_fd);
 			return (result);
+		}
 		result = exec_redirect_each(node->content, self_node->proc_fd, context);
 		if (result == FAILURE || result == PROCESS_ERROR)
+		{
+			// open_fd; closed to fail_fd
+			assign_failure_fd_to_proc_fds(self_node->proc_fd);
 			return (result);
+		}
 		node = node->next;
 	}
 	return (SUCCESS);
