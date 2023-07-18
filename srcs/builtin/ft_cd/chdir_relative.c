@@ -12,7 +12,7 @@ static t_deque	*set_path_elems(const char *path)
 	t_deque	*path_elems;
 
 	path_elems = allocate_path_elems();
-	split_and_add_dq(path_elems, path);
+	add_split_path_elems(path_elems, path);
 	return (path_elems);
 }
 

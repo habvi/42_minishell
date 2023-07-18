@@ -120,7 +120,7 @@ void		destroy_path_elems(t_deque *path_elems);
 t_deque		*separate_path_and_join(const char *path, \
 									const char *internal_pwd, \
 									t_deque *path_elems);
-void		split_and_add_dq(t_deque *path_elems, const char *path);
+void		add_split_path_elems(t_deque *path_elems, const char *path);
 void		erase_dot_path(t_deque **dq);
 void		erase_dot_dot_path(t_deque **dq);
 void		handle_double_slash_path(const char *path, char **absolute_path);

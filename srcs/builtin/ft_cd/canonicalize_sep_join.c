@@ -19,7 +19,7 @@ static void	add_split_path_to_path_elems(t_deque *path_elems, char **split_path)
 	}
 }
 
-void	split_and_add_dq(t_deque *path_elems, const char *path)
+void	add_split_path_elems(t_deque *path_elems, const char *path)
 {
 	char	**split_path;
 
@@ -37,8 +37,8 @@ t_deque	*separate_path_and_join(const char *path, \
 	if (!is_absolute_path(path))
 	{
 		if (internal_pwd)
-			split_and_add_dq(path_elems, internal_pwd);
+			add_split_path_elems(path_elems, internal_pwd);
 	}
-	split_and_add_dq(path_elems, path);
+	add_split_path_elems(path_elems, path);
 	return (path_elems);
 }
