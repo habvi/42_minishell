@@ -58,7 +58,7 @@ t_result		execute_command(t_ast **self_node, \
 								t_context *context, \
 								t_result heredoc_result);
 t_result		execute_command_recursive(t_ast *self_node, t_context *context);
-t_result		copy_stdio_fd(int *stdin_copy, \
+t_result		backup_stdio_fd(int *stdin_copy, \
 								int *stdout_copy, \
 								const t_ast *self_node);
 t_result		restore_stdio_fd(int stdin_copy, int stdout_copy);
@@ -98,5 +98,7 @@ t_result		open_redirect_fd_and_save_to_proc(t_redirect *redirect, \
 													int *open_errno);
 t_result		close_proc_in_fd(int *proc_in_fd);
 t_result		close_proc_out_fd(int *proc_out_fd);
+bool			is_use_redirect_in(int proc_in_fd);
+bool			is_use_redirect_out(int proc_out_fd);
 
 #endif //MS_EXEC_H

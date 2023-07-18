@@ -32,9 +32,19 @@ static t_result	connect_redirect_out_to_proc(int out_fd)
 	return (SUCCESS);
 }
 
+bool	is_use_redirect_in(int proc_in_fd)
+{
+	return (proc_in_fd != IN_FD_INIT);
+}
+
+bool	is_use_redirect_out(int proc_out_fd)
+{
+	return (proc_out_fd != OUT_FD_INIT);
+}
+
 t_result	connect_redirect_to_proc(t_ast *self_node)
 {
-	if (self_node->proc_fd[IN] != IN_FD_INIT)
+	if (is_use_redirect_in(self_node->proc_fd[IN]))
 	{
 		if (connect_redirect_in_to_proc(\
 			&self_node->prev_fd, self_node->proc_fd[IN]) == PROCESS_ERROR)
@@ -42,8 +52,9 @@ t_result	connect_redirect_to_proc(t_ast *self_node)
 			close_proc_out_fd(&self_node->proc_fd[OUT]);
 			return (PROCESS_ERROR);
 		}
+//		self_node->proc_fd[IN] = REDIRECT_USED;
 	}
-	if (self_node->proc_fd[OUT] != OUT_FD_INIT)
+	if (is_use_redirect_out(self_node->proc_fd[OUT]))
 	{
 		if (connect_redirect_out_to_proc(\
 			self_node->proc_fd[OUT]) == PROCESS_ERROR)
@@ -51,6 +62,7 @@ t_result	connect_redirect_to_proc(t_ast *self_node)
 			close_proc_in_fd(&self_node->proc_fd[IN]);
 			return (PROCESS_ERROR);
 		}
+//		self_node->proc_fd[OUT] = REDIRECT_USED;
 	}
 	return (SUCCESS);
 }

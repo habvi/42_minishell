@@ -6,7 +6,37 @@
 #include "ft_string.h"
 #include "ft_sys.h"
 
-t_result	copy_stdio_fd(int *stdin_copy, \
+static bool	is_command_not_used_redirect(const char *command)
+{
+	return (ft_streq(command, CMD_EXIT));
+}
+
+t_result	backup_stdio_fd(int *stdin_copy, \
+							int *stdout_copy, \
+							const t_ast *self_node)
+{
+	const char	*command = get_head_token_str(self_node->command);
+
+	*stdin_copy = STDIO_COPY_INIT;
+	*stdout_copy = STDIO_COPY_INIT;
+	if (is_command_not_used_redirect(command))
+		return (SUCCESS);
+	if (is_use_redirect_in(self_node->proc_fd[IN]))
+	{
+		*stdin_copy = x_dup(STDIN_FILENO);
+		if (*stdin_copy == DUP_ERROR)
+			return (PROCESS_ERROR);
+	}
+	if (is_use_redirect_out(self_node->proc_fd[OUT]))
+	{
+		*stdout_copy = x_dup(STDOUT_FILENO);
+		if (*stdout_copy == DUP_ERROR)
+			return (PROCESS_ERROR);
+	}
+	return (SUCCESS);
+}
+/*
+t_result	backup_stdio_fd(int *stdin_copy, \
 							int *stdout_copy, \
 							const t_ast *self_node)
 {
@@ -14,7 +44,7 @@ t_result	copy_stdio_fd(int *stdin_copy, \
 
 	*stdin_copy = IN_FD_INIT;
 	*stdout_copy = OUT_FD_INIT;
-	if (ft_streq(command, CMD_EXIT))
+	if (is_command_not_used_redirect(command))
 		return (SUCCESS);
 	*stdin_copy = x_dup(STDIN_FILENO);
 	if (*stdin_copy == DUP_ERROR)
@@ -24,10 +54,10 @@ t_result	copy_stdio_fd(int *stdin_copy, \
 		return (PROCESS_ERROR);
 	return (SUCCESS);
 }
-
+*/
 t_result	restore_stdio_fd(int stdin_copy, int stdout_copy)
 {
-	if (stdin_copy != IN_FD_INIT)
+	if (stdin_copy != STDIO_COPY_INIT)
 	{
 		if (x_close(STDIN_FILENO) == CLOSE_ERROR)
 			return (PROCESS_ERROR);
@@ -36,7 +66,7 @@ t_result	restore_stdio_fd(int stdin_copy, int stdout_copy)
 		if (x_close(stdin_copy) == CLOSE_ERROR)
 			return (PROCESS_ERROR);
 	}
-	if (stdout_copy != OUT_FD_INIT)
+	if (stdout_copy != STDIO_COPY_INIT)
 	{
 		if (x_close(STDOUT_FILENO) == CLOSE_ERROR)
 			return (PROCESS_ERROR);

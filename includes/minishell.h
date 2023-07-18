@@ -62,6 +62,7 @@
 /* parse, exec */
 # define IN_FD_INIT		STDIN_FILENO
 # define OUT_FD_INIT	STDOUT_FILENO
+# define REDIRECT_USED	(-1)
 
 /* utils */
 # define RANDOM_FILENAME	"/dev/urandom"
