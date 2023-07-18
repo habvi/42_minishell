@@ -19,16 +19,13 @@ static t_result	close_fd_for_redirect_failed(t_ast *self_node)
 
 static bool	is_node_executable(t_ast *ast_node)
 {
-	t_node_kind	kind;
+	const t_node_kind	kind = ast_node->kind;
 
-	if (!ast_node)
-		return (false);
-	kind = ast_node->kind;
 	return (kind == NODE_KIND_COMMAND || kind == NODE_KIND_SUBSHELL);
 }
 
 // execute_single_builtin() not return t_result
-static t_result	execute_command_internal(t_ast *self_node, t_context *context)
+static t_result	execute_builtin_or_external_command(t_ast *self_node, t_context *context)
 {
 	t_result	result;
 
@@ -52,24 +49,31 @@ static t_result	execute_command_internal(t_ast *self_node, t_context *context)
 	return (SUCCESS);
 }
 
-t_result	execute_command_recursive(t_ast *self_node, t_context *context)
+t_result	execute_command_internal(t_ast *self_node, t_context *context)
 {
 	t_result	result;
 	int			stdin_copy;
 	int			stdout_copy;
 
+	if (copy_stdio_fd(&stdin_copy, &stdout_copy, self_node) == PROCESS_ERROR)
+		return (PROCESS_ERROR);
+	result = execute_builtin_or_external_command(self_node, context);
+	if (restore_stdio_fd(stdin_copy, stdout_copy) == PROCESS_ERROR)
+		return (PROCESS_ERROR);
+	return (result);
+}
+
+t_result	execute_command_recursive(t_ast *self_node, t_context *context)
+{
 	if (!self_node)
 		return (SUCCESS);
 	if (exec_handle_left_node(self_node, context) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
 	if (exec_handle_right_node(self_node, context) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
-	if (copy_stdio_fd(&stdin_copy, &stdout_copy, self_node) == PROCESS_ERROR)
+	if (execute_command_internal(self_node, context) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
-	result = execute_command_internal(self_node, context);
-	if (restore_stdio_fd(stdin_copy, stdout_copy) == PROCESS_ERROR)
-		return (PROCESS_ERROR);
-	return (result);
+	return (SUCCESS);
 }
 
 t_result	execute_command(t_ast **self_node, \
