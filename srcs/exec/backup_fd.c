@@ -6,7 +6,7 @@
 #include "ft_string.h"
 #include "ft_sys.h"
 
-t_result	copy_stdio_fd(int *stdin_copy, \
+t_result	backup_stdio_fd(int *stdin_copy, \
 							int *stdout_copy, \
 							const t_ast *self_node)
 {

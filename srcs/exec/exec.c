@@ -56,7 +56,7 @@ t_result	execute_command_internal(t_ast *self_node, t_context *context)
 	int			stdin_copy;
 	int			stdout_copy;
 
-	if (copy_stdio_fd(&stdin_copy, &stdout_copy, self_node) == PROCESS_ERROR)
+	if (backup_stdio_fd(&stdin_copy, &stdout_copy, self_node) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
 	result = execute_builtin_or_external_command(self_node, context);
 	if (restore_stdio_fd(stdin_copy, stdout_copy) == PROCESS_ERROR)
