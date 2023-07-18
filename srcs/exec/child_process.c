@@ -47,12 +47,12 @@ static uint8_t	execute_command_in_child(t_ast *self_node, t_context *context)
 }
 
 // if execve erorr, no need for auto perror.
-void	child_process(t_ast *self_node, t_context *context)
+void	child_process(t_ast *self_node, t_context *context, t_result redirect_result)
 {
 	uint8_t	status;
 
-	// debug_func(__func__, __LINE__);
-	// debug_2d_array(argv);
+	if (redirect_result == FAILURE)
+		exit(context->status);
 	if (handle_child_pipes(self_node) == PROCESS_ERROR)
 		exit(EXIT_FAILURE);
 	status = execute_command_in_child(self_node, context);

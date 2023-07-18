@@ -34,10 +34,12 @@ bool	is_single_builtin_command(const t_ast *self_node)
 	return (true);
 }
 
-void	execute_single_builtin(t_ast *self_node, t_context *context)
+void	execute_single_builtin(t_ast *self_node, t_context *context, t_result redirect_result)
 {
 	char	**argv;
 
+	if (redirect_result == FAILURE)
+		return ;
 	argv = convert_command_to_argv(self_node->command);
 	context->status = call_builtin_command((const char *const *)argv, context);
 	free_2d_array(&argv);

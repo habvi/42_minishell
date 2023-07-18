@@ -60,8 +60,9 @@
 # define ERROR_MSG_RETRIEVE_CWD	"error retrieving current directory"
 
 /* parse, exec */
-# define IN_FD_INIT		STDIN_FILENO
-# define OUT_FD_INIT	STDOUT_FILENO
+# define IN_FD_INIT			STDIN_FILENO
+# define OUT_FD_INIT		STDOUT_FILENO
+# define REDIRECT_FAILURE	(1)
 
 /* utils */
 # define RANDOM_FILENAME	"/dev/urandom"
