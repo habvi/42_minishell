@@ -5,18 +5,6 @@
 #include "ms_result.h"
 #include "ft_sys.h"
 
-//static t_result	close_fd_for_redirect_failed(t_ast *self_node)
-//{
-//	if (self_node->prev_fd != IN_FD_INIT)
-//	{
-//		if (x_close(self_node->prev_fd) == CLOSE_ERROR)
-//			return (PROCESS_ERROR);
-//	}
-//	if (self_node->parent)
-//		self_node->parent->prev_fd = IN_FD_INIT;
-//	return (SUCCESS);
-//}
-
 static bool	is_node_executable(t_ast *ast_node)
 {
 	const t_node_kind	kind = ast_node->kind;
@@ -34,12 +22,6 @@ static t_result	execute_builtin_or_external_command(t_ast *self_node, t_context 
 	redirect_result = redirect_fd(self_node, context);
 	if (redirect_result == PROCESS_ERROR)
 		return (PROCESS_ERROR);
-//	if ((redirect_result == PROCESS_ERROR) || (redirect_result == FAILURE))
-//	{
-//		if (close_fd_for_redirect_failed(self_node) == PROCESS_ERROR)
-//			return (PROCESS_ERROR);
-//		return (redirect_result);
-//	}
 	if (is_single_builtin_command(self_node))
 		execute_single_builtin(self_node, context, redirect_result);
 	else if (is_node_executable(self_node))
