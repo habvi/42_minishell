@@ -111,6 +111,13 @@ t_result	cd_chdir_from_relative_path(char **absolute_path, \
 										const char *arg, \
 										const char *path, \
 										const char *internal_pwd);
+void		set_absolute_path_in_error(char **absolute_path, \
+										const char *backup_pwd, \
+										const char *path, \
+										t_result result);
+void		restore_path_and_clean_up(const char *backup_pwd, \
+										char **canonicalized_path, \
+										t_deque **path_elems);
 // canonicalize
 char		*cd_canonicalize_path(const char *path, const char *internal_pwd);
 t_deque		*allocate_path_elems(void);
