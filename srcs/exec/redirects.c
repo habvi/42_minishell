@@ -8,38 +8,31 @@
 #include "ft_string.h"
 #include "ft_sys.h"
 
-static void	assign_failure_fd_to_proc_fds(int proc_fd[2])
+void	assign_failure_fd_to_proc_fds(int proc_fd[2])
 {
 	proc_fd[IN] = REDIRECT_FAILURE;
 	proc_fd[OUT] = REDIRECT_FAILURE;
 }
 
-static t_result	exec_redirect_each(t_redirect *redirect, \
-									int proc_fd[2], \
-									t_context *context)
+static t_result	open_redirect_files_each(t_redirect *redirect, \
+											int proc_fd[2], \
+											t_context *context)
 {
 	t_result	result;
 	int			open_errno;
 	char		*path;
 
 	result = open_redirect_fd_and_save_to_proc(redirect, proc_fd, &open_errno);
-	if (result == FAILURE)
+	if (result == FAILURE || result == PROCESS_ERROR)
 	{
-		context->status = STATUS_REDIRECT_FAILURE;
 		path = get_head_token_str(redirect->tokens);
 		puterr_cmd_msg(path, strerror(open_errno));
+		context->status = STATUS_REDIRECT_FAILURE;
 	}
 	return (result);
 }
 
-// OK [redirect_symbol]-[file]
-// NG [redirect_symbol]-[redirect_symbol]: dropped $var
-//    [redirect_symbol]-[file]-[file]    : splitted $var
-
-// redirect_list != NULL
-// if redirect failure, proc_fd[IN/OUT] = (-1)
-static t_result	expand_and_exec_redirect_all(t_ast *self_node, \
-												t_context *context)
+static t_result	open_redirect_files(t_ast *self_node, t_context *context)
 {
 	t_deque_node	*node;
 	t_result		result;
@@ -49,17 +42,9 @@ static t_result	expand_and_exec_redirect_all(t_ast *self_node, \
 	while (node)
 	{
 		redirect = (t_redirect *)node->content;
-		result = expand_for_redirect(redirect, context);
+		result = open_redirect_files_each(redirect, self_node->proc_fd, context);
 		if (result == FAILURE || result == PROCESS_ERROR)
 		{
-			// init_fd to fail_fd
-			assign_failure_fd_to_proc_fds(self_node->proc_fd);
-			return (result);
-		}
-		result = exec_redirect_each(node->content, self_node->proc_fd, context);
-		if (result == FAILURE || result == PROCESS_ERROR)
-		{
-			// open_fd; closed to fail_fd
 			assign_failure_fd_to_proc_fds(self_node->proc_fd);
 			return (result);
 		}
@@ -90,7 +75,10 @@ t_result	redirect_fd(t_ast *self_node, t_context *context)
 
 	if (!self_node->redirect_list)
 		return (SUCCESS);
-	result = expand_and_exec_redirect_all(self_node, context);
+	result = expand_for_filename(self_node, context);
+	if (result == FAILURE || result == PROCESS_ERROR)
+		return (result);
+	result = open_redirect_files(self_node, context);
 	if (result == FAILURE || result == PROCESS_ERROR)
 		return (result);
 	if (ft_streq(command, CMD_EXIT))

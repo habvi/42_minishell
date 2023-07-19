@@ -43,9 +43,10 @@ t_result	open_current_directory(DIR **dirp);
 t_result	get_next_dirp_in_current(DIR *dirp, struct dirent **dirent);
 t_result	close_current_directory(DIR *dirp);
 void		sort_filenames(t_deque *tokens);
-t_result	expand_for_heredoc(t_redirect *redirect, t_context *context);
+t_result	expand_for_heredoc(t_ast *self_node, t_context *context);
 t_result	expand_variables_in_heredoc(t_redirect *redirect, \
 										t_context *context);
-t_result	expand_for_redirect(t_redirect *redirect, \
-									t_context *context);
+t_result	expand_for_filename(t_ast *self_node, t_context *context);
+void		assign_failure_fd_to_proc_fds(int proc_fd[2]);
+
 #endif //MS_EXPANSION_H

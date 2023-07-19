@@ -13,8 +13,8 @@ static bool	is_ambiguous_redirect(t_redirect *redirect)
 	return (redirect->tokens->size != 1);
 }
 
-static t_result	expand_for_redirect_file(t_redirect *redirect, \
-										t_context *context)
+static t_result	expand_for_filename_each(t_redirect *redirect, \
+											t_context *context)
 {
 	char		*original_token;
 	t_result	result;
@@ -32,18 +32,33 @@ static t_result	expand_for_redirect_file(t_redirect *redirect, \
 	return (result);
 }
 
-t_result	expand_for_redirect(t_redirect *redirect, \
-									t_context *context)
+// OK [redirect_symbol]-[file]
+// NG [redirect_symbol]-[redirect_symbol]: dropped $var
+//    [redirect_symbol]-[file]-[file]    : splitted $var
+
+// redirect_list != NULL
+// if redirect failure, proc_fd[IN/OUT] = (-1)
+t_result	expand_for_filename(t_ast *self_node, t_context *context)
 {
-	if (redirect->kind == TOKEN_KIND_REDIRECT_HEREDOC)
+	t_deque_node	*node;
+	t_result		result;
+	t_redirect		*redirect;
+
+	node = self_node->redirect_list->node;
+	while (node)
 	{
-		if (expand_for_heredoc(redirect, context) == PROCESS_ERROR)
-			return (PROCESS_ERROR);
-	}
-	else
-	{
-		if (expand_for_redirect_file(redirect, context) == FAILURE)
+		redirect = (t_redirect *)node->content;
+		if (redirect->kind == TOKEN_KIND_REDIRECT_HEREDOC)
+		{
+			node = node->next;
+			continue ;
+		}
+		if (expand_for_filename_each(redirect, context) == FAILURE)
+		{
+			assign_failure_fd_to_proc_fds(self_node->proc_fd);
 			return (FAILURE);
+		}
+		node = node->next;
 	}
 	return (SUCCESS);
 }
