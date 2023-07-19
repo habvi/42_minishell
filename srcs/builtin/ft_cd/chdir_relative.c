@@ -52,7 +52,7 @@ static t_result chdir_from_relative_path_inter(const char *arg, \
 	(void)backup_pwd;
 	// result = cd_change_dir_to_valid_path(backup_pwd, &tmp_err);
 	// getcwd() failed... "cd nothing"
-	if (getcwd(NULL, 1)) // todo: buf?
+	if (get_working_directory("ft_cd")) // todo: buf?
 	{
 		// do nothing.
 		// ft_dprintf(2, "%d: [%s]\n", __LINE__, *canonicalized_path);
