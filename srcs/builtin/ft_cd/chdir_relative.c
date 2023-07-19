@@ -68,6 +68,22 @@ static void	restore_path_and_clean_up(const char *backup_pwd, \
 	deque_clear_all(path_elems, del_path_elem);
 }
 
+static char	*get_absolute_path_in_error(const char *backup_pwd, \
+										const char *path, \
+										t_result result)
+{
+	char	*absolute_path;
+
+	if (result == FAILURE)
+		absolute_path = x_ft_strdup(backup_pwd);
+	else if (result == BREAK) //todo only . & .. can join
+	{
+		absolute_path = x_ft_strjoin(backup_pwd, PATH_DELIMITER_STR);
+		absolute_path = extend_str(absolute_path, x_ft_strdup(path));
+	}
+	return (absolute_path);
+}
+
 t_result	cd_chdir_from_relative_path(char **absolute_path, \
 										const char *arg, \
 										const char *path, \
@@ -76,28 +92,21 @@ t_result	cd_chdir_from_relative_path(char **absolute_path, \
 	const char		*backup_pwd = internal_pwd;
 	t_deque			*path_elems;
 	char			*canonicalized_path;
-	t_deque_node	*pop_node;
+	t_deque_node	*pop;
 	t_result		result;
 
 	path_elems = set_path_elems(path); // [..]-[..]-[A]-[B]-[..]-
-	canonicalized_path = x_ft_strdup(internal_pwd); // todo: for NULL unset PWD && ./minishell
+	canonicalized_path = x_ft_strdup(internal_pwd);
 	while (!deque_is_empty(path_elems))
 	{
-		pop_node = deque_pop_front(path_elems);
-		canonicalized_path = get_canonicalize_path(&pop_node, canonicalized_path);
+		pop = deque_pop_front(path_elems);
+		canonicalized_path = get_canonicalize_path(&pop, canonicalized_path);
 		result = test_change_directory(arg, &canonicalized_path, backup_pwd);
-		if (result == FAILURE)
+		if (result == FAILURE || result == BREAK)
 		{
-			*absolute_path = x_ft_strdup(backup_pwd);
+			*absolute_path = get_absolute_path_in_error(path, backup_pwd, result);
 			restore_path_and_clean_up(backup_pwd, &canonicalized_path, &path_elems);
-			return (FAILURE);
-		}
-		if (result == BREAK) //todo only . & .. can join
-		{
-			*absolute_path = x_ft_strjoin(backup_pwd, PATH_DELIMITER_STR);
-			*absolute_path = extend_str(*absolute_path, x_ft_strdup(path));
-			restore_path_and_clean_up(backup_pwd, &canonicalized_path, &path_elems);
-			return (BREAK);
+			return (result);
 		}
 	}
 	*absolute_path = canonicalized_path;
