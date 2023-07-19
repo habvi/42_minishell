@@ -16,8 +16,8 @@ static t_deque	*set_path_elems(const char *path)
 	return (path_elems);
 }
 
-static char	*get_canonicalize_path(t_deque_node **pop_node, \
-									char *canonicalized_path)
+static char	*get_joined_canonicalize_path(char *canonicalized_path, \
+											t_deque_node **pop_node)
 {
 	char		*tmp;
 	const char	*path_segment = (const char *)(*pop_node)->content;
@@ -29,7 +29,7 @@ static char	*get_canonicalize_path(t_deque_node **pop_node, \
 	return (canonicalized_path);
 }
 
-static t_result test_change_directory(const char *arg, \
+static t_result	test_change_directory(const char *arg, \
 										char **canonicalized_path,
 										const char *backup_pwd)
 {
@@ -57,6 +57,21 @@ static t_result test_change_directory(const char *arg, \
 	return (BREAK);
 }
 
+static void	set_absolute_path_in_error(char **absolute_path, \
+										const char *backup_pwd, \
+										const char *path, \
+										t_result result)
+{
+	ft_free(absolute_path);
+	if (result == FAILURE)
+		*absolute_path = x_ft_strdup(backup_pwd);
+	else if (result == BREAK) //todo only . & .. can join
+	{
+		*absolute_path = x_ft_strjoin(backup_pwd, PATH_DELIMITER_STR);
+		*absolute_path = extend_str(*absolute_path, x_ft_strdup(path));
+	}
+}
+
 static void	restore_path_and_clean_up(const char *backup_pwd, \
 										char **canonicalized_path, \
 										t_deque **path_elems)
@@ -68,48 +83,30 @@ static void	restore_path_and_clean_up(const char *backup_pwd, \
 	deque_clear_all(path_elems, del_path_elem);
 }
 
-static char	*get_absolute_path_in_error(const char *backup_pwd, \
-										const char *path, \
-										t_result result)
-{
-	char	*absolute_path;
-
-	if (result == FAILURE)
-		absolute_path = x_ft_strdup(backup_pwd);
-	else if (result == BREAK) //todo only . & .. can join
-	{
-		absolute_path = x_ft_strjoin(backup_pwd, PATH_DELIMITER_STR);
-		absolute_path = extend_str(absolute_path, x_ft_strdup(path));
-	}
-	return (absolute_path);
-}
-
 t_result	cd_chdir_from_relative_path(char **absolute_path, \
 										const char *arg, \
 										const char *path, \
 										const char *internal_pwd)
 {
-	const char		*backup_pwd = internal_pwd;
 	t_deque			*path_elems;
-	char			*canonicalized_path;
 	t_deque_node	*pop;
+	const char		*backup_pwd = internal_pwd;
 	t_result		result;
 
 	path_elems = set_path_elems(path); // [..]-[..]-[A]-[B]-[..]-
-	canonicalized_path = x_ft_strdup(internal_pwd);
+	*absolute_path = x_ft_strdup(internal_pwd);
 	while (!deque_is_empty(path_elems))
 	{
 		pop = deque_pop_front(path_elems);
-		canonicalized_path = get_canonicalize_path(&pop, canonicalized_path);
-		result = test_change_directory(arg, &canonicalized_path, backup_pwd);
+		*absolute_path = get_joined_canonicalize_path(*absolute_path, &pop);
+		result = test_change_directory(arg, absolute_path, backup_pwd);
 		if (result == FAILURE || result == BREAK)
 		{
-			*absolute_path = get_absolute_path_in_error(path, backup_pwd, result);
-			restore_path_and_clean_up(backup_pwd, &canonicalized_path, &path_elems);
+			set_absolute_path_in_error(absolute_path, backup_pwd, path, result);
+			restore_path_and_clean_up(backup_pwd, absolute_path, &path_elems);
 			return (result);
 		}
 	}
-	*absolute_path = canonicalized_path;
 	deque_clear_all(&path_elems, del_path_elem);
 	return (SUCCESS);
 }
