@@ -34,9 +34,7 @@ static t_result	change_directory_inter(const char *arg, \
 }
 
 // in normal case: not free absolute_path
-static void	change_directory(const char *arg, \
-								t_context *context, \
-								uint8_t *status)
+static t_result	change_directory(const char *arg, t_context *context)
 {
 	char		*path;
 	bool		is_print_path;
@@ -46,19 +44,14 @@ static void	change_directory(const char *arg, \
 
 	path = cd_set_path(arg, context->var, &is_print_path);
 	if (!path)
-	{
-		*status = CD_ERROR_STATUS;
-		return ;
-	}
+		return (FAILURE);
 	result = change_directory_inter(arg, path, &absolute_path, internal_pwd);
 	ft_free(&path);
 	if (result == FAILURE)
-	{
-		*status = CD_ERROR_STATUS;
-		return ;
-	}
+		return (FAILURE);
 	cd_update_pwd(absolute_path, context);
 	print_mv_path_use_oldpwd_or_cdpath(is_print_path, context->internal_pwd);
+	return (SUCCESS);
 }
 
 uint8_t	ft_cd(const char *const *argv, t_context *context)
@@ -78,6 +71,7 @@ uint8_t	ft_cd(const char *const *argv, t_context *context)
 		puterr_cmd_msg(CMD_CD, ERROR_MSG_TOO_MANY_ARG);
 		return (status);
 	}
-	change_directory(argv[i], context, &status);
+	if (change_directory(argv[i], context) == FAILURE)
+		status = CD_ERROR_STATUS;
 	return (status);
 }
