@@ -1,8 +1,6 @@
 #include <fcntl.h>
-#include <string.h>
 #include "minishell.h"
 #include "ms_exec.h"
-#include "ms_expansion.h"
 #include "ms_tokenize.h"
 #include "ms_parse.h"
 #include "ft_deque.h"
@@ -29,24 +27,14 @@ static int	open_redirect_fd(const char *path, \
 	return (open_fd);
 }
 
-t_result	close_proc_in_fd(int *proc_in_fd)
+static bool	is_open_failure(int open_errno)
 {
-	if (*proc_in_fd == IN_FD_INIT)
-		return (SUCCESS);
-	if (x_close(*proc_in_fd) == CLOSE_ERROR)
-		return (PROCESS_ERROR);
-	*proc_in_fd = IN_FD_INIT;
-	return (SUCCESS);
-}
-
-t_result	close_proc_out_fd(int *proc_out_fd)
-{
-	if (*proc_out_fd == OUT_FD_INIT)
-		return (SUCCESS);
-	if (x_close(*proc_out_fd) == CLOSE_ERROR)
-		return (PROCESS_ERROR);
-	*proc_out_fd = OUT_FD_INIT;
-	return (SUCCESS);
+	return (open_errno == EACCES || open_errno == EISDIR \
+	|| open_errno == ELOOP || open_errno == ENAMETOOLONG \
+	|| open_errno == ENODEV || open_errno == ENOENT \
+	|| open_errno == ENOTDIR || open_errno == ENXIO \
+	|| open_errno == EOVERFLOW || open_errno == EROFS \
+	|| open_errno == ETXTBSY || open_errno == ETXTBSY);
 }
 
 static t_result	connect_proc_io_fd(const char *path, \
@@ -68,7 +56,11 @@ static t_result	connect_proc_io_fd(const char *path, \
 	}
 	open_fd = open_redirect_fd(path, open_flag, open_errno);
 	if (open_fd == OPEN_ERROR)
-		return (FAILURE);
+	{
+		if (is_open_failure(*open_errno))
+			return (FAILURE);
+		return (PROCESS_ERROR);
+	}
 	*proc_fd = open_fd;
 	return (SUCCESS);
 }

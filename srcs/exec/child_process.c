@@ -4,8 +4,6 @@
 #include "ms_parse.h"
 #include "ms_builtin.h"
 #include "ft_deque.h"
-#include "ft_dprintf.h"
-#include "ft_string.h"
 #include "ft_mem.h"
 
 static uint8_t	execute_builtin_command(const char *const *argv, \
@@ -54,8 +52,10 @@ void	child_process(t_ast *self_node, t_context *context)
 	t_result	redirect_result;
 
 	redirect_result = redirect_fd(self_node, context);
-	if (redirect_result == FAILURE || redirect_result == PROCESS_ERROR)
+	if (redirect_result == FAILURE)
 		exit(context->status);
+	if (redirect_result == PROCESS_ERROR)
+		exit(EXIT_FAILURE);
 	if (handle_child_pipes(self_node) == PROCESS_ERROR)
 		exit(EXIT_FAILURE);
 	status = execute_command_in_child(self_node, context);
