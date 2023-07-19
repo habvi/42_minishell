@@ -201,14 +201,16 @@ def put_output_and_result(test_no, stdin, val, m_res, b_res, status_only, ko_cas
 
 def put_total_result(val):
     test_num, ok, ko = val
-    print("#########################################")
-    print(" TOTAL RESULT : ", end="")
-    print_color_str_no_lf(GREEN, "OK ")
-    print(f'{ok}, ', end="")
-    print_color_str_no_lf(RED, "KO ")
-    print(ko, end="")
-    print(f' (test case: {test_num - 1})')
-    print("#########################################\n")
+    if ok == test_num - 1:
+        color = GREEN
+    else:
+        color = RED
+    print_color_str(color,
+                    f"#########################################\n"
+                    f"TOTAL RESULT (test case: {test_num - 1})\n"
+                    f"  OK {ok}\n"
+                    f"  KO {ko}\n"
+                    f"#########################################\n\n")
     if ok == test_num - 1:
         return 0
     else:
