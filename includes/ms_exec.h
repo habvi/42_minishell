@@ -21,6 +21,9 @@
 # define STATUS_CMD_NOT_FOUND		127
 # define REDIRECT_ONLY_SUCCESS		0
 
+# define DEV_STDIN_PATH		"/dev/stdin"
+# define DEV_STDOUT_PATH	"/dev/stdout"
+
 # define STDIO_COPY_INIT	(-1)
 
 # define ERROR_MSG_NO_SUCH_FILE			"No such file or directory"
@@ -55,7 +58,7 @@ t_result		execute_command(t_ast **self_node, \
 								t_context *context, \
 								t_result heredoc_result);
 t_result		execute_command_recursive(t_ast *self_node, t_context *context);
-t_result		copy_stdio_fd(int *stdin_copy, \
+t_result		backup_stdio_fd(int *stdin_copy, \
 								int *stdout_copy, \
 								const t_ast *self_node);
 t_result		restore_stdio_fd(int stdin_copy, int stdout_copy);
@@ -73,7 +76,7 @@ void			child_process(t_ast *self_node, t_context *context);
 t_result		handle_parent_pipes(t_ast *self_node);
 t_result		parent_process(t_ast *self_node, t_context *context);
 t_result		exec_command_each(t_ast *self_node, t_context *context);
-void			execute_single_builtin(t_ast *self_node, t_context *context);
+t_result		execute_single_builtin(t_ast *self_node, t_context *context);
 bool			is_single_builtin_command(const t_ast *self_node);
 bool			is_last_command_node(t_ast *self_node);
 char			*get_head_token_str(const t_deque *command);
@@ -89,11 +92,13 @@ t_result		exec_handle_right_node(t_ast *self_node, t_context *context);
 t_redirect		*init_redirect(void);
 void			del_redirect(void *content);
 t_result		redirect_fd(t_ast *self_node, t_context *context);
-t_result		connect_redirect_to_proc(t_ast *self_node);
+t_result		connect_redirect_to_proc(int *prev_fd, int proc_fd[2]);
 t_result		open_redirect_fd_and_save_to_proc(t_redirect *redirect, \
 													int proc_fd[2], \
 													int *open_errno);
 t_result		close_proc_in_fd(int *proc_in_fd);
 t_result		close_proc_out_fd(int *proc_out_fd);
+bool			is_use_redirect_in(int proc_in_fd);
+bool			is_use_redirect_out(int proc_out_fd);
 
 #endif //MS_EXEC_H

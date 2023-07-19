@@ -171,19 +171,24 @@ def put_valgrind_result(val_res, m_res):
 
 def put_total_valgrind_result(val_res):
     test_num, ok, leak_ng, fd_ng, skip = val_res
-    print("#########################################")
-    print(" LEAK TOTAL RESULT : ", end="")
-    print_color_str_no_lf(GREEN, "OK ")
-    print(f'{ok}, ', end="")
-    print_color_str_no_lf(RED, "LEAK_NG ")
-    print(f'{leak_ng}, ', end="")
-    print_color_str_no_lf(RED, "FD_NG ")
-    print(f'{fd_ng}, ', end="")
-    print_color_str_no_lf(YELLOW, "SKIP ")
-    print(skip, end="")
-    print(f' (test case: {test_num - 1})')
-    print("#########################################\n")
-    if ok == test_num - 1:
+
+    if skip:
+        color = YELLOW
+    elif ok == test_num - 1:
+        color = GREEN
+    else:
+        color = RED
+
+    print_color_str(color,
+                    f"#########################################\n"
+                    f"LEAK/FD TOTAL RESULT (test case: {test_num - 1})\n"
+                    f"  OK {ok}\n"
+                    f"  LEAK_KO {leak_ng}\n"
+                    f"  FD_KO {fd_ng}\n"
+                    f"  SKIP {skip}\n"
+                    f"#########################################\n\n")
+
+    if ok == test_num - 1 - skip:
         return 0
     else:
         return 1
