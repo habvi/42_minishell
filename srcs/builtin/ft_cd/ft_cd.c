@@ -6,28 +6,6 @@
 #include "ft_string.h"
 #include "ft_mem.h"
 
-static void	print_err_set_status(const char *arg, uint8_t *status)
-{
-	const char	*err_arg;
-
-	if (!arg || ft_streq(arg, KEY_HOME) || ft_streq(arg, CD_ARG_HOME))
-		err_arg = KEY_HOME;
-	else
-		err_arg = KEY_OLDPWD;
-	puterr_cmd_arg_msg_wo_colon(CMD_CD, err_arg, ERROR_MSG_NOT_SET);
-	*status = CD_ERROR_STATUS;
-	// ft_dprintf(2, "%d\n", __LINE__, "error: not set");
-}
-
-/*
-static bool	is_valid_cd_path(const char *path, int *tmp_err)
-{
-	if (!path)
-		return (false);
-	return (is_valid_path(path, tmp_err));
-}
-*/
-
 static void	print_mv_path_use_oldpwd_or_cdpath(bool is_print_path, \
 												const char *pwd)
 {
@@ -66,7 +44,7 @@ static void	change_directory(const char *arg, \
 	path = cd_set_path(arg, context->var, &is_print_path);
 	if (!path)
 	{
-		print_err_set_status(arg, status);
+		*status = CD_ERROR_STATUS;
 		return ;
 	}
 	result = change_directory_inter(\
