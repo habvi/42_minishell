@@ -41,7 +41,6 @@ static t_result	expand_for_filename_each(t_redirect *redirect, \
 t_result	expand_for_filename(t_ast *self_node, t_context *context)
 {
 	t_deque_node	*node;
-	t_result		result;
 	t_redirect		*redirect;
 
 	node = self_node->redirect_list->node;
@@ -54,10 +53,7 @@ t_result	expand_for_filename(t_ast *self_node, t_context *context)
 			continue ;
 		}
 		if (expand_for_filename_each(redirect, context) == FAILURE)
-		{
-			assign_failure_fd_to_proc_fds(self_node->proc_fd);
 			return (FAILURE);
-		}
 		node = node->next;
 	}
 	return (SUCCESS);

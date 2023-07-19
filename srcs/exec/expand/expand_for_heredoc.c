@@ -14,7 +14,8 @@ static bool	is_expand_in_heredoc(t_redirect *redirect)
 }
 
 // redirect->kind is NODE_KIND_HEREDOC
-static t_result	expand_for_heredoc_each(t_redirect *redirect, t_context *context)
+static t_result	expand_for_heredoc_each(t_redirect *redirect, \
+										t_context *context)
 {
 	if (!is_expand_in_heredoc(redirect))
 		return (SUCCESS);

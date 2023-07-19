@@ -6,12 +6,12 @@
 
 bool	is_use_redirect_in(int proc_in_fd)
 {
-	return (!(proc_in_fd == IN_FD_INIT || proc_in_fd == REDIRECT_FAILURE));
+	return (proc_in_fd != IN_FD_INIT);
 }
 
 bool	is_use_redirect_out(int proc_out_fd)
 {
-	return (!(proc_out_fd == OUT_FD_INIT || proc_out_fd == REDIRECT_FAILURE));
+	return (proc_out_fd != OUT_FD_INIT);
 }
 
 static t_result	connect_redirect_in_to_proc(int *prev_fd, int in_fd)
