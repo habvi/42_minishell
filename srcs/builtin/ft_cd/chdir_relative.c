@@ -39,6 +39,7 @@ static t_result chdir_from_relative_path_inter(const char *arg, \
 {
 	t_result	result;
 	int			tmp_err;
+	char		*cwd;
 
 	result = cd_change_dir_to_valid_path(*canonicalized_path, &tmp_err);
 	if (result == SUCCESS)
@@ -51,11 +52,12 @@ static t_result chdir_from_relative_path_inter(const char *arg, \
 	}
 	(void)backup_pwd;
 	// result = cd_change_dir_to_valid_path(backup_pwd, &tmp_err);
-	// getcwd() failed... "cd nothing"
-	if (get_working_directory("ft_cd")) // todo: buf?
+	cwd = get_working_directory(CMD_CD);
+	if (cwd)
 	{
 		// do nothing.
 		// ft_dprintf(2, "%d: [%s]\n", __LINE__, *canonicalized_path);
+		ft_free(&cwd);
 		return (FAILURE);
 	}
 	else
