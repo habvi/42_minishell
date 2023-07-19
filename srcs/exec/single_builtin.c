@@ -5,6 +5,7 @@
 #include "ms_parse.h"
 #include "ft_deque.h"
 #include "ft_mem.h"
+#include "ft_sys.h"
 
 char	*get_head_token_str(const t_deque *command)
 {
@@ -34,15 +35,26 @@ bool	is_single_builtin_command(const t_ast *self_node)
 	return (true);
 }
 
-void	execute_single_builtin(t_ast *self_node, \
-								t_context *context, \
-								t_result redirect_result)
+t_result	execute_single_builtin(t_ast *self_node, t_context *context)
 {
-	char	**argv;
+	int			stdin_copy;
+	int			stdout_copy;
+	char		**argv;
+	t_result	redirect_result;
 
-	if (redirect_result == FAILURE)
-		return ;
+	if (backup_stdio_fd(&stdin_copy, &stdout_copy, self_node) == PROCESS_ERROR)
+		return (PROCESS_ERROR);
+	redirect_result = redirect_fd(self_node, context);
+	if (redirect_result == PROCESS_ERROR || redirect_result == FAILURE)
+	{
+		if (restore_stdio_fd(stdin_copy, stdout_copy) == PROCESS_ERROR)
+			return (PROCESS_ERROR);
+		return (redirect_result);
+	}
 	argv = convert_command_to_argv(self_node->command);
 	context->status = call_builtin_command((const char *const *)argv, context);
 	free_2d_array(&argv);
+	if (restore_stdio_fd(stdin_copy, stdout_copy) == PROCESS_ERROR)
+		return (PROCESS_ERROR);
+	return (SUCCESS);
 }

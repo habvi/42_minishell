@@ -13,39 +13,23 @@ static bool	is_node_executable(t_ast *ast_node)
 }
 
 // execute_single_builtin() not return t_result
-static t_result	execute_builtin_or_external_command(t_ast *self_node, \
-													t_context *context)
+static t_result	execute_command_internal(t_ast *self_node, t_context *context)
 {
-	t_result	redirect_result;
-
 	if (expand_variable_of_cmd_tokens(self_node, context) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
-	redirect_result = redirect_fd(self_node, context);
-	if (redirect_result == PROCESS_ERROR)
+	if (expand_for_heredoc(self_node, context) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
 	if (is_single_builtin_command(self_node))
-		execute_single_builtin(self_node, context, redirect_result);
+	{
+		if (execute_single_builtin(self_node, context) == PROCESS_ERROR)
+			return (PROCESS_ERROR);
+	}
 	else if (is_node_executable(self_node))
 	{
-		if (exec_command_each(\
-				self_node, context, redirect_result) == PROCESS_ERROR)
+		if (exec_command_each(self_node, context) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 	}
 	return (SUCCESS);
-}
-
-t_result	execute_command_internal(t_ast *self_node, t_context *context)
-{
-	t_result	result;
-	int			stdin_copy;
-	int			stdout_copy;
-
-	if (backup_stdio_fd(&stdin_copy, &stdout_copy, self_node) == PROCESS_ERROR)
-		return (PROCESS_ERROR);
-	result = execute_builtin_or_external_command(self_node, context);
-	if (restore_stdio_fd(stdin_copy, stdout_copy) == PROCESS_ERROR)
-		return (PROCESS_ERROR);
-	return (result);
 }
 
 t_result	execute_command_recursive(t_ast *self_node, t_context *context)

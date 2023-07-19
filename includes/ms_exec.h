@@ -72,17 +72,11 @@ bool			is_command_builtin(const char *cmd);
 /* ast */
 char			**convert_command_to_argv(t_deque *command);
 t_result		handle_child_pipes(t_ast *self_node);
-void			child_process(t_ast *self_node, \
-								t_context *context, \
-								t_result redirect_result);
+void			child_process(t_ast *self_node, t_context *context);
 t_result		handle_parent_pipes(t_ast *self_node);
 t_result		parent_process(t_ast *self_node, t_context *context);
-t_result		exec_command_each(t_ast *self_node, \
-									t_context *context, \
-									t_result redirect_result);
-void			execute_single_builtin(t_ast *self_node, \
-										t_context *context, \
-										t_result redirect_result);
+t_result		exec_command_each(t_ast *self_node, t_context *context);
+t_result		execute_single_builtin(t_ast *self_node, t_context *context);
 bool			is_single_builtin_command(const t_ast *self_node);
 bool			is_last_command_node(t_ast *self_node);
 char			*get_head_token_str(const t_deque *command);
