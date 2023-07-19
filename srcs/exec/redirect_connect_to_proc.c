@@ -4,6 +4,16 @@
 #include "ft_deque.h"
 #include "ft_sys.h"
 
+bool	is_use_redirect_in(int proc_in_fd)
+{
+	return (proc_in_fd != IN_FD_INIT);
+}
+
+bool	is_use_redirect_out(int proc_out_fd)
+{
+	return (proc_out_fd != OUT_FD_INIT);
+}
+
 static t_result	connect_redirect_in_to_proc(int *prev_fd, int in_fd)
 {
 	if (*prev_fd != IN_FD_INIT)
@@ -32,23 +42,21 @@ static t_result	connect_redirect_out_to_proc(int out_fd)
 	return (SUCCESS);
 }
 
-t_result	connect_redirect_to_proc(t_ast *self_node)
+t_result	connect_redirect_to_proc(int *prev_fd, int proc_fd[2])
 {
-	if (self_node->proc_fd[IN] != IN_FD_INIT)
+	if (is_use_redirect_in(proc_fd[IN]))
 	{
-		if (connect_redirect_in_to_proc(\
-			&self_node->prev_fd, self_node->proc_fd[IN]) == PROCESS_ERROR)
+		if (connect_redirect_in_to_proc(prev_fd, proc_fd[IN]) == PROCESS_ERROR)
 		{
-			close_proc_out_fd(&self_node->proc_fd[OUT]);
+			close_proc_out_fd(&proc_fd[OUT]);
 			return (PROCESS_ERROR);
 		}
 	}
-	if (self_node->proc_fd[OUT] != OUT_FD_INIT)
+	if (is_use_redirect_out(proc_fd[OUT]))
 	{
-		if (connect_redirect_out_to_proc(\
-			self_node->proc_fd[OUT]) == PROCESS_ERROR)
+		if (connect_redirect_out_to_proc(proc_fd[OUT]) == PROCESS_ERROR)
 		{
-			close_proc_in_fd(&self_node->proc_fd[IN]);
+			close_proc_in_fd(&proc_fd[IN]);
 			return (PROCESS_ERROR);
 		}
 	}

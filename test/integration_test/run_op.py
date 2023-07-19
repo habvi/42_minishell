@@ -1,3 +1,4 @@
+from test_function.print_ng_case import print_ng_cases
 import run_and_or
 import run_mix
 import run_paren
@@ -13,6 +14,8 @@ def main():
     test_res |= run_redirects.main()
     test_res |= run_expansion.main()
     # test_res |= run_path.main()
+
+    print_ng_cases(test_res)
 
     return test_res
 
