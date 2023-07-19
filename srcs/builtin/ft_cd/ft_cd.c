@@ -28,6 +28,8 @@ static t_result	change_directory_inter(const char *arg, \
 	else
 		result = cd_chdir_from_relative_path(\
 									arg, path, absolute_path, internal_pwd);
+	if (result == FAILURE)
+		ft_free(absolute_path);
 	return (result);
 }
 
@@ -40,6 +42,7 @@ static void	change_directory(const char *arg, \
 	bool		is_print_path;
 	t_result	result;
 	char		*absolute_path;
+	const char	*internal_pwd = context->internal_pwd;
 
 	path = cd_set_path(arg, context->var, &is_print_path);
 	if (!path)
@@ -47,14 +50,11 @@ static void	change_directory(const char *arg, \
 		*status = CD_ERROR_STATUS;
 		return ;
 	}
-	result = change_directory_inter(\
-							arg, path, &absolute_path, context->internal_pwd);
+	result = change_directory_inter(arg, path, &absolute_path, internal_pwd);
 	ft_free(&path);
 	if (result == FAILURE)
 	{
 		*status = CD_ERROR_STATUS;
-		// ft_dprintf(2, "%d: [%s]\n", __LINE__, absolute_path);
-		ft_free(&absolute_path);
 		return ;
 	}
 	cd_update_pwd(absolute_path, context);
