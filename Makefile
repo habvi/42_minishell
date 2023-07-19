@@ -251,82 +251,97 @@ t		: all
 # test all
 .PHONY		: test_all
 test_all	: all
-	$(shell rm ko_case_*.txt)
+	rm -f ko_case_*.txt
 	python3 ./test/integration_test/run_all.py
 
 # test multi pipe
 .PHONY		: test_pipe
 test_pipe	: all
+	rm -f ko_case_*.txt
 	python3 ./test/integration_test/run_pipe.py
 
 # test builtin cd
 .PHONY		: test_cd
 test_cd		: all
+	rm -f ko_case_*.txt
 	python3 ./test/integration_test/run_cd.py
 
 # test builtin declare
 .PHONY			: test_declare
 test_declare	: all
+	rm -f ko_case_*.txt
 	python3 ./test/integration_test/run_declare.py
 
 # test builtin echo
 .PHONY		: test_echo
 test_echo	: all
+	rm -f ko_case_*.txt
 	python3 ./test/integration_test/run_echo.py
 
 # test builtin exit
 .PHONY		: test_exit
 test_exit	: all
+	rm -f ko_case_*.txt
 	python3 ./test/integration_test/run_exit.py
 
 # test builtin export
 .PHONY		: test_export
 test_export	: all
+	rm -f ko_case_*.txt
 	python3 ./test/integration_test/run_export.py
 
 # test builtin pwd
 .PHONY		: test_pwd
 test_pwd	: all
+	rm -f ko_case_*.txt
 	python3 ./test/integration_test/run_pwd.py
 
 # test op paren
 .PHONY		: test_paren
 test_paren	: all
+	rm -f ko_case_*.txt
 	python3 ./test/integration_test/run_paren.py
 
 # test op and or
 .PHONY		: test_and_or
 test_and_or	: all
+	rm -f ko_case_*.txt
 	python3 ./test/integration_test/run_and_or.py
 
 # test mix
 .PHONY		: test_mix
 test_mix	: all
+	rm -f ko_case_*.txt
 	python3 ./test/integration_test/run_mix.py
 
 # test redirects
 .PHONY		: test_redirects
 test_redirects	: all
+	rm -f ko_case_*.txt
 	python3 ./test/integration_test/run_redirects.py
 
 # test error
 .PHONY		: test_error
 test_error	: all
+	rm -f ko_case_*.txt
 	python3 ./test/integration_test/run_error.py
 
 # test env
 .PHONY		: test_env
 test_env	: all
+	rm -f ko_case_*.txt
 	python3 ./test/integration_test/run_env.py
 
 # test expansion
 .PHONY		: test_expansion
 test_expansion	: all
+	rm -f ko_case_*.txt
 	python3 ./test/integration_test/run_expansion.py
 
 # test original
 .PHONY		: test_original
 test_original	: all
+	rm -f ko_case_*.txt
 	python3 ./test/integration_test/run_original.py
 
 

@@ -1,5 +1,4 @@
-import glob
-
+from test_function.print_ng_case import print_ng_cases
 import run_builtin
 import run_pipe
 import run_op
@@ -17,16 +16,6 @@ def print_test_title(title):
     print(" *" + " " * len(title) * 4 + title + " " * len(title) * 4 + "* ")
     print(" " + "*" * (len(title) * 9 + 1) + " ")
     print(RESET)
-
-
-def print_ng_cases(test_res):
-    if not test_res:
-        return
-
-    for file in glob.glob('ko_case_*_cmd.txt'):
-        with open(file, 'r') as f:
-            print(f.read())
-    return
 
 
 def main():

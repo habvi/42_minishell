@@ -1,4 +1,5 @@
 from test_function.test_functions import test
+from test_function.print_ng_case import print_ng_cases
 
 def main():
     test_res = 0
@@ -116,6 +117,8 @@ def main():
     test_res |= test("redirect_out", redirects_out_test, False)
     test_res |= test("redirect_append", redirects_append_test, False)
     test_res |= test("redirect_heredoc", redirects_heredoc_test, False)
+
+    print_ng_cases(test_res)
 
     return test_res
 
