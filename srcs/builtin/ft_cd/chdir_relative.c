@@ -48,16 +48,13 @@ static t_result test_change_directory(const char *arg, \
 	(void)backup_pwd;
 	// result = cd_exec_chdir(backup_pwd, &tmp_err);
 	cwd = get_working_directory(CMD_CD);
-	if (cwd)// do nothing.
+	if (cwd)
 	{
 		ft_free(&cwd);
+		puterr_cmd_arg_msg(CMD_CD, arg, strerror(tmp_err));
 		return (FAILURE);
 	}
-	else
-	{
-		puterr_cmd_arg_msg(CMD_CD, arg, strerror(tmp_err));
-		return (BREAK);
-	}
+	return (BREAK);
 }
 
 static void	restore_path_and_clean_up(const char *backup_pwd, \
@@ -91,12 +88,11 @@ t_result	cd_chdir_from_relative_path(char **absolute_path, \
 		result = test_change_directory(arg, &canonicalized_path, backup_pwd);
 		if (result == FAILURE)
 		{
-			puterr_cmd_arg_msg(CMD_CD, arg, ERROR_MSG_NO_SUCH_FILE);
 			*absolute_path = x_ft_strdup(backup_pwd);
 			restore_path_and_clean_up(backup_pwd, &canonicalized_path, &path_elems);
 			return (FAILURE);
 		}
-		if (result == BREAK)
+		if (result == BREAK) //todo only . & .. can join
 		{
 			*absolute_path = x_ft_strjoin(backup_pwd, PATH_DELIMITER_STR);
 			*absolute_path = extend_str(*absolute_path, x_ft_strdup(path));
