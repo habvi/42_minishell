@@ -16,7 +16,6 @@ static t_deque	*set_path_elems(const char *path)
 	return (path_elems);
 }
 
-// todo: func name
 static char	*get_canonicalize_path(t_deque_node **pop_node, \
 									char *canonicalized_path)
 {
@@ -24,87 +23,57 @@ static char	*get_canonicalize_path(t_deque_node **pop_node, \
 	const char	*path_segment = (const char *)(*pop_node)->content;
 
 	tmp = canonicalized_path;
-	// ft_dprintf(2, "%d: [%s] [%s]\n", __LINE__, canonicalized_path, path_segment);
 	canonicalized_path = cd_canonicalize_path(path_segment, canonicalized_path);
-	// ft_dprintf(2, "%d: [%s] [%s]\n", __LINE__, canonicalized_path, path_segment);
 	ft_free(&tmp);
 	deque_clear_node(pop_node, del_path_elem);
 	return (canonicalized_path);
 }
 
-// todo: func name
-static t_result chdir_from_relative_path_inter(const char *arg, \
-												char **canonicalized_path,
-												const char *backup_pwd)
+static t_result test_change_directory(const char *arg, \
+										char **canonicalized_path,
+										const char *backup_pwd)
 {
 	t_result	result;
 	int			tmp_err;
 	char		*cwd;
 
-	result = cd_change_dir_to_valid_path(*canonicalized_path, &tmp_err);
+	result = cd_exec_chdir(*canonicalized_path, &tmp_err);
 	if (result == SUCCESS)
 		return (SUCCESS);
 	if (tmp_err == EACCES)
 	{
 		puterr_cmd_arg_msg(CMD_CD, arg, strerror(tmp_err));
-		// ft_dprintf(2, "%d: [%s]\n", __LINE__, *canonicalized_path);
 		return (FAILURE);
 	}
 	(void)backup_pwd;
-	// result = cd_change_dir_to_valid_path(backup_pwd, &tmp_err);
+	// result = cd_exec_chdir(backup_pwd, &tmp_err);
 	cwd = get_working_directory(CMD_CD);
-	if (cwd)
+	if (cwd)// do nothing.
 	{
-		// do nothing.
-		// ft_dprintf(2, "%d: [%s]\n", __LINE__, *canonicalized_path);
 		ft_free(&cwd);
 		return (FAILURE);
 	}
 	else
 	{
 		puterr_cmd_arg_msg(CMD_CD, arg, strerror(tmp_err));
-		// ft_dprintf(2, "%d: [%s]\n", __LINE__, *canonicalized_path);
 		return (BREAK);
 	}
 }
 
-// todo: func name
-static void	clear_for_return(char **canonicalized_path, t_deque **path_elems)
+static void	restore_path_and_clean_up(const char *backup_pwd, \
+										char **canonicalized_path, \
+										t_deque **path_elems)
 {
+	int	tmp_err;
+
+	cd_exec_chdir(backup_pwd, &tmp_err);
 	ft_free(canonicalized_path);
 	deque_clear_all(path_elems, del_path_elem);
 }
 
-// todo: func name
-static void	set_error_for_failure(const char *arg, \
-									const char *backup_pwd, \
-									char **canonicalized_path, \
-									t_deque **path_elems)
-{
-	int	tmp_err;
-
-	cd_change_dir_to_valid_path(backup_pwd, &tmp_err);
-	puterr_cmd_arg_msg(CMD_CD, arg, ERROR_MSG_NO_SUCH_FILE);
-	// ft_dprintf(2, "%d: [%s]\n", __LINE__, *canonicalized_path);
-	clear_for_return(canonicalized_path, path_elems);
-}
-
-// todo: func name
-static void	set_error_for_break(const char *backup_pwd, \
-								char **canonicalized_path, \
-								t_deque **path_elems)
-{
-	int	tmp_err;
-
-	cd_change_dir_to_valid_path(backup_pwd, &tmp_err);
-	// ft_dprintf(2, "%d: [%s]\n", __LINE__, backup_pwd);
-	// ft_dprintf(2, "%d: [%s]\n", __LINE__, *canonicalized_path);
-	clear_for_return(canonicalized_path, path_elems);
-}
-
-t_result	cd_chdir_from_relative_path(const char *arg, \
+t_result	cd_chdir_from_relative_path(char **absolute_path, \
+										const char *arg, \
 										const char *path, \
-										char **absolute_path, \
 										const char *internal_pwd)
 {
 	const char		*backup_pwd = internal_pwd;
@@ -119,18 +88,19 @@ t_result	cd_chdir_from_relative_path(const char *arg, \
 	{
 		pop_node = deque_pop_front(path_elems);
 		canonicalized_path = get_canonicalize_path(&pop_node, canonicalized_path);
-		result = chdir_from_relative_path_inter(arg, &canonicalized_path, backup_pwd);
+		result = test_change_directory(arg, &canonicalized_path, backup_pwd);
 		if (result == FAILURE)
 		{
+			puterr_cmd_arg_msg(CMD_CD, arg, ERROR_MSG_NO_SUCH_FILE);
 			*absolute_path = x_ft_strdup(backup_pwd);
-			set_error_for_failure(arg, backup_pwd, &canonicalized_path, &path_elems);
+			restore_path_and_clean_up(backup_pwd, &canonicalized_path, &path_elems);
 			return (FAILURE);
 		}
 		if (result == BREAK)
 		{
 			*absolute_path = x_ft_strjoin(backup_pwd, PATH_DELIMITER_STR);
 			*absolute_path = extend_str(*absolute_path, x_ft_strdup(path));
-			set_error_for_break(backup_pwd, &canonicalized_path, &path_elems);
+			restore_path_and_clean_up(backup_pwd, &canonicalized_path, &path_elems);
 			return (BREAK);
 		}
 	}

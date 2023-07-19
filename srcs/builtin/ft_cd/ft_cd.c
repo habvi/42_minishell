@@ -13,21 +13,25 @@ static void	print_mv_path_use_oldpwd_or_cdpath(bool is_print_path, \
 		ft_dprintf(STDOUT_FILENO, "%s\n", pwd);
 }
 
-// todo: func name
+bool	is_absolute_path(const char *path)
+{
+	return (path[0] == ABSOLUTE_PATH_HEAD);
+}
+
 // allocate absolute_path
-static t_result	change_directory_inter(const char *arg, \
-										const char *path, \
-										char **absolute_path, \
-										const char *internal_pwd)
+static t_result	change_directory_to_valid_path(char **absolute_path, \
+												const char *arg, \
+												const char *path, \
+												const char *internal_pwd)
 {
 	t_result	result;
 
 	*absolute_path = NULL;
 	if (is_absolute_path(path))
-		result = cd_chdir_from_absolute_path(path, absolute_path);
+		result = cd_chdir_from_absolute_path(absolute_path, path);
 	else
 		result = cd_chdir_from_relative_path(\
-									arg, path, absolute_path, internal_pwd);
+									absolute_path, arg, path, internal_pwd);
 	if (result == FAILURE)
 		ft_free(absolute_path);
 	return (result);
@@ -40,12 +44,12 @@ static t_result	change_directory(const char *arg, t_context *context)
 	bool		is_print_path;
 	t_result	result;
 	char		*absolute_path;
-	const char	*internal_pwd = context->internal_pwd;
 
 	path = cd_set_path(arg, context->var, &is_print_path);
 	if (!path)
 		return (FAILURE);
-	result = change_directory_inter(arg, path, &absolute_path, internal_pwd);
+	result = change_directory_to_valid_path(\
+							&absolute_path, arg, path, context->internal_pwd);
 	ft_free(&path);
 	if (result == FAILURE)
 		return (FAILURE);

@@ -104,13 +104,12 @@ bool		is_whitespace(char c);
 /* ft_cd */
 // cd
 char		*cd_set_path(const char *arg, t_var *var, bool *is_print_path);
-t_result	cd_change_dir_to_valid_path(const char *absolute_path, \
-										int *tmp_err);
+t_result	cd_exec_chdir(const char *absolute_path, int *tmp_err);
 void		cd_update_pwd(char *path, t_context *context);
-t_result	cd_chdir_from_absolute_path(const char *path, char **absolute_path);
-t_result	cd_chdir_from_relative_path(const char *arg, \
+t_result	cd_chdir_from_absolute_path(char **absolute_path, const char *path);
+t_result	cd_chdir_from_relative_path(char **absolute_path, \
+										const char *arg, \
 										const char *path, \
-										char **absolute_path, \
 										const char *internal_pwd);
 // canonicalize
 char		*cd_canonicalize_path(const char *path, const char *internal_pwd);

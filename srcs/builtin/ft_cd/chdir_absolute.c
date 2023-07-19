@@ -5,17 +5,17 @@
 #include "ft_dprintf.h"
 #include "ft_mem.h"
 
-t_result	cd_chdir_from_absolute_path(const char *path, char **absolute_path)
+// todo: result == PROCESS_ERROR
+t_result	cd_chdir_from_absolute_path(char **absolute_path, const char *path)
 {
 	t_result	result;
 	int			tmp_err;
 
 	*absolute_path = x_ft_strdup(path);
-	result = cd_change_dir_to_valid_path(path, &tmp_err);
+	result = cd_exec_chdir(path, &tmp_err);
 	if (result == FAILURE)
 	{
 		puterr_cmd_arg_msg(CMD_CD, path, strerror(tmp_err));
-		// ft_dprintf(2, "%d: [%s]\n", __LINE__, *absolute_path);
 		return (FAILURE);
 	}
 	ft_free(absolute_path);
