@@ -149,7 +149,11 @@ def run_both_with_valgrind(stdin):
 
 
 def put_valgrind_result(val_res, m_res):
-    test_num, _, _, _, _= val_res
+    if m_res is None:
+        print("valgrind result is None")
+        return
+    
+    test_num, _, _, _, _ = val_res
     if m_res is None:
         print_color_str(YELLOW, f'[{test_num}. valgrind not found]')
         val_res[VAL_SKIP_IDX] += 1

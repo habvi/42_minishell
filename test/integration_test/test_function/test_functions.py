@@ -17,30 +17,6 @@ OK_IDX = 1
 KO_IDX = 2
 SKIP_IDX = 3
 
-# ----------------------------------------------------------
-# OUT_FILE = "pipe_test_out.txt"
-PATH_MINISHELL = ["./minishell", "-i"]
-PATH_MINISHELL_LEAK = "./minishell"
-BASH_INIT_FILE = 'bash_init_file'
-PATH_BASH = ["/bin/bash", "--init-file", BASH_INIT_FILE, "-i"]
-PATH_BASH_LEAK = "bash"
-
-# ----------------------------------------------------------
-MINISHELL_PROMPT_PREFIX = "minishell "
-MINISHELL_ERROR_PREFIX = "minishell: "
-BASH_PROMPT_PREFIX = "bash "
-BASH_ERROR_PREFIX = "bash: "
-GITHUB_ERROR_PREFIX = ["cannot set terminal", "no job"]
-BASH_DROP_WORDS = ["usage:"]
-
-VALGRIND = "valgrind"
-VALGRIND_OP = " --track-fds=yes "
-
-# valgrind str
-DEFINITELY = "definitely"
-INDIRECTLY = "indirectly"
-POSSIBLY = "possibly"
-FD_FLAG = "DESCRIPTORS:"
 
 # ----------------------------------------------------------
 
@@ -147,29 +123,22 @@ def print_ko_case(test_name, test_res, out_ko_case, val_ko_case):
 
 
 def test(test_name, test_input_list, status_only):
-    try:
-        with open(BASH_INIT_FILE, "w") as init_file:
-            init_file.write(f'PS1="{BASH_PROMPT_PREFIX} "')
 
-        test_res = 0
-        print(f' ========================= '
-              f'TEST : [{test_name} {" STATUS ONLY" if status_only else ""}]'
-              f' ========================= ')
+    test_res = 0
+    print(f' ========================= '
+          f'TEST : [{test_name} {" STATUS ONLY" if status_only else ""}]'
+          f' ========================= ')
 
-        output_res, out_ko_case = output_test(test_input_list, status_only)
-        test_res |= output_res
+    output_res, out_ko_case = output_test(test_input_list, status_only)
+    test_res |= output_res
 
-        val_res, val_ko_case = valgrind_test(test_input_list)
-        test_res |= val_res
-        print()
+    val_res, val_ko_case = valgrind_test(test_input_list)
+    test_res |= val_res
+    print()
 
-        print_ko_case(test_name,test_res,out_ko_case,val_ko_case)
-        save_ko_case(test_name, test_res, out_ko_case, val_ko_case)
-        print()
-
-    finally:
-        if os.path.exists(BASH_INIT_FILE):
-            os.remove(BASH_INIT_FILE)
+    print_ko_case(test_name,test_res,out_ko_case,val_ko_case)
+    save_ko_case(test_name, test_res, out_ko_case, val_ko_case)
+    print()
 
     return test_res
 
