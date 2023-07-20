@@ -7,7 +7,7 @@
 #include "ft_string.h"
 
 // todo
-char	*create_path_with_relative_pwd(void)
+char	*cd_create_path_with_relative_pwd(void)
 {
 	return (NULL);
 }

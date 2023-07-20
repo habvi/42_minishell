@@ -50,10 +50,10 @@ static t_result	try_change_directory(const char *arg, \
 	return (SUCCESS);
 }
 
-char	*create_path_with_absolute_pwd(t_deque *path_elems, \
-										const char *internal_pwd, \
-										const char *arg, \
-										t_result *result)
+char	*cd_create_path_with_absolute_pwd(t_deque *path_elems, \
+											const char *internal_pwd, \
+											const char *arg, \
+											t_result *result)
 {
 	char			*absolute_path;
 	t_deque_node	*pop_node;

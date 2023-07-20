@@ -44,17 +44,17 @@ t_result	cd_chdir_from_relative_path(char **new_path, \
 	result = SUCCESS;
 	path_elems = set_path_elems(path);
 	if (is_internal_pwd_relative(internal_pwd))
-		*new_path = create_path_with_relative_pwd(); // todo
+		*new_path = cd_create_path_with_relative_pwd(); // todo
 	else
 	{
-		*new_path = create_path_with_absolute_pwd(\
+		*new_path = cd_create_path_with_absolute_pwd(\
 								path_elems, internal_pwd, arg, &result);
 		if (result == PROCESS_ERROR || result == FAILURE)
 		{
 			restore_path_and_clean_up(internal_pwd, &path_elems);
 			return (result);
 		}
-		result = check_current_exist(arg, new_path, internal_pwd, path);
+		result = cd_check_current_exist(arg, new_path, internal_pwd, path);
 	}
 	deque_clear_all(&path_elems, del_path_elem);
 	return (result);

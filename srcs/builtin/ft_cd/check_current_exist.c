@@ -30,10 +30,10 @@ static t_result	check_current_exist_inter(const char *arg, char **new_path)
 }
 
 // result == BREAK : new_pwd is pwd/path (just joined) and no error returns.
-t_result	check_current_exist(const char *arg, \
-								char **new_path, \
-								const char *internal_pwd, \
-								const char *path)
+t_result	cd_check_current_exist(const char *arg, \
+									char **new_path, \
+									const char *internal_pwd, \
+									const char *path)
 {
 	t_result	result;
 	int			tmp_err;
