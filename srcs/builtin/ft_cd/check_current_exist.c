@@ -1,10 +1,7 @@
-#include <errno.h>
 #include <string.h>
 #include "minishell.h"
 #include "ms_builtin.h"
-#include "ft_deque.h"
 #include "ft_mem.h"
-#include "ft_string.h"
 
 static t_result	check_current_exist_inter(const char *arg, char **new_path)
 {

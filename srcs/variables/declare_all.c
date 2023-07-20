@@ -1,7 +1,6 @@
 #include "minishell.h"
 #include "ms_builtin.h"
 #include "ms_var.h"
-#include "ft_dprintf.h"
 
 void	var_declare_all(const char *const *args, \
 						t_var *var, \

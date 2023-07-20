@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include "minishell.h"
 #include "ms_builtin.h"
-#include "ft_string.h"
 #include "ms_var.h"
+#include "ft_string.h"
 
 static bool	is_valid_option_for_env(const char *const *argv, \
 									uint8_t *status, \

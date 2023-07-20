@@ -1,9 +1,7 @@
 #include <stdlib.h>
 #include "minishell.h"
 #include "ms_exec.h"
-#include "ms_tokenize.h"
 #include "ms_parse.h"
-#include "ft_deque.h"
 
 static bool	is_matching_condition_of_traverse_left_node(t_ast *self_node)
 {

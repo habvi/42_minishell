@@ -1,8 +1,6 @@
-#include <errno.h>
 #include <string.h>
 #include "minishell.h"
 #include "ms_builtin.h"
-#include "ft_dprintf.h"
 #include "ft_mem.h"
 
 t_result	cd_chdir_from_absolute_path(char **absolute_path, const char *path)

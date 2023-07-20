@@ -1,8 +1,6 @@
 #include <stdlib.h>
 #include "minishell.h"
 #include "ms_builtin.h"
-#include "ft_dprintf.h"
-#include "ft_string.h"
 #include "ft_mem.h"
 
 // pwd arg1 arg2 arg3 ... -> pwd, $?=0

@@ -1,9 +1,6 @@
-#include <sys/wait.h>
 #include "minishell.h"
 #include "ms_exec.h"
-#include "ms_tokenize.h"
 #include "ms_parse.h"
-#include "ft_deque.h"
 #include "ft_sys.h"
 
 static bool	is_last_pipe_node(t_ast *self_node)

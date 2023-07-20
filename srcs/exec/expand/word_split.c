@@ -2,8 +2,6 @@
 #include "ms_tokenize.h"
 #include "ms_builtin.h"
 #include "ft_deque.h"
-#include "ft_mem.h"
-#include "ft_string.h"
 
 static char	*get_split_tail(char *head)
 {

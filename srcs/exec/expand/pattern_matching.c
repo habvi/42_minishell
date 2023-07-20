@@ -1,12 +1,8 @@
-#include <errno.h>
-#include <sys/types.h>
 #include "minishell.h"
 #include "ms_expansion.h"
 #include "ms_tokenize.h"
-#include "ms_result.h"
 #include "ft_deque.h"
 #include "ft_string.h"
-#include "ft_sys.h"
 
 bool	is_hidden_file(const char *str)
 {

@@ -3,7 +3,6 @@
 #include "ft_deque.h"
 #include "ft_hash.h"
 #include "ft_mem.h"
-#include "ft_string.h"
 
 static char	*create_joined_value(t_deque_node *node, char *new_value)
 {

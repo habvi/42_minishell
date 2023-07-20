@@ -1,6 +1,4 @@
 #include "minishell.h"
-#include "ms_var.h"
-#include "ft_string.h"
 
 static bool	is_add_operator(const char c)
 {

@@ -1,8 +1,9 @@
 #include "minishell.h"
 #include "ms_var.h"
-#include "ft_deque.h"
 #include "ft_hash.h"
-#include "ft_mem.h"// attr of declare is the arg_attr
+#include "ft_mem.h"
+
+// attr of declare is the arg_attr
 // if arg_attr is NONE, use the attr of key ...(*)
 //
 // key    key_attr    arg_attr    declare_attr

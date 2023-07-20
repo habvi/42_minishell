@@ -1,8 +1,5 @@
 #include <errno.h>
-#include <string.h>
-#include <unistd.h>
 #include "minishell.h"
-#include "ms_builtin.h"
 
 static bool	is_chdir_failure(const int tmp_err)
 {

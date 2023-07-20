@@ -1,10 +1,7 @@
-#include <stdlib.h>
 #include "minishell.h"
 #include "ms_tokenize.h"
 #include "ft_deque.h"
-#include "ft_dprintf.h"
 #include "ft_mem.h"
-#include "ft_string.h"
 
 // a   b    c  |   d   eeee|f||    >   e
 // [a],[b],[c],[|],[d],[e],[&&],[f],[>],[e]
