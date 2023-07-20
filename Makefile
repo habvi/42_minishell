@@ -37,6 +37,8 @@ SRCS		+=	$(BUILTIN_DIR)/$(FT_CD_DIR)/canonicalize.c \
 				$(BUILTIN_DIR)/$(FT_CD_DIR)/chdir_absolute.c \
 				$(BUILTIN_DIR)/$(FT_CD_DIR)/chdir_relative.c \
 				$(BUILTIN_DIR)/$(FT_CD_DIR)/check_current_exist.c \
+				$(BUILTIN_DIR)/$(FT_CD_DIR)/create_path_with_absolute_pwd.c \
+				$(BUILTIN_DIR)/$(FT_CD_DIR)/create_path_with_relative_pwd.c \
 				$(BUILTIN_DIR)/$(FT_CD_DIR)/ft_cd.c \
 				$(BUILTIN_DIR)/$(FT_CD_DIR)/search_cdpath.c \
 				$(BUILTIN_DIR)/$(FT_CD_DIR)/set_path.c \

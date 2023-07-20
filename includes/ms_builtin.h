@@ -105,19 +105,24 @@ bool		is_whitespace(char c);
 // cd
 char		*cd_set_path(const char *arg, t_var *var, bool *is_print_path);
 t_result	cd_exec_chdir(const char *absolute_path, int *tmp_err);
-t_result	try_change_directory(const char *arg, \
-									char *canonicalized_path, \
-									bool is_contain_dot);
 t_result	cd_chdir_from_absolute_path(char **absolute_path, const char *path);
 t_result	cd_chdir_from_relative_path(char **absolute_path, \
 										const char *arg, \
 										const char *path, \
 										const char *internal_pwd);
+char		*create_path_with_relative_pwd(void);
+char		*create_path_with_absolute_pwd(t_deque *path_elems, \
+											const char *internal_pwd, \
+											const char *arg, \
+											t_result *result);
+t_result	check_current_exist(const char *arg, \
+								char **new_path, \
+								const char *internal_pwd, \
+								const char *path);
 void		set_absolute_path_in_error(char **absolute_path, \
 										const char *backup_pwd, \
 										const char *path, \
 										t_result result);
-t_result	check_current_exist(const char *arg, char **canonicalized_path);
 void		cd_update_pwd(char *path, t_context *context);
 // canonicalize
 char		*cd_canonicalize_path(const char *path, const char *internal_pwd);

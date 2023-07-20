@@ -15,66 +15,47 @@ static t_deque	*set_path_elems(const char *path)
 	return (path_elems);
 }
 
-static bool	is_path_segment_dot(const char *const path)
+static bool	is_internal_pwd_relative(const char *internal_pwd)
 {
-	return (ft_streq(PATH_DOT, path) || ft_streq(PATH_DOT_DOT, path));
+	if (!internal_pwd)
+		return (true);
+	return (!is_absolute_path(internal_pwd));
 }
 
-static char	*get_joined_canonicalize_path(char *canonicalized_path, \
-											t_deque_node **pop_node)
-{
-	char		*tmp;
-	const char	*path_segment = (const char *)(*pop_node)->content;
-
-	tmp = canonicalized_path;
-	canonicalized_path = cd_canonicalize_path(path_segment, canonicalized_path);
-	ft_free(&tmp);
-	deque_clear_node(pop_node, del_path_elem);
-	return (canonicalized_path);
-}
-
-static void	restore_path_and_clean_up(const char *backup_pwd, \
+// return error after this function, so not implement chdir error handling here.
+static void	restore_path_and_clean_up(const char *internal_pwd, \
 										t_deque **path_elems)
 {
 	int	tmp_err;
 
-	cd_exec_chdir(backup_pwd, &tmp_err);
+	cd_exec_chdir(internal_pwd, &tmp_err);
 	deque_clear_all(path_elems, del_path_elem);
 }
 
-t_result	cd_chdir_from_relative_path(char **absolute_path, \
+// path_elems : ../../A/B/../ -> [..]-[..]-[A]-[B]-[..]
+t_result	cd_chdir_from_relative_path(char **new_path, \
 										const char *arg, \
 										const char *path, \
 										const char *internal_pwd)
 {
-	t_deque			*path_elems;
-	t_deque_node	*pop;
-	bool			is_contain_dot;
-	const char		*backup_pwd = internal_pwd;
-	t_result		result;
+	t_deque		*path_elems;
+	t_result	result;
 
-	// if !PWD
-	path_elems = set_path_elems(path); // [..]-[..]-[A]-[B]-[..]-
-	*absolute_path = x_ft_strdup(internal_pwd);
-	while (!deque_is_empty(path_elems))
+	result = SUCCESS;
+	path_elems = set_path_elems(path);
+	if (is_internal_pwd_relative(internal_pwd))
+		*new_path = create_path_with_relative_pwd(); // todo
+	else
 	{
-		pop = deque_pop_front(path_elems);
-		is_contain_dot = is_path_segment_dot(pop->content);
-		*absolute_path = get_joined_canonicalize_path(*absolute_path, &pop);
-		result = try_change_directory(arg, *absolute_path, is_contain_dot);
-		if (result == FAILURE)
+		*new_path = create_path_with_absolute_pwd(\
+								path_elems, internal_pwd, arg, &result);
+		if (result == PROCESS_ERROR || result == FAILURE)
 		{
-			restore_path_and_clean_up(backup_pwd, &path_elems);
-			return (FAILURE);
+			restore_path_and_clean_up(internal_pwd, &path_elems);
+			return (result);
 		}
-	}
-	result = check_current_exist(arg, absolute_path);
-	if (result == FAILURE || result == BREAK)
-	{
-		set_absolute_path_in_error(absolute_path, backup_pwd, path, result);
-		restore_path_and_clean_up(backup_pwd, &path_elems);
-		return (result);
+		result = check_current_exist(arg, new_path, internal_pwd, path);
 	}
 	deque_clear_all(&path_elems, del_path_elem);
-	return (SUCCESS);
+	return (result);
 }
