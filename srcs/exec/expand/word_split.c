@@ -22,9 +22,7 @@ static char	*get_split_str(char *head, char **end)
 	if (!*head)
 		return (NULL);
 	tail = get_split_tail(head);
-	split_str = ft_strndup(head, tail - head);
-	if (!split_str)
-		ft_abort();
+	split_str = x_ft_strndup(head, tail - head);
 	*end = tail;
 	return (split_str);
 }

@@ -11,9 +11,7 @@ static char	*get_pwd(t_context *context)
 
 	if (context->internal_pwd)
 	{
-		pwd = ft_strdup(context->internal_pwd);
-		if (!pwd)
-			ft_abort();
+		pwd = x_ft_strdup(context->internal_pwd);
 		return (pwd);
 	}
 	pwd = get_working_directory(CMD_PWD);

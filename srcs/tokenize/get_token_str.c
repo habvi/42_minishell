@@ -17,9 +17,7 @@ char	*get_token_str(char *head, char **end)
 	if (!*head)
 		return (NULL);
 	tail = get_token_tail(head);
-	token_str = ft_strndup(head, tail - head);
-	if (!token_str)
-		ft_abort();
+	token_str = x_ft_strndup(head, tail - head);
 	*end = tail;
 	return (token_str);
 }
