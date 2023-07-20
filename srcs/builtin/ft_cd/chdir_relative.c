@@ -75,7 +75,7 @@ t_result	cd_chdir_from_relative_path(char **absolute_path, \
 		if (result == FAILURE || result == BREAK)
 		{
 			set_absolute_path_in_error(absolute_path, backup_pwd, path, result);
-			restore_path_and_clean_up(backup_pwd, absolute_path, &path_elems);
+			restore_path_and_clean_up(backup_pwd, &path_elems);
 			return (result);
 		}
 	}

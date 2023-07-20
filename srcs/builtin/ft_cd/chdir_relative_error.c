@@ -18,13 +18,10 @@ void	set_absolute_path_in_error(char **absolute_path, \
 	}
 }
 
-void	restore_path_and_clean_up(const char *backup_pwd, \
-									char **canonicalized_path, \
-									t_deque **path_elems)
+void	restore_path_and_clean_up(const char *backup_pwd, t_deque **path_elems)
 {
 	int	tmp_err;
 
 	cd_exec_chdir(backup_pwd, &tmp_err);
-	ft_free(canonicalized_path);
 	deque_clear_all(path_elems, del_path_elem);
 }
