@@ -104,7 +104,7 @@ bool		is_whitespace(char c);
 /* ft_cd */
 // cd
 char		*cd_set_path(const char *arg, t_var *var, bool *is_print_path);
-t_result	cd_exec_chdir(const char *absolute_path, int *tmp_err);
+t_result	cd_exec_chdir(const char *path, int *tmp_err);
 t_result	cd_chdir_from_absolute_path(char **absolute_path, const char *path);
 t_result	cd_chdir_from_relative_path(char **absolute_path, \
 										const char *arg, \

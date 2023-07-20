@@ -12,11 +12,11 @@ static bool	is_chdir_failure(const int tmp_err)
 }
 
 // if chdir error, no need for auto perror.
-t_result	cd_exec_chdir(const char *absolute_path, int *tmp_err)
+t_result	cd_exec_chdir(const char *path, int *tmp_err)
 {
 	*tmp_err = 0;
 	errno = 0;
-	if (chdir(absolute_path) == CHDIR_ERROR)
+	if (chdir(path) == CHDIR_ERROR)
 	{
 		*tmp_err = errno;
 		if (is_chdir_failure(*tmp_err))
