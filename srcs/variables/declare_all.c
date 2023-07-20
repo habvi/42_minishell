@@ -4,9 +4,9 @@
 #include "ft_dprintf.h"
 
 void	var_declare_all(const char *const *args, \
-					t_var *var, \
-					uint8_t *status, \
-					t_var_attr attr)
+						t_var *var, \
+						uint8_t *status, \
+						t_var_attr attr)
 {
 	size_t		i;
 	t_result	result;

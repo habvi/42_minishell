@@ -36,8 +36,8 @@ static void	add_pattern_matched_filename_each(const char *token_str, \
 }
 
 static t_result	add_pattern_matched_files(const char *token_str, \
-										const bool *is_quoted_arr, \
-										t_deque *matched_filenames)
+											const bool *is_quoted_arr, \
+											t_deque *matched_filenames)
 {
 	DIR				*dirp;
 	struct dirent	*dirent;

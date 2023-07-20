@@ -17,8 +17,8 @@
 //                     -           -
 //                     NONE        -  (*)
 static t_var_attr	get_declare_attr(t_var *var, \
-								const char *key, \
-								t_var_attr arg_attr)
+										const char *key, \
+										t_var_attr arg_attr)
 {
 	t_var_attr	declare_attr;
 
@@ -32,8 +32,8 @@ static t_var_attr	get_declare_attr(t_var *var, \
 
 // allocate dup_key, dup_info
 static char	*get_declare_value(t_var *var, \
-										const char *key, \
-										const char *value)
+								const char *key, \
+								const char *value)
 {
 	char	*dup_value;
 
@@ -49,9 +49,9 @@ static char	*get_declare_value(t_var *var, \
 // key, var_info, op, var
 // key, value, attr, op, var -> register
 static t_var_info	*var_create_var_info_for_add(t_var *var, \
-												const char *key, \
-												const char *value, \
-												t_var_attr attr)
+													const char *key, \
+													const char *value, \
+													t_var_attr attr)
 {
 	t_var_info	*var_info;
 
