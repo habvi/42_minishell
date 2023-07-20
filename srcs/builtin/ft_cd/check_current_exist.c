@@ -1,3 +1,4 @@
+#include <string.h>
 #include "minishell.h"
 #include "ms_builtin.h"
 #include "ft_deque.h"
@@ -11,17 +12,28 @@ void	set_absolute_path_in_error(char **absolute_path, \
 	ft_free(absolute_path);
 	if (result == FAILURE)
 		*absolute_path = x_ft_strdup(backup_pwd);
-	else if (result == BREAK) //todo only . & .. can join
+	else if (result == BREAK)
 	{
 		*absolute_path = x_ft_strjoin(backup_pwd, PATH_DELIMITER_STR);
 		*absolute_path = extend_str(*absolute_path, x_ft_strdup(path));
 	}
 }
 
-void	restore_path_and_clean_up(const char *backup_pwd, t_deque **path_elems)
+t_result	check_current_exist(const char *arg, char **canonicalized_path)
 {
-	int	tmp_err;
+	t_result	result;
+	int			tmp_err;
+	char		*cwd;
 
-	cd_exec_chdir(backup_pwd, &tmp_err);
-	deque_clear_all(path_elems, del_path_elem);
+	result = cd_exec_chdir(*canonicalized_path, &tmp_err);
+	if (result == SUCCESS)
+		return (SUCCESS);
+	cwd = get_working_directory(CMD_CD);
+	if (cwd)
+	{
+		ft_free(&cwd);
+		puterr_cmd_arg_msg(CMD_CD, arg, strerror(tmp_err));
+		return (FAILURE);
+	}
+	return (BREAK);
 }
