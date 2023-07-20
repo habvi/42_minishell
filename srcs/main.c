@@ -12,6 +12,8 @@ int	main(int argc, char **argv)
 	init_context(&context, is_forced_interactive);
 	result = read_eval_print_loop(&context);
 	destroy_context(context);
+	if (context.is_interactive)
+		ft_dprintf(STDERR_FILENO, "exit\n");
 	if (result == PROCESS_ERROR)
 		return (EXIT_FAILURE);
 	return (context.status);
