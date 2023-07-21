@@ -3,11 +3,11 @@ from color import print_color_str, print_color_str_no_lf, RED, GREEN, MAGENTA, C
 
 # ----------------------------------------------------------
 # OUT_FILE = "pipe_test_out.txt"
-# PATH_MINISHELL = ["./minishell", "-i"]
-PATH_MINISHELL = ["./minishell"]
+PATH_MINISHELL = ["./minishell", "-i", "-t"]
+# PATH_MINISHELL = ["./minishell"]
 BASH_INIT_FILE = 'bash_init_file'
-# PATH_BASH = ["/bin/bash", "--init-file", BASH_INIT_FILE, "-i"]
-PATH_BASH = ["/bin/bash"]
+PATH_BASH = ["/bin/bash", "--init-file", BASH_INIT_FILE, "-i"]
+# PATH_BASH = ["/bin/bash"]
 
 # ----------------------------------------------------------
 MINISHELL_PROMPT_PREFIX = "minishell "
