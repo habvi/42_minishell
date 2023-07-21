@@ -6,11 +6,12 @@ int	main(int argc, char **argv)
 	t_context	context;
 	t_result	result;
 	bool		is_forced_interactive;
-	bool		is_test;
+	bool		is_rl_hook_on;
 
-	if (analyze_option(argc, argv, &is_forced_interactive, &is_test) == FAILURE)
+	result = analyze_option(argc, argv, &is_forced_interactive, &is_rl_hook_on);
+	if (result == FAILURE)
 		return (INVALID_OPTION);
-	init_context(&context, is_forced_interactive, is_test);
+	init_context(&context, is_forced_interactive, is_rl_hook_on);
 	result = read_eval_print_loop(&context);
 	destroy_context(context);
 	if (result == PROCESS_ERROR)

@@ -7,15 +7,7 @@
 #include "ms_tokenize.h"
 #include "ft_deque.h"
 
-static volatile sig_atomic_t	g_sig = INIT_SIG;
-
-void	sigint_handler_for_prompt(int sig)
-{
-	if (sig == SIGINT)
-	{
-		g_sig = SIGINT;
-	}
-}
+volatile sig_atomic_t	g_sig = INIT_SIG;
 
 static int	event_by_sigint_for_prompt(void)
 {
@@ -35,7 +27,7 @@ static void	init_repl_var(t_context *context, t_result *result)
 	*result = SUCCESS;
 	if (g_sig == SIGINT)
 		context->status = STATUS_SIG_BASE + SIGINT;
-	if (context->is_interactive && !context->_is_test)
+	if (context->is_interactive && !context->is_rl_event_hook_on)
 	{
 		rl_catch_signals = true; // false -> not display ^C // todo:init?
 		rl_event_hook = event_by_sigint_for_prompt;
@@ -62,7 +54,7 @@ t_result	read_eval_print_loop(t_context *context)
 		if (result == FAILURE)
 			continue ;
 		ast = parse(&tokens, context, &result);
-		if (result == FAILURE)
+		if (result == BREAK || result == FAILURE)
 			continue ;
 		result = execute_command(&ast, context, result);
 //		debug_print_ast_tree(ast, "repl");

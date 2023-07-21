@@ -11,7 +11,6 @@ static t_result	get_last_command_status(pid_t pid, \
 										uint8_t *last_status)
 {
 	pid_t	wait_pid;
-	int		sig;
 
 	errno = 0;
 	wait_pid = waitpid(pid, wait_status, 0);
@@ -20,12 +19,7 @@ static t_result	get_last_command_status(pid_t pid, \
 	if (WIFEXITED(*wait_status))
 		*last_status = WEXITSTATUS(*wait_status);
 	else if (WIFSIGNALED(*wait_status))
-	{
-		sig = WTERMSIG(*wait_status);
-		if (sig == SIGINT)
-			ft_dprintf(STDERR_FILENO, NEWLINE_STR);
-		*last_status = STATUS_SIG_BASE + sig;
-	}
+		*last_status = STATUS_SIG_BASE + WTERMSIG(*wait_status);
 	else
 		*last_status = EXIT_FAILURE; // todo
 	return (SUCCESS);
@@ -36,40 +30,42 @@ static bool	is_child_signaled_sigint(int status)
 	return (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT);
 }
 
-static bool	is_all_child_terminated(int err)
-{
-	return (err == ECHILD);
-}
-
 // if wait error, no need for auto perror.
-static t_result	wait_all_child_process(void)
+static t_result	wait_all_child_process(bool *signaled_sigint)
 {
 	int		status;
-	bool	signaled_int_printed;
 
-	signaled_int_printed = false;
+	*signaled_sigint = false;
 	while (true)
 	{
 		errno = 0;
 		if (wait(&status) == WAIT_ERROR)
 		{
-			if (is_all_child_terminated(errno))
+			if (errno == ECHILD)
 				break ;
 			perror("wait");
 			return (PROCESS_ERROR);
 		}
-		if (is_child_signaled_sigint(status) && !signaled_int_printed)
-		{
-			ft_dprintf(STDERR_FILENO, NEWLINE_STR);
-			signaled_int_printed = true;
-		}
+		if (is_child_signaled_sigint(status))
+			*signaled_sigint = true;
 	}
 	return (SUCCESS);
 }
 
+static void	put_signal_information(int wait_status, bool signaled_sigint)
+{
+	const int	last_status = WTERMSIG(wait_status);
+
+	if (last_status == SIGQUIT)
+		ft_dprintf(STDERR_FILENO, "Quit\n");
+	if (last_status == SIGINT || signaled_sigint)
+		ft_dprintf(STDERR_FILENO, "\n");
+}
+
 t_result	parent_process(t_ast *self_node, t_context *context)
 {
-	int	wait_status;
+	int		wait_status;
+	bool	signaled_sigint;
 
 	set_signal_for_parent();
 	if (handle_parent_pipes(self_node) == PROCESS_ERROR)
@@ -80,8 +76,9 @@ t_result	parent_process(t_ast *self_node, t_context *context)
 									&wait_status, \
 									&context->status) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
-		if (wait_all_child_process() == PROCESS_ERROR)
+		if (wait_all_child_process(&signaled_sigint) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
+		put_signal_information(wait_status, signaled_sigint);
 	}
 	return (SUCCESS);
 }

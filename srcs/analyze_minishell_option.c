@@ -11,27 +11,27 @@ static void	put_option_error(char *arg)
 
 static void	skip_while_valid_op(char ***argv, \
 									char op_chr, \
-									bool *is_forced_interactive)
+									bool *option)
 {
 	while (is_arg_option(**argv, CMD_OPTION_MARKER, op_chr))
 	{
 		(*argv)++;
-		*is_forced_interactive = true;
+		*option = true;
 	}
 }
 
 t_result	analyze_option(int argc, \
 							char **argv, \
 							bool *is_forced_interactive, \
-							bool *is_test)
+							bool *is_rl_event_hook_on)
 {
 	*is_forced_interactive = false;
-	*is_test = false;
+	*is_rl_event_hook_on = false;
 	if (argc == 1)
 		return (SUCCESS);
 	argv++;
 	skip_while_valid_op(&argv, OP_FORCED_INTERACTIVE, is_forced_interactive);
-	skip_while_valid_op(&argv, OP_TEST, is_test);
+	skip_while_valid_op(&argv, OP_TEST, is_rl_event_hook_on);
 	if (is_end_of_option(*argv))
 		argv++;
 	if (!*argv)

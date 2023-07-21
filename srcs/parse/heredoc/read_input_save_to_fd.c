@@ -6,19 +6,9 @@
 #include "ms_tokenize.h"
 #include "ft_dprintf.h"
 #include "ft_string.h"
-#include "ft_sys.h"
 #include "ft_mem.h"
 
-static int	g_sig = INIT_SIG;
-
-void	sigint_handler_for_heredoc(int sig)
-{
-	if (sig == SIGINT)
-	{
-		g_sig = SIGINT;
-		rl_done = true;
-	}
-}
+extern volatile sig_atomic_t	g_sig;
 
 static char	*input_line_for_heredoc(void)
 {
@@ -38,24 +28,29 @@ static int	event_by_sigint_for_heredoc(void)
 	return (0);
 }
 
-static void	set_signal_in_heredoc(bool is_interactive, bool is_test)
+static void	set_signal_in_heredoc(t_context *context)
 {
 	set_signal_for_heredoc();
-	if (is_interactive && !is_test)
+	if (context->is_interactive && !context->is_rl_event_hook_on)
 	{
 		rl_catch_signals = true;
 		rl_event_hook = event_by_sigint_for_heredoc;
 	}
 }
 
+static void	set_status_and_init_sig_var(t_context *context)
+{
+	context->status = SIGINT + STATUS_SIG_BASE;
+	g_sig = INIT_SIG;
+}
+
 t_result	read_input_save_to_fd(int fd, \
 									const char *delimiter, \
-									bool is_interactive, \
-									bool is_test)
+									t_context *context)
 {
 	char	*line;
 
-	set_signal_in_heredoc(is_interactive, is_test);
+	set_signal_in_heredoc(context);
 	while (true)
 	{
 		line = input_line_for_heredoc();
@@ -67,7 +62,7 @@ t_result	read_input_save_to_fd(int fd, \
 		if (g_sig == SIGINT)
 		{
 			ft_free(&line);
-			g_sig = INIT_SIG;
+			set_status_and_init_sig_var(context);
 			return (BREAK);
 		}
 		if (ft_streq(line, delimiter))

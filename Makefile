@@ -149,7 +149,9 @@ SRCS		+=	$(PATH_DIR)/create_exec_path.c \
 				$(PATH_DIR)/get_next_path.c
 
 SIGNAL_DIR	:=	signal
-SRCS		+=	$(SIGNAL_DIR)/signal.c
+SRCS		+=	$(SIGNAL_DIR)/signal.c \
+				$(SIGNAL_DIR)/signal_for_heredoc.c \
+				$(SIGNAL_DIR)/signal_for_prompt.c
 
 TOKEN_DIR	:=	tokenize
 SRCS		+=	$(TOKEN_DIR)/del_token.c \

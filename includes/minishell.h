@@ -1,6 +1,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <signal.h>
 # include <stdio.h>
 # include <stdbool.h>
 # include <stddef.h>
@@ -24,6 +25,7 @@
 # define CLOSEDIR_ERROR	(-1)
 # define UNREACHABLE	(-1)
 # define SIGACT_ERROR	(-1) //todo:sort
+# define SIGEMPTY_ERROR	(-1)
 
 # define STR_PATH_DELIMITER		":"
 # define CHR_PATH_DELIMITER		':'
@@ -85,7 +87,7 @@ typedef struct s_context
 	char	*internal_pwd;
 	uint8_t	status;
 	bool	is_return;
-	bool	_is_test;
+	bool	is_rl_event_hook_on;
 }	t_context;
 
 // temporarily here ...

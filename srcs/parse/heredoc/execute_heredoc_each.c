@@ -44,9 +44,7 @@ static void	create_heredoc_delimiter(t_deque *tokens)
 		token->quote = QUOTE_NONE;
 }
 
-t_result	execute_heredoc_each(t_redirect *redirect, \
-									bool is_interactive, \
-									bool is_test)
+t_result	execute_heredoc_each(t_redirect *redirect, t_context *context)
 {
 	t_token		*token;
 	char		*delimiter;
@@ -59,8 +57,7 @@ t_result	execute_heredoc_each(t_redirect *redirect, \
 	create_heredoc_delimiter(redirect->tokens);
 	token = redirect->tokens->node->content;
 	delimiter = token->str; // don't free
-	heredoc_result = read_input_save_to_fd(\
-								fd, delimiter, is_interactive, is_test);
+	heredoc_result = read_input_save_to_fd(fd, delimiter, context);
 	if (x_close(fd) == CLOSE_ERROR)
 		return (PROCESS_ERROR);
 	return (heredoc_result);
