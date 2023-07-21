@@ -35,7 +35,7 @@ static void	init_repl_var(t_context *context, t_result *result)
 	*result = SUCCESS;
 	if (g_sig == SIGINT)
 		context->status = STATUS_SIG_BASE + SIGINT;
-	if (context->is_interactive)
+	if (context->is_interactive && !context->_is_test)
 	{
 		rl_catch_signals = true; // false -> not display ^C // todo:init?
 		rl_event_hook = event_by_sigint_for_prompt;

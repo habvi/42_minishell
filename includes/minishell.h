@@ -35,8 +35,9 @@
 # define SPACE					' '
 # define EMPTY_LINE				""
 
-# define OPTION_FORCED_INTERACTIVE	'i'
-# define INVALID_OPTION				2
+# define OP_FORCED_INTERACTIVE	'i'
+# define OP_TEST				't'
+# define INVALID_OPTION			2
 
 /* status */
 // tokenize and parse
@@ -84,6 +85,7 @@ typedef struct s_context
 	char	*internal_pwd;
 	uint8_t	status;
 	bool	is_return;
+	bool	_is_test;
 }	t_context;
 
 // temporarily here ...
@@ -130,9 +132,13 @@ char		*get_random_str(const size_t size);
 char		*ft_get_next_line(int fd, t_result *result);
 
 /* init */
-void		init_context(t_context *context, bool is_forced_interactive);
-t_result	analyze_option(int argc, char **argv, bool *is_forced_interactive);
-
+void		init_context(t_context *context, \
+							bool is_forced_interactive, \
+							bool is_test);
+t_result	analyze_option(int argc, \
+							char **argv, \
+							bool *is_forced_interactive, \
+							bool *is_test);
 /* repl */
 t_result	read_eval_print_loop(t_context *context);
 
