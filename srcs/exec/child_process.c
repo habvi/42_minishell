@@ -45,14 +45,19 @@ static uint8_t	execute_command_in_child(t_ast *self_node, t_context *context)
 	return (status);
 }
 
+//todo:can't return proc error
 // if execve erorr, no need for auto perror.
 void	child_process(t_ast *self_node, t_context *context)
 {
-	uint8_t	status;
+	uint8_t		status;
+	t_result	redirect_result;
 
 	set_signal_for_child();
-	// debug_func(__func__, __LINE__);
-	// debug_2d_array(argv);
+	redirect_result = redirect_fd(self_node, context);
+	if (redirect_result == FAILURE)
+		exit(context->status);
+	if (redirect_result == PROCESS_ERROR)
+		exit(EXIT_FAILURE);
 	if (handle_child_pipes(self_node) == PROCESS_ERROR)
 		exit(EXIT_FAILURE);
 	status = execute_command_in_child(self_node, context);

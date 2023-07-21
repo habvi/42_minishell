@@ -32,13 +32,17 @@ def save_ko_cmd(test_name, out_ko_case, val_ko_case):
     with open(f'ko_case_{test_name}_cmd.txt', 'w') as f:
         if len(out_ko_case):
             f.write(f'[OUTPUT KO CASE OF : {test_name}]\n')
+            f.write(f'{"-" * 100}\n')
             for stdin, _, _ in out_ko_case:
                 f.write(f'{stdin}\n')
+                f.write(f'{"-" * 100}\n')
 
         if len(val_ko_case):
             f.write(f'[LEAK or FD KO CASE OF : {test_name}]\n')
+            f.write(f'{"-" * 100}\n')
             for ko in val_ko_case:
                 f.write(f'{ko}\n')
+                f.write(f'{"-" * 100}\n')
             # for stdin, _, _ in val_ko_case:
             #     f.write(f'{stdin}\n')
 
@@ -70,6 +74,7 @@ def save_ko_out(test_name, out_ko_case, val_ko_case):
     with open(f'ko_case_{test_name}_out.txt', 'w') as f:
         if len(out_ko_case):
             f.write(f'[OUTPUT KO CASE OF : {test_name}]\n')
+            f.write(f'{"-" * 100}\n')
             for ko in out_ko_case:
                 stdin, m_res, b_res = ko
                 write_out_to_file("minishell", stdin, m_res, f)
@@ -78,9 +83,10 @@ def save_ko_out(test_name, out_ko_case, val_ko_case):
 
         if len(val_ko_case):
             f.write(f'[LEAK or FD KO CASE OF : {test_name}]\n')
-
+            f.write(f'{"-" * 100}\n')
             for ko in val_ko_case:
                 f.write(ko)
+                f.write(f'{"-" * 100}\n')
                 # stdin, m_res, b_res = ko
                 # write_val_to_f("minishell", stdin, m_res, f)
                 # write_val_to_f("bash", stdin, b_res, f)
@@ -108,13 +114,17 @@ def print_ko_case(test_name, test_res, out_ko_case, val_ko_case):
 
     if len(out_ko_case):
         print(f'[OUTPUT KO CASE OF : {test_name}]')
+        print('-' * 100)
         for stdin, _, _ in out_ko_case:
             print(stdin)
+            print('-' * 100)
 
     if len(val_ko_case):
         print(f'[LEAK or FD KO CASE OF : {test_name}]')
+        print('-' * 100)
         for ko in val_ko_case:
             print(ko)
+            print('-' * 100)
     #     for stdin, _, _ in val_ko_case:
     #         print(stdin)
 
