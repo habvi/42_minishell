@@ -1,4 +1,27 @@
+#include <signal.h>
+#include "minishell.h"
 #include "ms_signal.h"
+#include "ft_mem.h"
+#include "ft_sys.h"
+
+static void	init_sigaction(struct sigaction *act, \
+							void (*handler)(int sig), \
+							int flag)
+{
+	ft_bzero(act, sizeof(struct sigaction));
+	sigemptyset(&act->sa_mask);
+	act->sa_handler = handler;
+	act->sa_flags = flag;
+}
+
+void	set_signal_for_prompt(void)
+{
+	struct sigaction	sigquit_act;
+
+	init_sigaction(&sigquit_act, SIG_IGN, 0);
+	if (x_sigaction(SIGQUIT, &sigquit_act, NULL) == SIGACT_ERROR)
+		ft_abort();
+}
 
 void	signal(void)
 {

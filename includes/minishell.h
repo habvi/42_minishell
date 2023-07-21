@@ -23,6 +23,7 @@
 # define UNLINK_ERROR	(-1)
 # define CLOSEDIR_ERROR	(-1)
 # define UNREACHABLE	(-1)
+# define SIGACT_ERROR	(-1) //todo:sort
 
 # define STR_PATH_DELIMITER		":"
 # define CHR_PATH_DELIMITER		':'

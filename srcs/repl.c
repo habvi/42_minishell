@@ -2,6 +2,7 @@
 #include "minishell.h"
 #include "ms_exec.h"
 #include "ms_parse.h"
+#include "ms_signal.h"
 #include "ms_tokenize.h"
 #include "ft_deque.h"
 
@@ -16,6 +17,7 @@ t_result	read_eval_print_loop(t_context *context)
 	{
 		context->is_return = false;
 		result = SUCCESS;
+		set_signal_for_prompt();
 		line = input_line();
 		if (!line)
 			break ;
