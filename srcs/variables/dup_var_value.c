@@ -14,7 +14,7 @@ char	*dup_var_value(const char *const arg)
 	char			*value;
 
 	if (is_operator_exist(*(arg - 1)))
-		value = x_ft_substr(arg, 0, len); // todo: x_ft_strndup?
+		value = x_ft_strndup(arg, len);
 	else// key only
 		value = NULL;
 	return (value);
