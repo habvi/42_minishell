@@ -1,3 +1,4 @@
+#include <signal.h>
 #include "minishell.h"
 #include "ms_parse.h"
 #include "ms_tokenize.h"
@@ -46,8 +47,8 @@ t_ast	*parse(t_deque **tokens, t_context *context, t_result *result)
 	ast = create_ast(*tokens, context, result);
 	if (!ast)
 		return (destroy_tokens(tokens, del_token));
-	heredoc_result = execute_heredoc(ast);
-	if (heredoc_result == PROCESS_ERROR)
+	heredoc_result = execute_heredoc(ast, context);
+	if (heredoc_result == BREAK || heredoc_result == PROCESS_ERROR)
 		return (destroy_tokens_and_ast(tokens, &ast, *result));
 	destroy_tokens(tokens, del_token);
 	return (ast);

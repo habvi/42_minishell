@@ -1,8 +1,9 @@
 #include <stdlib.h>
 #include "minishell.h"
 #include "ms_exec.h"
-#include "ms_parse.h"
 #include "ms_builtin.h"
+#include "ms_parse.h"
+#include "ms_signal.h"
 #include "ft_deque.h"
 #include "ft_mem.h"
 
@@ -51,6 +52,7 @@ void	child_process(t_ast *self_node, t_context *context)
 	uint8_t		status;
 	t_result	redirect_result;
 
+	set_signal_for_child();
 	redirect_result = redirect_fd(self_node, context);
 	if (redirect_result == FAILURE)
 		exit(context->status);

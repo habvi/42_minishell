@@ -83,12 +83,14 @@ void		transfer_redirect_from_command(t_deque *command, \
 											t_deque_node **token_node);
 
 /* heredoc */
-t_result	execute_heredoc(t_ast *ast_node);
-t_result	execute_heredoc_each(t_redirect *redirect);
+t_result	execute_heredoc(t_ast *ast_node, t_context *context);
+t_result	execute_heredoc_each(t_redirect *redirect, t_context *context);
 void		move_redirect_from_command(t_ast *ast_node);
 char		*create_heredoc_filename(void);
 t_result	create_filename_and_open_heredoc_fd(int *fd, char **filename);
-
+t_result	read_input_save_to_fd(int fd, \
+									const char *delimiter, \
+									t_context *context);
 /* is */
 bool		is_node_kind_subshell(t_node_kind node_kind);
 bool		is_node_kind_exec_heredoc(t_node_kind node_kind);

@@ -3,9 +3,11 @@ from color import print_color_str, print_color_str_no_lf, RED, GREEN, MAGENTA, C
 
 # ----------------------------------------------------------
 # OUT_FILE = "pipe_test_out.txt"
-PATH_MINISHELL = ["./minishell", "-i"]
+PATH_MINISHELL = ["./minishell", "-i", "-t"]
+# PATH_MINISHELL = ["./minishell"]
 BASH_INIT_FILE = 'bash_init_file'
 PATH_BASH = ["/bin/bash", "--init-file", BASH_INIT_FILE, "-i"]
+# PATH_BASH = ["/bin/bash"]
 
 # ----------------------------------------------------------
 MINISHELL_PROMPT_PREFIX = "minishell "
@@ -191,6 +193,10 @@ def put_result(stdin, val, m_res, b_res, status_only, ko_case):
 
 # put
 def put_output_and_result(test_no, stdin, val, m_res, b_res, status_only, ko_case):
+    if m_res is None or b_res is None:
+        print("test result is none")
+        return
+
     put_title(stdin, test_no, status_only)
 
     put_output("minishell", stdin, m_res)
