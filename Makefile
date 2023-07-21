@@ -125,6 +125,7 @@ SRCS		+=	$(PARSE_DIR)/$(HEREDOC_DIR)/create_heredoc_filename.c \
 				$(PARSE_DIR)/$(HEREDOC_DIR)/execute_heredoc_each.c \
 				$(PARSE_DIR)/$(HEREDOC_DIR)/heredoc.c \
 				$(PARSE_DIR)/$(HEREDOC_DIR)/open_heredoc_fd.c \
+				$(PARSE_DIR)/$(HEREDOC_DIR)/read_input_save_to_fd.c \
 				$(PARSE_DIR)/abstruct_syntax_tree.c \
 				$(PARSE_DIR)/ast_convert_kind.c \
 				$(PARSE_DIR)/ast_dup_token.c \
