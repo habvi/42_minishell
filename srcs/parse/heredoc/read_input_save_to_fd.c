@@ -38,10 +38,10 @@ static int	event_by_sigint_for_heredoc(void)
 	return (0);
 }
 
-static void	set_signal_in_heredoc(bool is_interactive)
+static void	set_signal_in_heredoc(bool is_interactive, bool is_test)
 {
 	set_signal_for_heredoc();
-	if (is_interactive)
+	if (is_interactive && !is_test)
 	{
 		rl_catch_signals = true;
 		rl_event_hook = event_by_sigint_for_heredoc;
@@ -50,11 +50,12 @@ static void	set_signal_in_heredoc(bool is_interactive)
 
 t_result	read_input_save_to_fd(int fd, \
 									const char *delimiter, \
-									bool is_interactive)
+									bool is_interactive, \
+									bool is_test)
 {
 	char	*line;
 
-	set_signal_in_heredoc(is_interactive);
+	set_signal_in_heredoc(is_interactive, is_test);
 	while (true)
 	{
 		line = input_line_for_heredoc();

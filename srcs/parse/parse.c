@@ -47,7 +47,8 @@ t_ast	*parse(t_deque **tokens, t_context *context, t_result *result)
 	ast = create_ast(*tokens, context, result);
 	if (!ast)
 		return (destroy_tokens(tokens, del_token));
-	heredoc_result = execute_heredoc(ast, context->is_interactive);
+	heredoc_result = execute_heredoc(\
+							ast, context->is_interactive, context->_is_test);
 	if (heredoc_result == BREAK)
 		context->status = SIGINT + STATUS_SIG_BASE;
 	if (heredoc_result == BREAK || heredoc_result == PROCESS_ERROR)
