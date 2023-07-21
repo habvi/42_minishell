@@ -4,7 +4,7 @@ import run_pipe
 import run_op
 import run_error
 import run_original
-
+import run_crazy
 
 BLUE = "\x1b[34m"
 RESET = "\x1b[0m"
@@ -35,6 +35,12 @@ def main():
 
     # print_test_title("ORIGINAL")
     # test_res |= run_original.main()
+
+    print_test_title("ERROR")
+    test_res |= run_error.main()
+
+    # print_test_title("CRAZY")
+    # test_res |= run_crazy.main()
 
     print_ng_cases(test_res)
 

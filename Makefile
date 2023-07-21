@@ -345,5 +345,11 @@ test_original	: all
 	rm -f ko_case_*.txt
 	python3 ./test/integration_test/run_original.py
 
+# test original
+.PHONY		: test_crazy
+test_crazy	: all
+	rm -f ko_case_*.txt
+	python3 ./test/integration_test/run_crazy.py
+
 
 -include $(DEPS)
