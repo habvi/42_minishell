@@ -78,10 +78,10 @@ t_result	execute_command(t_ast **self_node, \
 {
 	t_result	exec_result;
 
-	if (heredoc_result == PROCESS_ERROR)
+	if (heredoc_result == BREAK || heredoc_result == PROCESS_ERROR)
 	{
 		destroy_ast_node_recursive(self_node);
-		return (PROCESS_ERROR);
+		return (heredoc_result);
 	}
 	exec_result = execute_command_recursive(*self_node, context);
 	destroy_ast_tree(self_node, exec_result);

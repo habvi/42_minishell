@@ -83,8 +83,8 @@ void		transfer_redirect_from_command(t_deque *command, \
 											t_deque_node **token_node);
 
 /* heredoc */
-t_result	execute_heredoc(t_ast *ast_node);
-t_result	execute_heredoc_each(t_redirect *redirect);
+t_result	execute_heredoc(t_ast *ast_node, bool is_interactive);
+t_result	execute_heredoc_each(t_redirect *redirect, bool is_interactive);
 void		move_redirect_from_command(t_ast *ast_node);
 char		*create_heredoc_filename(void);
 t_result	create_filename_and_open_heredoc_fd(int *fd, char **filename);

@@ -12,24 +12,70 @@
 #include "ft_sys.h"
 #include "ft_mem.h"
 
-static void	read_input_save_to_fd(int fd, const char *delimiter)
+static int	g_sig = INIT_SIG;
+
+char	*input_line_for_heredoc(void)
 {
 	char	*line;
 
 	rl_outstream = stderr;
+	line = readline(HEREDOC_PROMPT);
+	if (!line)
+		return (NULL);
+	return (line);
+}
+
+void	sigint_handler_for_heredoc(int sig)
+{
+	if (sig == SIGINT)
+	{
+		g_sig = SIGINT;
+		rl_done = true;
+	}
+}
+
+int	event_by_sigint_for_heredoc(void)
+{
+	if (g_sig == SIGINT)
+		rl_done = false;
+	return (0);
+}
+
+static void	set_signal_in_heredoc(bool is_interactive)
+{
+	set_signal_for_heredoc();
+	if (is_interactive)
+	{
+		rl_catch_signals = true;
+		rl_event_hook = event_by_sigint_for_heredoc;
+	}
+}
+
+t_result	read_input_save_to_fd(int fd, \
+										const char *delimiter, \
+										bool is_interactive)
+{
+	char	*line;
+
 	set_signal_in_heredoc(is_interactive);
 	while (true)
 	{
-		line = readline(HEREDOC_PROMPT);
+		line = input_line_for_heredoc();
 		if (!line)
 		{
 			puterr_heredoc_wanted_eof(delimiter);
-			break ;
+			return (SUCCESS);
+		}
+		if (g_sig == SIGINT)
+		{
+			ft_free(&line);
+			g_sig = INIT_SIG;
+			return (BREAK);
 		}
 		if (ft_streq(line, delimiter))
 		{
 			ft_free(&line);
-			break ;
+			return (SUCCESS);
 		}
 		ft_dprintf(fd, "%s\n", line);
 		ft_free(&line);
@@ -74,11 +120,12 @@ static void	create_heredoc_delimiter(t_deque *tokens)
 		token->quote = QUOTE_NONE;
 }
 
-t_result	execute_heredoc_each(t_redirect *redirect)
+t_result	execute_heredoc_each(t_redirect *redirect, bool is_interactive)
 {
-	t_token			*token;
-	char			*delimiter;
-	int				fd;
+	t_token		*token;
+	char		*delimiter;
+	int			fd;
+	t_result	heredoc_result;
 
 	if (create_filename_and_open_heredoc_fd(\
 		&fd, &redirect->heredoc_filename) == PROCESS_ERROR)
@@ -86,8 +133,8 @@ t_result	execute_heredoc_each(t_redirect *redirect)
 	create_heredoc_delimiter(redirect->tokens);
 	token = redirect->tokens->node->content;
 	delimiter = token->str; // don't free
-	read_input_save_to_fd(fd, delimiter);
+	heredoc_result = read_input_save_to_fd(fd, delimiter, is_interactive);
 	if (x_close(fd) == CLOSE_ERROR)
 		return (PROCESS_ERROR);
-	return (SUCCESS);
+	return (heredoc_result);
 }
