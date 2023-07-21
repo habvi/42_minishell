@@ -7,7 +7,7 @@
 #include "ms_tokenize.h"
 #include "ft_deque.h"
 
-static sig_atomic_t	g_sig = INIT_SIG;
+static volatile sig_atomic_t	g_sig = INIT_SIG;
 
 void	sigint_handler_for_prompt(int sig)
 {
