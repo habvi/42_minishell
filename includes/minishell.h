@@ -33,6 +33,7 @@
 # define CHR_NULL				'\0'
 # define EMPTY_STR				"\0"
 # define SPACE					' '
+# define EMPTY_LINE				""
 
 # define OPTION_FORCED_INTERACTIVE	'i'
 # define INVALID_OPTION				2
