@@ -45,7 +45,9 @@ static bool	is_all_child_terminated(int err)
 static t_result	wait_all_child_process(void)
 {
 	int		status;
+	bool	signaled_int_printed;
 
+	signaled_int_printed = false;
 	while (true)
 	{
 		errno = 0;
@@ -56,8 +58,11 @@ static t_result	wait_all_child_process(void)
 			perror("wait");
 			return (PROCESS_ERROR);
 		}
-		if (is_child_signaled_sigint(status))
+		if (is_child_signaled_sigint(status) && !signaled_int_printed)
+		{
 			ft_dprintf(STDERR_FILENO, NEWLINE_STR);
+			signaled_int_printed = true;
+		}
 	}
 	return (SUCCESS);
 }
