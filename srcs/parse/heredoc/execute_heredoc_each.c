@@ -3,6 +3,7 @@
 #include "minishell.h"
 #include "ms_expansion.h"
 #include "ms_parse.h"
+#include "ms_signal.h"
 #include "ms_tokenize.h"
 #include "ft_deque.h"
 #include "ft_dprintf.h"
@@ -16,6 +17,7 @@ static void	read_input_save_to_fd(int fd, const char *delimiter)
 	char	*line;
 
 	rl_outstream = stderr;
+	set_signal_in_heredoc(is_interactive);
 	while (true)
 	{
 		line = readline(HEREDOC_PROMPT);

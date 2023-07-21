@@ -28,7 +28,12 @@ void	set_signal_for_prompt(void)
 		ft_abort();
 }
 
-void	signal(void)
+void	set_signal_for_heredoc(void)
 {
 	
+	struct sigaction	sigquit_act;
+
+	init_sigaction(&sigquit_act, SIG_IGN, 0);
+	if (x_sigaction(SIGQUIT, &sigquit_act, NULL) == SIGACT_ERROR)
+		ft_abort();
 }
