@@ -1,8 +1,5 @@
-#include "minishell.h"
 #include "ms_expansion.h"
-#include "ms_tokenize.h"
 #include "ms_parse.h"
-#include "ms_var.h"
 #include "ft_deque.h"
 
 static bool	is_expand_in_heredoc(t_redirect *redirect)

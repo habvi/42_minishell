@@ -1,8 +1,6 @@
 #include <stdlib.h>
-#include <unistd.h>
 #include "minishell.h"
 #include "ms_var.h"
-#include "ft_string.h"
 
 static void	set_context_initial_value(t_context *context)
 {

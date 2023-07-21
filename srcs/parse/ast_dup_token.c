@@ -23,7 +23,6 @@ static t_deque_node	*deque_dup_node(t_token *token)
 
 	new_token = dup_token(token);
 	new_node = deque_node_new((void *)new_token);
-//	ft_dprintf(2, "dup_cmd:%s\n", new_token->str);
 	if (!new_node)
 		ft_abort();
 	return (new_node);

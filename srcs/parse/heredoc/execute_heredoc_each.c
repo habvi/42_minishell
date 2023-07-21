@@ -1,15 +1,11 @@
-#include <stdio.h>
 #include <readline/readline.h>
 #include "minishell.h"
 #include "ms_expansion.h"
 #include "ms_parse.h"
-#include "ms_tokenize.h"
 #include "ft_deque.h"
-#include "ft_dprintf.h"
-#include "ft_hash.h"
+#include "ft_mem.h"
 #include "ft_string.h"
 #include "ft_sys.h"
-#include "ft_mem.h"
 
 static void	read_input_save_to_fd(int fd, const char *delimiter)
 {

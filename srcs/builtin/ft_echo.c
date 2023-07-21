@@ -1,4 +1,3 @@
-#include <stdbool.h>
 #include <stdlib.h>
 #include "ms_builtin.h"
 #include "ft_dprintf.h"

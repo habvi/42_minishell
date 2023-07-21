@@ -1,9 +1,6 @@
-#include <stdlib.h>
 #include "minishell.h"
 #include "ms_exec.h"
 #include "ms_parse.h"
-#include "ms_tokenize.h"
-#include "ft_deque.h"
 
 t_result	read_eval_print_loop(t_context *context)
 {

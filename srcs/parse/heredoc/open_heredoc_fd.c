@@ -1,5 +1,4 @@
 #include <fcntl.h>
-#include <stdio.h>
 #include "minishell.h"
 #include "ms_parse.h"
 #include "ft_mem.h"

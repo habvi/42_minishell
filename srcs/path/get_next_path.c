@@ -29,7 +29,7 @@ char	*get_next_path(char **path_list)
 	if (*head == CHR_PATH_DELIMITER)
 	{
 		*path_list = head + 1;
-		return (x_ft_strdup(""));
+		return (x_ft_strdup(EMPTY_STR));
 	}
 	tail = head;
 	while (*tail && *tail != CHR_PATH_DELIMITER)

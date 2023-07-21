@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <readline/readline.h>
 #include "minishell.h"
 #include "ms_var.h"

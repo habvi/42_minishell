@@ -1,9 +1,6 @@
 #include <stdlib.h>
 #include "minishell.h"
 #include "ms_builtin.h"
-#include "ms_var.h"
-#include "ft_dprintf.h"
-#include "ft_string.h"
 #include "ft_mem.h"
 
 static void	print_mv_path_use_oldpwd_or_cdpath(bool is_print_path, \

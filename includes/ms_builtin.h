@@ -17,6 +17,7 @@
 
 /* option */
 # define CMD_OPTION_MARKER				'-'
+# define CMD_OPTION_MARKER_STR			"-"
 # define ECHO_OPTION_DISPLAY_NEWLINE	'n'
 # define DECLARE_OPTION_VAR_ENV			'x'
 # define DECLARE_DEL_ATTR_MARKER		'+'

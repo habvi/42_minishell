@@ -1,5 +1,4 @@
 #include <errno.h>
-#include <sys/types.h>
 #include "minishell.h"
 #include "ms_expansion.h"
 #include "ft_sys.h"

@@ -1,10 +1,5 @@
-#include <errno.h>
-#include <string.h>
-#include "minishell.h"
 #include "ms_builtin.h"
 #include "ft_deque.h"
-#include "ft_mem.h"
-#include "ft_string.h"
 
 static t_deque	*set_path_elems(const char *path)
 {
