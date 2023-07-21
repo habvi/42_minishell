@@ -22,7 +22,6 @@ void	set_signal_for_prompt(void)
 	init_sigaction(&sigint_act, sigint_handler_for_prompt, 0); // todo:flag
 	if (x_sigaction(SIGINT, &sigint_act, NULL) == SIGACT_ERROR)
 		ft_abort();
-
 	init_sigaction(&sigquit_act, SIG_IGN, 0);
 	if (x_sigaction(SIGQUIT, &sigquit_act, NULL) == SIGACT_ERROR)
 		ft_abort();
@@ -36,7 +35,6 @@ void	set_signal_for_heredoc(void)
 	init_sigaction(&sigint_act, sigint_handler_for_heredoc, 0); // todo:flag
 	if (x_sigaction(SIGINT, &sigint_act, NULL) == SIGACT_ERROR)
 		ft_abort();
-
 	init_sigaction(&sigquit_act, SIG_IGN, 0);
 	if (x_sigaction(SIGQUIT, &sigquit_act, NULL) == SIGACT_ERROR)
 		ft_abort();
@@ -44,7 +42,12 @@ void	set_signal_for_heredoc(void)
 
 void	set_signal_for_parent(void)
 {
+	struct sigaction	sigint_act;
 	struct sigaction	sigquit_act;
+
+	init_sigaction(&sigint_act, SIG_IGN, 0);
+	if (x_sigaction(SIGINT, &sigint_act, NULL) == SIGACT_ERROR)
+		ft_abort();
 	init_sigaction(&sigquit_act, SIG_IGN, 0);
 	if (x_sigaction(SIGQUIT, &sigquit_act, NULL) == SIGACT_ERROR)
 		ft_abort();
@@ -52,7 +55,12 @@ void	set_signal_for_parent(void)
 
 void	set_signal_for_child(void)
 {
+	struct sigaction	sigint_act;
 	struct sigaction	sigquit_act;
+
+	init_sigaction(&sigint_act, SIG_DFL, 0);
+	if (x_sigaction(SIGINT, &sigint_act, NULL) == SIGACT_ERROR)
+		ft_abort();
 	init_sigaction(&sigquit_act, SIG_DFL, 0);
 	if (x_sigaction(SIGQUIT, &sigquit_act, NULL) == SIGACT_ERROR)
 		ft_abort();

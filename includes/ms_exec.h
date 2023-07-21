@@ -27,6 +27,8 @@
 # define ERROR_MSG_CMD_NOT_FOUND		"command not found"
 # define ERROR_MSG_AMBIGUOUS_REDIRECT	"ambiguous redirect"
 
+# define NEWLINE_STR	"\n"
+
 typedef struct s_ast		t_ast;
 typedef struct s_context	t_context;
 typedef struct s_deque		t_deque;
@@ -78,10 +80,6 @@ bool			is_single_builtin_command(const t_ast *self_node);
 bool			is_last_command_node(t_ast *self_node);
 char			*get_head_token_str(const t_deque *command);
 
-t_result		get_last_command_status(pid_t pid, \
-										int *wait_status, \
-										uint8_t *last_status);
-t_result		wait_all_child_process(int wait_status);
 t_result		exec_handle_left_node(t_ast *self_node, t_context *context);
 t_result		exec_handle_right_node(t_ast *self_node, t_context *context);
 

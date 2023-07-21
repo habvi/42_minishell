@@ -1,11 +1,10 @@
 #include <stdlib.h>
 #include "minishell.h"
 #include "ms_exec.h"
+#include "ms_builtin.h"
 #include "ms_parse.h"
 #include "ms_signal.h"
 #include "ft_deque.h"
-#include "ft_dprintf.h"
-#include "ft_string.h"
 #include "ft_mem.h"
 
 static uint8_t	execute_builtin_command(const char *const *argv, \
