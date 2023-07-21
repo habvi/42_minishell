@@ -41,3 +41,19 @@ void	set_signal_for_heredoc(void)
 	if (x_sigaction(SIGQUIT, &sigquit_act, NULL) == SIGACT_ERROR)
 		ft_abort();
 }
+
+void	set_signal_for_parent(void)
+{
+	struct sigaction	sigquit_act;
+	init_sigaction(&sigquit_act, SIG_IGN, 0);
+	if (x_sigaction(SIGQUIT, &sigquit_act, NULL) == SIGACT_ERROR)
+		ft_abort();
+}
+
+void	set_signal_for_child(void)
+{
+	struct sigaction	sigquit_act;
+	init_sigaction(&sigquit_act, SIG_DFL, 0);
+	if (x_sigaction(SIGQUIT, &sigquit_act, NULL) == SIGACT_ERROR)
+		ft_abort();
+}

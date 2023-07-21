@@ -42,6 +42,7 @@ t_result	parent_process(t_ast *self_node, t_context *context)
 {
 	int	wait_status;
 
+	set_signal_for_parent();
 	if (handle_parent_pipes(self_node) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
 	if (is_last_command_node(self_node))

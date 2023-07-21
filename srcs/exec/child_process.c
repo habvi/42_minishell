@@ -2,7 +2,7 @@
 #include "minishell.h"
 #include "ms_exec.h"
 #include "ms_parse.h"
-#include "ms_builtin.h"
+#include "ms_signal.h"
 #include "ft_deque.h"
 #include "ft_dprintf.h"
 #include "ft_string.h"
@@ -51,6 +51,7 @@ void	child_process(t_ast *self_node, t_context *context)
 {
 	uint8_t	status;
 
+	set_signal_for_child();
 	// debug_func(__func__, __LINE__);
 	// debug_2d_array(argv);
 	if (handle_child_pipes(self_node) == PROCESS_ERROR)
