@@ -21,7 +21,7 @@ static bool	is_valid_option_for_env(const char *const *argv, \
 
 static bool	is_valid_argument_for_env(const char *const *argv, const size_t i)
 {
-	if (argv[i] && !ft_streq(argv[i], "-"))
+	if (argv[i] && !ft_streq(argv[i], CMD_OPTION_MARKER_STR))
 		return (false);
 	if (argv[i] && argv[i + 1])
 		return (false);
@@ -44,7 +44,7 @@ uint8_t	ft_env(const char *const *argv, t_var *var)
 		puterr_env_argument(argv[i]);
 		return (status);
 	}
-	if (ft_streq(argv[i], "-"))
+	if (ft_streq(argv[i], CMD_OPTION_MARKER_STR))
 		return (status);
 	var->env_print(var);
 	return (status);

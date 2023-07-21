@@ -19,6 +19,9 @@
 # define KEY_HOME		"HOME"
 # define KEY_CDPATH		"CDPATH"
 
+# define ASSIGNMENT_STR	"="
+# define ASSIGNMENT_CHR	'='
+
 typedef struct s_context		t_context;
 typedef struct s_var			t_var;
 typedef struct s_hash_element	t_elem;
