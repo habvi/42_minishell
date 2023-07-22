@@ -44,9 +44,9 @@ t_result	cd_check_current_exist(const char *arg, \
 	else if (result == BREAK)
 	{
 		ft_free(new_path);
-		// todo: internal_pwd tail != '/' -> join '/'
 		*new_path = x_ft_strjoin(internal_pwd, PATH_DELIMITER_STR);
 		*new_path = extend_str(*new_path, x_ft_strdup(path));
+		// todo: if len >= 2 && path last == "/" -> rm "/"
 		cd_exec_chdir(internal_pwd, &tmp_err);
 		result = SUCCESS;
 	}

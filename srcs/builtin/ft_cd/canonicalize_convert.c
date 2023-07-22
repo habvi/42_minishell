@@ -4,12 +4,18 @@
 #include "ft_string.h"
 #include "ft_sys.h"
 
-static size_t	calc_len_path(t_deque *path_elems)
+// all len path_elems + number of delimiter("/")
+// absolute pwd -> /path
+// relative pwd -> path
+static size_t	calc_len_path(t_deque *path_elems, const char *internal_pwd)
 {
 	size_t			len_path;
 	t_deque_node	*node;
 
-	len_path = 1;
+	if (is_internal_pwd_relative(internal_pwd))
+		len_path = 0;
+	else
+		len_path = 1;
 	node = path_elems->node;
 	while (node)
 	{
@@ -21,9 +27,10 @@ static size_t	calc_len_path(t_deque *path_elems)
 	return (len_path);
 }
 
-static char	*allocate_absolute_path(t_deque *path_elems)
+// todo: func name. not only absolute
+static char	*allocate_absolute_path(t_deque *path_elems, const char *internal_pwd)
 {
-	const size_t	len_path = calc_len_path(path_elems);
+	const size_t	len_path = calc_len_path(path_elems, internal_pwd);
 	char			*absolute_path;
 
 	absolute_path = (char *)x_malloc(sizeof(char) * (len_path + 1));
@@ -47,16 +54,18 @@ static bool	is_last_path_elems(t_deque_node *node)
 	return (!node->next);
 }
 
-char	*convert_path_elems_to_absolute_path(t_deque *path_elems)
+char	*convert_path_elems_to_absolute_path(t_deque *path_elems, \
+												const char *internal_pwd)
 {
 	char			*absolute_path;
 	size_t			i;
 	t_deque_node	*node;
 	char			*path_elem;
 
-	absolute_path = allocate_absolute_path(path_elems);
+	absolute_path = allocate_absolute_path(path_elems, internal_pwd);
 	i = 0;
-	strlcpy_path_elem(absolute_path, &i, PATH_DELIMITER_STR);
+	if (!is_internal_pwd_relative(internal_pwd)) // todo: is_absolute
+		strlcpy_path_elem(absolute_path, &i, PATH_DELIMITER_STR);
 	node = path_elems->node;
 	while (node)
 	{

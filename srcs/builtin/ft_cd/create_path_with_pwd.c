@@ -50,6 +50,7 @@ static t_result	try_change_directory(const char *arg, \
 	return (SUCCESS);
 }
 
+// todo: doesn't need pop, just iterate?
 char	*cd_create_path_with_pwd(t_deque *path_elems, \
 									const char *internal_pwd, \
 									const char *arg, \

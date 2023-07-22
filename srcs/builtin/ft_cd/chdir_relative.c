@@ -37,7 +37,7 @@ t_result	cd_chdir_from_relative_path(char **new_path, \
 	t_result	result;
 
 	result = SUCCESS;
-	path_elems = set_path_elems(path);
+	path_elems = set_path_elems(path); // todo: create deque in cd_create_path_with_pwd()
 	*new_path = cd_create_path_with_pwd(path_elems, internal_pwd, arg, &result);
 	if (result == PROCESS_ERROR || result == FAILURE)
 	{

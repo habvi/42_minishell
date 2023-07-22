@@ -17,6 +17,6 @@ t_result	cd_chdir_from_absolute_path(char **absolute_path, const char *path)
 		return (result);
 	}
 	ft_free(absolute_path);
-	*absolute_path = cd_canonicalize_path(path, NULL);
+	*absolute_path = cd_canonicalize_path(path, "/"); //todo
 	return (SUCCESS);
 }

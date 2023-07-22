@@ -127,16 +127,19 @@ void		cd_update_pwd(char *path, t_context *context);
 // canonicalize
 char		*cd_canonicalize_path(const char *path, const char *internal_pwd);
 t_deque		*allocate_path_elems(void);
+bool		is_internal_pwd_relative(const char *internal_pwd);
 void		del_path_elem(void *content);
 void		destroy_path_elems(t_deque *path_elems);
 t_deque		*separate_path_and_join(const char *path, \
 									const char *internal_pwd, \
 									t_deque *path_elems);
 void		add_split_path_elems(t_deque *path_elems, const char *path);
-void		erase_dot_path(t_deque **dq);
-void		erase_dot_dot_path(t_deque **dq);
+void		erase_dot_path_for_relative(t_deque **path_elems);
+void		erase_dot_path(t_deque **path_elems);
+void		erase_dot_dot_path(t_deque **path_elems);
 void		handle_double_slash_path(const char *path, char **absolute_path);
-char		*convert_path_elems_to_absolute_path(t_deque *path_elems);
+char		*convert_path_elems_to_absolute_path(t_deque *path_elems, \
+													const char *internal_pwd);
 char		*search_cdpath(const char *arg, t_var *var, bool *is_print_path);
 
 bool		is_absolute_path(const char *path);
