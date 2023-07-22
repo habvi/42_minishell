@@ -351,5 +351,10 @@ test_original	: all
 	rm -f ko_case_*.txt
 	python3 ./test/integration_test/run_original.py
 
+# test original
+.PHONY		: test_path
+test_path	: all
+	rm -f ko_case_*.txt
+	python3 ./test/integration_test/run_path.py
 
 -include $(DEPS)

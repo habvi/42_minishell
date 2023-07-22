@@ -42,7 +42,7 @@ uint8_t	err_and_ret_status(const char *const cmd, \
 							char **exec_path, \
 							size_t paths_len)
 {
-	if (paths_len == 0 && ft_streq(cmd, PATH_DOT))
+	if (paths_len == 0)
 		return (err_no_such_file_and_ret_status(cmd, context, exec_path));
 	return (err_cmd_not_found_and_ret_status(cmd, context, exec_path));
 }
