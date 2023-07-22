@@ -105,6 +105,7 @@ SRCS		+=	$(EXEC_DIR)/$(EXPAND_DIR)/concat_tokens.c  \
 				$(EXEC_DIR)/close_proc_fds.c \
 				$(EXEC_DIR)/exec.c \
 				$(EXEC_DIR)/exec_command.c \
+				$(EXEC_DIR)/exec_error.c \
 				$(EXEC_DIR)/exec_external_command.c \
 				$(EXEC_DIR)/get_exec_command.c \
 				$(EXEC_DIR)/handle_node.c \

@@ -148,7 +148,9 @@ t_result	read_eval_print_loop(t_context *context);
 char		*get_next_path(char **path_list);
 char		*create_executable_path(char *paths, const char *const command);
 char		*create_accessible_path(char *paths, const char *const command);
-char		*create_exec_path(const char *const *argv, t_var *var);
+char		*create_exec_path(const char *const *argv, \
+								t_var *var, \
+								size_t paths_len);
 char		*create_valid_path_by_judge(char *paths, \
 										const char *const arg, \
 										bool (*judge)(const char *path));
