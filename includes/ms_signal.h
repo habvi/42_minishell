@@ -4,6 +4,9 @@
 # define INIT_SIG	0
 # define FLAG_NONE	0
 
+# define QUIT			"Quit\n"
+# define NEWLINE_STR	"\n"
+
 void	set_signal_for_prompt(void);
 void	set_signal_for_heredoc(void);
 void	set_signal_for_parent(void);
