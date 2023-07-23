@@ -3,24 +3,8 @@
 #include "ft_deque.h"
 #include "ft_mem.h"
 
-t_deque	*allocate_path_elems(void)
-{
-	t_deque	*path_elems;
-
-	path_elems = deque_new();
-	if (!path_elems)
-		ft_abort();
-	return (path_elems);
-}
-
-bool	is_internal_pwd_relative(const char *internal_pwd)
-{
-	if (!internal_pwd)
-		return (true);
-	return (!is_absolute_path(internal_pwd));
-}
-
-static void	erase_unnecessary_path_elem(t_deque **path_elems, const char *internal_pwd)
+static void	erase_unnecessary_path_elem(t_deque **path_elems, \
+										const char *internal_pwd)
 {
 	if (is_internal_pwd_relative(internal_pwd))
 		erase_dot_path_for_relative(path_elems);
@@ -31,14 +15,16 @@ static void	erase_unnecessary_path_elem(t_deque **path_elems, const char *intern
 	}
 }
 
-void	del_path_elem(void *content)
+static void	handle_double_slash_path(const char *path, char **absolute_path)
 {
-	ft_free(&content);
-}
+	char	*new_path;
 
-void	destroy_path_elems(t_deque *path_elems)
-{
-	deque_clear_all(&path_elems, del_path_elem);
+	if (is_head_double_slash(path))
+	{
+		new_path = x_ft_strjoin(PATH_DELIMITER_STR, *absolute_path);
+		ft_free(absolute_path);
+		*absolute_path = new_path;
+	}
 }
 
 // 	 PWD         path

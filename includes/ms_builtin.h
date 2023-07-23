@@ -33,7 +33,8 @@
 # define ABSOLUTE_PATH_HEAD	'/'
 # define PATH_DELIMITER_CHR	'/'
 # define PATH_DELIMITER_STR	"/"
-# define PATH_DOUBLE_SLASH	"//"
+// error in norm 3.3.51 ...
+// # define PATH_DOUBLE_SLASH	"//"
 # define PATH_DOT			"."
 # define PATH_DOT_DOT		".."
 # define CHAR_PATH_DOT		'.'
@@ -141,7 +142,6 @@ void		add_split_path_elems(t_deque *path_elems, const char *path);
 void		erase_dot_path_for_relative(t_deque **path_elems);
 void		erase_dot_path(t_deque **path_elems);
 void		erase_dot_dot_path(t_deque **path_elems);
-void		handle_double_slash_path(const char *path, char **absolute_path);
 char		*convert_path_elems_to_absolute_path(t_deque *path_elems, \
 													const char *internal_pwd);
 char		*search_cdpath(const char *arg, t_var *var, bool *is_print_path);

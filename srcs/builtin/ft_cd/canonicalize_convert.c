@@ -28,7 +28,8 @@ static size_t	calc_len_path(t_deque *path_elems, const char *internal_pwd)
 }
 
 // todo: func name. not only absolute
-static char	*allocate_absolute_path(t_deque *path_elems, const char *internal_pwd)
+static char	*allocate_absolute_path(t_deque *path_elems, \
+									const char *internal_pwd)
 {
 	const size_t	len_path = calc_len_path(path_elems, internal_pwd);
 	char			*absolute_path;
@@ -64,7 +65,7 @@ char	*convert_path_elems_to_absolute_path(t_deque *path_elems, \
 
 	absolute_path = allocate_absolute_path(path_elems, internal_pwd);
 	i = 0;
-	if (!is_internal_pwd_relative(internal_pwd)) // todo: is_absolute
+	if (is_absolute_path(internal_pwd))
 		strlcpy_path_elem(absolute_path, &i, PATH_DELIMITER_STR);
 	node = path_elems->node;
 	while (node)

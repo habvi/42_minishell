@@ -27,7 +27,8 @@ t_result	cd_check_current_exist(const char *internal_pwd)
 	return (SUCCESS);
 }
 
-// chdir's result == FAILURE : new_pwd is pwd + path (just joined) and no error handling.
+// chdir's result == FAILURE
+//   -> new_pwd is pwd + path (just joined) and no error handling.
 t_result	cd_check_new_path_exist(const char *arg, \
 									char **new_path, \
 									const char *path, \
@@ -45,7 +46,7 @@ t_result	cd_check_new_path_exist(const char *arg, \
 	if (!cwd)
 	{
 		tmp = *new_path;
-		*new_path = x_ft_strjoin(internal_pwd, "/");
+		*new_path = x_ft_strjoin(internal_pwd, PATH_DELIMITER_STR);
 		*new_path = extend_str(*new_path, x_ft_strdup(path));
 		ft_free(&tmp);
 		return (SUCCESS);

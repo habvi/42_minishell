@@ -13,6 +13,7 @@ static char	*dup_path_prefix(const char *path, const char *internal_pwd)
 	return (x_ft_strdup(internal_pwd));
 }
 
+// define "//" -> error in norm 3.3.51, fixed 3.3.53
 static t_deque	*set_path_elems(const char *path)
 {
 	t_deque			*path_elems;
@@ -22,7 +23,7 @@ static t_deque	*set_path_elems(const char *path)
 	add_split_path_elems(path_elems, path);
 	if (is_head_double_slash(path))
 	{
-		new_node = deque_node_new(x_ft_strdup(PATH_DOUBLE_SLASH));
+		new_node = deque_node_new(x_ft_strdup("//"));
 		deque_add_back(path_elems, new_node);
 	}
 	return (path_elems);
@@ -62,7 +63,7 @@ char	*cd_create_path_with_pwd(const char *arg, \
 	while (node)
 	{
 		path_segment = (char *)node->content;
-		is_contain_dot = is_path_segment_dot_or_dot_dot(path_segment); // todo: no need?
+		is_contain_dot = is_path_segment_dot_or_dot_dot(path_segment);
 		new_path = get_joined_canonicalize_path(&new_path, path_segment);
 		*result = chack_is_valid_directory(arg, path, new_path, is_contain_dot);
 		if (*result == PROCESS_ERROR || *result == FAILURE)
