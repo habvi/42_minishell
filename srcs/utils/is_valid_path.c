@@ -14,17 +14,22 @@ bool	test_opendir_strict(const char *path)
 	return (true);
 }
 
-static bool	test_opendir(const char *path, int *tmp_err)
+static t_result	try_opendir(const char *path, int *tmp_err)
 {
 	DIR	*dirp;
 
 	errno = 0;
 	dirp = opendir(path);
 	*tmp_err = errno;
-	if (*tmp_err != 0)
-		return (false);
-	closedir(dirp);
-	return (true);
+	if (*tmp_err == 0)
+	{
+		if (closedir(dirp) == CLOSE_ERROR)
+			return (PROCESS_ERROR);
+		return (SUCCESS);
+	}
+	if (*tmp_err == EACCES || *tmp_err == ENOENT || *tmp_err == ENOTDIR)
+		return (FAILURE);
+	return (PROCESS_ERROR);
 }
 
 static bool	is_permission_denied(int tmp_err)
@@ -32,46 +37,78 @@ static bool	is_permission_denied(int tmp_err)
 	return (tmp_err == EACCES);
 }
 
-bool	is_valid_path(const char *path, int *tmp_err)
+bool	is_valid_path(const char *path, int *tmp_err, t_result *result)
 {
-	if (test_opendir(path, tmp_err))
+	t_result	open_result;
+
+	*result = SUCCESS;
+	open_result = try_opendir(path, tmp_err);
+	if (open_result == PROCESS_ERROR)
+	{
+		*result = PROCESS_ERROR;
+		return (false);
+	}
+	if (open_result == SUCCESS)
 		return (true);
 	if (is_permission_denied(*tmp_err))
 		return (true);
 	return (false);
 }
 
-bool	is_file_by_stat(const char *path)
+static t_result	get_stat_result(int tmp_err)
 {
-	int			ret;
-	struct stat	sb;
-
-	errno = 0;
-	ret = stat(path, &sb);
-	if (ret == -1)
-		return (false);
-	return (S_ISREG(sb.st_mode));
+	if (tmp_err == 0)
+		return (SUCCESS);
+	if (tmp_err == EACCES || tmp_err == ENOENT || tmp_err == ENOTDIR)
+		return (FAILURE);
+	return (PROCESS_ERROR);
 }
 
-bool	is_a_directory_by_stat(const char *path)
+bool	is_file_by_stat(const char *path, t_result *result)
 {
-	int			ret;
+	int			stat_ret;
+	bool		is_file;
 	struct stat	sb;
 
+	is_file = false;
 	errno = 0;
-	ret = stat(path, &sb);
-	if (ret == -1)
-		return (false);
-	return (S_ISDIR(sb.st_mode));
+	stat_ret = stat(path, &sb);
+	*result = get_stat_result(errno);
+	if (stat_ret != STAT_ERROR && S_ISREG(sb.st_mode))
+		is_file = true;
+	return (is_file);
 }
 
-bool	is_a_directory(const char *path)
+bool	is_a_directory_by_stat(const char *path, t_result *result)
 {
-	int		tmp_err;
+	int			stat_ret;
+	bool		is_dir;
+	struct stat	sb;
 
-	if (!path || !is_a_directory_by_stat(path))
+	is_dir = false;
+	errno = 0;
+	stat_ret = stat(path, &sb);
+	*result = get_stat_result(errno);
+	if (stat_ret != STAT_ERROR && S_ISDIR(sb.st_mode))
+		is_dir = true;
+	return (is_dir);
+}
+
+bool	is_a_directory(const char *path, t_result *result)
+{
+	int			tmp_err;
+	t_result	open_res;
+
+	*result = SUCCESS;
+	if (!path || !is_a_directory_by_stat(path, result))
 		return (false);
-	if (test_opendir(path, &tmp_err))
+	open_res = try_opendir(path, &tmp_err);
+	if (open_res == PROCESS_ERROR)
+	{
+		*result = PROCESS_ERROR;
+		return (false);
+	}
+	if (open_res == SUCCESS)
 		return (true);
 	if (is_permission_denied(tmp_err))
 		return (true);

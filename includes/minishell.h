@@ -121,10 +121,10 @@ char		*get_working_directory(const char *for_whom);
 bool		is_valid_key(const char *word);
 bool		is_valid_head(const char c);
 bool		is_valid_after_head(const char c);
-bool		is_valid_path(const char *path, int *tmp_err);
-bool		is_a_directory(const char *path);
-bool		is_a_directory_by_stat(const char *path);
-bool		is_file_by_stat(const char *path);
+bool		is_valid_path(const char *path, int *tmp_err, t_result *result);
+bool		is_a_directory(const char *path, t_result *result);
+bool		is_a_directory_by_stat(const char *path, t_result *result);
+bool		is_file_by_stat(const char *path, t_result *result);
 bool		test_opendir_strict(const char *path);
 char		*x_ft_itoa(int n);
 char		*x_ft_strdup(const char *str);
@@ -149,14 +149,20 @@ t_result	read_eval_print_loop(t_context *context);
 
 /* path */
 char		*get_next_path(char **path_list);
-char		*create_executable_path(char *paths, const char *const command);
-char		*create_accessible_path(char *paths, const char *const command);
+char		*create_executable_path(char *paths, \
+									const char *const command, \
+									t_result *result);
+char		*create_accessible_path(char *paths, \
+									const char *const command, \
+									t_result *result);
 char		*create_exec_path(const char *const *argv, \
 								t_var *var, \
-								size_t paths_len);
+								size_t paths_len, \
+								t_result *result);
 char		*create_valid_path_by_judge(char *paths, \
 										const char *const arg, \
-										bool (*judge)(const char *path));
+										bool (*judge)(const char *path, t_result *res),
+										t_result *result);
 
 /* error msg */
 // arg, msg

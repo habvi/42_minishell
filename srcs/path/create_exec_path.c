@@ -22,11 +22,13 @@ static bool	is_empty_command(const char *const command)
 // access(PATH[i] + "/" " command)
 static char	*search_command_path(const char *const command, \
 									t_var *var, \
-									size_t paths_len)
+									size_t paths_len, \
+									t_result *result)
 {
 	char	*env_path;
 	char	*exec_path;
 
+	*result = SUCCESS;
 	if (is_empty_command(command))
 		return (NULL);
 	if (ft_streq(command, PATH_DOT))
@@ -34,25 +36,28 @@ static char	*search_command_path(const char *const command, \
 	if (paths_len > 0 && ft_streq(command, PATH_DOT_DOT))
 		return (NULL);
 	env_path = create_split_src_paths(var, KEY_PATH);
-	exec_path = create_executable_path(env_path, command);
+	exec_path = create_executable_path(env_path, command, result);
 	if (exec_path)
 	{
 		ft_free(&env_path);
 		return (exec_path);
 	}
-	exec_path = create_accessible_path(env_path, command);
+	exec_path = create_accessible_path(env_path, command, result);
 	ft_free(&env_path);
 	return (exec_path);
 }
 
 // if search_command_path return NULL -> command not found
-char	*create_exec_path(const char *const *argv, t_var *var, size_t paths_len)
+char	*create_exec_path(const char *const *argv, \
+							t_var *var, \
+							size_t paths_len, \
+							t_result *result)
 {
 	char	*path;
 
 	if (is_slash_in_argv(argv[0]))
 		path = x_ft_strdup(argv[0]);
 	else
-		path = search_command_path(argv[0], var, paths_len);
+		path = search_command_path(argv[0], var, paths_len, result);
 	return (path);
 }
