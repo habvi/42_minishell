@@ -250,6 +250,17 @@ sani	:
 norm	:
 	python3 ./test/integration_test/norm.py
 
+.PHONY	: readline
+readline:
+ifeq ($(UNAME), Linux)
+	sudo apt-get install libreadline8
+	sudo apt-get install libreadline-dev
+else
+ifeq ($(UNAME), Darwin)
+	curl -fsSL https://rawgit.com/kube/42homebrew/master/install.sh | zsh
+	brew update && brew upgrade && brew install readline
+endif
+endif
 
 #--------------------------------------------
 # test.bats
