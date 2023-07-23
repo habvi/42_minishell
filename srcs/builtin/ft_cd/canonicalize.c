@@ -15,15 +15,15 @@ static void	erase_unnecessary_path_elem(t_deque **path_elems, \
 	}
 }
 
-static void	handle_double_slash_path(const char *path, char **absolute_path)
+static void	handle_double_slash_path(const char *path, char **new_path)
 {
-	char	*new_path;
+	char	*tmp;
 
 	if (is_head_double_slash(path))
 	{
-		new_path = x_ft_strjoin(PATH_DELIMITER_STR, *absolute_path);
-		ft_free(absolute_path);
-		*absolute_path = new_path;
+		tmp = x_ft_strjoin(PATH_DELIMITER_STR, *new_path);
+		ft_free(new_path);
+		*new_path = tmp;
 	}
 }
 
@@ -51,7 +51,7 @@ char	*cd_canonicalize_path(const char *internal_pwd, const char *path)
 	path_elems = allocate_path_elems();
 	path_elems = separate_path_and_join(path, internal_pwd, path_elems);
 	erase_unnecessary_path_elem(&path_elems, internal_pwd);
-	new_path = convert_path_elems_to_absolute_path(path_elems, internal_pwd);
+	new_path = convert_path_elems_to_path(path_elems, internal_pwd);
 	handle_double_slash_path(path, &new_path);
 	destroy_path_elems(&path_elems);
 	return (new_path);
