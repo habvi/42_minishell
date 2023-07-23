@@ -3,7 +3,6 @@
 #include "ms_expansion.h"
 #include "ms_parse.h"
 #include "ms_result.h"
-#include "ft_sys.h"
 
 static t_result	execute_command_internal(t_ast *self_node, t_context *context)
 {

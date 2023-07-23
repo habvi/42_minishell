@@ -1,13 +1,13 @@
 #include "minishell.h"
 #include "ms_tokenize.h"
-#include "ms_builtin.h"
+#include "ft_ascii.h"
 #include "ft_deque.h"
 #include "ft_mem.h"
 #include "ft_string.h"
 
 void	skip_token_delimiter(char **head)
 {
-	while (is_whitespace(**head))
+	while (ft_is_whitespace(**head))
 		(*head)++;
 }
 

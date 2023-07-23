@@ -1,4 +1,3 @@
-#include <signal.h>
 #include "minishell.h"
 #include "ms_parse.h"
 #include "ms_tokenize.h"
