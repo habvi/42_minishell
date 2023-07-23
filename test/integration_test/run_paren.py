@@ -46,9 +46,9 @@ def main():
                     "echo a (())",
                     ]
 
-    test_res |= test("paren", pass_paren_error_test, False)
-    test_res |= test("paren", not_pass_yet_paren_error_test, False)
-    test_res |= test("paren", paren_test, False)
+    test_res |= test("paren", pass_paren_error_test, False, False)
+    test_res |= test("paren", not_pass_yet_paren_error_test, False, False)
+    test_res |= test("paren", paren_test, False, False)
 
 
     return test_res

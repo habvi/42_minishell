@@ -108,11 +108,11 @@ def main():
                 "cd nosuchfile && echo a b || cd nosuchfile",
                 ]
 
-    test_res |= test("and_error", and_error_test, False)
-    test_res |= test("or_error", or_error_test, False)
-    test_res |= test("and", and_test, False)
-    test_res |= test("or", or_test, False)
-    test_res |= test("ans_or_mix", and_or_mix_test, False)
+    test_res |= test("and_error", and_error_test, False, False)
+    test_res |= test("or_error", or_error_test, False, False)
+    test_res |= test("and", and_test, False, False)
+    test_res |= test("or", or_test, False, False)
+    test_res |= test("ans_or_mix", and_or_mix_test, False, False)
 
     return test_res
 
