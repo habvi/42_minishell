@@ -7,11 +7,11 @@
 // for not pur error message, use access. not x_access.
 static bool	is_accessible_command(const char *path, t_result *result)
 {
-	int	ret;
+	int	access_ret;
 
 	errno = 0;
-	ret = access(path, X_OK);
-	if (ret != ACCESS_ERROR)
+	access_ret = access(path, X_OK);
+	if (access_ret != ACCESS_ERROR)
 		return (true);
 	if (errno == EACCES && is_file_by_stat(path, result))
 		return (true);
@@ -24,7 +24,7 @@ static bool	is_executable_command(const char *path, t_result *result)
 
 	errno = 0;
 	access_ret = access(path, X_OK);
-	if (errno == 0)
+	if (access_ret != ACCESS_ERROR)
 		*result = SUCCESS;
 	else if (errno == EACCES || errno == ENOENT || errno == ENOTDIR)
 		*result = FAILURE;

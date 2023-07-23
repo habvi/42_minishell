@@ -8,7 +8,7 @@ bool	test_opendir_strict(const char *path, t_result *result)
 
 	errno = 0;
 	dirp = opendir(path);
-	if (errno == 0)
+	if (dirp)
 		*result = SUCCESS;
 	else if (errno == EACCES || errno == ENOENT || errno == ENOTDIR)
 		*result = FAILURE;
@@ -27,7 +27,7 @@ static t_result	try_opendir(const char *path, int *tmp_err)
 	errno = 0;
 	dirp = opendir(path);
 	*tmp_err = errno;
-	if (*tmp_err == 0)
+	if (dirp)
 	{
 		if (closedir(dirp) == CLOSE_ERROR)
 			return (PROCESS_ERROR);
