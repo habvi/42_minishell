@@ -1,7 +1,6 @@
 #include "minishell.h"
 #include "ms_tokenize.h"
 #include "ft_deque.h"
-#include "ft_mem.h"
 #include "ft_sys.h"
 
 char	**convert_command_to_argv(t_deque *command)

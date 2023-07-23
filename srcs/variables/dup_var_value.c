@@ -4,7 +4,7 @@
 
 static int	is_operator_exist(const char c)
 {
-	return (c == '=');
+	return (c == ASSIGNMENT_CHR);
 }
 
 // j > 0, because key exists.
@@ -15,7 +15,7 @@ char	*dup_var_value(const char *const arg)
 	char			*value;
 
 	if (is_operator_exist(*(arg - 1)))
-		value = ft_substr(arg, 0, len);
+		value = x_ft_strndup(arg, len);
 	else// key only
 		value = NULL;
 	return (value);

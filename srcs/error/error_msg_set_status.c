@@ -1,5 +1,4 @@
 #include "minishell.h"
-#include "ms_builtin.h"
 
 void	puterr_cmd_msg_set_status(const char *const cmd, \
 									const char *msg, \

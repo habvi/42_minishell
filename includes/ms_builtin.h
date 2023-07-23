@@ -15,8 +15,11 @@
 # define CMD_PWD		"pwd"
 # define CMD_UNSET		"unset"
 
+# define CHDIR			"chdir"
+
 /* option */
 # define CMD_OPTION_MARKER				'-'
+# define CMD_OPTION_MARKER_STR			"-"
 # define ECHO_OPTION_DISPLAY_NEWLINE	'n'
 # define DECLARE_OPTION_VAR_ENV			'x'
 # define DECLARE_DEL_ATTR_MARKER		'+'
@@ -30,6 +33,8 @@
 # define ABSOLUTE_PATH_HEAD	'/'
 # define PATH_DELIMITER_CHR	'/'
 # define PATH_DELIMITER_STR	"/"
+// error in norm 3.3.51 ...
+// # define PATH_DOUBLE_SLASH	"//"
 # define PATH_DOT			"."
 # define PATH_DOT_DOT		".."
 # define CHAR_PATH_DOT		'.'
@@ -104,21 +109,41 @@ bool		is_whitespace(char c);
 /* ft_cd */
 // cd
 char		*cd_set_path(const char *arg, t_var *var, bool *is_print_path);
-t_result	cd_change_dir_to_valid_path(const char *absolute_path, \
-										int *tmp_err);
+t_result	cd_exec_chdir(const char *path, int *tmp_err);
+char		*cd_create_path_with_pwd(const char *arg, \
+										const char *path, \
+										const char *internal_pwd, \
+										t_result *result);
+t_result	chack_is_valid_directory(const char *arg, \
+										const char *path, \
+										char *new_path, \
+										const bool is_contain_dot);
+t_result	cd_check_current_exist(const char *internal_pwd);
+t_result	cd_check_new_path_exist(const char *arg, \
+									char **new_path, \
+									const char *path, \
+									const char *internal_pwd);
+void		set_absolute_path_in_error(char **absolute_path, \
+										const char *backup_pwd, \
+										const char *path, \
+										t_result result);
 void		cd_update_pwd(char *path, t_context *context);
 // canonicalize
-char		*cd_canonicalize_path(const char *path, const char *internal_pwd);
+char		*cd_canonicalize_path(const char *internal_pwd, const char *path);
 t_deque		*allocate_path_elems(void);
+bool		is_internal_pwd_relative(const char *internal_pwd);
+bool		is_head_double_slash(const char *path);
 void		del_path_elem(void *content);
-void		destroy_path_elems(t_deque *path_elems);
+void		destroy_path_elems(t_deque **path_elems);
 t_deque		*separate_path_and_join(const char *path, \
 									const char *internal_pwd, \
 									t_deque *path_elems);
-void		erase_dot_path(t_deque **dq);
-void		erase_dot_dot_path(t_deque **dq);
-void		handle_double_slash_path(const char *path, char **absolute_path);
-char		*convert_path_elems_to_absolute_path(t_deque *path_elems);
+void		add_split_path_elems(t_deque *path_elems, const char *path);
+void		erase_dot_path_for_relative(t_deque **path_elems);
+void		erase_dot_path(t_deque **path_elems);
+void		erase_dot_dot_path(t_deque **path_elems);
+char		*convert_path_elems_to_absolute_path(t_deque *path_elems, \
+													const char *internal_pwd);
 char		*search_cdpath(const char *arg, t_var *var, bool *is_print_path);
 
 bool		is_absolute_path(const char *path);

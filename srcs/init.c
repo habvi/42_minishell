@@ -1,8 +1,7 @@
 #include <stdlib.h>
-#include <unistd.h>
 #include "minishell.h"
 #include "ms_var.h"
-#include "ft_string.h"
+#include "ft_mem.h"
 
 static void	set_context_initial_value(t_context *context)
 {
@@ -12,6 +11,18 @@ static void	set_context_initial_value(t_context *context)
 	context->status = EXIT_SUCCESS;
 	context->is_return = false;
 	context->is_rl_event_hook_on = false;
+}
+
+static char	*set_default_internal_pwd(t_var *var)
+{
+	char	*pwd_path;
+	int		tmp_err;
+
+	pwd_path = get_current_path(&tmp_err);
+	ft_free(&pwd_path);
+	if (tmp_err)
+		return (NULL);
+	return (var->get_value(var, KEY_PWD));
 }
 
 // If an error occurs, will not exit.
@@ -27,11 +38,8 @@ static void	set_context_default_value(t_context *context, \
 										bool is_forced_interactive, \
 										bool is_rl_event_hook_on)
 {
-	t_var	*var;
-
 	context->var = set_default_environ();
-	var = context->var;
-	context->internal_pwd = var->get_value(var, KEY_PWD);
+	context->internal_pwd = set_default_internal_pwd(context->var);
 	context->is_interactive = set_is_interactive(is_forced_interactive);
 	context->status = EXIT_SUCCESS;
 	context->is_rl_event_hook_on = is_rl_event_hook_on;

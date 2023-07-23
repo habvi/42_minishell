@@ -1,8 +1,6 @@
 #include <limits.h>
-#include <stdbool.h>
 #include <string.h>
 #include "minishell.h"
-#include "ft_dprintf.h"
 #include "ft_mem.h"
 #include "ft_sys.h"
 
@@ -18,7 +16,7 @@ static char	*extend_path(char *path, const size_t newsize)
 }
 
 // use getcwd to original error handling.
-static char	*get_current_path(int *tmp_err)
+char	*get_current_path(int *tmp_err)
 {
 	char	*path;
 	size_t	size;

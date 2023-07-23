@@ -2,8 +2,6 @@
 #include "ft_deque.h"
 #include "ft_dprintf.h"
 
-#include <stdlib.h>
-
 // tokenize:[echo], [a], [|], [echo], [b], [&&], [echo], [c]
 
 // typedef struct s_token {

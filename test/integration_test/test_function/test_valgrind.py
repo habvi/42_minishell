@@ -36,9 +36,8 @@ def get_leak_bytes(line):
     leak_bytes = 0
     for i in range(len_split):
         for lost in (DEFINITELY, INDIRECTLY, POSSIBLY):
-            if split[i] == lost and i + 2 < len_split and split[i + 2].isdigit():
-                leak_bytes = int(split[i + 2])
-                # print(f'lost:{lost}, leak:[{split[i + 2]}]')
+            if split[i] == lost:
+                leak_bytes = int(split[i + 2].replace(',', ''))
                 break
 
     return leak_bytes
@@ -51,14 +50,13 @@ def get_valgrind_leak_summary(stderr):
     checked = [0, 0, 0]
 
     for line in reversed(val_results):
-        # print(f'reversed_line:{line}')
         if DEFINITELY in line:
             sum_bytes += get_leak_bytes(line)
             checked[0] = 1
-        if INDIRECTLY in line:
+        elif INDIRECTLY in line:
             sum_bytes += get_leak_bytes(line)
             checked[1] = 1
-        if POSSIBLY in line:
+        elif POSSIBLY in line:
             sum_bytes += get_leak_bytes(line)
             checked[2] = 1
 

@@ -51,9 +51,9 @@ static t_result	validate_env_key(char *key)
 // key+=      -> key  ""     += (JOIN)
 // key        -> key  NULL      (ADD)
 static t_result	var_separate_key_value_op(const char *const arg, \
-									char **key, \
-									char **value, \
-									t_env_op *op)
+											char **key, \
+											char **value, \
+											t_env_op *op)
 {
 	size_t		i;
 	t_result	result;

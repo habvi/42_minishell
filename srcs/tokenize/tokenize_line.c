@@ -1,7 +1,6 @@
 #include "minishell.h"
 #include "ms_tokenize.h"
 #include "ft_deque.h"
-#include "ft_string.h"
 #include "ft_sys.h"
 
 t_token	*init_token_struct(void)

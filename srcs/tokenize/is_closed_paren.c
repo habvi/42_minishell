@@ -1,11 +1,10 @@
 #include "minishell.h"
 #include "ms_tokenize.h"
 #include "ft_deque.h"
-#include "ft_dprintf.h"
 
 static bool	is_valid_paren_pair(const t_token_kind kind, \
-										size_t *left, \
-										size_t *right)
+								size_t *left, \
+								size_t *right)
 {
 	if (kind == TOKEN_KIND_PAREN_LEFT)
 		(*left)++;

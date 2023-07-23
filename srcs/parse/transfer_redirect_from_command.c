@@ -1,9 +1,7 @@
 #include "minishell.h"
 #include "ms_exec.h"
 #include "ms_parse.h"
-#include "ms_tokenize.h"
 #include "ft_deque.h"
-#include "ft_sys.h"
 
 static t_token_kind	get_redirect_kind_and_clear_node(t_deque *command, \
 													t_deque_node **token_node)

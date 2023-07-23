@@ -1,7 +1,4 @@
-#include <limits.h>
-#include <stdlib.h>
 #include "minishell.h"
-#include "ms_result.h"
 #include "ft_mem.h"
 #include "ft_string.h"
 #include "ft_sys.h"

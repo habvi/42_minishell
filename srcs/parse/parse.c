@@ -1,7 +1,6 @@
 #include <signal.h>
 #include "minishell.h"
 #include "ms_parse.h"
-#include "ms_tokenize.h"
 #include "ft_deque.h"
 
 static t_ast	*create_ast(t_deque *tokens, \
