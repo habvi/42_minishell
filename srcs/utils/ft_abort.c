@@ -1,5 +1,5 @@
-#include <stdlib.h>
 #include <signal.h>
+#include <stdlib.h>
 #include "minishell.h"
 
 void	ft_abort(void)

@@ -15,7 +15,7 @@ MINISHELL_ERROR_PREFIX = "minishell: "
 BASH_PROMPT_PREFIX = "bash "
 BASH_ERROR_PREFIX = "bash: "
 GITHUB_ERROR_PREFIX = ["cannot set terminal", "no job"]
-BASH_DROP_WORDS = ["usage:", "sh: 0: getcwd()"]
+BASH_DROP_WORDS = ["usage:", "sh: 0: getcwd()", "job-working-directory"]
 
 # ----------------------------------------------------------
 STDOUT_IDX = 0
@@ -72,6 +72,20 @@ def remove_github_error(err_list, err_prefixes):
     return ret
 
 
+def remove_line_prefix(err_list):
+    ret = []
+    for err in err_list:
+        if not err.startswith("line"):
+            ret.append(err)
+            continue
+        idx = err.find(':')
+        if idx == -1:
+            ret.append(err)
+            continue
+        ret.append(err[idx + 2:])
+    return ret
+
+
 def get_eval_stderr(stderr, prompt_prefix, error_prefix):
     if stderr is None:
         return None
@@ -85,6 +99,7 @@ def get_eval_stderr(stderr, prompt_prefix, error_prefix):
     err_list = remove_error_prefix(err_list, error_prefix)
     err_list = remove_drop_words(err_list, BASH_DROP_WORDS)
     err_list = remove_github_error(err_list, GITHUB_ERROR_PREFIX)
+    err_list = remove_line_prefix(err_list)
 
     return err_list
 

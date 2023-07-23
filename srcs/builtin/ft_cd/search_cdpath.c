@@ -1,8 +1,6 @@
 #include "minishell.h"
 #include "ms_builtin.h"
-#include "ms_exec.h"
 #include "ms_var.h"
-#include "ft_string.h"
 #include "ft_mem.h"
 
 static bool	is_arg_head_dot(const char *arg)

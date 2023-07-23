@@ -1,5 +1,4 @@
 #include "ms_builtin.h"
-#include "ft_deque.h"
 #include "ft_string.h"
 
 //echo, cd, pwd, export, unset, env, exit

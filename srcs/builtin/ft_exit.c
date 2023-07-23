@@ -1,8 +1,6 @@
 #include <stdlib.h>
 #include "minishell.h"
 #include "ms_builtin.h"
-#include "ms_exec.h"
-#include "ft_dprintf.h"
 
 // {"exit", "valid_arg", "invalid_arg1", "invalid_arg2", ..., NULL};
 static t_exit_arg	validate_argument(const char *const *argv)

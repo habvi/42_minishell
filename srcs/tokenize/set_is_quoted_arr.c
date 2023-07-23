@@ -1,4 +1,3 @@
-#include <stdlib.h>
 #include "minishell.h"
 #include "ms_tokenize.h"
 #include "ft_deque.h"

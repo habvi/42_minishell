@@ -1,5 +1,4 @@
 #include "ms_tokenize.h"
-#include "ft_deque.h"
 
 bool	is_token_kind_word(const t_token_kind token_kind)
 {

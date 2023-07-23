@@ -4,9 +4,8 @@
 #include "ms_builtin.h"
 #include "ms_exec.h"
 #include "ms_var.h"
-#include "ft_deque.h"
-#include "ft_string.h"
 #include "ft_mem.h"
+#include "ft_string.h"
 
 static bool	is_slash_in_argv(const char *const argv_head)
 {

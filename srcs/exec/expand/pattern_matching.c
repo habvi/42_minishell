@@ -1,12 +1,8 @@
-#include <errno.h>
-#include <sys/types.h>
 #include "minishell.h"
 #include "ms_expansion.h"
 #include "ms_tokenize.h"
-#include "ms_result.h"
 #include "ft_deque.h"
 #include "ft_string.h"
-#include "ft_sys.h"
 
 bool	is_hidden_file(const char *str)
 {
@@ -36,8 +32,8 @@ static void	add_pattern_matched_filename_each(const char *token_str, \
 }
 
 static t_result	add_pattern_matched_files(const char *token_str, \
-										const bool *is_quoted_arr, \
-										t_deque *matched_filenames)
+											const bool *is_quoted_arr, \
+											t_deque *matched_filenames)
 {
 	DIR				*dirp;
 	struct dirent	*dirent;

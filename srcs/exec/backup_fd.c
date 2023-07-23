@@ -2,7 +2,6 @@
 #include "ms_builtin.h"
 #include "ms_exec.h"
 #include "ms_parse.h"
-#include "ms_result.h"
 #include "ft_string.h"
 #include "ft_sys.h"
 

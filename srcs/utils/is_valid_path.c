@@ -16,7 +16,11 @@ bool	test_opendir_strict(const char *path, t_result *result)
 		*result = PROCESS_ERROR;
 	if (!dirp)
 		return (false);
-	closedir(dirp);
+	if (closedir(dirp) == CLOSE_ERROR)
+	{
+		*result = PROCESS_ERROR;
+		return (false);
+	}
 	return (true);
 }
 

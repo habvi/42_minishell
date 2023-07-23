@@ -1,8 +1,6 @@
 #include <stdlib.h>
 #include "minishell.h"
 #include "ms_builtin.h"
-#include "ft_dprintf.h"
-#include "ft_string.h"
 #include "ft_mem.h"
 
 // pwd arg1 arg2 arg3 ... -> pwd, $?=0
@@ -13,9 +11,7 @@ static char	*get_pwd(t_context *context)
 
 	if (context->internal_pwd)
 	{
-		pwd = ft_strdup(context->internal_pwd);
-		if (!pwd)
-			ft_abort();
+		pwd = x_ft_strdup(context->internal_pwd);
 		return (pwd);
 	}
 	pwd = get_working_directory(CMD_PWD);

@@ -3,6 +3,17 @@
 #include "ms_var.h"
 #include "ft_string.h"
 
+static void	print_err_arg(const char *arg)
+{
+	const char	*err_arg;
+
+	if (!arg || ft_streq(arg, KEY_HOME) || ft_streq(arg, CD_ARG_HOME))
+		err_arg = KEY_HOME;
+	else
+		err_arg = KEY_OLDPWD;
+	puterr_cmd_arg_msg_wo_colon(CMD_CD, err_arg, ERROR_MSG_NOT_SET);
+}
+
 // "~"  -> HOME
 // "-"  -> OLDPWD
 // else -> arg
@@ -37,5 +48,7 @@ char	*cd_set_path(const char *arg, t_var *var, bool *is_print_path)
 		path = var->get_value(var, KEY_HOME);
 	else
 		path = set_path_by_arg(arg, var, is_print_path);
+	if (!path)
+		print_err_arg(arg);
 	return (path);
 }

@@ -1,7 +1,5 @@
-#include "ms_expansion.h"
 #include "ms_parse.h"
 #include "ft_deque.h"
-#include "ft_hash.h"
 
 static t_result	execute_heredoc_all(t_deque *redirect_list, t_context *context)
 {

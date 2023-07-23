@@ -1,7 +1,5 @@
 #include <errno.h>
 #include "minishell.h"
-#include "ft_deque.h"
-#include "ft_dprintf.h"
 #include "ft_mem.h"
 
 // for not pur error message, use access. not x_access.
