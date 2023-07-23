@@ -1,6 +1,7 @@
 #include "minishell.h"
 #include "ms_tokenize.h"
 #include "ms_builtin.h"
+#include "ft_deque.h"
 #include "ft_mem.h"
 #include "ft_string.h"
 
@@ -24,4 +25,16 @@ char	*get_token_str(char *head, char **end)
 		ft_abort();
 	*end = tail;
 	return (token_str);
+}
+
+char	*get_head_token_str(const t_deque *command)
+{
+	t_token	*token;
+
+	if (!command)
+		return (NULL);
+	if (deque_is_empty(command))
+		return (NULL);
+	token = (t_token *)command->node->content;
+	return (token->str);
 }
