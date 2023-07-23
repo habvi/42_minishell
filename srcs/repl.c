@@ -21,18 +21,23 @@ static int	event_by_sigint_for_prompt(void)
 	return (0);
 }
 
+static void	init_rl_var(bool is_rl_event_hook_off)
+{
+	rl_outstream = stderr;
+	rl_done = false;
+	if (!is_rl_event_hook_off)
+	{
+		rl_catch_signals = true;
+		rl_event_hook = event_by_sigint_for_prompt;
+	}
+}
+
 static void	init_repl_var(t_context *context, t_result *result)
 {
 	context->is_return = false;
 	*result = SUCCESS;
 	if (g_sig == SIGINT)
 		context->status = STATUS_SIG_BASE + SIGINT;
-	if (!context->is_rl_event_hook_off)
-	{
-		rl_catch_signals = true; // false -> not display ^C // todo:init?
-		rl_event_hook = event_by_sigint_for_prompt;
-	}
-	rl_done = false;
 	g_sig = INIT_SIG;
 }
 
@@ -47,6 +52,7 @@ t_result	read_eval_print_loop(t_context *context)
 	{
 		set_signal_for_prompt();
 		init_repl_var(context, &result);
+		init_rl_var(context->is_rl_event_hook_off);
 		line = input_line();
 		if (!line)
 			break ;
