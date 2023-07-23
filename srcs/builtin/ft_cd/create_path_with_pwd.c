@@ -66,9 +66,13 @@ char	*cd_create_path_with_pwd(const char *arg, \
 		new_path = get_joined_canonicalize_path(&new_path, path_segment);
 		*result = chack_is_valid_directory(arg, path, new_path, is_contain_dot);
 		if (*result == PROCESS_ERROR || *result == FAILURE)
-			break ;
+		{
+			deque_clear_all(&path_elems, del_path_elem);
+			return (new_path);
+		}
 		node = node->next;
 	}
+	*result = chack_is_valid_directory(arg, path, new_path, is_contain_dot);
 	deque_clear_all(&path_elems, del_path_elem);
 	return (new_path);
 }
