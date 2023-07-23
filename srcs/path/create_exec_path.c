@@ -24,8 +24,8 @@ static char	*search_command_path(const char *const command, \
 									t_var *var, \
 									size_t paths_len)
 {
-	char			*env_path;
-	char			*exec_path;
+	char	*env_path;
+	char	*exec_path;
 
 	if (is_empty_command(command))
 		return (NULL);

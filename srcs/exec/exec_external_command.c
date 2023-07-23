@@ -50,8 +50,10 @@ uint8_t	execute_external_command(char *const *argv, t_context *context)
 	envp = var->convert_to_envp(var);
 	errno = 0;
 	if (execve(exec_path, (char *const *)argv, envp) == EXECVE_ERROR)
+	{
 		puterr_cmd_msg_set_status(\
-		command, strerror(errno), context, set_execve_status(errno));
+			exec_path, strerror(errno), context, set_execve_status(errno));
+	}
 	ft_free(&exec_path);
 	free_2d_array(&envp);
 	return (context->status);

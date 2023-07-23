@@ -26,6 +26,7 @@
 # define UNREACHABLE	(-1)
 # define SIGACT_ERROR	(-1) //todo:sort
 # define SIGEMPTY_ERROR	(-1)
+# define STAT_ERROR		(-1)
 
 # define STR_PATH_DELIMITER		":"
 # define CHR_PATH_DELIMITER		':'
@@ -122,6 +123,8 @@ bool		is_valid_head(const char c);
 bool		is_valid_after_head(const char c);
 bool		is_valid_path(const char *path, int *tmp_err);
 bool		is_a_directory(const char *path);
+bool		is_a_directory_by_stat(const char *path);
+bool		is_file_by_stat(const char *path);
 bool		test_opendir_strict(const char *path);
 char		*x_ft_itoa(int n);
 char		*x_ft_strdup(const char *str);

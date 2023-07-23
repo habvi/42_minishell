@@ -13,7 +13,7 @@ static bool	is_accessible_command(const char *path)
 	ret = access(path, X_OK);
 	if (ret != ACCESS_ERROR)
 		return (true);
-	if (errno == EACCES)
+	if (errno == EACCES && is_file_by_stat(path))
 		return (true);
 	return (false);
 }

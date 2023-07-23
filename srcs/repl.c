@@ -48,6 +48,7 @@ t_result	read_eval_print_loop(t_context *context)
 		set_signal_for_prompt();
 		init_repl_var(context, &result);
 		line = input_line();
+//		ft_dprintf(2, "line:[%s]\n", line);
 		if (!line)
 			break ;
 		tokens = tokenize(line, context, &result);
