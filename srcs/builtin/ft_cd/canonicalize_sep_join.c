@@ -4,6 +4,7 @@
 #include "ft_mem.h"
 #include "ft_string.h"
 
+// after end this function, remain only char **split_path. all freed inside.
 static void	add_split_path_to_path_elems(t_deque *path_elems, char **split_path)
 {
 	size_t			i;
