@@ -6,72 +6,69 @@
 #include "ft_mem.h"
 #include "ft_string.h"
 
+static char	*dup_path_prefix(const char *path, const char *internal_pwd)
+{
+	if (is_absolute_path(path))
+		return (x_ft_strdup(PATH_DELIMITER_STR));
+	return (x_ft_strdup(internal_pwd));
+}
+
+static t_deque	*set_path_elems(const char *path)
+{
+	t_deque			*path_elems;
+	t_deque_node	*new_node;
+
+	path_elems = allocate_path_elems();
+	add_split_path_elems(path_elems, path);
+	if (is_head_double_slash(path))
+	{
+		new_node = deque_node_new(x_ft_strdup(PATH_DOUBLE_SLASH));
+		deque_add_back(path_elems, new_node);
+	}
+	return (path_elems);
+}
+
 // . or ..
-static bool	is_path_segment_dot(const char *const path)
+static bool	is_path_segment_dot_or_dot_dot(const char *const path)
 {
 	return (ft_streq(PATH_DOT, path) || ft_streq(PATH_DOT_DOT, path));
 }
 
-static char	*get_joined_canonicalize_path(char *canonicalized_path, \
-											t_deque_node **pop_node)
+static char	*get_joined_canonicalize_path(char **pre_path, \
+											const char *path_segment)
 {
-	char		*tmp;
-	const char	*path_segment = (const char *)(*pop_node)->content;
+	char	*canonicalized_path;
 
-	tmp = canonicalized_path;
-	canonicalized_path = cd_canonicalize_path(path_segment, canonicalized_path);
-	ft_free(&tmp);
-	deque_clear_node(pop_node, del_path_elem);
+	canonicalized_path = cd_canonicalize_path(*pre_path, path_segment);
+	ft_free(pre_path);
 	return (canonicalized_path);
 }
 
-static t_result	try_change_directory(const char *arg, \
-										char *canonicalized_path, \
-										bool is_contain_dot)
-{
-	t_result	result;
-	int			tmp_err;
-
-	result = cd_exec_chdir(canonicalized_path, &tmp_err);
-	if (result == PROCESS_ERROR)
-		return (PROCESS_ERROR);
-	if (result == FAILURE)
-	{
-		if (tmp_err == EACCES)
-		{
-			puterr_cmd_arg_msg(CMD_CD, arg, strerror(tmp_err));
-			return (FAILURE);
-		}
-		if (is_contain_dot)
-			return (SUCCESS);
-		puterr_cmd_arg_msg(CMD_CD, arg, strerror(tmp_err));
-		return (FAILURE);
-	}
-	return (SUCCESS);
-}
-
-// todo: doesn't need pop, just iterate?
-char	*cd_create_path_with_pwd(t_deque *path_elems, \
+// path_elems : ../../A/B/../ -> [..]-[..]-[A]-[B]-[..]
+char	*cd_create_path_with_pwd(const char *arg, \
+									const char *path, \
 									const char *internal_pwd, \
-									const char *arg, \
 									t_result *result)
 {
-	char			*absolute_path;
-	t_deque_node	*pop_node;
+	char			*new_path;
+	t_deque			*path_elems;
+	t_deque_node	*node;
+	char			*path_segment;
 	bool			is_contain_dot;
 
-	absolute_path = x_ft_strdup(internal_pwd);
-	while (!deque_is_empty(path_elems))
+	new_path = dup_path_prefix(path, internal_pwd);
+	path_elems = set_path_elems(path);
+	node = path_elems->node;
+	while (node)
 	{
-		pop_node = deque_pop_front(path_elems);
-		is_contain_dot = is_path_segment_dot(pop_node->content);
-		absolute_path = get_joined_canonicalize_path(absolute_path, &pop_node);
-		*result = try_change_directory(arg, absolute_path, is_contain_dot);
+		path_segment = (char *)node->content;
+		is_contain_dot = is_path_segment_dot_or_dot_dot(path_segment); // todo: no need?
+		new_path = get_joined_canonicalize_path(&new_path, path_segment);
+		*result = chack_is_valid_directory(arg, path, new_path, is_contain_dot);
 		if (*result == PROCESS_ERROR || *result == FAILURE)
-		{
-			ft_free(&absolute_path);
 			break ;
-		}
+		node = node->next;
 	}
-	return (absolute_path);
+	deque_clear_all(&path_elems, del_path_elem);
+	return (new_path);
 }
