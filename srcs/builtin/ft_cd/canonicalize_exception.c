@@ -91,7 +91,7 @@ void	erase_dot_dot_path(t_deque **path_elems)
 }
 
 // todo: use ft_strncmp?
-static bool	is_head_double_slash(const char *path)
+bool	is_head_double_slash(const char *path)
 {
 	return (path[0] == PATH_DELIMITER_CHR \
 			&& path[1] == PATH_DELIMITER_CHR \
