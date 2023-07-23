@@ -234,7 +234,7 @@ def main():
 
     ]
 
-    test_res |= test("path", path_test, False)
+    test_res |= test("path", path_test, False, False)
 
     return test_res
 
