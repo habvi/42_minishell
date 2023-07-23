@@ -60,6 +60,7 @@
 # define PROMPT_NAME	"minishell "
 # define HEREDOC_PROMPT	"> "
 
+# define SHELL_EXIT				"exit\n"
 # define SHELL_INIT				"shell-init"
 # define ERROR_MSG_GETCWD		"getcwd: cannot access parent directories"
 # define ERROR_MSG_RETRIEVE_CWD	"error retrieving current directory"

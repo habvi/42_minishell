@@ -17,6 +17,6 @@ int	main(int argc, char **argv)
 	if (result == PROCESS_ERROR)
 		return (EXIT_FAILURE);
 	if (context.is_interactive)
-		ft_dprintf(STDERR_FILENO, "exit\n");
+		ft_dprintf(STDERR_FILENO, SHELL_EXIT);
 	return (context.status);
 }
