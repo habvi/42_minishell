@@ -1,34 +1,9 @@
-#include <readline/readline.h>
 #include "minishell.h"
 #include "ms_expansion.h"
 #include "ms_parse.h"
 #include "ft_deque.h"
-#include "ft_mem.h"
-#include "ft_string.h"
+#include "ft_hash.h"
 #include "ft_sys.h"
-
-static void	read_input_save_to_fd(int fd, const char *delimiter)
-{
-	char	*line;
-
-	rl_outstream = stderr;
-	while (true)
-	{
-		line = readline(HEREDOC_PROMPT);
-		if (!line)
-		{
-			puterr_heredoc_wanted_eof(delimiter);
-			break ;
-		}
-		if (ft_streq(line, delimiter))
-		{
-			ft_free(&line);
-			break ;
-		}
-		ft_dprintf(fd, "%s\n", line);
-		ft_free(&line);
-	}
-}
 
 static bool	is_quote_token_exist(const t_deque *tokens)
 {
@@ -68,11 +43,12 @@ static void	create_heredoc_delimiter(t_deque *tokens)
 		token->quote = QUOTE_NONE;
 }
 
-t_result	execute_heredoc_each(t_redirect *redirect)
+t_result	execute_heredoc_each(t_redirect *redirect, t_context *context)
 {
-	t_token			*token;
-	char			*delimiter;
-	int				fd;
+	t_token		*token;
+	char		*delimiter;
+	int			fd;
+	t_result	heredoc_result;
 
 	if (create_filename_and_open_heredoc_fd(\
 		&fd, &redirect->heredoc_filename) == PROCESS_ERROR)
@@ -80,8 +56,8 @@ t_result	execute_heredoc_each(t_redirect *redirect)
 	create_heredoc_delimiter(redirect->tokens);
 	token = redirect->tokens->node->content;
 	delimiter = token->str; // don't free
-	read_input_save_to_fd(fd, delimiter);
+	heredoc_result = read_input_save_to_fd(fd, delimiter, context);
 	if (x_close(fd) == CLOSE_ERROR)
 		return (PROCESS_ERROR);
-	return (SUCCESS);
+	return (heredoc_result);
 }

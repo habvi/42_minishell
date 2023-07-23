@@ -40,7 +40,7 @@ def main():
                     
                     ] # todo more test
 
-    test_res |= test("different", different_result_from_bash_test, False)
+    test_res |= test("different", different_result_from_bash_test, False, False)
 
     return test_res
 

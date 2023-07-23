@@ -2,7 +2,7 @@ import os
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '.'))
 
-from test_output import output_test
+from test_output import output_test, BASH_INIT_FILE, BASH_PROMPT_PREFIX
 from test_valgrind import valgrind_test
 from color import RED, COLOR_DICT
 
@@ -17,30 +17,6 @@ OK_IDX = 1
 KO_IDX = 2
 SKIP_IDX = 3
 
-# ----------------------------------------------------------
-# OUT_FILE = "pipe_test_out.txt"
-PATH_MINISHELL = ["./minishell", "-i"]
-PATH_MINISHELL_LEAK = "./minishell"
-BASH_INIT_FILE = 'bash_init_file'
-PATH_BASH = ["/bin/bash", "--init-file", BASH_INIT_FILE, "-i"]
-PATH_BASH_LEAK = "bash"
-
-# ----------------------------------------------------------
-MINISHELL_PROMPT_PREFIX = "minishell "
-MINISHELL_ERROR_PREFIX = "minishell: "
-BASH_PROMPT_PREFIX = "bash "
-BASH_ERROR_PREFIX = "bash: "
-GITHUB_ERROR_PREFIX = ["cannot set terminal", "no job"]
-BASH_DROP_WORDS = ["usage:"]
-
-VALGRIND = "valgrind"
-VALGRIND_OP = " --track-fds=yes "
-
-# valgrind str
-DEFINITELY = "definitely"
-INDIRECTLY = "indirectly"
-POSSIBLY = "possibly"
-FD_FLAG = "DESCRIPTORS:"
 
 # ----------------------------------------------------------
 
@@ -156,7 +132,7 @@ def print_ko_case(test_name, test_res, out_ko_case, val_ko_case):
 # ----------------------------------------------------------
 
 
-def test(test_name, test_input_list, status_only):
+def test(test_name, test_input_list, status_only, shell_replace):
     try:
         with open(BASH_INIT_FILE, "w") as init_file:
             init_file.write(f'PS1="{BASH_PROMPT_PREFIX} "')
@@ -166,16 +142,17 @@ def test(test_name, test_input_list, status_only):
               f'TEST : [{test_name} {" STATUS ONLY" if status_only else ""}]'
               f' ========================= ')
 
-        output_res, out_ko_case = output_test(test_input_list, status_only)
+        output_res, out_ko_case = output_test(test_input_list, status_only, shell_replace)
         test_res |= output_res
 
-        val_res, val_ko_case = valgrind_test(test_input_list)
+        val_res, val_ko_case = valgrind_test(test_input_list, shell_replace)
         test_res |= val_res
         print()
 
         print_ko_case(test_name,test_res,out_ko_case,val_ko_case)
         save_ko_case(test_name, test_res, out_ko_case, val_ko_case)
         print()
+
 
     finally:
         if os.path.exists(BASH_INIT_FILE):
