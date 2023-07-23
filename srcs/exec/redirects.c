@@ -46,7 +46,7 @@ static t_result	open_redirect_files(t_ast *self_node, t_context *context)
 	return (SUCCESS);
 }
 
-t_result	close_prod_fd_for_exit_command(t_ast *self_node)
+static t_result	close_prod_fd_for_exit_command(t_ast *self_node)
 {
 	if (self_node->proc_fd[IN] != IN_FD_INIT)
 	{
