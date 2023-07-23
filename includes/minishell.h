@@ -128,6 +128,7 @@ bool		is_a_directory_by_stat(const char *path, t_result *result);
 bool		is_file_by_stat(const char *path, t_result *result);
 bool		test_opendir_strict(const char *path, t_result *result);
 char		*x_ft_itoa(int n);
+char		**x_ft_split(char const *str, char c);
 char		*x_ft_strdup(const char *str);
 char		*x_ft_strndup(const char *str, const size_t maxlen);
 char		*x_ft_strjoin(char const *s1, char const *s2);
