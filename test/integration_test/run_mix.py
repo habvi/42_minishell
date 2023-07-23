@@ -39,8 +39,8 @@ def main():
                     "( ( ( ls ) | cat ) | cat ) && pwd",
                     ]
 
-    test_res |= test("mix", mix_error_test, False)
-    test_res |= test("subshell", subshell_test, False)
+    test_res |= test("mix", mix_error_test, False, False)
+    test_res |= test("subshell", subshell_test, False, False)
 
     return test_res
 

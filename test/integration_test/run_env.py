@@ -25,7 +25,7 @@ def main():
                 "env -- -a",
                 ]
 
-    test_res |= test("ft_env", env_test, True)
+    test_res |= test("ft_env", env_test, True, False)
     # test_res |= test("ft_env original", different_behavior_from_bash_test, True)
 
     return test_res

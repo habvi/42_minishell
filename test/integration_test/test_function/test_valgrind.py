@@ -1,6 +1,7 @@
 import shutil
 import subprocess
 from color import print_color_str, print_color_str_no_lf, RED, GREEN, YELLOW
+from test_output import replace_to_shell
 
 # ----------------------------------------------------------
 PATH_MINISHELL_LEAK = "./minishell"
@@ -117,7 +118,8 @@ def run_cmd_with_valgrind(stdin=None, cmd=None):
         print(e.cmd)
 
 
-def run_minishell_with_valgrind(stdin, cmd):
+def run_minishell_with_valgrind(stdin, cmd, shell_replace):
+    stdin = replace_to_shell(stdin, cmd, shell_replace)
     res_minishell = run_cmd_with_valgrind(stdin, cmd)
     print(f'cmd:[{stdin}]', end='\n')
     if res_minishell is None or res_minishell.stderr is None:
@@ -128,21 +130,21 @@ def run_minishell_with_valgrind(stdin, cmd):
     return leak_bytes, fd_at_exit
 
 
-def run_bash_with_valgrind(stdin, cmd):
-    res_bash = run_cmd_with_valgrind(stdin, cmd)
-    if res_bash is None or res_bash.stderr is None:
-        return None
-    leak_bytes, fd_at_exit = get_valgrind_res(res_bash.stderr)
-    print(f' bash leaks           : {leak_bytes} bytes')
-    return leak_bytes, fd_at_exit
+# def run_bash_with_valgrind(stdin, cmd, shell_replace):
+#     res_bash = run_cmd_with_valgrind(stdin, cmd)
+#     if res_bash is None or res_bash.stderr is None:
+#         return None
+#     leak_bytes, fd_at_exit = get_valgrind_res(res_bash.stderr)
+#     print(f' bash leaks           : {leak_bytes} bytes')
+#     return leak_bytes, fd_at_exit
 
 
-def run_both_with_valgrind(stdin):
+def run_both_with_valgrind(stdin, shell_replace):
     print("===== leak and fd test =====")
     if shutil.which(VALGRIND) is None:
         return None, None
 
-    leak_res_minishell = run_minishell_with_valgrind(stdin, PATH_MINISHELL_LEAK)
+    leak_res_minishell = run_minishell_with_valgrind(stdin, PATH_MINISHELL_LEAK, shell_replace)
     # leak_res_bash = run_bash_with_valgrind(stdin, PATH_BASH_LEAK)
     # return leak_res_minishell, leak_res_bash
     return leak_res_minishell
@@ -198,7 +200,7 @@ def put_total_valgrind_result(val_res):
         return 1
 
 
-def valgrind_test(test_input_list):
+def valgrind_test(test_input_list, shell_replace):
     test_num = 1
     ok = 0
     leak_ng = 0
@@ -210,7 +212,7 @@ def valgrind_test(test_input_list):
     prev_ok = 0
 
     for stdin in test_input_list:
-        m_res = run_both_with_valgrind(stdin)
+        m_res = run_both_with_valgrind(stdin, shell_replace)
         put_valgrind_result(val_result, m_res)
         if prev_ok == val_result[VAL_OK_IDX]:
             ko_case.append(stdin)

@@ -18,7 +18,7 @@ def main():
                 # "mkdir -p testdir && cd testdir && rmdir $PWD && pwd && chmod 775 $PWD",
                  ]  # todo: add more test after implement cd
 
-    test_res |= test("ft_pwd", pwd_test, False)
+    test_res |= test("ft_pwd", pwd_test, False, False)
 
     return test_res
 
