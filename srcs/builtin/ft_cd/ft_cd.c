@@ -3,6 +3,42 @@
 #include "ms_builtin.h"
 #include "ft_mem.h"
 
+bool	is_absolute_path(const char *path)
+{
+	if (!path)
+		return (false);
+	return (path[0] == ABSOLUTE_PATH_HEAD);
+}
+
+// if cd_check_current_exist() failure, continue.
+// after cd_update_pwd(), not free new_path.
+static t_result	change_directory_to_valid_path(const char *arg, \
+												const char *path, \
+												t_context *context)
+{
+	char		*new_path;
+	t_result	result;
+	const char	*internal_pwd = context->internal_pwd;
+
+	result = cd_check_current_exist(internal_pwd);
+	if (result == PROCESS_ERROR)
+		return (result);
+	new_path = cd_create_path_with_pwd(arg, path, internal_pwd, &result);
+	if (result == PROCESS_ERROR || result == FAILURE)
+	{
+		ft_free(&new_path);
+		return (result);
+	}
+	result = cd_check_new_path_exist(arg, &new_path, path, internal_pwd);
+	if (result == PROCESS_ERROR || result == FAILURE)
+	{
+		ft_free(&new_path);
+		return (result);
+	}
+	cd_update_pwd(new_path, context);
+	return (SUCCESS);
+}
+
 static void	print_mv_path_use_oldpwd_or_cdpath(bool is_print_path, \
 												const char *pwd)
 {
@@ -10,43 +46,20 @@ static void	print_mv_path_use_oldpwd_or_cdpath(bool is_print_path, \
 		ft_dprintf(STDOUT_FILENO, "%s\n", pwd);
 }
 
-bool	is_absolute_path(const char *path)
-{
-	return (path[0] == ABSOLUTE_PATH_HEAD);
-}
-
-// allocate new_path
-static t_result	change_directory_to_valid_path(char **new_path, \
-												const char *arg, \
-												const char *path, \
-												const char *internal_pwd)
-{
-	t_result	result;
-
-	if (is_absolute_path(path))
-		result = cd_chdir_from_absolute_path(new_path, path);
-	else
-		result = cd_chdir_from_relative_path(new_path, arg, path, internal_pwd);
-	return (result);
-}
-
-// in normal case: not free new_path
 static t_result	change_directory(const char *arg, t_context *context)
 {
 	char		*path;
 	bool		is_print_path;
 	t_result	result;
-	char		*new_path;
 
 	path = cd_set_path(arg, context->var, &is_print_path);
 	if (!path)
 		return (FAILURE);
-	result = change_directory_to_valid_path(\
-							&new_path, arg, path, context->internal_pwd);
+	// ft_dprintf(2, "%s: %s, %s\n", __func__, context->internal_pwd, path);
+	result = change_directory_to_valid_path(arg, path, context);
 	ft_free(&path);
 	if (result == PROCESS_ERROR || result == FAILURE)
 		return (result);
-	cd_update_pwd(new_path, context);
 	print_mv_path_use_oldpwd_or_cdpath(is_print_path, context->internal_pwd);
 	return (SUCCESS);
 }
