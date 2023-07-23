@@ -33,21 +33,18 @@ static size_t	get_paths_len(t_var *var)
 uint8_t	execute_external_command(char *const *argv, t_context *context)
 {
 	const char *const	command = argv[0];
-	char				*exec_path;
-	char				**envp;
 	t_var				*var;
-	size_t				paths_len;
-	t_result			result;
+	char				*exec_path;
+	const size_t		paths_len = get_paths_len(context->var);
+	char				**envp;
 
 	if (!command)
 		return (REDIRECT_ONLY_SUCCESS);
 	var = context->var;
-	paths_len = get_paths_len(var);
-	exec_path = create_exec_path((const char *const *)argv, var, paths_len, &result);// todo: PROCESS_ERROR...
+	exec_path = create_exec_path(\
+			(const char *const *)argv, var, paths_len, context);
 	if (!exec_path)
-		return (err_and_ret_status(command, context, &exec_path, paths_len));
-	else if (is_a_directory(exec_path, &result)) // todo: PROCESS_ERROR...
-		return (err_is_a_dir_and_ret_status(command, context, &exec_path));
+		return (context->status);
 	envp = var->convert_to_envp(var);
 	errno = 0;
 	if (execve(exec_path, (char *const *)argv, envp) == EXECVE_ERROR)

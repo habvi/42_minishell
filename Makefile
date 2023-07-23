@@ -105,7 +105,6 @@ SRCS		+=	$(EXEC_DIR)/$(EXPAND_DIR)/concat_tokens.c  \
 				$(EXEC_DIR)/close_proc_fds.c \
 				$(EXEC_DIR)/exec.c \
 				$(EXEC_DIR)/exec_command.c \
-				$(EXEC_DIR)/exec_error.c \
 				$(EXEC_DIR)/exec_external_command.c \
 				$(EXEC_DIR)/get_exec_command.c \
 				$(EXEC_DIR)/handle_node.c \
@@ -180,6 +179,7 @@ SRCS		+=	$(UTILS_DIR)/count_array.c \
 				$(UTILS_DIR)/ft_gnl.c \
 				$(UTILS_DIR)/get_random_str.c \
 				$(UTILS_DIR)/get_working_directory.c \
+				$(UTILS_DIR)/is_dir_or_file_by_stat.c \
 				$(UTILS_DIR)/is_valid_key.c \
 				$(UTILS_DIR)/is_valid_path.c \
 				$(UTILS_DIR)/x_ft_itoa.c \

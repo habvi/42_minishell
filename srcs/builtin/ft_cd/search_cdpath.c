@@ -27,13 +27,15 @@ static bool	is_var_cdpath_exist(t_var *var)
 
 static char	*search_command_path(const char *arg, t_var *var)
 {
-	char	*cdpath;
-	char	*valid_path;
+	char		*cdpath;
+	char		*valid_path;
+	t_result	result;
 
 	cdpath = create_split_src_paths(var, KEY_CDPATH);
 	valid_path = create_valid_path_by_judge(cdpath, \
 											(const char *const)arg, \
-											test_opendir_strict);
+											test_opendir_strict, \
+											&result);
 	ft_free(&cdpath);
 	return (valid_path);
 }

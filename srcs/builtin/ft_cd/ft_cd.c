@@ -29,9 +29,11 @@ static void	print_err_set_status(const char *arg, \
 
 static bool	is_valid_cd_path(const char *path, int *tmp_err)
 {
+	t_result	result;
+
 	if (!path)
 		return (false);
-	return (is_valid_path(path, tmp_err));
+	return (is_valid_path(path, tmp_err, &result));
 }
 
 static void	print_mv_path_use_oldpwd_or_cdpath(bool is_print_path, \

@@ -125,7 +125,7 @@ bool		is_valid_path(const char *path, int *tmp_err, t_result *result);
 bool		is_a_directory(const char *path, t_result *result);
 bool		is_a_directory_by_stat(const char *path, t_result *result);
 bool		is_file_by_stat(const char *path, t_result *result);
-bool		test_opendir_strict(const char *path);
+bool		test_opendir_strict(const char *path, t_result *result);
 char		*x_ft_itoa(int n);
 char		*x_ft_strdup(const char *str);
 char		*x_ft_strndup(const char *str, const size_t maxlen);
@@ -158,11 +158,11 @@ char		*create_accessible_path(char *paths, \
 char		*create_exec_path(const char *const *argv, \
 								t_var *var, \
 								size_t paths_len, \
-								t_result *result);
+								t_context *context);
 char		*create_valid_path_by_judge(char *paths, \
-										const char *const arg, \
-										bool (*judge)(const char *path, t_result *res),
-										t_result *result);
+								const char *const arg, \
+								bool (*judge)(const char *path, t_result *res), \
+								t_result *result);
 
 /* error msg */
 // arg, msg
@@ -191,5 +191,7 @@ void		puterr_cmd_msg_set_status(const char *const cmd, \
 										const char *msg, \
 										t_context *context, \
 										uint8_t status);
-
+void		put_path_err_set_status(const char *const cmd, \
+									t_context *context, \
+									size_t paths_len);
 #endif //MINISHELL_H

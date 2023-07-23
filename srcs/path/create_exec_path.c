@@ -1,5 +1,8 @@
+#include <errno.h>
+#include <string.h>
 #include "minishell.h"
 #include "ms_builtin.h"
+#include "ms_exec.h"
 #include "ms_var.h"
 #include "ft_deque.h"
 #include "ft_string.h"
@@ -48,7 +51,7 @@ static char	*search_command_path(const char *const command, \
 }
 
 // if search_command_path return NULL -> command not found
-char	*create_exec_path(const char *const *argv, \
+static char	*create_exec_path_inter(const char *const *argv, \
 							t_var *var, \
 							size_t paths_len, \
 							t_result *result)
@@ -60,4 +63,34 @@ char	*create_exec_path(const char *const *argv, \
 	else
 		path = search_command_path(argv[0], var, paths_len, result);
 	return (path);
+}
+
+char	*create_exec_path(const char *const *argv, \
+							t_var *var, \
+							size_t paths_len, \
+							t_context *context)
+{
+	const char *const	command = argv[0];
+	char				*exec_path;
+	t_result			result;
+	bool				is_dir;
+
+	exec_path = create_exec_path_inter(argv, var, paths_len, &result);
+	if (result == PROCESS_ERROR)
+		return (ft_free(&exec_path));
+	if (!exec_path)
+	{
+		put_path_err_set_status(command, context, paths_len);
+		return (ft_free(&exec_path));
+	}
+	is_dir = is_a_directory(exec_path, &result);
+	if (result == PROCESS_ERROR)
+		return (ft_free(&exec_path));
+	if (is_dir)
+	{
+		puterr_cmd_msg_set_status(\
+			command, strerror(EISDIR), context, STATUS_IS_A_DIRECTORY);
+		return (ft_free(&exec_path));
+	}
+	return (exec_path);
 }
