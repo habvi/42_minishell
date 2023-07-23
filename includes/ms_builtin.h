@@ -134,7 +134,7 @@ t_deque		*allocate_path_elems(void);
 bool		is_internal_pwd_relative(const char *internal_pwd);
 bool		is_head_double_slash(const char *path);
 void		del_path_elem(void *content);
-void		destroy_path_elems(t_deque *path_elems);
+void		destroy_path_elems(t_deque **path_elems);
 t_deque		*separate_path_and_join(const char *path, \
 									const char *internal_pwd, \
 									t_deque *path_elems);

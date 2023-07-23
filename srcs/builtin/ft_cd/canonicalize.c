@@ -53,6 +53,6 @@ char	*cd_canonicalize_path(const char *internal_pwd, const char *path)
 	erase_unnecessary_path_elem(&path_elems, internal_pwd);
 	new_path = convert_path_elems_to_absolute_path(path_elems, internal_pwd);
 	handle_double_slash_path(path, &new_path);
-	destroy_path_elems(path_elems);
+	destroy_path_elems(&path_elems);
 	return (new_path);
 }

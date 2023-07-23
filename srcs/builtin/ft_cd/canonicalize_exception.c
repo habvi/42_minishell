@@ -46,7 +46,7 @@ void	erase_dot_path_for_relative(t_deque **path_elems)
 		deque_add_back(new_path_elems, pop_node);
 	}
 	erase_head_dot(new_path_elems);
-	destroy_path_elems(*path_elems);
+	destroy_path_elems(path_elems);
 	*path_elems = new_path_elems;
 }
 
@@ -69,7 +69,7 @@ void	erase_dot_path(t_deque **path_elems)
 		}
 		deque_add_back(new_path_elems, pop_node);
 	}
-	destroy_path_elems(*path_elems);
+	destroy_path_elems(path_elems);
 	*path_elems = new_path_elems;
 }
 
@@ -94,6 +94,6 @@ void	erase_dot_dot_path(t_deque **path_elems)
 		}
 		deque_add_back(new_path_elems, pop_node);
 	}
-	destroy_path_elems(*path_elems);
+	destroy_path_elems(path_elems);
 	*path_elems = new_path_elems;
 }

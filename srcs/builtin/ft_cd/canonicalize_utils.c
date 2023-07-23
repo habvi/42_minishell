@@ -18,9 +18,9 @@ void	del_path_elem(void *content)
 	ft_free(&content);
 }
 
-void	destroy_path_elems(t_deque *path_elems)
+void	destroy_path_elems(t_deque **path_elems)
 {
-	deque_clear_all(&path_elems, del_path_elem);
+	deque_clear_all(path_elems, del_path_elem);
 }
 
 bool	is_internal_pwd_relative(const char *internal_pwd)
