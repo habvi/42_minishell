@@ -5,30 +5,35 @@
 #include "ft_mem.h"
 #include "ft_sys.h"
 
+static size_t	count_key_value_pair(t_deque_node *node)
+{
+	size_t		size;
+	t_elem		*elem;
+	t_var_info	*var_info;
+
+	size = 0;
+	while (node)
+	{
+		elem = (t_elem *)node->content;
+		var_info = (t_var_info *)elem->value;
+		if (elem->key && var_info->value)
+			size++;
+		node = node->next;
+	}
+	return (size);
+}
+
 static size_t	count_envp_size(t_hash *hash)
 {
-	size_t			i;
-	t_deque_node	*node;
-	t_elem			*elem;
-	t_var_info		*var_info;
-	size_t			size;
+	size_t	size;
+	size_t	i;
 
 	size = 0;
 	i = 0;
 	while (i < hash->table_size)
 	{
 		if (hash->table[i] && hash->table[i]->size)
-		{
-			node = hash->table[i]->node;
-			while (node)
-			{
-				elem = (t_elem *)node->content;
-				var_info = (t_var_info *)elem->value;
-				if (elem->key && var_info->value)
-					size++;
-				node = node->next;
-			}
-		}
+			size += count_key_value_pair(hash->table[i]->node);
 		i++;
 	}
 	return (size);
