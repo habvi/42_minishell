@@ -3,8 +3,6 @@
 #include "ft_deque.h"
 #include "ft_mem.h"
 
-#include "ft_string.h"
-
 t_deque	*allocate_path_elems(void)
 {
 	t_deque	*path_elems;
@@ -44,33 +42,31 @@ void	destroy_path_elems(t_deque *path_elems)
 }
 
 // 	 PWD         path
-// "/home/aaa"  libft/            -> /home/aaa/libft
-//              ./libft/          -> /home/aaa/libft
-//              ./libft//////     -> /home/aaa/libft
-//              ./libft//////srcs -> /home/aaa/libft/srcs
-//              ./libft/../../    -> /home
+// "/home/a"    bb/               -> /home/a/bb
+//              ./bb/             -> /home/a/bb
+//              ./bb//////        -> /home/a/bb
+//              ./bb//////ccc     -> /home/a/bb/ccc
+//              ./bb/../../       -> /home
 //              ../               -> /home
-//              ./                -> /home/aaa
-//              //                -> /
+//              ./                -> /home/a
+//              /                 -> /
 //              //                -> //
 //              ///               -> /
 //              ////home          -> /home
-//              /home/aaa/../aaa/../././  -> /home
+//              /home/a/../a/../././      -> /home
 //              ../../../../../../../../  -> /
-//  PWD=NULL                      -> unspecified
-char	*cd_canonicalize_path(const char *path, const char *internal_pwd)
+//  NULL                          -> relative
+//  ../..                         -> relative
+char	*cd_canonicalize_path(const char *internal_pwd, const char *path)
 {
 	t_deque	*path_elems;
-	char	*absolute_path;
+	char	*new_path;
 
-	// if (!internal_pwd)
-	// 	return (); // todo: for unset PWD & ./minishell
 	path_elems = allocate_path_elems();
 	path_elems = separate_path_and_join(path, internal_pwd, path_elems);
 	erase_unnecessary_path_elem(&path_elems, internal_pwd);
-	absolute_path = convert_path_elems_to_absolute_path(path_elems, internal_pwd);
-	// ft_dprintf(2, "%s: %s\n", __func__, absolute_path);
-	handle_double_slash_path(path, &absolute_path);
+	new_path = convert_path_elems_to_absolute_path(path_elems, internal_pwd);
+	handle_double_slash_path(path, &new_path);
 	destroy_path_elems(path_elems);
-	return (absolute_path);
+	return (new_path);
 }
