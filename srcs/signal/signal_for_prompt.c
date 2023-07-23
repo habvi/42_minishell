@@ -1,7 +1,7 @@
 #include "minishell.h"
 #include "ms_signal.h"
-#include "ft_sys.h"
 #include "ft_mem.h"
+#include "ft_sys.h"
 
 extern volatile sig_atomic_t	g_sig;
 
