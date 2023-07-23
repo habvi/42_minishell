@@ -4,9 +4,10 @@
 
 static bool	is_valid_old_pwd_path(const char *path)
 {
-	int	tmp_err;
+	int			tmp_err;
+	t_result	result;
 
-	return (is_valid_path(path, &tmp_err));
+	return (is_valid_path(path, &tmp_err, &result));
 }
 
 // key=OLDPWD

@@ -26,6 +26,7 @@
 # define UNREACHABLE	(-1)
 # define SIGACT_ERROR	(-1) //todo:sort
 # define SIGEMPTY_ERROR	(-1)
+# define STAT_ERROR		(-1)
 
 # define STR_PATH_DELIMITER		":"
 # define CHR_PATH_DELIMITER		':'
@@ -121,10 +122,11 @@ char		*get_working_directory(const char *for_whom);
 bool		is_valid_key(const char *word);
 bool		is_valid_head(const char c);
 bool		is_valid_after_head(const char c);
-bool		is_valid_path(const char *path, int *tmp_err);
-bool		is_a_directory(const char *path);
-bool		test_opendir_strict(const char *path);
-bool		test_opendir(const char *path, int *tmp_err);
+bool		is_valid_path(const char *path, int *tmp_err, t_result *result);
+bool		is_a_directory(const char *path, t_result *result);
+bool		is_a_directory_by_stat(const char *path, t_result *result);
+bool		is_file_by_stat(const char *path, t_result *result);
+bool		test_opendir_strict(const char *path, t_result *result);
 char		*x_ft_itoa(int n);
 char		*x_ft_strdup(const char *str);
 char		*x_ft_strndup(const char *str, const size_t maxlen);
@@ -148,12 +150,20 @@ t_result	read_eval_print_loop(t_context *context);
 
 /* path */
 char		*get_next_path(char **path_list);
-char		*create_executable_path(char *paths, const char *const command);
-char		*create_accessible_path(char *paths, const char *const command);
-char		*create_exec_path(const char *const *argv, t_var *var);
+char		*create_executable_path(char *paths, \
+									const char *const command, \
+									t_result *result);
+char		*create_accessible_path(char *paths, \
+									const char *const command, \
+									t_result *result);
+char		*create_exec_path(const char *const *argv, \
+								t_var *var, \
+								size_t paths_len, \
+								t_context *context);
 char		*create_valid_path_by_judge(char *paths, \
-										const char *const arg, \
-										bool (*judge)(const char *path));
+								const char *const arg, \
+								bool (*judge)(const char *path, t_result *res), \
+								t_result *result);
 
 /* error msg */
 // arg, msg
@@ -182,5 +192,7 @@ void		puterr_cmd_msg_set_status(const char *const cmd, \
 										const char *msg, \
 										t_context *context, \
 										uint8_t status);
-
+void		put_path_err_set_status(const char *const cmd, \
+									t_context *context, \
+									size_t paths_len);
 #endif //MINISHELL_H
