@@ -51,7 +51,7 @@ def main():
 
     # test_res |= test("word_splitting", word_splitting_test, False)
     # test_res |= test("wildcard", wildcard_test, False)
-    test_res |= test("expansion", expansion_test, False)
+    test_res |= test("expansion", expansion_test, False, False)
 
     return test_res
 

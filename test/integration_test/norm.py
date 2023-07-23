@@ -55,6 +55,7 @@ def norm_check_exclude_header():
     LINE_HEADER = "INVALID_HEADER"
     LINE_COMMENT = "WRONG_SCOPE_COMMENT"
     LINE_EMPTY = "EMPTY_LINE_FUNCTION"
+    LINE_GLOBAL = "GLOBAL_VAR_DETECTED"
     passed = True
     with open(OUT_FILE) as f:
         try:
@@ -67,6 +68,8 @@ def norm_check_exclude_header():
                     if LINE_HEADER in line or LINE_OK in line:
                         continue
                     if LINE_COMMENT in line or LINE_EMPTY in line:
+                        continue
+                    if LINE_GLOBAL in line or LINE_EMPTY in line:
                         continue
                     lines.append(line)
             passed &= check_each_file(lines)

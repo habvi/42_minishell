@@ -186,9 +186,9 @@ def main():
     test_res = 0
 
 #     test_res |= test("cdpath", cdpath_test, False)
-    test_res |= test("ft_cd", commands_list, False)
-    test_res |= test("ft_cd rm_cwd", rm_cwd_test, False)
-    test_res |= test("ft_cd shell_in_rm_cwd", shell_in_rm_cwd_test, True)
+    test_res = test("ft_cd", commands_list, False, False)
+    test_res |= test("ft_cd rm_cwd", rm_cwd_test, False, False)
+    test_res |= test("ft_cd shell_in_rm_cwd", shell_in_rm_cwd_test, False, True)
 
     return test_res
 

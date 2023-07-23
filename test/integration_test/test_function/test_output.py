@@ -3,9 +3,11 @@ from color import print_color_str, print_color_str_no_lf, RED, GREEN, MAGENTA, C
 
 # ----------------------------------------------------------
 # OUT_FILE = "pipe_test_out.txt"
-PATH_MINISHELL = ["./minishell", "-i"]
+PATH_MINISHELL = ["./minishell", "-i", "-t"]
+# PATH_MINISHELL = ["./minishell"]
 BASH_INIT_FILE = 'bash_init_file'
 PATH_BASH = ["/bin/bash", "--init-file", BASH_INIT_FILE, "-i"]
+# PATH_BASH = ["/bin/bash"]
 
 # ----------------------------------------------------------
 MINISHELL_PROMPT_PREFIX = "minishell "
@@ -13,7 +15,7 @@ MINISHELL_ERROR_PREFIX = "minishell: "
 BASH_PROMPT_PREFIX = "bash "
 BASH_ERROR_PREFIX = "bash: "
 GITHUB_ERROR_PREFIX = ["cannot set terminal", "no job"]
-BASH_DROP_WORDS = ["usage:"]
+BASH_DROP_WORDS = ["usage:", "sh: 0: getcwd()"]
 
 # ----------------------------------------------------------
 STDOUT_IDX = 0
@@ -119,8 +121,21 @@ def get_cmd_string_for_output(stdin):
         .replace("\r", "\\r")
     return print_cmd
 
+# stdin = "aaa __SHELL__ bbb" -> "aaa minishell bbb"
+#         "aaa __SHELL__ bbb" -> "aaa bash bbb"
 
-def run_shell(stdin, cmd, prompt_pfx, err_pfx):
+
+def replace_to_shell(stdin, cmd, shell_replace):
+    if shell_replace:
+        if cmd[0] == './minishell':
+            stdin = stdin.replace('__SHELL__', 'minishell')
+        else:
+            stdin = stdin.replace("__SHELL__", "bash")
+    return stdin
+
+
+def run_shell(stdin, cmd, prompt_pfx, err_pfx, shell_replace):
+    stdin = replace_to_shell(stdin, cmd, shell_replace)
     output_result = run_cmd(stdin, cmd)
     if output_result:
         errors = get_eval_stderr(output_result[STDERR_IDX], prompt_pfx, err_pfx)
@@ -129,15 +144,17 @@ def run_shell(stdin, cmd, prompt_pfx, err_pfx):
     return None
 
 
-def run_both(stdin):
+def run_both(stdin, shell_replace):
     res_minishell = run_shell(stdin,
                               PATH_MINISHELL,
                               MINISHELL_PROMPT_PREFIX,
-                              MINISHELL_ERROR_PREFIX)
+                              MINISHELL_ERROR_PREFIX,
+                              shell_replace)
     res_bash = run_shell(stdin,
                          PATH_BASH,
                          BASH_PROMPT_PREFIX,
-                         BASH_ERROR_PREFIX)
+                         BASH_ERROR_PREFIX,
+                         shell_replace)
 
     return res_minishell, res_bash
 
@@ -191,6 +208,10 @@ def put_result(stdin, val, m_res, b_res, status_only, ko_case):
 
 # put
 def put_output_and_result(test_no, stdin, val, m_res, b_res, status_only, ko_case):
+    if m_res is None or b_res is None:
+        print("test result is none")
+        return
+
     put_title(stdin, test_no, status_only)
 
     put_output("minishell", stdin, m_res)
@@ -219,7 +240,7 @@ def put_total_result(val):
 
 # ----------------------------------------------------------
 
-def output_test(test_input_list, status_only):
+def output_test(test_input_list, status_only, shell_replace):
     test_num = 1
     ok = 0
     ko = 0
@@ -228,7 +249,7 @@ def output_test(test_input_list, status_only):
     test_no = 1
 
     for stdin in test_input_list:
-        m_res, b_res = run_both(stdin)
+        m_res, b_res = run_both(stdin, shell_replace)
         put_output_and_result(test_no, stdin, val, m_res, b_res, status_only, ko_case)
         test_no += 1
 

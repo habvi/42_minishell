@@ -20,7 +20,7 @@ def main():
         "unset PWD\ndeclare -x PWD\ndeclare -p | /bin/grep PWD | /bin/grep -v _=",
     ]
 
-    test_res |= test("ft_declare", declare_test, False)
+    test_res |= test("ft_declare", declare_test, False, False)
 
     return test_res
 

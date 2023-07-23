@@ -71,7 +71,7 @@ def main():
                  " exit 1 | exit 2 | exit 3 && echo a || echo b && exit 1 1 1 || echo 42 && echo hello >out"
                  ]  # add more test after update tokenizer
 
-    test_res |= test("ft_exit", exit_test, False)
+    test_res |= test("ft_exit", exit_test, False, False)
 
     return test_res
 
