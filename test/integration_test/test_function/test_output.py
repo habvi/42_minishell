@@ -15,7 +15,7 @@ MINISHELL_ERROR_PREFIX = "minishell: "
 BASH_PROMPT_PREFIX = "bash "
 BASH_ERROR_PREFIX = "bash: "
 GITHUB_ERROR_PREFIX = ["cannot set terminal", "no job"]
-BASH_DROP_WORDS = ["usage:"]
+BASH_DROP_WORDS = ["usage:", "sh: 0: getcwd()"]
 
 # ----------------------------------------------------------
 STDOUT_IDX = 0
