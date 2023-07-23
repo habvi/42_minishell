@@ -115,7 +115,10 @@ char		*cd_create_path_with_pwd(t_deque *path_elems, \
 										const char *internal_pwd, \
 										const char *arg, \
 										t_result *result);
-t_result	cd_check_current_exist(const char *arg, \
+t_result	chack_is_valid_directory(const char *arg, \
+										const char *path, \
+										char *new_path, \
+										const bool is_contain_dot);
 									char **new_path, \
 									const char *internal_pwd, \
 									const char *path);

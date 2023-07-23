@@ -117,6 +117,7 @@ bool		is_valid_after_head(const char c);
 bool		is_valid_path(const char *path, int *tmp_err);
 bool		is_a_directory(const char *path);
 bool		test_opendir_strict(const char *path);
+bool		test_opendir(const char *path, int *tmp_err);
 char		*x_ft_itoa(int n);
 char		*x_ft_strdup(const char *str);
 char		*x_ft_strndup(const char *str, const size_t maxlen);

@@ -34,9 +34,8 @@ SRCS		+=	$(BUILTIN_DIR)/$(FT_CD_DIR)/canonicalize.c \
 				$(BUILTIN_DIR)/$(FT_CD_DIR)/canonicalize_exception.c \
 				$(BUILTIN_DIR)/$(FT_CD_DIR)/canonicalize_sep_join.c \
 				$(BUILTIN_DIR)/$(FT_CD_DIR)/chdir.c \
-				$(BUILTIN_DIR)/$(FT_CD_DIR)/chdir_absolute.c \
-				$(BUILTIN_DIR)/$(FT_CD_DIR)/chdir_relative.c \
 				$(BUILTIN_DIR)/$(FT_CD_DIR)/check_current_exist.c \
+				$(BUILTIN_DIR)/$(FT_CD_DIR)/check_is_valid_directory.c \
 				$(BUILTIN_DIR)/$(FT_CD_DIR)/create_path_with_pwd.c \
 				$(BUILTIN_DIR)/$(FT_CD_DIR)/ft_cd.c \
 				$(BUILTIN_DIR)/$(FT_CD_DIR)/search_cdpath.c \
