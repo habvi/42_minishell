@@ -16,7 +16,7 @@ static char	*extend_path(char *path, const size_t newsize)
 }
 
 // use getcwd to original error handling.
-static char	*get_current_path(int *tmp_err)
+char	*get_current_path(int *tmp_err)
 {
 	char	*path;
 	size_t	size;
