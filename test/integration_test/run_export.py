@@ -24,7 +24,7 @@ def main():
         f"export A=\"a   b   c\"'d   e' \n export B=\"$A\" \n echo $B \n echo \"$B\" \n {PRINT_EXIT_CMD}",
     ]
 
-    test_res |= test("ft_export", echo_test, False)
+    test_res |= test("ft_export", echo_test, False, False)
 
     return test_res
 

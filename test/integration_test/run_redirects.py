@@ -111,12 +111,12 @@ def main():
         f"cat << eof | wc \n{BIG}\neof\n",
         "<no |<no <<eof <no cat -e && <<eof2 cat -e\ntest1\n$HOME\neof\ntest2\n$HOME\neof2\n",
         ]  # todo more test
-    test_res |= test("redirect_in_error", redirects_in_error_test, False)
-    test_res |= test("redirect_out_error", redirects_out_error_test, False)
-    test_res |= test("redirect_in", redirects_in_test, False)
-    test_res |= test("redirect_out", redirects_out_test, False)
-    test_res |= test("redirect_append", redirects_append_test, False)
-    test_res |= test("redirect_heredoc", redirects_heredoc_test, False)
+    test_res |= test("redirect_in_error", redirects_in_error_test, False, False)
+    test_res |= test("redirect_out_error", redirects_out_error_test, False, False)
+    test_res |= test("redirect_in", redirects_in_test, False, False)
+    test_res |= test("redirect_out", redirects_out_test, False, False)
+    test_res |= test("redirect_append", redirects_append_test, False, False)
+    test_res |= test("redirect_heredoc", redirects_heredoc_test, False, False)
 
     print_ng_cases(test_res)
 

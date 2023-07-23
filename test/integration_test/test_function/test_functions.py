@@ -132,7 +132,7 @@ def print_ko_case(test_name, test_res, out_ko_case, val_ko_case):
 # ----------------------------------------------------------
 
 
-def test(test_name, test_input_list, status_only):
+def test(test_name, test_input_list, status_only, shell_replace):
     try:
         with open(BASH_INIT_FILE, "w") as init_file:
             init_file.write(f'PS1="{BASH_PROMPT_PREFIX} "')
@@ -142,10 +142,10 @@ def test(test_name, test_input_list, status_only):
               f'TEST : [{test_name} {" STATUS ONLY" if status_only else ""}]'
               f' ========================= ')
 
-        output_res, out_ko_case = output_test(test_input_list, status_only)
+        output_res, out_ko_case = output_test(test_input_list, status_only, shell_replace)
         test_res |= output_res
 
-        val_res, val_ko_case = valgrind_test(test_input_list)
+        val_res, val_ko_case = valgrind_test(test_input_list, shell_replace)
         test_res |= val_res
         print()
 
