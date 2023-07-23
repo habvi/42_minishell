@@ -1,4 +1,5 @@
 #include <signal.h>
+#include <stdlib.h>
 #include <readline/readline.h>
 #include "minishell.h"
 #include "ms_exec.h"
@@ -18,7 +19,7 @@ static int	event_by_sigint_for_prompt(void)
 		rl_redisplay();
 		rl_done = true;
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 static void	init_rl_var(bool is_rl_event_hook_off)

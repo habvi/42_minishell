@@ -13,7 +13,7 @@ static t_result	get_last_command_status(pid_t pid, \
 	pid_t	wait_pid;
 
 	errno = 0;
-	wait_pid = waitpid(pid, wait_status, 0);
+	wait_pid = waitpid(pid, wait_status, NO_OPTION);
 	if (wait_pid == WAIT_ERROR)
 		return (PROCESS_ERROR);
 	if (WIFEXITED(*wait_status))

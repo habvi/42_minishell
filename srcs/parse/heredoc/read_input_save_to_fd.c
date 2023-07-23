@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include <stdlib.h>
 #include <readline/readline.h>
 #include "minishell.h"
 #include "ms_parse.h"
@@ -25,7 +25,7 @@ static int	event_by_sigint_for_heredoc(void)
 {
 	if (g_sig == SIGINT)
 		rl_done = false;
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 static void	set_signal_in_heredoc(t_context *context)
