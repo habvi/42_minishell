@@ -20,7 +20,7 @@ static char	read_random_alnum(const int fd)
 		if (i == 0)
 		{
 			read_size = read(fd, buf, RANDOM_BUF_SIZE);
-			if (read_size == -1)
+			if (read_size == READ_ERROR)
 				return (CHR_NULL);
 		}
 		while (i < read_size && !ft_isalnum((int)buf[i]))
