@@ -4,7 +4,7 @@ from test_function.test_functions import test
 DISPLAY_CMD = "declare -p | /bin/grep PWD | /bin/grep -v _="
 STATUS = "\n echo $? \n"
 
-RM_CWD_AND_CD_PRE = f"rm -rf testdir \n mkdir testdirA testdirA/testdirB \n cd testdirA/testdirB {STATUS} pwd \n rm -rf ../../testdirA \n {DISPLAY_CMD} \n"
+RM_CWD_AND_CD_PRE = f"rm -rf testdirA \n mkdir testdirA testdirA/testdirB \n cd testdirA/testdirB {STATUS} pwd \n rm -rf ../../testdirA \n {DISPLAY_CMD} \n"
 STATUS_PWD_DISPLAY = f"{STATUS} pwd \n {DISPLAY_CMD} \n"
 REGISTER_PATH = "export PATH=$PATH:$PWD \n"
 
