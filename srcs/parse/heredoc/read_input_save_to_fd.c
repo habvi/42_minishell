@@ -31,7 +31,7 @@ static int	event_by_sigint_for_heredoc(void)
 static void	set_signal_in_heredoc(t_context *context)
 {
 	set_signal_for_heredoc();
-	if (context->is_interactive && !context->is_rl_event_hook_on)
+	if (!context->is_rl_event_hook_off)
 	{
 		rl_catch_signals = true;
 		rl_event_hook = event_by_sigint_for_heredoc;

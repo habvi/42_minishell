@@ -3,7 +3,7 @@ import subprocess
 from color import print_color_str, print_color_str_no_lf, RED, GREEN, YELLOW
 
 # ----------------------------------------------------------
-PATH_MINISHELL_LEAK = "./minishell"
+PATH_MINISHELL_LEAK = "./minishell -t"
 PATH_BASH_LEAK = "bash"
 
 # ----------------------------------------------------------

@@ -87,7 +87,7 @@ typedef struct s_context
 	char	*internal_pwd;
 	uint8_t	status;
 	bool	is_return;
-	bool	is_rl_event_hook_on;
+	bool	is_rl_event_hook_off;
 }	t_context;
 
 // temporarily here ...
@@ -136,11 +136,11 @@ char		*ft_get_next_line(int fd, t_result *result);
 /* init */
 void		init_context(t_context *context, \
 							bool is_forced_interactive, \
-							bool is_test);
-t_result	analyze_option(int argc, \
-							char **argv, \
-							bool *is_forced_interactive, \
-							bool *is_test);
+							bool is_rl_event_hook_off);
+t_result	analyze_op(int argc, \
+						char **argv, \
+						bool *is_forced_interactive, \
+						bool *is_rl_event_hook_off);
 /* repl */
 t_result	read_eval_print_loop(t_context *context);
 
