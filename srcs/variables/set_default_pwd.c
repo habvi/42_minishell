@@ -26,7 +26,7 @@ t_result	set_default_pwd(t_var *var)
 		return (PROCESS_ERROR);
 	if (pwd_path)
 	{
-    update_pwd_for_double_slash(var, &pwd_path);
+		update_pwd_for_double_slash(var, &pwd_path);
 		var->add(var, KEY_PWD, pwd_path, VAR_ENV);
 		ft_free((void **)&pwd_path);
 	}
