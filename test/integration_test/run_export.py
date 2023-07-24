@@ -3,6 +3,14 @@ from test_function.test_functions import test
 PRINT_CMD = "export | grep -v ^_ | grep -v PS1 | grep -v MAKE_TERMERR | grep -v MAKE_TERMOUT"
 INIT = "unset LS_COLORS\n export PS1='bash '"
 
+def add_many(n):
+    add_cmd = "export"
+
+    for i in range(n):
+        add_cmd += " "
+        add_cmd += f"A{str(i)}=test{str(i)}"
+    return add_cmd
+
 def main():
     test_res = 0
     export_test = [
@@ -20,6 +28,9 @@ def main():
         f"{INIT} \n export A=\"a   b   c\" \n export B=\"$A\" \n echo $B \n echo \"$B\" \n{PRINT_CMD}",
         f"{INIT} \n export A=\"a   b   c\"'d   e' \n export B=\"$A\" \n echo $B \n echo \"$B\" \n{PRINT_CMD}",
         f"{INIT} \n export A=a B=b C=c D \n export A+=$A$B$noghint$C B=\"  \"aa$C\n {PRINT_CMD}",
+        f"{INIT} \n {add_many(100)}\n {PRINT_CMD} \n echo A1:$A1",
+        f"{INIT} \n {add_many(1000)}\n {PRINT_CMD} \n echo A1:$A1",
+        f"{INIT} \n {add_many(10000)}\n {PRINT_CMD} \n echo A1:$A1",
     ]
 
     test_res |= test("ft_export", export_test, False, False)
