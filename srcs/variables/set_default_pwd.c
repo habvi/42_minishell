@@ -12,7 +12,7 @@ static void	update_pwd_for_double_slash(t_var *var, char **pwd_path)
 	parent_pwd = var->get_value(var, KEY_PWD);
 	if (!ft_streq(parent_pwd, "//"))
 	{
-		ft_free((void **)parent_pwd);
+		ft_free((void **)&parent_pwd);
 		return ;
 	}
 	ft_free((void **)pwd_path);
