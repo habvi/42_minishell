@@ -18,6 +18,11 @@
 # define KEY_OLDPWD		"OLDPWD"
 # define KEY_HOME		"HOME"
 # define KEY_CDPATH		"CDPATH"
+# define KEY_SHLVL		"SHLVL"
+
+# define SHLVL_ZERO		0
+# define SHLVL_RESET	1
+# define SHLVL_LIMIT	999
 
 # define ASSIGNMENT_STR	"="
 # define ASSIGNMENT_CHR	'='

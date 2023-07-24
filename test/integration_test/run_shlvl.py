@@ -1,5 +1,7 @@
 from test_function.test_functions import test
 
+PATH_ADD = "export PATH+=:$PWD"
+
 
 def main():
     test_res = 0
@@ -24,7 +26,7 @@ def main():
          ]
 
     for lvl in lvl_list:
-        shlvl_test.append(f"echo init:$SHLVL\nexport SHLVL={str(lvl)}\necho before:$SHLVL\n__SHELL__\necho after:$SHLVL")
+        shlvl_test.append(f"{PATH_ADD}\necho init:$SHLVL\nexport SHLVL={str(lvl)}\necho before:$SHLVL\n__SHELL__\necho after:$SHLVL")
 
     test_res |= test("shlvl", shlvl_test, False, True)
 
