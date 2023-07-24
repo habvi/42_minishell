@@ -42,6 +42,12 @@ static void	init_repl_var(t_context *context, t_result *result)
 	g_sig = INIT_SIG;
 }
 
+static void	init_each_loop(t_context *context, t_result *result)
+{
+	init_repl_var(context, result);
+	init_rl_var(context->is_rl_event_hook_off);
+}
+
 t_result	read_eval_print_loop(t_context *context)
 {
 	t_result	result;
@@ -52,8 +58,7 @@ t_result	read_eval_print_loop(t_context *context)
 	while (true)
 	{
 		set_signal_for_prompt();
-		init_repl_var(context, &result);
-		init_rl_var(context->is_rl_event_hook_off);
+		init_each_loop(context, &result);
 		line = input_line();
 		if (!line)
 			break ;
