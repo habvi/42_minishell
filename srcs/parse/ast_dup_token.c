@@ -16,7 +16,7 @@ static t_token	*dup_token(t_token *token)
 	return (new_token);
 }
 
-static t_deque_node	*deque_dup_node(t_token *token)
+static t_deque_node	*dup_token_node(t_token *token)
 {
 	t_deque_node	*new_node;
 	t_token			*new_token;
@@ -35,7 +35,7 @@ static void	add_dup_token_to_command(t_deque *command, \
 	t_deque_node	*dup_node;
 
 	token = (*token_node)->content;
-	dup_node = deque_dup_node(token);
+	dup_node = dup_token_node(token);
 	deque_add_back(command, dup_node);
 	*token_node = (*token_node)->next;
 }
