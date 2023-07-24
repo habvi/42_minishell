@@ -124,8 +124,7 @@ def main():
         f"{PATH_ADD}\n export PWD=xxxx  \n {SHELL_PWD * 10}\n unset PWD \n {SHELL_PWD * 10}",
     ]
 
-
-    # test_res |= test("ft_pwd", pwd_test, False, False)
+    test_res |= test("ft_pwd", pwd_test, False, False)
     test_res |= test("ft_pwd with rm", pwd_rm_test, False, True)
 
     return test_res
