@@ -10,7 +10,7 @@ def wildcard():
     for per in permutations(WORDS):
         random_files += ''.join(per) + " "
     random_files = random_files.replace("x", "'*'")
-    TOUCH_TEST_FILES = f"{MAKE_TEST_DIR} touch {random_files} \n "
+    TOUCH_TEST_FILES = f"{MAKE_TEST_DIR} touch {random_files} && "
     SORT_COMPARE = f" | tr ' ' '\\n' | sort && cd ../ && rm -rf {DIR_NAME}"
 
     wildcard_test = [
