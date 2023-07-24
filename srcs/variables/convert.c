@@ -60,7 +60,7 @@ static void	convert_elem_to_env(char **envp, t_deque *deque)
 	{
 		elem = (t_elem *)node->content;
 		var_info = (t_var_info *)elem->value;
-		if (elem->key && var_info->value)
+		if (var_info->attr == VAR_ENV && elem->key && var_info->value)
 		{
 			envp[i] = create_key_value_pair(elem->key, var_info->value);
 			i++;
