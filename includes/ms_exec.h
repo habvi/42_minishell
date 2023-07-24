@@ -30,8 +30,6 @@
 # define ERROR_MSG_CMD_NOT_FOUND		"command not found"
 # define ERROR_MSG_AMBIGUOUS_REDIRECT	"ambiguous redirect"
 
-# define NEWLINE_STR	"\n"
-
 typedef struct s_ast		t_ast;
 typedef struct s_context	t_context;
 typedef struct s_deque		t_deque;

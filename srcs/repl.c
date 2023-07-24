@@ -1,5 +1,7 @@
-#include <readline/readline.h>
 #include <signal.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <readline/readline.h>
 #include "minishell.h"
 #include "ms_exec.h"
 #include "ms_parse.h"
@@ -18,7 +20,18 @@ static int	event_by_sigint_for_prompt(void)
 		rl_redisplay();
 		rl_done = true;
 	}
-	return (0);
+	return (EXIT_SUCCESS);
+}
+
+static void	init_rl_var(bool is_rl_event_hook_off)
+{
+	rl_outstream = stderr;
+	rl_done = false;
+	if (!is_rl_event_hook_off)
+	{
+		rl_catch_signals = true;
+		rl_event_hook = event_by_sigint_for_prompt;
+	}
 }
 
 static void	init_repl_var(t_context *context, t_result *result)
@@ -27,13 +40,13 @@ static void	init_repl_var(t_context *context, t_result *result)
 	*result = SUCCESS;
 	if (g_sig == SIGINT)
 		context->status = STATUS_SIG_BASE + SIGINT;
-	if (context->is_interactive && !context->is_rl_event_hook_on)
-	{
-		rl_catch_signals = true; // false -> not display ^C // todo:init?
-		rl_event_hook = event_by_sigint_for_prompt;
-	}
-	rl_done = false;
 	g_sig = INIT_SIG;
+}
+
+static void	init_each_loop(t_context *context, t_result *result)
+{
+	init_repl_var(context, result);
+	init_rl_var(context->is_rl_event_hook_off);
 }
 
 t_result	read_eval_print_loop(t_context *context)
@@ -46,9 +59,8 @@ t_result	read_eval_print_loop(t_context *context)
 	while (true)
 	{
 		set_signal_for_prompt();
-		init_repl_var(context, &result);
+		init_each_loop(context, &result);
 		line = input_line();
-//		ft_dprintf(2, "line:[%s]\n", line);
 		if (!line)
 			break ;
 		tokens = tokenize(&line, context, &result);

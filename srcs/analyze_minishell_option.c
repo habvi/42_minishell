@@ -20,18 +20,18 @@ static void	skip_while_valid_op(char ***argv, \
 	}
 }
 
-t_result	analyze_option(int argc, \
-							char **argv, \
-							bool *is_forced_interactive, \
-							bool *is_rl_event_hook_on)
+t_result	analyze_op(int argc, \
+						char **argv, \
+						bool *is_forced_interactive, \
+						bool *is_rl_event_hook_off)
 {
 	*is_forced_interactive = false;
-	*is_rl_event_hook_on = false;
+	*is_rl_event_hook_off = false;
 	if (argc == 1)
 		return (SUCCESS);
 	argv++;
 	skip_while_valid_op(&argv, OP_FORCED_INTERACTIVE, is_forced_interactive);
-	skip_while_valid_op(&argv, OP_TEST, is_rl_event_hook_on);
+	skip_while_valid_op(&argv, OP_TEST, is_rl_event_hook_off);
 	if (is_end_of_option(*argv))
 		argv++;
 	if (!*argv)

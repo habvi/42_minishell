@@ -14,7 +14,7 @@ static void	wait_all_child_lastly(t_ast *ast)
 		waitpid(ast->pid, NULL, NO_OPTION);
 }
 
-void	destroy_ast_node_recursive(t_ast **root)
+static void	destroy_ast_node_recursive(t_ast **root)
 {
 	if ((*root)->left)
 		destroy_ast_node_recursive(&(*root)->left);

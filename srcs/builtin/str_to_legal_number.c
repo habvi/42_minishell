@@ -1,9 +1,5 @@
+#include "ft_ascii.h"
 #include "ft_lib.h"
-
-bool	is_whitespace(char c)
-{
-	return (c == ' ' || c == '\t');
-}
 
 bool	str_to_legal_number(const char *str, long *result)
 {
@@ -17,7 +13,7 @@ bool	str_to_legal_number(const char *str, long *result)
 	is_strtol_success = ft_strtol(str, &value, &endptr);
 	if (!is_strtol_success)
 		return (false);
-	while (is_whitespace(*endptr))
+	while (ft_is_whitespace(*endptr))
 		endptr++;
 	if (*endptr)
 		return (false);
