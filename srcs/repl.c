@@ -1,5 +1,6 @@
 #include <signal.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <readline/readline.h>
 #include "minishell.h"
 #include "ms_exec.h"
@@ -60,10 +61,9 @@ t_result	read_eval_print_loop(t_context *context)
 		set_signal_for_prompt();
 		init_each_loop(context, &result);
 		line = input_line();
-//		ft_dprintf(2, "line:[%s]\n", line);
 		if (!line)
 			break ;
-		tokens = tokenize(line, context, &result);
+		tokens = tokenize(&line, context, &result);
 		if (result == FAILURE)
 			continue ;
 		ast = parse(&tokens, context, &result);

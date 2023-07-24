@@ -10,12 +10,12 @@ static char	*expand_status(char **str, t_context *context)
 	return (x_ft_itoa(context->status));
 }
 
-static char	*strcat_after_dollar(char *str)
+static char	*strcat_after_dollar(char **str)
 {
 	char	*new_str;
 
-	new_str = x_ft_strjoin(STR_DOLLAR, str);
-	ft_free(&str);
+	new_str = x_ft_strjoin(STR_DOLLAR, *str);
+	ft_free((void **)str);
 	return (new_str);
 }
 
@@ -39,10 +39,10 @@ static char	*expand_key(char **str, t_var *var)
 	{
 		if (**str)
 			(*str)++;
-		return (strcat_after_dollar(key));
+		return (strcat_after_dollar(&key));
 	}
 	value = var->get_value(var, key);
-	ft_free(&key);
+	ft_free((void **)&key);
 	return (value);
 }
 

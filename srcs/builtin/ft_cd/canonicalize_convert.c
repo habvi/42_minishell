@@ -27,26 +27,22 @@ static size_t	calc_len_path(t_deque *path_elems, const char *internal_pwd)
 	return (len_path);
 }
 
-// todo: func name. not only absolute
-static char	*allocate_absolute_path(t_deque *path_elems, \
-									const char *internal_pwd)
+static char	*allocate_new_path(t_deque *path_elems, const char *internal_pwd)
 {
 	const size_t	len_path = calc_len_path(path_elems, internal_pwd);
-	char			*absolute_path;
+	char			*new_path;
 
-	absolute_path = (char *)x_malloc(sizeof(char) * (len_path + 1));
-	if (!absolute_path)
+	new_path = (char *)x_malloc(sizeof(char) * (len_path + 1));
+	if (!new_path)
 		ft_abort();
-	return (absolute_path);
+	return (new_path);
 }
 
-static void	strlcpy_path_elem(char *absolute_path, \
-								size_t *i, \
-								const char *path_elem)
+static void	strlcpy_path_elem(char *new_path, size_t *i, const char *path_elem)
 {
 	const size_t	len_path_elem = ft_strlen(path_elem);
 
-	ft_strlcpy_void(&absolute_path[*i], path_elem, len_path_elem + 1);
+	ft_strlcpy_void(&new_path[*i], path_elem, len_path_elem + 1);
 	(*i) += len_path_elem;
 }
 
@@ -55,26 +51,26 @@ static bool	is_last_path_elems(t_deque_node *node)
 	return (!node->next);
 }
 
-char	*convert_path_elems_to_absolute_path(t_deque *path_elems, \
-												const char *internal_pwd)
+char	*convert_path_elems_to_path(t_deque *path_elems, \
+									const char *internal_pwd)
 {
-	char			*absolute_path;
+	char			*new_path;
 	size_t			i;
 	t_deque_node	*node;
 	char			*path_elem;
 
-	absolute_path = allocate_absolute_path(path_elems, internal_pwd);
+	new_path = allocate_new_path(path_elems, internal_pwd);
 	i = 0;
 	if (is_absolute_path(internal_pwd))
-		strlcpy_path_elem(absolute_path, &i, PATH_DELIMITER_STR);
+		strlcpy_path_elem(new_path, &i, PATH_DELIMITER_STR);
 	node = path_elems->node;
 	while (node)
 	{
 		path_elem = (char *)node->content;
-		strlcpy_path_elem(absolute_path, &i, path_elem);
+		strlcpy_path_elem(new_path, &i, path_elem);
 		if (!is_last_path_elems(node))
-			strlcpy_path_elem(absolute_path, &i, PATH_DELIMITER_STR);
+			strlcpy_path_elem(new_path, &i, PATH_DELIMITER_STR);
 		node = node->next;
 	}
-	return (absolute_path);
+	return (new_path);
 }

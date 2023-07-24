@@ -12,7 +12,7 @@ static char	*create_hidden_filename(void)
 	if (!random_str)
 		return (NULL);
 	hidden_filename = x_ft_strjoin(HEREDOC_FILE_PREFIX, random_str);
-	ft_free(&random_str);
+	ft_free((void **)&random_str);
 	return (hidden_filename);
 }
 
@@ -40,7 +40,7 @@ char	*create_heredoc_filename(void)
 			return (NULL);
 		if (is_file_creatable(filename))
 			break ;
-		ft_free(&filename);
+		ft_free((void **)&filename);
 	}
 	return (filename);
 }

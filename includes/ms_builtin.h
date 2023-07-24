@@ -142,8 +142,8 @@ void		add_split_path_elems(t_deque *path_elems, const char *path);
 void		erase_dot_path_for_relative(t_deque **path_elems);
 void		erase_dot_path(t_deque **path_elems);
 void		erase_dot_dot_path(t_deque **path_elems);
-char		*convert_path_elems_to_absolute_path(t_deque *path_elems, \
-													const char *internal_pwd);
+char		*convert_path_elems_to_path(t_deque *path_elems, \
+										const char *internal_pwd);
 char		*search_cdpath(const char *arg, t_var *var, bool *is_print_path);
 
 bool		is_absolute_path(const char *path);

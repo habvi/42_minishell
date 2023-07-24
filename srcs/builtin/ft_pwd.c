@@ -7,15 +7,16 @@
 // pwd op                 -> invalid op, $?=2
 static char	*get_pwd(t_context *context)
 {
-	char	*pwd;
+	char		*pwd;
+	t_result	result;
 
 	if (context->internal_pwd)
 	{
 		pwd = x_ft_strdup(context->internal_pwd);
 		return (pwd);
 	}
-	pwd = get_working_directory(CMD_PWD);
-	if (!pwd)
+	pwd = get_working_directory(CMD_PWD, &result);
+	if (result == PROCESS_ERROR || result == FAILURE)
 		return (NULL);
 	return (pwd);
 }
@@ -35,6 +36,6 @@ uint8_t	ft_pwd(const char *const *argv, t_context *context)
 	if (!pwd)
 		return (EXIT_FAILURE);
 	ft_dprintf(STDOUT_FILENO, "%s\n", pwd);
-	ft_free(&pwd);
+	ft_free((void **)&pwd);
 	return (status);
 }

@@ -39,6 +39,6 @@ char	*get_next_path(char **path_list)
 		tail++;
 	*path_list = tail;
 	new_path = add_tail_slash_to_path(path);
-	ft_free(&path);
+	ft_free((void **)&path);
 	return (new_path);
 }

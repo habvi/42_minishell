@@ -4,7 +4,7 @@
 # include <stddef.h>
 
 /* free */
-void	*ft_free(void *ptr);
+void	*ft_free(void **ptr);
 void	*free_2d_array(char ***ptr);
 
 void	ft_bzero(void *s, size_t n);

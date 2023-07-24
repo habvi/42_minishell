@@ -41,11 +41,11 @@ static char	*search_command_path(const char *const command, \
 	exec_path = create_executable_path(env_path, command, result);
 	if (exec_path)
 	{
-		ft_free(&env_path);
+		ft_free((void **)&env_path);
 		return (exec_path);
 	}
 	exec_path = create_accessible_path(env_path, command, result);
-	ft_free(&env_path);
+	ft_free((void **)&env_path);
 	return (exec_path);
 }
 
@@ -76,20 +76,20 @@ char	*create_exec_path(const char *const *argv, \
 
 	exec_path = create_exec_path_inter(argv, var, paths_len, &result);
 	if (result == PROCESS_ERROR)
-		return (ft_free(&exec_path));
+		return (ft_free((void **)&exec_path));
 	if (!exec_path)
 	{
 		put_path_err_set_status(command, context, paths_len);
-		return (ft_free(&exec_path));
+		return (ft_free((void **)&exec_path));
 	}
 	is_dir = is_a_directory(exec_path, &result);
 	if (result == PROCESS_ERROR)
-		return (ft_free(&exec_path));
+		return (ft_free((void **)&exec_path));
 	if (is_dir)
 	{
 		puterr_cmd_msg_set_status(\
 			command, strerror(EISDIR), context, STATUS_IS_A_DIRECTORY);
-		return (ft_free(&exec_path));
+		return (ft_free((void **)&exec_path));
 	}
 	return (exec_path);
 }
