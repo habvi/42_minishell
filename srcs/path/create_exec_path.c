@@ -57,6 +57,7 @@ static char	*create_exec_path_inter(const char *const *argv, \
 {
 	char	*path;
 
+	*result = SUCCESS;
 	if (is_slash_in_argv(argv[0]))
 		path = x_ft_strdup(argv[0]);
 	else
