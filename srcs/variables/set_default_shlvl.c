@@ -7,9 +7,9 @@
 
 static int	get_new_shlvl_by_positive_num(long parent_lvl)
 {
-	if (parent_lvl < SHLVL_LIMIT)
+	if (parent_lvl < (long)SHLVL_LIMIT)
 		return ((int)parent_lvl + 1);
-	if (parent_lvl < INT_MAX)
+	if (parent_lvl < (long)INT_MAX)
 	{
 		ft_dprintf(2, \
 			"%s: %s: shell level (%d) too high, resetting to %d\n", \
