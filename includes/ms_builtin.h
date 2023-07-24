@@ -104,7 +104,6 @@ bool		skip_valid_options(const char *const *argv, \
 								char marker, \
 								char op_chr);
 bool		str_to_legal_number(const char *str, long *result);
-bool		is_whitespace(char c);
 
 /* ft_cd */
 // cd
