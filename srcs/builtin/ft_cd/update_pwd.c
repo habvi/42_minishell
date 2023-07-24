@@ -10,7 +10,7 @@ static void	update_internal_pwd(char *absolute_path, t_context *context)
 
 static void	set_condition_old_pwd_for_update(t_var *var)
 {
-	char		*new_old_pwd;
+	char	*new_old_pwd;
 
 	new_old_pwd = var_get_value(var, KEY_PWD);
 	if (!new_old_pwd)
@@ -32,8 +32,8 @@ static void	update_var_old_pwd(t_var *var)
 
 static void	update_var_pwd(t_context *context)
 {
-	t_var		*var;
-	char		*new_pwd;
+	t_var	*var;
+	char	*new_pwd;
 
 	var = context->var;
 	new_pwd = context->internal_pwd;
