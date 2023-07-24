@@ -11,8 +11,8 @@ void	del_var_info(void **var_info)
 	if (!var_info || !*var_info)
 		return ;
 	tmp_info = (t_var_info *)*var_info;
-	ft_free(&tmp_info->value);
-	ft_free(&tmp_info);
+	ft_free((void **)&tmp_info->value);
+	ft_free((void **)&tmp_info);
 	*var_info = NULL;
 }
 
@@ -61,7 +61,17 @@ t_var	*set_default_environ(void)
 		ft_abort();
 	set_func(var);
 	set_env_default_hash(var);
-	set_default_pwd(var);
-	set_default_old_pwd(var);
+	if (set_default_pwd(var) == PROCESS_ERROR)
+	{
+		var->clear(var);
+		ft_free((void **)&var);
+		return (NULL);
+	}
+	if (set_default_old_pwd(var) == PROCESS_ERROR)
+	{
+		var->clear(var);
+		ft_free((void **)&var);
+		return (NULL);
+	}
 	return (var);
 }

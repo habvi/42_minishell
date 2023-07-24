@@ -16,15 +16,19 @@ static void	update_pwd_for_double_slash(t_var *var, char **pwd_path)
 	*pwd_path = parent_pwd;
 }
 
-void	set_default_pwd(t_var *var)
+t_result	set_default_pwd(t_var *var)
 {
-	char	*pwd_path;
+	char		*pwd_path;
+	t_result	result;
 
-	pwd_path = get_working_directory(SHELL_INIT);
-	update_pwd_for_double_slash(var, &pwd_path);
+	pwd_path = get_working_directory(SHELL_INIT, &result);
+	if (result == PROCESS_ERROR)
+		return (PROCESS_ERROR);
 	if (pwd_path)
 	{
+    update_pwd_for_double_slash(var, &pwd_path);
 		var->add(var, KEY_PWD, pwd_path, VAR_ENV);
-		ft_free(&pwd_path);
+		ft_free((void **)&pwd_path);
 	}
+	return (SUCCESS);
 }

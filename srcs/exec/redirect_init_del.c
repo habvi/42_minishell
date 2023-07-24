@@ -30,7 +30,7 @@ void	del_redirect(void *content)
 	if (redirect->heredoc_filename)
 	{
 		unlink(redirect->heredoc_filename);
-		ft_free(&redirect->heredoc_filename);
+		ft_free((void **)&redirect->heredoc_filename);
 	}
-	ft_free(&redirect);
+	ft_free((void **)&redirect);
 }

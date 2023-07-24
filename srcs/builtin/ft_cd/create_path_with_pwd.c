@@ -41,7 +41,7 @@ static char	*get_joined_canonicalize_path(char **pre_path, \
 	char	*canonicalized_path;
 
 	canonicalized_path = cd_canonicalize_path(*pre_path, path_segment);
-	ft_free(pre_path);
+	ft_free((void **)pre_path);
 	return (canonicalized_path);
 }
 

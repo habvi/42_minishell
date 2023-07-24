@@ -187,6 +187,7 @@ SRCS		+=	$(UTILS_DIR)/count_array.c \
 				$(UTILS_DIR)/is_valid_key.c \
 				$(UTILS_DIR)/is_valid_path.c \
 				$(UTILS_DIR)/x_ft_itoa.c \
+				$(UTILS_DIR)/x_ft_split.c \
 				$(UTILS_DIR)/x_ft_strdup.c \
 				$(UTILS_DIR)/x_ft_strjoin.c \
 				$(UTILS_DIR)/x_ft_substr.c
@@ -249,6 +250,17 @@ sani	:
 norm	:
 	python3 ./test/integration_test/norm.py
 
+.PHONY	: readline
+readline:
+ifeq ($(UNAME), Linux)
+	sudo apt-get install libreadline8
+	sudo apt-get install libreadline-dev
+else
+ifeq ($(UNAME), Darwin)
+	curl -fsSL https://rawgit.com/kube/42homebrew/master/install.sh | zsh
+	brew update && brew upgrade && brew install readline
+endif
+endif
 
 #--------------------------------------------
 # test.bats

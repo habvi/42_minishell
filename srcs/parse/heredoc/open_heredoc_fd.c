@@ -24,7 +24,7 @@ t_result	create_filename_and_open_heredoc_fd(int *fd, char **filename)
 	*fd = open_file_dup_errno(*filename);
 	if (*fd == OPEN_ERROR)
 	{
-		ft_free(filename);
+		ft_free((void **)filename);
 		return (PROCESS_ERROR);
 	}
 	return (SUCCESS);
