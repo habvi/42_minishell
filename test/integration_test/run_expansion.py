@@ -1,10 +1,11 @@
 from test_function.test_functions import test
 
 # for wildcard
-MAKE_TEST_DIR = "mkdir -p test_wildcard && cd test_wildcard && "
-RANDOM_FILES = []
-TOUCH_TEST_Z = f"{MAKE_TEST_DIR} touch z1 zz2 3z 4zz zz5z z6zz z7z7z z8zz8zz zz9z9zzz"
-SORT_COMPARE = " | tr ' ' '\\n' | sort && rm -rf test_wildcard"
+DIR_NAME = "test_wildcard"
+MAKE_TEST_DIR = f"mkdir -p test_wildcard && cd {DIR_NAME} && "
+RANDOM_FILES = "z1 zz2 3z 4zz zz5z z6zz z7z7z z8zz8zz zz9z9zzz"
+TOUCH_TEST_Z = f"{MAKE_TEST_DIR} touch {RANDOM_FILES}"
+SORT_COMPARE = f" | tr ' ' '\\n' | sort && cd ../ && rm -rf {DIR_NAME}"
 
 def main():
     test_res = 0
