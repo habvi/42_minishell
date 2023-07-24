@@ -65,6 +65,7 @@ SRCS		+=	$(VAR_DIR)/add.c \
 				$(VAR_DIR)/is_key_exist.c \
 				$(VAR_DIR)/join.c \
 				$(VAR_DIR)/print_detail.c \
+				$(VAR_DIR)/set_default_shlvl.c \
 				$(VAR_DIR)/set_default_environ.c \
 				$(VAR_DIR)/set_default_old_pwd.c \
 				$(VAR_DIR)/set_default_pwd.c \
@@ -372,5 +373,11 @@ test_original	: all
 test_path	: all
 	rm -f ko_case_*.txt
 	python3 ./test/integration_test/run_path.py
+
+# test original
+.PHONY		: test_lvl
+test_lvl	: all
+	rm -f ko_case_*.txt
+	python3 ./test/integration_test/run_shlvl.py
 
 -include $(DEPS)
