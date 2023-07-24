@@ -2,7 +2,8 @@
 # ft_ascii
 #--------------------------------------------
 ASCII_DIR	:=	ft_ascii
-ASCII_SRC	:=	$(ASCII_DIR)/ft_isalnum.c \
+ASCII_SRC	:=	$(ASCII_DIR)/ft_is_whitespace.c \
+				$(ASCII_DIR)/ft_isalnum.c \
 				$(ASCII_DIR)/ft_isalpha.c \
 				$(ASCII_DIR)/ft_isascii.c \
 				$(ASCII_DIR)/ft_isdigit.c \
