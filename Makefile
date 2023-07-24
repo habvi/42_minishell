@@ -374,4 +374,10 @@ test_path	: all
 	rm -f ko_case_*.txt
 	python3 ./test/integration_test/run_path.py
 
+# test original
+.PHONY		: test_lvl
+test_lvl	: all
+	rm -f ko_case_*.txt
+	python3 ./test/integration_test/run_shlvl.py
+
 -include $(DEPS)
