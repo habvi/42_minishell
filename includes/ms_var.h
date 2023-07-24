@@ -18,6 +18,11 @@
 # define KEY_OLDPWD		"OLDPWD"
 # define KEY_HOME		"HOME"
 # define KEY_CDPATH		"CDPATH"
+# define KEY_SHLVL		"SHLVL"
+
+# define SHLVL_ZERO		0
+# define SHLVL_RESET	1
+# define SHLVL_LIMIT	999
 
 # define ASSIGNMENT_STR	"="
 # define ASSIGNMENT_CHR	'='
@@ -64,6 +69,7 @@ struct s_var
 t_var		*set_default_environ(void);
 t_result	set_default_pwd(t_var *var);
 t_result	set_default_old_pwd(t_var *var);
+void		set_default_shlvl(t_var *var);
 
 /* create, dup */
 void		var_declare_all(const char *const *args, \

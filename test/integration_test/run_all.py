@@ -4,7 +4,7 @@ import run_pipe
 import run_op
 import run_error
 import run_original
-
+import run_shlvl
 
 BLUE = "\x1b[34m"
 RESET = "\x1b[0m"
@@ -35,6 +35,9 @@ def main():
 
     # print_test_title("ORIGINAL")
     # test_res |= run_original.main()
+
+    print_test_title("OTHER")
+    test_res |= run_shlvl.main()
 
     print_ng_cases(test_res)
 
