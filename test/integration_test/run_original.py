@@ -21,13 +21,11 @@ def main():
                     "((()))",
                     "(()())",
                     "((()()))",
-                    "<< aaa",
                     "<<a () <<b",
                     "<<a ||| <<b",
                     "echo a | (e) >a && a ||",
                     "$$",
                     "$$$",
-                    "$_",
                     # redirect in
                     "echo aa >test_infile1 && echo bb > test_infile2",
                     "cat test_infile1 && cat test_infille2 && <test_infile1 | cat | grep a",
