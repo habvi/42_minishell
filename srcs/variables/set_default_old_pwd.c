@@ -44,6 +44,7 @@ t_result	set_default_old_pwd(t_var *var)
 {
 	t_result	result;
 
+	result = SUCCESS;
 	if (var->is_key_exist(var, KEY_OLDPWD))
 		result = check_and_rm_invalid_oldpwd_path(var);
 	else
