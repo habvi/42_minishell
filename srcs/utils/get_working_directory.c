@@ -11,7 +11,7 @@ static char	*extend_path(char **path, const size_t newsize)
 	new_path = (char *)x_malloc(sizeof(char) * newsize);
 	if (!new_path)
 		ft_abort();
-	ft_free(path);
+	ft_free((void **)path);
 	return (new_path);
 }
 
@@ -52,7 +52,7 @@ char	*get_working_directory(const char *for_whom)
 								ERROR_MSG_RETRIEVE_CWD, \
 								ERROR_MSG_GETCWD, \
 								strerror(tmp_err));
-		ft_free(&cwd);
+		ft_free((void **)&cwd);
 		return (NULL);
 	}
 	return (cwd);

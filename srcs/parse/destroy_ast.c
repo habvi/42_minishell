@@ -24,7 +24,7 @@ void	destroy_ast_node_recursive(t_ast **root)
 		deque_clear_all(&(*root)->command, del_token);
 	if ((*root)->redirect_list)
 		deque_clear_all(&(*root)->redirect_list, del_redirect);
-	ft_free(root);
+	ft_free((void **)root);
 }
 
 void	destroy_ast_tree(t_ast **root, t_result exec_result)

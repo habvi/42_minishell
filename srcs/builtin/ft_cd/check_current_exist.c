@@ -23,7 +23,7 @@ t_result	cd_check_current_exist(const char *internal_pwd)
 	}
 	if (!cwd)
 		return (PROCESS_ERROR);
-	ft_free(&cwd);
+	ft_free((void **)&cwd);
 	return (SUCCESS);
 }
 
@@ -48,10 +48,10 @@ t_result	cd_check_new_path_exist(const char *arg, \
 		tmp = *new_path;
 		*new_path = x_ft_strjoin(internal_pwd, PATH_DELIMITER_STR);
 		*new_path = extend_str(*new_path, x_ft_strdup(path));
-		ft_free(&tmp);
+		ft_free((void **)&tmp);
 		return (SUCCESS);
 	}
 	puterr_cmd_arg_msg(CMD_CD, arg, strerror(tmp_err));
-	ft_free(&cwd);
+	ft_free((void **)&cwd);
 	return (FAILURE);
 }

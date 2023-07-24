@@ -19,7 +19,7 @@ static char	*set_default_internal_pwd(t_var *var)
 	int		tmp_err;
 
 	pwd_path = get_current_path(&tmp_err);
-	ft_free(&pwd_path);
+	ft_free((void **)&pwd_path);
 	if (tmp_err)
 		return (NULL);
 	return (var->get_value(var, KEY_PWD));

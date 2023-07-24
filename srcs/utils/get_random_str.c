@@ -46,7 +46,7 @@ static char	*read_random_str(const int fd, const size_t size)
 	{
 		buf[i] = read_random_alnum(fd);
 		if (!buf[i])
-			return (ft_free(&buf));
+			return (ft_free((void **)&buf));
 		i++;
 	}
 	buf[size] = CHR_NULL;

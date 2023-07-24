@@ -15,7 +15,7 @@ static char	*strcat_after_dollar(char **str)
 	char	*new_str;
 
 	new_str = x_ft_strjoin(STR_DOLLAR, *str);
-	ft_free(str);
+	ft_free((void **)str);
 	return (new_str);
 }
 
@@ -42,7 +42,7 @@ static char	*expand_key(char **str, t_var *var)
 		return (strcat_after_dollar(&key));
 	}
 	value = var->get_value(var, key);
-	ft_free(&key);
+	ft_free((void **)&key);
 	return (value);
 }
 

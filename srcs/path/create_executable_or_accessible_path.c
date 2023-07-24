@@ -44,10 +44,10 @@ char	*create_valid_path_by_judge(char *paths, \
 	{
 		try_path = get_next_path(&paths);
 		join_path = x_ft_strjoin(try_path, arg);
-		ft_free(&try_path);
+		ft_free((void **)&try_path);
 		if (judge(join_path, result))
 			break ;
-		ft_free(&join_path);
+		ft_free((void **)&join_path);
 	}
 	return (join_path);
 }

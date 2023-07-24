@@ -11,8 +11,8 @@ void	del_var_info(void **var_info)
 	if (!var_info || !*var_info)
 		return ;
 	tmp_info = (t_var_info *)*var_info;
-	ft_free(&tmp_info->value);
-	ft_free(&tmp_info);
+	ft_free((void **)&tmp_info->value);
+	ft_free((void **)&tmp_info);
 	*var_info = NULL;
 }
 

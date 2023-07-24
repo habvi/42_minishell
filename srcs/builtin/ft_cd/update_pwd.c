@@ -4,7 +4,7 @@
 
 static void	update_internal_pwd(char *absolute_path, t_context *context)
 {
-	ft_free(&context->internal_pwd);
+	ft_free((void **)&context->internal_pwd);
 	context->internal_pwd = absolute_path;
 }
 
@@ -15,7 +15,7 @@ static void	set_condition_old_pwd_for_update(t_var *var)
 	new_old_pwd = var_get_value(var, KEY_PWD);
 	if (!new_old_pwd)
 		var->unset(var, KEY_OLDPWD);
-	ft_free(&new_old_pwd);
+	ft_free((void **)&new_old_pwd);
 }
 
 static void	update_var_old_pwd(t_var *var)
@@ -27,7 +27,7 @@ static void	update_var_old_pwd(t_var *var)
 	new_old_pwd_attr = var_get_attribute(var, KEY_OLDPWD);
 	set_condition_old_pwd_for_update(var);
 	var->add(var, KEY_OLDPWD, new_old_pwd, new_old_pwd_attr);
-	ft_free(&new_old_pwd);
+	ft_free((void **)&new_old_pwd);
 }
 
 static void	update_var_pwd(t_context *context)

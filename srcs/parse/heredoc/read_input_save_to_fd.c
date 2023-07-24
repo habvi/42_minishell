@@ -61,16 +61,16 @@ t_result	read_input_save_to_fd(int fd, \
 		}
 		if (g_sig == SIGINT)
 		{
-			ft_free(&line);
+			ft_free((void **)&line);
 			set_status_and_init_sig_var(context);
 			return (BREAK);
 		}
 		if (ft_streq(line, delimiter))
 		{
-			ft_free(&line);
+			ft_free((void **)&line);
 			return (SUCCESS);
 		}
 		ft_dprintf(fd, "%s\n", line);
-		ft_free(&line);
+		ft_free((void **)&line);
 	}
 }

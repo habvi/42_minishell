@@ -23,7 +23,7 @@ void	set_is_quoted_value_to_arr(t_token *token)
 		ft_abort();
 	is_quoted_value = get_is_quoted_value(token->quote);
 	ft_memset(is_quoted_arr, is_quoted_value, sizeof(bool) * len);
-	ft_free(&token->is_quoted_arr);
+	ft_free((void **)&token->is_quoted_arr);
 	token->is_quoted_arr = is_quoted_arr;
 }
 

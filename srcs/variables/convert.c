@@ -47,7 +47,7 @@ static char	*create_key_value_pair(const char *key, const char *value)
 	join_str = x_ft_strjoin(key, ASSIGNMENT_STR);
 	tmp = join_str;
 	join_str = x_ft_strjoin(tmp, value);
-	ft_free(&tmp);
+	ft_free((void **)&tmp);
 	return (join_str);
 }
 

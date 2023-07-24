@@ -31,7 +31,7 @@ static void	check_and_rm_invalid_oldpwd_path(t_var *var)
 		var->unset(var, KEY_OLDPWD);
 		set_old_pwd_key_only(var);
 	}
-	ft_free(&dup_path);
+	ft_free((void **)&dup_path);
 }
 
 void	set_default_old_pwd(t_var *var)

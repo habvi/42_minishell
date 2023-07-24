@@ -10,6 +10,6 @@ void	set_default_pwd(t_var *var)
 	if (pwd_path)
 	{
 		var->add(var, KEY_PWD, pwd_path, VAR_ENV);
-		ft_free(&pwd_path);
+		ft_free((void **)&pwd_path);
 	}
 }

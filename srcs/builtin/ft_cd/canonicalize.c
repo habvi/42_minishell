@@ -22,7 +22,7 @@ static void	handle_double_slash_path(const char *path, char **new_path)
 	if (is_head_double_slash(path))
 	{
 		tmp = x_ft_strjoin(PATH_DELIMITER_STR, *new_path);
-		ft_free(new_path);
+		ft_free((void **)new_path);
 		*new_path = tmp;
 	}
 }

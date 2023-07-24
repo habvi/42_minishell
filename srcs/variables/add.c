@@ -47,6 +47,7 @@ static char	*get_declare_value(t_var *var, \
 	return (dup_value);
 }
 
+// todo: fix
 // key, var_info, op, var
 // key, value, attr, op, var -> register
 static t_var_info	*var_create_var_info_for_add(t_var *var, \
@@ -59,7 +60,7 @@ static t_var_info	*var_create_var_info_for_add(t_var *var, \
 	attr = get_declare_attr(var, key, attr);
 	value = get_declare_value(var, key, value);
 	var_info = var_create_var_info_by_value_attr(value, attr);
-	ft_free(&value);
+	ft_free((void **)&value);
 	return (var_info);
 }
 
