@@ -3,8 +3,8 @@ from test_function.test_functions import test
 MKDIR = "rm -rf test_dir \n mkdir test_dir \n cd test_dir"
 RMDIR = "cd .. \n chmod 777 test_dir \n rm -rf test_dir"
 PATH_ADD = "export PATH+=:$PWD"
-SHOW_PWD = "echo 'pwd: '\n pwd \necho status: \"$?\"\n declare -p | grep PWD"
-SHELL_PWD = "__SHELL__\n echo 'pwd: '\n pwd \necho status: \"$?\"\n declare -p | grep PWD\n"
+SHOW_PWD = "\necho 'pwd: '\n pwd \necho status: \"$?\"\n declare -p | grep PWD\n"
+SHELL_PWD = "\n__SHELL__\n echo 'pwd: '\n pwd \necho status: \"$?\"\n declare -p | grep PWD\n"
 
 def main():
 
