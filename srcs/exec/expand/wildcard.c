@@ -4,9 +4,20 @@
 #include "ft_deque.h"
 #include "ft_string.h"
 
-static bool	is_wildcard_in_token(const char *str)
+static bool	is_wildcard_in_token(t_token *token)
 {
-	return (ft_strchr_bool(str, WILDCARD));
+	const char	*str = token->str;
+	const bool	*is_quoted_arr = token->is_quoted_arr;
+	size_t		i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == WILDCARD && !is_quoted_arr[i])
+			return (true);
+		i++;
+	}
+	return (false);
 }
 
 // not clear src
@@ -30,7 +41,7 @@ static t_result	create_matched_tokens_each(t_deque_node *node, \
 	t_result	result;
 
 	token = (t_token *)node->content;
-	if (token->quote == QUOTE_NONE && is_wildcard_in_token(token->str))
+	if (is_wildcard_in_token(token))
 	{
 		tmp_matched_tokens = get_pattern_matched_filenames(token, &result);
 		if (result == PROCESS_ERROR)
