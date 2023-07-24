@@ -1,6 +1,4 @@
-#include "minishell.h"
 #include "ms_parse.h"
-#include "ms_tokenize.h"
 #include "ft_deque.h"
 
 t_node_kind	convert_kind_token_to_node(t_deque_node *token_node)

@@ -1,6 +1,5 @@
 #include "minishell.h"
 #include "ms_parse.h"
-#include "ms_tokenize.h"
 #include "ft_deque.h"
 
 static void	move_all_redirect_token_from_command(t_ast *ast_node)

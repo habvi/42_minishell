@@ -1,9 +1,7 @@
 #include <fcntl.h>
-#include <string.h>
 #include "minishell.h"
 #include "ft_ascii.h"
 #include "ft_mem.h"
-#include "ft_string.h"
 #include "ft_sys.h"
 
 // 01234567

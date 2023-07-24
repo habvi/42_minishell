@@ -1,7 +1,6 @@
 #include "minishell.h"
 #include "ms_var.h"
 #include "ft_hash.h"
-#include "ft_string.h"
 
 // return value of key
 // if key not found or value is NULL, returns NULL.
@@ -18,9 +17,7 @@ char	*var_get_value(t_var *var, const char *key)
 	value = var_info->value;
 	if (!value)
 		return (NULL);
-	dup_value = ft_strdup(value);
-	if (!dup_value)
-		ft_abort();
+	dup_value = x_ft_strdup(value);
 	return (dup_value);
 }
 

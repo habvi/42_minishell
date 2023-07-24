@@ -1,5 +1,4 @@
 #include "minishell.h"
-#include "ft_dprintf.h"
 
 /*
 usage

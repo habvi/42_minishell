@@ -1,37 +1,42 @@
 #include <stdlib.h>
-#include <string.h>
 #include "minishell.h"
 #include "ms_builtin.h"
-#include "ms_var.h"
-#include "ft_dprintf.h"
-#include "ft_string.h"
 #include "ft_mem.h"
 
-static void	print_err_set_status(const char *arg, \
-									const char *path, \
-									int tmp_err, \
-									uint8_t *status)
-{
-	const char	*err_arg;
-
-	if (!path)
-	{
-		if (!arg || ft_streq(arg, KEY_HOME) || ft_streq(arg, CD_ARG_HOME))
-			err_arg = KEY_HOME;
-		else
-			err_arg = KEY_OLDPWD;
-		puterr_cmd_arg_msg_wo_colon(CMD_CD, err_arg, ERROR_MSG_NOT_SET);
-	}
-	else
-		puterr_cmd_arg_msg(CMD_CD, path, strerror(tmp_err));
-	*status = CD_ERROR_STATUS;
-}
-
-static bool	is_valid_cd_path(const char *path, int *tmp_err)
+bool	is_absolute_path(const char *path)
 {
 	if (!path)
 		return (false);
-	return (is_valid_path(path, tmp_err));
+	return (path[0] == ABSOLUTE_PATH_HEAD);
+}
+
+// if cd_check_current_exist() failure, continue.
+// after cd_update_pwd(), not free new_path.
+static t_result	change_directory_to_valid_path(const char *arg, \
+												const char *path, \
+												t_context *context)
+{
+	char		*new_path;
+	t_result	result;
+	const char	*internal_pwd = context->internal_pwd;
+
+	result = cd_check_current_exist(internal_pwd);
+	if (result == PROCESS_ERROR)
+		return (result);
+	new_path = cd_create_path_with_pwd(arg, path, internal_pwd, &result);
+	if (result == PROCESS_ERROR || result == FAILURE)
+	{
+		ft_free(&new_path);
+		return (result);
+	}
+	result = cd_check_new_path_exist(arg, &new_path, path, internal_pwd);
+	if (result == PROCESS_ERROR || result == FAILURE)
+	{
+		ft_free(&new_path);
+		return (result);
+	}
+	cd_update_pwd(new_path, context);
+	return (SUCCESS);
 }
 
 static void	print_mv_path_use_oldpwd_or_cdpath(bool is_print_path, \
@@ -41,40 +46,30 @@ static void	print_mv_path_use_oldpwd_or_cdpath(bool is_print_path, \
 		ft_dprintf(STDOUT_FILENO, "%s\n", pwd);
 }
 
-static void	change_directory(const char *arg, \
-								t_context *context, \
-								uint8_t *status)
+static t_result	change_directory(const char *arg, t_context *context)
 {
-	char	*path;
-	int		tmp_err;
-	char	*absolute_path;
-	bool	is_print_path;
+	char		*path;
+	bool		is_print_path;
+	t_result	result;
 
 	path = cd_set_path(arg, context->var, &is_print_path);
-	if (!is_valid_cd_path(path, &tmp_err))
-	{
-		print_err_set_status(arg, path, tmp_err, status);
-		ft_free(&path);
-		return ;
-	}
-	absolute_path = cd_canonicalize_path(path, context->internal_pwd);
+	if (!path)
+		return (FAILURE);
+	// ft_dprintf(2, "%s: %s, %s\n", __func__, context->internal_pwd, path);
+	result = change_directory_to_valid_path(arg, path, context);
 	ft_free(&path);
-	if (cd_change_dir_to_valid_path(absolute_path, &tmp_err) == FAILURE)
-	{
-		puterr_cmd_arg_msg(CMD_CD, arg, strerror(tmp_err));
-		*status = CD_ERROR_STATUS;
-		ft_free(&absolute_path);
-		return ;
-	}
-	cd_update_pwd(absolute_path, context);
+	if (result == PROCESS_ERROR || result == FAILURE)
+		return (result);
 	print_mv_path_use_oldpwd_or_cdpath(is_print_path, context->internal_pwd);
+	return (SUCCESS);
 }
 
 uint8_t	ft_cd(const char *const *argv, t_context *context)
 {
-	uint8_t	status;
-	size_t	i;
-	size_t	args;
+	uint8_t		status;
+	size_t		i;
+	size_t		args;
+	t_result	result;
 
 	status = EXIT_SUCCESS;
 	i = 1;
@@ -87,6 +82,8 @@ uint8_t	ft_cd(const char *const *argv, t_context *context)
 		puterr_cmd_msg(CMD_CD, ERROR_MSG_TOO_MANY_ARG);
 		return (status);
 	}
-	change_directory(argv[i], context, &status);
+	result = change_directory(argv[i], context);
+	if (result == PROCESS_ERROR || result == FAILURE)
+		status = CD_ERROR_STATUS;
 	return (status);
 }

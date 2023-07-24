@@ -4,7 +4,6 @@
 #include "minishell.h"
 #include "ms_exec.h"
 #include "ms_var.h"
-#include "ft_dprintf.h"
 #include "ft_mem.h"
 
 static uint8_t	set_execve_status(int tmp_err)

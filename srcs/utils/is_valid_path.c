@@ -13,7 +13,7 @@ bool	test_opendir_strict(const char *path)
 	return (true);
 }
 
-static bool	test_opendir(const char *path, int *tmp_err)
+bool	test_opendir(const char *path, int *tmp_err)
 {
 	DIR	*dirp;
 
