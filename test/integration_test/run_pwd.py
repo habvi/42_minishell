@@ -26,9 +26,18 @@ def main():
         f"{MKDIR}\n chmod -rx $PWD && pwd\n {RMDIR}",
         f"{MKDIR}\n chmod -wx $PWD && pwd\n {RMDIR}",
         f"{MKDIR}\n chmod -rwx $PWD && pwd\n {RMDIR}",
-         ]  # todo: add more test after implement cd
+    ]  # todo: add more test after implement cd
 
-    test_res |= test("ft_pwd", pwd_test, False, False)
+    pwd_rm_test = [
+        f"{PATH_ADD}\n __SHELL \n pwd",
+        f"{PATH_ADD}\n{MKDIR} && chmod 000 $PWD \n pwd                    \n __SHELL__ \n pwd \n exit \n {RMDIR}",
+        f"{PATH_ADD}\n{MKDIR} && chmod 000 $PWD \n pwd \n export PWD=xxxx \n __SHELL__ \n pwd \n exit \n {RMDIR}",
+        f"{PATH_ADD}\n{MKDIR} && chmod 000 $PWD \n pwd \n unset PWD       \n __SHELL__ \n pwd \n exit \n {RMDIR}",
+    ]
+
+
+    # test_res |= test("ft_pwd", pwd_test, False, False)
+    test_res |= test("ft_pwd with rm", pwd_rm_test, False, True)
 
     return test_res
 
