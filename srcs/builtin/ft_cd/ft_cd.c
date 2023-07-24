@@ -26,13 +26,13 @@ static t_result	change_directory_to_valid_path(const char *arg, \
 	new_path = cd_create_path_with_pwd(arg, path, internal_pwd, &result);
 	if (result == PROCESS_ERROR || result == FAILURE)
 	{
-		ft_free(&new_path);
+		ft_free((void **)&new_path);
 		return (result);
 	}
 	result = cd_check_new_path_exist(arg, &new_path, path, internal_pwd);
 	if (result == PROCESS_ERROR || result == FAILURE)
 	{
-		ft_free(&new_path);
+		ft_free((void **)&new_path);
 		return (result);
 	}
 	cd_update_pwd(new_path, context);
@@ -57,7 +57,7 @@ static t_result	change_directory(const char *arg, t_context *context)
 		return (FAILURE);
 	// ft_dprintf(2, "%s: %s, %s\n", __func__, context->internal_pwd, path);
 	result = change_directory_to_valid_path(arg, path, context);
-	ft_free(&path);
+	ft_free((void **)&path);
 	if (result == PROCESS_ERROR || result == FAILURE)
 		return (result);
 	print_mv_path_use_oldpwd_or_cdpath(is_print_path, context->internal_pwd);

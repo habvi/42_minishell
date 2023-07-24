@@ -62,8 +62,8 @@ struct s_var
 
 /* init */
 t_var		*set_default_environ(void);
-void		set_default_pwd(t_var *var);
-void		set_default_old_pwd(t_var *var);
+t_result	set_default_pwd(t_var *var);
+t_result	set_default_old_pwd(t_var *var);
 
 /* create, dup */
 void		var_declare_all(const char *const *args, \

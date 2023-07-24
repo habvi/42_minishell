@@ -18,7 +18,7 @@ t_hash	*hs_create_table(size_t size, void (*del_hash_value)(void **))
 	hash->table = (t_deque **)ft_calloc(hash->table_size, sizeof(t_deque *));
 	if (!hash->table)
 	{
-		ft_free(&hash);
+		ft_free((void **)&hash);
 		return (NULL);
 	}
 	hash->del_hash_value = del_hash_value;

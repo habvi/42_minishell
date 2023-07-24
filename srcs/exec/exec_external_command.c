@@ -25,7 +25,7 @@ static size_t	get_paths_len(t_var *var)
 
 	paths = var->get_value(var, KEY_PATH);
 	len = ft_strlen(paths);
-	ft_free(&paths);
+	ft_free((void **)&paths);
 	return (len);
 }
 
@@ -51,7 +51,7 @@ uint8_t	execute_external_command(char *const *argv, t_context *context)
 		puterr_cmd_msg_set_status(\
 			exec_path, strerror(errno), context, set_execve_status(errno));
 	}
-	ft_free(&exec_path);
+	ft_free((void **)&exec_path);
 	free_2d_array(&envp);
 	return (context->status);
 }

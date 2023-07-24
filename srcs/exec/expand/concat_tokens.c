@@ -46,9 +46,9 @@ static void	swap_next_token_str_and_is_quoted_arr(t_deque_node *next, \
 	t_token	*next_token;
 
 	next_token = (t_token *)next->content;
-	ft_free(&next_token->str);
+	ft_free((void **)&next_token->str);
 	next_token->str = concat_str;
-	ft_free(&next_token->is_quoted_arr);
+	ft_free((void **)&next_token->is_quoted_arr);
 	next_token->is_quoted_arr = *is_quoted_arr;
 }
 

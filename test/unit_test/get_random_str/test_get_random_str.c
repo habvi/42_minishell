@@ -45,8 +45,8 @@ static int	test(const size_t size, int test_no)
 	result ? COLOR_GREEN"OK"COLOR_RESET : COLOR_RED"NG"COLOR_RESET);
 	printf("------------------------------\n");
 
-	ft_free(&str1);
-	ft_free(&str2);
+	ft_free((void **)&str1);
+	ft_free((void **)&str2);
 	if (result)
 		return (1);
 	return (0);

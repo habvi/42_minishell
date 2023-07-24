@@ -101,5 +101,5 @@ void	var_print_detail(t_var *var, t_var_attr attr, bool is_display_attr)
 	set_elem_pointer(elems, var->hash->table, var->hash->table_size, attr);
 	var_sort_elems_by_key(elems);
 	print_elems(elems, is_display_attr);
-	ft_free(&elems);
+	ft_free((void **)&elems);
 }

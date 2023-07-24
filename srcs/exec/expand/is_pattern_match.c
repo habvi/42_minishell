@@ -36,8 +36,8 @@ static bool	is_pattern_match_and_clear_dp(bool **dp, \
 {
 	const bool	answer = (*dp)[len_target];
 
-	ft_free(dp);
-	ft_free(ndp);
+	ft_free((void **)dp);
+	ft_free((void **)ndp);
 	return (answer);
 }
 

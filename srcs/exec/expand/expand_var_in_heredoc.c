@@ -25,8 +25,8 @@ static t_result	expand_and_transfer_heredoc(int old_fd, \
 			break ;
 		expand_line = get_expand_token_str(line, context);
 		ft_dprintf(new_fd, expand_line);
-		ft_free(&line);
-		ft_free(&expand_line);
+		ft_free((void **)&line);
+		ft_free((void **)&expand_line);
 	}
 	return (result);
 }
@@ -54,19 +54,19 @@ static t_result	clear_expand_in_heredoc(int old_fd, \
 	{
 		x_close(new_fd);
 		x_unlink(*new_filename);
-		ft_free(new_filename);
+		ft_free((void **)new_filename);
 		return (PROCESS_ERROR);
 	}
 	if (x_close(new_fd) == CLOSE_ERROR)
 	{
 		x_unlink(*new_filename);
-		ft_free(new_filename);
+		ft_free((void **)new_filename);
 		return (PROCESS_ERROR);
 	}
 	if (x_unlink(*old_filename) == UNLINK_ERROR)
 	{
 		x_unlink(*new_filename);
-		ft_free(new_filename);
+		ft_free((void **)new_filename);
 		return (PROCESS_ERROR);
 	}
 	return (SUCCESS);
@@ -77,7 +77,7 @@ static void	clear_fd_for_error(int old_fd, int new_fd, char **new_filename)
 	x_close(old_fd);
 	x_close(new_fd);
 	x_unlink(*new_filename);
-	ft_free(new_filename);
+	ft_free((void **)new_filename);
 }
 
 t_result	expand_variables_in_heredoc(t_redirect *redirect, \
@@ -100,7 +100,7 @@ t_result	expand_variables_in_heredoc(t_redirect *redirect, \
 	if (clear_expand_in_heredoc(\
 		old_fd, new_fd, &old_filename, &new_filename) == PROCESS_ERROR)
 		return (PROCESS_ERROR);
-	ft_free(&redirect->heredoc_filename);
+	ft_free((void **)&redirect->heredoc_filename);
 	redirect->heredoc_filename = new_filename;
 	return (SUCCESS);
 }

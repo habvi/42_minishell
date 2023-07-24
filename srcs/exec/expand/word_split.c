@@ -1,6 +1,6 @@
 #include "minishell.h"
 #include "ms_tokenize.h"
-#include "ms_builtin.h"
+#include "ft_ascii.h"
 #include "ft_deque.h"
 
 static char	*get_split_tail(char *head)
@@ -8,7 +8,7 @@ static char	*get_split_tail(char *head)
 	char	*tail;
 
 	tail = head;
-	while (*tail && !is_whitespace(*tail))
+	while (*tail && !ft_is_whitespace(*tail))
 		tail++;
 	return (tail);
 }

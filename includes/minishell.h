@@ -61,6 +61,7 @@
 # define PROMPT_NAME	"minishell "
 # define HEREDOC_PROMPT	"> "
 
+# define SHELL_EXIT				"exit\n"
 # define SHELL_INIT				"shell-init"
 # define ERROR_MSG_GETCWD		"getcwd: cannot access parent directories"
 # define ERROR_MSG_RETRIEVE_CWD	"error retrieving current directory"
@@ -88,7 +89,7 @@ typedef struct s_context
 	char	*internal_pwd;
 	uint8_t	status;
 	bool	is_return;
-	bool	is_rl_event_hook_on;
+	bool	is_rl_event_hook_off;
 }	t_context;
 
 // temporarily here ...
@@ -118,7 +119,8 @@ size_t		count_argv(const char *const *argc);
 char		*extend_str(char *left, char *right);
 void		ft_abort(void);
 char		*get_current_path(int *tmp_err);
-char		*get_working_directory(const char *for_whom);
+char		*get_working_directory(const char *for_whom, t_result *result);
+bool		is_getcwd_failure(const int tmp_err);
 bool		is_valid_key(const char *word);
 bool		is_valid_head(const char c);
 bool		is_valid_after_head(const char c);
@@ -128,6 +130,7 @@ bool		is_a_directory_by_stat(const char *path, t_result *result);
 bool		is_file_by_stat(const char *path, t_result *result);
 bool		test_opendir_strict(const char *path, t_result *result);
 char		*x_ft_itoa(int n);
+char		**x_ft_split(char const *str, char c);
 char		*x_ft_strdup(const char *str);
 char		*x_ft_strndup(const char *str, const size_t maxlen);
 char		*x_ft_strjoin(char const *s1, char const *s2);
@@ -138,13 +141,13 @@ char		*get_random_str(const size_t size);
 char		*ft_get_next_line(int fd, t_result *result);
 
 /* init */
-void		init_context(t_context *context, \
+t_result	init_context(t_context *context, \
 							bool is_forced_interactive, \
-							bool is_test);
-t_result	analyze_option(int argc, \
-							char **argv, \
-							bool *is_forced_interactive, \
-							bool *is_test);
+							bool is_rl_event_hook_off);
+t_result	analyze_op(int argc, \
+						char **argv, \
+						bool *is_forced_interactive, \
+						bool *is_rl_event_hook_off);
 /* repl */
 t_result	read_eval_print_loop(t_context *context);
 

@@ -4,18 +4,6 @@
 #include "ft_deque.h"
 #include "ft_mem.h"
 
-char	*get_head_token_str(const t_deque *command)
-{
-	t_token	*token;
-
-	if (!command)
-		return (NULL);
-	if (deque_is_empty(command))
-		return (NULL);
-	token = (t_token *)command->node->content;
-	return (token->str);
-}
-
 // &&, ||, subshell, command, (ex |)
 bool	is_single_builtin_command(const t_ast *self_node)
 {

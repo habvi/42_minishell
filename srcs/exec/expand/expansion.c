@@ -9,7 +9,7 @@ static void	expand_token(t_token *token, t_context *context)
 	char	*expand_str;
 
 	expand_str = get_expand_token_str(token->str, context);
-	ft_free(&token->str);
+	ft_free((void **)&token->str);
 	token->str = expand_str;
 	set_is_quoted_value_to_arr(token);
 }

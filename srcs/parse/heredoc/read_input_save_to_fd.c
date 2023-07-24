@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include <stdlib.h>
 #include <readline/readline.h>
 #include "minishell.h"
 #include "ms_parse.h"
@@ -25,13 +25,13 @@ static int	event_by_sigint_for_heredoc(void)
 {
 	if (g_sig == SIGINT)
 		rl_done = false;
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 static void	set_signal_in_heredoc(t_context *context)
 {
 	set_signal_for_heredoc();
-	if (context->is_interactive && !context->is_rl_event_hook_on)
+	if (!context->is_rl_event_hook_off)
 	{
 		rl_catch_signals = true;
 		rl_event_hook = event_by_sigint_for_heredoc;
@@ -61,16 +61,16 @@ t_result	read_input_save_to_fd(int fd, \
 		}
 		if (g_sig == SIGINT)
 		{
-			ft_free(&line);
+			ft_free((void **)&line);
 			set_status_and_init_sig_var(context);
 			return (BREAK);
 		}
 		if (ft_streq(line, delimiter))
 		{
-			ft_free(&line);
+			ft_free((void **)&line);
 			return (SUCCESS);
 		}
 		ft_dprintf(fd, "%s\n", line);
-		ft_free(&line);
+		ft_free((void **)&line);
 	}
 }

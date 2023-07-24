@@ -9,9 +9,9 @@ void	del_token(void *content)
 	if (!content)
 		return ;
 	token = (t_token *)content;
-	ft_free(&token->str);
-	ft_free(&token->is_quoted_arr);
-	ft_free(&token);
+	ft_free((void **)&token->str);
+	ft_free((void **)&token->is_quoted_arr);
+	ft_free((void **)&token);
 }
 
 void	*destroy_tokens(t_deque **command, void (*del)(void *))

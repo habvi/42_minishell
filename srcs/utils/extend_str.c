@@ -8,7 +8,7 @@ char	*extend_str(char *left, char *right)
 
 	tmp = left;
 	left = x_ft_strjoin(tmp, right);
-	ft_free(&tmp);
-	ft_free(&right);
+	ft_free((void **)&tmp);
+	ft_free((void **)&right);
 	return (left);
 }

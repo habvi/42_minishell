@@ -29,7 +29,7 @@ static void	var_join_update_value(t_var *var, \
 	new_info = var_create_var_info_by_value_attr(joined_value, VAR_ENV);
 	hs_update_value(&key, new_info, existing_node, var->hash->del_hash_value);
 	del_var_info((void **)&var_info);
-	ft_free(&joined_value);
+	ft_free((void **)&joined_value);
 }
 
 // allocate key, value
