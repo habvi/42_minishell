@@ -4,7 +4,7 @@ from color import print_color_str, print_color_str_no_lf, RED, GREEN, YELLOW
 from test_output import replace_to_shell
 
 # ----------------------------------------------------------
-PATH_MINISHELL_LEAK = "./minishell"
+PATH_MINISHELL_LEAK = "./minishell -t"
 PATH_BASH_LEAK = "bash"
 
 # ----------------------------------------------------------
