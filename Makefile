@@ -65,6 +65,7 @@ SRCS		+=	$(VAR_DIR)/add.c \
 				$(VAR_DIR)/is_key_exist.c \
 				$(VAR_DIR)/join.c \
 				$(VAR_DIR)/print_detail.c \
+				$(VAR_DIR)/set_default_shlvl.c \
 				$(VAR_DIR)/set_default_environ.c \
 				$(VAR_DIR)/set_default_old_pwd.c \
 				$(VAR_DIR)/set_default_pwd.c \
