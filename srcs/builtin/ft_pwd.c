@@ -7,15 +7,16 @@
 // pwd op                 -> invalid op, $?=2
 static char	*get_pwd(t_context *context)
 {
-	char	*pwd;
+	char		*pwd;
+	t_result	result;
 
 	if (context->internal_pwd)
 	{
 		pwd = x_ft_strdup(context->internal_pwd);
 		return (pwd);
 	}
-	pwd = get_working_directory(CMD_PWD);
-	if (!pwd)
+	pwd = get_working_directory(CMD_PWD, &result);
+	if (result == PROCESS_ERROR || result == FAILURE)
 		return (NULL);
 	return (pwd);
 }

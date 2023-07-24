@@ -118,7 +118,8 @@ size_t		count_argv(const char *const *argc);
 char		*extend_str(char *left, char *right);
 void		ft_abort(void);
 char		*get_current_path(int *tmp_err);
-char		*get_working_directory(const char *for_whom);
+char		*get_working_directory(const char *for_whom, t_result *result);
+bool		is_getcwd_failure(const int tmp_err);
 bool		is_valid_key(const char *word);
 bool		is_valid_head(const char c);
 bool		is_valid_after_head(const char c);
@@ -139,7 +140,7 @@ char		*get_random_str(const size_t size);
 char		*ft_get_next_line(int fd, t_result *result);
 
 /* init */
-void		init_context(t_context *context, \
+t_result	init_context(t_context *context, \
 							bool is_forced_interactive, \
 							bool is_test);
 t_result	analyze_option(int argc, \

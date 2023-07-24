@@ -16,6 +16,7 @@ static char	*extend_path(char **path, const size_t newsize)
 }
 
 // use getcwd to original error handling.
+// check tmp_err. can't judge !cwd.
 char	*get_current_path(int *tmp_err)
 {
 	char	*path;
@@ -39,8 +40,13 @@ char	*get_current_path(int *tmp_err)
 	return (path);
 }
 
+bool	is_getcwd_failure(const int tmp_err)
+{
+	return (tmp_err == EACCES || tmp_err == ENAMETOOLONG || tmp_err == ENOENT);
+}
+
 /* ref: get_working_directory() in bash/builtins/common.c L623 */
-char	*get_working_directory(const char *for_whom)
+char	*get_working_directory(const char *for_whom, t_result *result)
 {
 	char	*cwd;
 	int		tmp_err;
@@ -48,12 +54,20 @@ char	*get_working_directory(const char *for_whom)
 	cwd = get_current_path(&tmp_err);
 	if (tmp_err)
 	{
-		puterr_whom_cmd_arg_msg(for_whom, \
-								ERROR_MSG_RETRIEVE_CWD, \
-								ERROR_MSG_GETCWD, \
-								strerror(tmp_err));
 		ft_free((void **)&cwd);
+		if (is_getcwd_failure(tmp_err))
+		{
+			puterr_whom_cmd_arg_msg(for_whom, \
+									ERROR_MSG_RETRIEVE_CWD, \
+									ERROR_MSG_GETCWD, \
+									strerror(tmp_err));
+			*result = FAILURE;
+			return (NULL);
+		}
+		ft_dprintf(STDERR_FILENO, "%s\n", strerror(tmp_err));
+		*result = PROCESS_ERROR;
 		return (NULL);
 	}
+	*result = SUCCESS;
 	return (cwd);
 }

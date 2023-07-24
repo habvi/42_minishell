@@ -11,7 +11,9 @@ int	main(int argc, char **argv)
 	result = analyze_option(argc, argv, &is_forced_interactive, &is_rl_hook_on);
 	if (result == FAILURE)
 		return (INVALID_OPTION);
-	init_context(&context, is_forced_interactive, is_rl_hook_on);
+	result = init_context(&context, is_forced_interactive, is_rl_hook_on);
+	if (result == PROCESS_ERROR)
+		return (PROCESS_ERROR);
 	result = read_eval_print_loop(&context);
 	destroy_context(context);
 	if (result == PROCESS_ERROR)
