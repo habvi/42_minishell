@@ -3,7 +3,7 @@
 #include "ft_deque.h"
 #include "ft_string.h"
 
-static bool	is_closed_quote_each_token(char *token_str)
+static bool	is_closed_quote_each_token(const char *token_str)
 {
 	const size_t	len = ft_strlen(token_str);
 	const char		head = *token_str;

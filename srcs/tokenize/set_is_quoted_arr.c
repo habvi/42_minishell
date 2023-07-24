@@ -27,7 +27,7 @@ void	set_is_quoted_value_to_arr(t_token *token)
 	token->is_quoted_arr = is_quoted_arr;
 }
 
-void	set_is_quoted_arr(t_deque *tokens)
+void	set_is_quoted_arr(const t_deque *tokens)
 {
 	t_deque_node	*token_node;
 

@@ -15,7 +15,7 @@ static void	remove_quote_in_token_str_each(t_token *token)
 	token->str = quote_removed;
 }
 
-void	remove_quote_in_token_str(t_deque *tokens)
+void	remove_quote_in_token_str(const t_deque *tokens)
 {
 	t_deque_node	*token_node;
 	t_token			*token;

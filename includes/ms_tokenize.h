@@ -92,9 +92,9 @@ bool			is_token_kind_subshell_as_ast_node(\
 
 /* set, update */
 void			set_token_kinds_all(t_deque *tokens);
-void			set_token_quote_type_all(t_deque *tokens);
-void			remove_quote_in_token_str(t_deque *tokens);
-void			set_is_quoted_arr(t_deque *tokens);
+void			set_token_quote_type_all(const t_deque *tokens);
+void			remove_quote_in_token_str(const t_deque *tokens);
+void			set_is_quoted_arr(const t_deque *tokens);
 void			set_is_quoted_value_to_arr(t_token *token);
 
 /* validate */

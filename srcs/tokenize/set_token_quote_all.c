@@ -1,7 +1,7 @@
 #include "ms_tokenize.h"
 #include "ft_deque.h"
 
-static t_quote	get_token_quote_type(char token_head_chr)
+static t_quote	get_token_quote_type(const char token_head_chr)
 {
 	if (token_head_chr == SINGLE_QUOTE_CHR)
 		return (QUOTE_SINGLE);
@@ -15,7 +15,7 @@ static void	set_each_token_quote_type(t_token *token)
 	token->quote = get_token_quote_type(*token->str);
 }
 
-void	set_token_quote_type_all(t_deque *tokens)
+void	set_token_quote_type_all(const t_deque *tokens)
 {
 	t_deque_node	*token_node;
 	t_token			*token;

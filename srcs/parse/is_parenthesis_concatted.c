@@ -1,7 +1,7 @@
 #include "ms_tokenize.h"
 #include "ft_deque.h"
 
-static bool	is_parenthesis_concatenated(t_token *token)
+static bool	is_parenthesis_concatenated(const t_token *token)
 {
 	const char	*token_str = token->str;
 

@@ -2,7 +2,7 @@
 #include "ms_parse.h"
 #include "ft_deque.h"
 
-static t_ast	*create_ast(t_deque *tokens, \
+static t_ast	*create_ast(const t_deque *tokens, \
 							t_context *context, \
 							t_result *result)
 {

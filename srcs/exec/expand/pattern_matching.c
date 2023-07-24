@@ -64,7 +64,7 @@ static t_result	add_pattern_matched_files(const char *token_str, \
 
 // * -> [libft],[srcs],[includes]..
 // in* -> [input.c],[in1],[includes]..
-t_deque	*get_pattern_matched_filenames(t_token *token, t_result *result)
+t_deque	*get_pattern_matched_filenames(const t_token *token, t_result *result)
 {
 	t_deque		*matched_filenames;
 	const char	*str = token->str;

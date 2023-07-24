@@ -12,6 +12,6 @@ bool	ft_isprint(int c);
 int		ft_tolower(int c);
 int		ft_toupper(int c);
 
-bool	ft_is_whitespace(char c);
+bool	ft_is_whitespace(const char c);
 
 #endif

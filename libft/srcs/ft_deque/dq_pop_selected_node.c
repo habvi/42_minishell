@@ -1,11 +1,11 @@
 #include "ft_deque.h"
 
-static bool	is_head_node(t_deque *deque, t_deque_node *node)
+static bool	is_head_node(const t_deque *deque, const t_deque_node *node)
 {
 	return (deque->node == node);
 }
 
-static bool	is_tail_node(t_deque *deque, t_deque_node *node)
+static bool	is_tail_node(const t_deque *deque, const t_deque_node *node)
 {
 	return (deque->node->prev == node);
 }

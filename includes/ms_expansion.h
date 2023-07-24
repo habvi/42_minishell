@@ -34,7 +34,8 @@ void		word_split_and_add(char *token_str, \
 								t_deque *expanded, \
 								bool concat_next);
 t_result	expand_wildcard(t_deque **tokens);
-t_deque		*get_pattern_matched_filenames(t_token *token, t_result *result);
+t_deque		*get_pattern_matched_filenames(const t_token *token, \
+											t_result *result);
 bool		is_pattern_match_target_path(const char *match_str, \
 											const size_t len_match, \
 											const char *target_path, \

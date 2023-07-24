@@ -5,7 +5,7 @@
 #include "ft_string.h"
 #include "ft_sys.h"
 
-static char	*concat_token_str(t_token *token1, t_token *token2)
+static char	*concat_token_str(const t_token *token1, const t_token *token2)
 {
 	char	*concat_str;
 

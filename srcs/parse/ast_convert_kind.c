@@ -1,7 +1,7 @@
 #include "ms_parse.h"
 #include "ft_deque.h"
 
-t_node_kind	convert_kind_token_to_node(t_deque_node *token_node)
+t_node_kind	convert_kind_token_to_node(const t_deque_node *token_node)
 {
 	t_token			*token;
 	t_token_kind	token_kind;
