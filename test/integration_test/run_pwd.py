@@ -3,8 +3,8 @@ from test_function.test_functions import test
 MKDIR = "rm -rf test_dir \n mkdir test_dir \n cd test_dir"
 RMDIR = "cd .. \n chmod 777 test_dir \n rm -rf test_dir"
 PATH_ADD = "export PATH+=:$PWD"
-PWD = "echo 'pwd: '\n pwd \necho status: \"$?\"\n declare -p | grep PWD"
-SHELL_PWD = f"__SHELL__\n {PWD}"
+SHOW_PWD = "echo 'pwd: '\n pwd \necho status: \"$?\"\n declare -p | grep PWD"
+SHELL_PWD = "__SHELL__\n echo 'pwd: '\n pwd \necho status: \"$?\"\n declare -p | grep PWD\n"
 
 def main():
 
@@ -38,84 +38,84 @@ def main():
         f"{PATH_ADD}\n export PWD=xxxx  \n {SHELL_PWD}",
         f"{PATH_ADD}\n unset PWD        \n {SHELL_PWD}",
 
-        f"{PATH_ADD}\n cd / \n {PWD} \n {SHELL_PWD}",
-        f"{PATH_ADD}\n cd // \n {PWD} \n {SHELL_PWD}",
-        f"{PATH_ADD}\n cd /// \n {PWD} \n {SHELL_PWD}",
-        f"{PATH_ADD}\n cd {'/'*50} \n {PWD} \n {SHELL_PWD}",
+        f"{PATH_ADD}\n cd / \n {SHOW_PWD} \n {SHELL_PWD}",
+        f"{PATH_ADD}\n cd // \n {SHOW_PWD} \n {SHELL_PWD}",
+        f"{PATH_ADD}\n cd /// \n {SHOW_PWD} \n {SHELL_PWD}",
+        f"{PATH_ADD}\n cd {'/'*50} \n {SHOW_PWD} \n {SHELL_PWD}",
 
-        f"{PATH_ADD}\n cd / \n {PWD} \n export PWD=zzzzzz\n {SHELL_PWD}",
-        f"{PATH_ADD}\n cd // \n {PWD} \n export PWD=zzzzzz\n {SHELL_PWD}",
-        f"{PATH_ADD}\n cd /// \n {PWD} \n export PWD=zzzzzz\n {SHELL_PWD}",
-        f"{PATH_ADD}\n cd {'/'*50} \n {PWD} \n export PWD=zzzzzz\n {SHELL_PWD}",
+        f"{PATH_ADD}\n cd / \n {SHOW_PWD} \n export PWD=zzzzzz\n {SHELL_PWD}",
+        f"{PATH_ADD}\n cd // \n {SHOW_PWD} \n export PWD=zzzzzz\n {SHELL_PWD}",
+        f"{PATH_ADD}\n cd /// \n {SHOW_PWD} \n export PWD=zzzzzz\n {SHELL_PWD}",
+        f"{PATH_ADD}\n cd {'/'*50} \n {SHOW_PWD} \n export PWD=zzzzzz\n {SHELL_PWD}",
 
-        f"{PATH_ADD}\n{MKDIR} && chmod 000 $PWD \n {PWD}                    \n {SHELL_PWD} \n {RMDIR}",
-        f"{PATH_ADD}\n{MKDIR} && chmod 000 $PWD \n {PWD} \n export PWD=xxxx \n {SHELL_PWD} \n {RMDIR}",
-        f"{PATH_ADD}\n{MKDIR} && chmod 000 $PWD \n {PWD} \n unset PWD       \n {SHELL_PWD} \n {RMDIR}",
+        f"{PATH_ADD}\n{MKDIR} && chmod 000 $PWD \n {SHOW_PWD}                    \n {SHELL_PWD} \n {RMDIR}",
+        f"{PATH_ADD}\n{MKDIR} && chmod 000 $PWD \n {SHOW_PWD} \n export PWD=xxxx \n {SHELL_PWD} \n {RMDIR}",
+        f"{PATH_ADD}\n{MKDIR} && chmod 000 $PWD \n {SHOW_PWD} \n unset PWD       \n {SHELL_PWD} \n {RMDIR}",
 
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD}                    \n {SHELL_PWD}",
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD} \n export PWD=xxxx \n {SHELL_PWD}",
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD} \n unset PWD       \n {SHELL_PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD}                    \n {SHELL_PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD} \n export PWD=xxxx \n {SHELL_PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD} \n unset PWD       \n {SHELL_PWD}",
 
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD}                    \n {SHELL_PWD} \n cd . \n {PWD}",
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD} \n export PWD=xxxx \n {SHELL_PWD} \n cd . \n {PWD}",
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD} \n unset PWD       \n {SHELL_PWD} \n cd . \n {PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD}                    \n {SHELL_PWD} \n cd . \n {SHOW_PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD} \n export PWD=xxxx \n {SHELL_PWD} \n cd . \n {SHOW_PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD} \n unset PWD       \n {SHELL_PWD} \n cd . \n {SHOW_PWD}",
 
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD}                    \n {SHELL_PWD} \n cd .. \n {PWD}",
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD} \n export PWD=xxxx \n {SHELL_PWD} \n cd .. \n {PWD}",
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD} \n unset PWD       \n {SHELL_PWD} \n cd .. \n {PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD}                    \n {SHELL_PWD} \n cd .. \n {SHOW_PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD} \n export PWD=xxxx \n {SHELL_PWD} \n cd .. \n {SHOW_PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD} \n unset PWD       \n {SHELL_PWD} \n cd .. \n {SHOW_PWD}",
 
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD}                    \n {SHELL_PWD} \n cd / \n {PWD}",
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD} \n export PWD=xxxx \n {SHELL_PWD} \n cd / \n {PWD}",
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD} \n unset PWD       \n {SHELL_PWD} \n cd / \n {PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD}                    \n {SHELL_PWD} \n cd / \n {SHOW_PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD} \n export PWD=xxxx \n {SHELL_PWD} \n cd / \n {SHOW_PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD} \n unset PWD       \n {SHELL_PWD} \n cd / \n {SHOW_PWD}",
 
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD}                    \n {SHELL_PWD} \n cd // \n {PWD}",
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD} \n export PWD=xxxx \n {SHELL_PWD} \n cd // \n {PWD}",
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD} \n unset PWD       \n {SHELL_PWD} \n cd // \n {PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD}                    \n {SHELL_PWD} \n cd // \n {SHOW_PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD} \n export PWD=xxxx \n {SHELL_PWD} \n cd // \n {SHOW_PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD} \n unset PWD       \n {SHELL_PWD} \n cd // \n {SHOW_PWD}",
 
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD}                    \n {SHELL_PWD} \n cd /// \n {PWD}",
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD} \n export PWD=xxxx \n {SHELL_PWD} \n cd /// \n {PWD}",
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD} \n unset PWD       \n {SHELL_PWD} \n cd /// \n {PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD}                    \n {SHELL_PWD} \n cd /// \n {SHOW_PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD} \n export PWD=xxxx \n {SHELL_PWD} \n cd /// \n {SHOW_PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD} \n unset PWD       \n {SHELL_PWD} \n cd /// \n {SHOW_PWD}",
 
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD}                    \n {SHELL_PWD} \n cd {'../' * 20} \n {PWD}",
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD} \n export PWD=xxxx \n {SHELL_PWD} \n cd {'../' * 20} \n {PWD}",
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD} \n unset PWD       \n {SHELL_PWD} \n cd {'../' * 20} \n {PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD}                    \n {SHELL_PWD} \n cd {'../' * 20} \n {SHOW_PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD} \n export PWD=xxxx \n {SHELL_PWD} \n cd {'../' * 20} \n {SHOW_PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD} \n unset PWD       \n {SHELL_PWD} \n cd {'../' * 20} \n {SHOW_PWD}",
 
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD}                    \n {SHELL_PWD} \n cd nothing \n {PWD}",
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD} \n export PWD=xxxx \n {SHELL_PWD} \n cd nothing \n {PWD}",
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD} \n unset PWD       \n {SHELL_PWD} \n cd nothing \n {PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD}                    \n {SHELL_PWD} \n cd nothing \n {SHOW_PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD} \n export PWD=xxxx \n {SHELL_PWD} \n cd nothing \n {SHOW_PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD} \n unset PWD       \n {SHELL_PWD} \n cd nothing \n {SHOW_PWD}",
 
 
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD}                    \n {SHELL_PWD} \n {SHELL_PWD}",
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD} \n export PWD=xxxx \n {SHELL_PWD} \n {SHELL_PWD}",
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD} \n unset PWD       \n {SHELL_PWD} \n {SHELL_PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD}                    \n {SHELL_PWD} \n {SHELL_PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD} \n export PWD=xxxx \n {SHELL_PWD} \n {SHELL_PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD} \n unset PWD       \n {SHELL_PWD} \n {SHELL_PWD}",
 
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD}                    \n {SHELL_PWD} \n cd . \n {PWD} \n {SHELL_PWD}",
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD} \n export PWD=xxxx \n {SHELL_PWD} \n cd . \n {PWD} \n {SHELL_PWD}",
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD} \n unset PWD       \n {SHELL_PWD} \n cd . \n {PWD} \n {SHELL_PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD}                    \n {SHELL_PWD} \n cd . \n {SHOW_PWD} \n {SHELL_PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD} \n export PWD=xxxx \n {SHELL_PWD} \n cd . \n {SHOW_PWD} \n {SHELL_PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD} \n unset PWD       \n {SHELL_PWD} \n cd . \n {SHOW_PWD} \n {SHELL_PWD}",
 
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD}                    \n {SHELL_PWD} \n cd .. \n {PWD} \n {SHELL_PWD}",
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD} \n export PWD=xxxx \n {SHELL_PWD} \n cd .. \n {PWD} \n {SHELL_PWD}",
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD} \n unset PWD       \n {SHELL_PWD} \n cd .. \n {PWD} \n {SHELL_PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD}                    \n {SHELL_PWD} \n cd .. \n {SHOW_PWD} \n {SHELL_PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD} \n export PWD=xxxx \n {SHELL_PWD} \n cd .. \n {SHOW_PWD} \n {SHELL_PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD} \n unset PWD       \n {SHELL_PWD} \n cd .. \n {SHOW_PWD} \n {SHELL_PWD}",
 
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD}                    \n {SHELL_PWD} \n cd / \n {PWD} \n {SHELL_PWD}",
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD} \n export PWD=xxxx \n {SHELL_PWD} \n cd / \n {PWD} \n {SHELL_PWD}",
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD} \n unset PWD       \n {SHELL_PWD} \n cd / \n {PWD} \n {SHELL_PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD}                    \n {SHELL_PWD} \n cd / \n {SHOW_PWD} \n {SHELL_PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD} \n export PWD=xxxx \n {SHELL_PWD} \n cd / \n {SHOW_PWD} \n {SHELL_PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD} \n unset PWD       \n {SHELL_PWD} \n cd / \n {SHOW_PWD} \n {SHELL_PWD}",
 
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD}                    \n {SHELL_PWD} \n cd // \n {PWD} \n {SHELL_PWD}",
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD} \n export PWD=xxxx \n {SHELL_PWD} \n cd // \n {PWD} \n {SHELL_PWD}",
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD} \n unset PWD       \n {SHELL_PWD} \n cd // \n {PWD} \n {SHELL_PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD}                    \n {SHELL_PWD} \n cd // \n {SHOW_PWD} \n {SHELL_PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD} \n export PWD=xxxx \n {SHELL_PWD} \n cd // \n {SHOW_PWD} \n {SHELL_PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD} \n unset PWD       \n {SHELL_PWD} \n cd // \n {SHOW_PWD} \n {SHELL_PWD}",
 
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD}                    \n {SHELL_PWD} \n cd /// \n {PWD} \n {SHELL_PWD}",
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD} \n export PWD=xxxx \n {SHELL_PWD} \n cd /// \n {PWD} \n {SHELL_PWD}",
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD} \n unset PWD       \n {SHELL_PWD} \n cd /// \n {PWD} \n {SHELL_PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD}                    \n {SHELL_PWD} \n cd /// \n {SHOW_PWD} \n {SHELL_PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD} \n export PWD=xxxx \n {SHELL_PWD} \n cd /// \n {SHOW_PWD} \n {SHELL_PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD} \n unset PWD       \n {SHELL_PWD} \n cd /// \n {SHOW_PWD} \n {SHELL_PWD}",
 
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD}                    \n {SHELL_PWD} \n cd {'../' * 20} \n {PWD} \n {SHELL_PWD}",
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD} \n export PWD=xxxx \n {SHELL_PWD} \n cd {'../' * 20} \n {PWD} \n {SHELL_PWD}",
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD} \n unset PWD       \n {SHELL_PWD} \n cd {'../' * 20} \n {PWD} \n {SHELL_PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD}                    \n {SHELL_PWD} \n cd {'../' * 20} \n {SHOW_PWD} \n {SHELL_PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD} \n export PWD=xxxx \n {SHELL_PWD} \n cd {'../' * 20} \n {SHOW_PWD} \n {SHELL_PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD} \n unset PWD       \n {SHELL_PWD} \n cd {'../' * 20} \n {SHOW_PWD} \n {SHELL_PWD}",
 
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD}                    \n {SHELL_PWD} \n cd nothing \n {PWD} \n {SHELL_PWD}",
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD} \n export PWD=xxxx \n {SHELL_PWD} \n cd nothing \n {PWD} \n {SHELL_PWD}",
-        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {PWD} \n unset PWD       \n {SHELL_PWD} \n cd nothing \n {PWD} \n __SHELL__ \n {PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD}                    \n {SHELL_PWD} \n cd nothing \n {SHOW_PWD} \n {SHELL_PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD} \n export PWD=xxxx \n {SHELL_PWD} \n cd nothing \n {SHOW_PWD} \n {SHELL_PWD}",
+        f"{PATH_ADD}\n{MKDIR} && rm -rf ../test_dir \n {SHOW_PWD} \n unset PWD       \n {SHELL_PWD} \n cd nothing \n {SHOW_PWD} \n __SHELL__ \n {SHOW_PWD}",
 
         f"{PATH_ADD}\n {SHELL_PWD * 10}",
         f"{PATH_ADD}\n export PWD=xxxx  \n {SHELL_PWD * 10}",
