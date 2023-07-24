@@ -37,6 +37,7 @@
 # define EMPTY_STR				"\0"
 # define SPACE					' '
 # define EMPTY_LINE				""
+# define PATH_ROOT				"/"
 
 # define OP_FORCED_INTERACTIVE	'i'
 # define OP_TEST				't'
