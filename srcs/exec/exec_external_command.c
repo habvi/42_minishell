@@ -5,6 +5,7 @@
 #include "ms_exec.h"
 #include "ms_var.h"
 #include "ft_mem.h"
+#include "ft_string.h"
 
 static uint8_t	set_execve_status(int tmp_err)
 {
@@ -17,45 +18,39 @@ static uint8_t	set_execve_status(int tmp_err)
 	return (EXIT_FAILURE);
 }
 
-static uint8_t	err_cmd_not_found_and_ret_status(const char *const cmd, \
-													t_context *context, \
-													char **exec_path)
+static size_t	get_paths_len(t_var *var)
 {
-	puterr_cmd_msg_set_status(\
-		cmd, ERROR_MSG_CMD_NOT_FOUND, context, STATUS_CMD_NOT_FOUND);
-	ft_free(exec_path);
-	return (context->status);
-}
+	size_t	len;
+	char	*paths;
 
-static uint8_t	err_is_a_dir_and_ret_status(const char *const cmd, \
-											t_context *context, \
-											char **exec_path)
-{
-	puterr_cmd_msg_set_status(\
-		cmd, strerror(EISDIR), context, STATUS_IS_A_DIRECTORY);
-	ft_free(exec_path);
-	return (context->status);
+	paths = var->get_value(var, KEY_PATH);
+	len = ft_strlen(paths);
+	ft_free(&paths);
+	return (len);
 }
 
 uint8_t	execute_external_command(char *const *argv, t_context *context)
 {
-	char	*exec_path;
-	char	**envp;
-	t_var	*var;
+	const char *const	command = argv[0];
+	t_var				*var;
+	char				*exec_path;
+	const size_t		paths_len = get_paths_len(context->var);
+	char				**envp;
 
-	if (!argv[0])
+	if (!command)
 		return (REDIRECT_ONLY_SUCCESS);
 	var = context->var;
-	exec_path = create_exec_path((const char *const *)argv, var);
+	exec_path = create_exec_path(\
+			(const char *const *)argv, var, paths_len, context);
 	if (!exec_path)
-		return (err_cmd_not_found_and_ret_status(argv[0], context, &exec_path));
-	else if (is_a_directory(exec_path))
-		return (err_is_a_dir_and_ret_status(argv[0], context, &exec_path));
+		return (context->status);
 	envp = var->convert_to_envp(var);
 	errno = 0;
 	if (execve(exec_path, (char *const *)argv, envp) == EXECVE_ERROR)
+	{
 		puterr_cmd_msg_set_status(\
-		argv[0], strerror(errno), context, set_execve_status(errno));
+			exec_path, strerror(errno), context, set_execve_status(errno));
+	}
 	ft_free(&exec_path);
 	free_2d_array(&envp);
 	return (context->status);

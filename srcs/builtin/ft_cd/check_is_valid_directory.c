@@ -1,3 +1,4 @@
+#include <dirent.h>
 #include <errno.h>
 #include <string.h>
 #include "minishell.h"
@@ -25,6 +26,19 @@ static void	puterr_arg_or_path(const char *arg, const char *path, int tmp_err)
 static bool	is_valid_directory_failure(const int tmp_err)
 {
 	return (tmp_err == EACCES || tmp_err == ENOENT || tmp_err == ENOTDIR);
+}
+
+static bool	test_opendir(const char *path, int *tmp_err)
+{
+	DIR	*dirp;
+
+	errno = 0;
+	dirp = opendir(path);
+	*tmp_err = errno;
+	if (!dirp)
+		return (false);
+	closedir(dirp);
+	return (true);
 }
 
 t_result	chack_is_valid_directory(const char *arg, \

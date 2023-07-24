@@ -63,6 +63,9 @@ t_result		backup_stdio_fd(int *stdin_copy, \
 								const t_ast *self_node);
 t_result		restore_stdio_fd(int stdin_copy, int stdout_copy);
 uint8_t			execute_external_command(char *const *argv, t_context *context);
+void			put_path_err_set_status(const char *const cmd, \
+											t_context *context, \
+											size_t paths_len);
 
 /* is_single_builtin */
 bool			is_command_builtin(const char *cmd);

@@ -183,6 +183,7 @@ SRCS		+=	$(UTILS_DIR)/count_array.c \
 				$(UTILS_DIR)/ft_gnl.c \
 				$(UTILS_DIR)/get_random_str.c \
 				$(UTILS_DIR)/get_working_directory.c \
+				$(UTILS_DIR)/is_dir_or_file_by_stat.c \
 				$(UTILS_DIR)/is_valid_key.c \
 				$(UTILS_DIR)/is_valid_path.c \
 				$(UTILS_DIR)/x_ft_itoa.c \
@@ -354,5 +355,10 @@ test_original	: all
 	rm -f ko_case_*.txt
 	python3 ./test/integration_test/run_original.py
 
+# test original
+.PHONY		: test_path
+test_path	: all
+	rm -f ko_case_*.txt
+	python3 ./test/integration_test/run_path.py
 
 -include $(DEPS)
