@@ -27,7 +27,7 @@ static t_result	expand_for_filename_each(t_redirect *redirect, \
 		puterr_cmd_msg(original_token, ERROR_MSG_AMBIGUOUS);
 		result = FAILURE;
 	}
-	ft_free(&original_token);
+	ft_free((void **)&original_token);
 	return (result);
 }
 

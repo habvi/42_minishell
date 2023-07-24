@@ -8,7 +8,7 @@ void	deque_clear_all(t_deque **deque, void (*del)(void *))
 
 	if (deque_is_empty(*deque))
 	{
-		ft_free(deque);
+		ft_free((void **)deque);
 		return ;
 	}
 	node = (*deque)->node;
@@ -18,5 +18,5 @@ void	deque_clear_all(t_deque **deque, void (*del)(void *))
 		node = node->next;
 		deque_clear_node(&tmp, del);
 	}
-	ft_free(deque);
+	ft_free((void **)deque);
 }

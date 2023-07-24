@@ -11,7 +11,7 @@ static void	remove_quote_in_token_str_each(t_token *token)
 	char			*quote_removed;
 
 	quote_removed = x_ft_substr(token->str, 1, len - 2);
-	ft_free(&token->str);
+	ft_free((void **)&token->str);
 	token->str = quote_removed;
 }
 

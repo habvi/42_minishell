@@ -34,7 +34,7 @@ static char	*search_command_path(const char *arg, t_var *var)
 											(const char *const)arg, \
 											test_opendir_strict, \
 											&result);
-	ft_free(&cdpath);
+	ft_free((void **)&cdpath);
 	return (valid_path);
 }
 

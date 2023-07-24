@@ -32,12 +32,12 @@ static bool	is_valid_tokens_syntax(t_deque_node *node)
 }
 
 // tokens != NULL
-t_deque	*tokenize(char *line, t_context *context, t_result *result)
+t_deque	*tokenize(char **line, t_context *context, t_result *result)
 {
 	t_deque	*tokens;
 
-	tokens = tokenize_line(line);
-	ft_free(&line);
+	tokens = tokenize_line(*line);
+	ft_free((void **)line);
 	set_token_kinds_all(tokens);
 	if (!is_valid_tokens_syntax(tokens->node))
 	{

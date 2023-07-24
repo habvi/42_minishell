@@ -62,7 +62,7 @@ static t_result	var_separate_key_value_op(const char *const arg, \
 	result = validate_env_key(*key);
 	if (result == FAILURE || result == CONTINUE)
 	{
-		ft_free(key);
+		ft_free((void **)key);
 		return (result);
 	}
 	*op = get_env_op(arg, &i);
@@ -86,7 +86,7 @@ t_result	var_declare_arg(const char *const arg, t_var *var, t_var_attr attr)
 		var->add(var, key, value, attr);
 	else if (op == ENV_JOIN)
 		var->join(var, key, value, attr);
-	ft_free(&key);
-	ft_free(&value);
+	ft_free((void **)&key);
+	ft_free((void **)&value);
 	return (result);
 }
