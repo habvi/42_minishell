@@ -143,7 +143,7 @@ def get_cmd_string_for_output(stdin):
 def replace_to_shell(stdin, cmd, shell_replace):
     if shell_replace:
         if cmd[0] == './minishell':
-            stdin = stdin.replace('__SHELL__', 'minishell')
+            stdin = stdin.replace('__SHELL__', 'minishell -t')
         else:
             stdin = stdin.replace("__SHELL__", "bash")
     return stdin

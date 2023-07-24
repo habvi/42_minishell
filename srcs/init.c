@@ -10,7 +10,7 @@ static void	set_context_initial_value(t_context *context)
 	context->is_interactive = false;
 	context->status = EXIT_SUCCESS;
 	context->is_return = false;
-	context->is_rl_event_hook_on = false;
+	context->is_rl_event_hook_off = false;
 }
 
 static char	*set_default_internal_pwd(t_var *var)
@@ -36,19 +36,19 @@ static bool	set_is_interactive(bool is_forced_interactive)
 // set_default_environ set also PWD, OLDPWD.
 static void	set_context_default_value(t_context *context, \
 										bool is_forced_interactive, \
-										bool is_rl_event_hook_on)
+										bool is_rl_event_hook_off)
 {
 	context->var = set_default_environ();
 	context->internal_pwd = set_default_internal_pwd(context->var);
 	context->is_interactive = set_is_interactive(is_forced_interactive);
 	context->status = EXIT_SUCCESS;
-	context->is_rl_event_hook_on = is_rl_event_hook_on;
+	context->is_rl_event_hook_off = is_rl_event_hook_off;
 }
 
 void	init_context(t_context *context, \
 						bool is_forced_interactive, \
-						bool is_test)
+						bool is_rl_hook_off)
 {
 	set_context_initial_value(context);
-	set_context_default_value(context, is_forced_interactive, is_test);
+	set_context_default_value(context, is_forced_interactive, is_rl_hook_off);
 }

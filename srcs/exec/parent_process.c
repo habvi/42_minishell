@@ -12,7 +12,7 @@ static t_result	get_last_command_status(pid_t pid, \
 	pid_t	wait_pid;
 
 	errno = 0;
-	wait_pid = waitpid(pid, wait_status, 0);
+	wait_pid = waitpid(pid, wait_status, NO_OPTION);
 	if (wait_pid == WAIT_ERROR)
 		return (PROCESS_ERROR);
 	if (WIFEXITED(*wait_status))
@@ -56,9 +56,9 @@ static void	put_signal_information(int wait_status, bool signaled_sigint)
 	const int	last_status = WTERMSIG(wait_status);
 
 	if (last_status == SIGQUIT)
-		ft_dprintf(STDERR_FILENO, "Quit\n");
+		ft_dprintf(STDERR_FILENO, QUIT);
 	if (last_status == SIGINT || signaled_sigint)
-		ft_dprintf(STDERR_FILENO, "\n");
+		ft_dprintf(STDERR_FILENO, NEWLINE_STR);
 }
 
 t_result	parent_process(t_ast *self_node, t_context *context)
