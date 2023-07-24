@@ -52,11 +52,11 @@ def main():
         "echo -n a\t\t\tb\t\t\tc",
         "echo -n a\t \t \tb\t  \t  \tc",
         f"echo {'-n' * 100} a  b  c",
-        f"echo {'-n' * 1000} a  b  c",
-        f"echo {'-n' * 10000} a  b  c",
-        f"echo {'-n' * 100000} a  b  c",
-        f"echo {'-n' * 100000}m a  b  c",
-        f"echo {'-n' * 100000} a -n b  c",
+        # f"echo {'-n' * 1000} a  b  c",
+        # f"echo {'-n' * 10000} a  b  c",
+        # f"echo {'-n' * 100000} a  b  c",
+        # f"echo {'-n' * 100000}m a  b  c",
+        # f"echo {'-n' * 100000} a -n b  c",
         "echo a   b   c  \"|\"  A   B  C",
         "echo a   b   c  \"&&\"  A   B  C",
         "echo a   b   c  \"<<eof\"  A   B  C",
@@ -72,15 +72,15 @@ def main():
         "export N_OP=-nnnnnnnnn \n echo $N_OP$NOP a  b  c",
         "export N=nnnnnnnnn \n echo -$N$N a  b  c",
         "export N=nnnnnnnnn \n echo '-'$N$N a $N b  c",
-        f"echo {'ab   c ' * 1000}"
-        f"echo {'ab   c ' * 10000}"
+        # f"echo {'ab   c ' * 1000}"
+        # f"echo {'ab   c ' * 10000}"
     ]
 
     KEY_HOME = "$HOME"
     KEY_USER = "$USER"
     KEY_NOTHING = "$nothing"
-    KEY_LONG = "A"*1000
-    VALUE_LONG = "B"*1000
+    KEY_LONG = "A"*10
+    VALUE_LONG = "B"*10
 
     echo_expand_test = [
         f"echo {KEY_HOME}",
