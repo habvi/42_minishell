@@ -1,6 +1,14 @@
 #include <stdlib.h>
 #include "minishell.h"
 
+static void	display_splash_screen(void)
+{
+	ft_dprintf(2, "           __         __         __            __  __\n"\
+	".--------.|__|.-----.|__|.-----.|  |--..-----.|  ||  |\n"\
+	"|        ||  ||     ||  ||__ --||     ||  -__||  ||  |\n"\
+	"|__|__|__||__||__|__||__||_____||__|__||_____||__||__|\n");
+}
+
 int	main(int argc, char **argv)
 {
 	t_context	context;
@@ -17,6 +25,8 @@ int	main(int argc, char **argv)
 		puterr_msg(ERROR_MSG_PROCESS_ERROR);
 		return (EXIT_FAILURE);
 	}
+	if (!context.is_rl_event_hook_off)
+		display_splash_screen();
 	result = read_eval_print_loop(&context);
 	destroy_context(context);
 	if (result == PROCESS_ERROR)
