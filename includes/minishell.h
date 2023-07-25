@@ -50,6 +50,8 @@
 # define SYNTAX_DEFAULT_ARG			"newline"
 # define ERROR_TYPE_WARNING			"warning"
 # define ERROR_MSG_HEREDOC_EOF		"here-document delimited by end-of-file"
+# define ERROR_MSG_PROCESS_ERROR	"fatal error occurred"
+# define ERROR_MSG_ABORT			"abort"
 
 /* size */
 # define VAR_LIST_SIZE	256
@@ -190,6 +192,7 @@ void		puterr_arg_op_msg(const char *const arg, const char op);
 void		puterr_heredoc_wanted_eof(const char *delimiter);
 void		puterr_env_option(const char *const arg);
 void		puterr_env_argument(const char *const arg);
+void		puterr_msg(const char *msg);
 
 // set
 void		puterr_cmd_msg_set_status(const char *const cmd, \

@@ -84,6 +84,7 @@ SRCS		+=	$(DEBUG_DIR)/debug_print_ast.c \
 ERROR_DIR	:=	error
 SRCS		+=	$(ERROR_DIR)/error_msg_1.c \
 				$(ERROR_DIR)/error_msg_2.c \
+				$(ERROR_DIR)/error_msg_3.c \
 				$(ERROR_DIR)/error_msg_set_status.c
 
 EXEC_DIR	:=	exec
