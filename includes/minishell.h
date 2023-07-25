@@ -14,19 +14,19 @@
 # define ACCESS_ERROR	(-1)
 # define CHDIR_ERROR	(-1)
 # define CLOSE_ERROR	(-1)
+# define CLOSEDIR_ERROR	(-1)
 # define DUP_ERROR		(-1) // dup && dup2
 # define EXECVE_ERROR	(-1)
 # define FORK_ERROR		(-1)
 # define OPEN_ERROR		(-1)
 # define PIPE_ERROR		(-1)
 # define READ_ERROR		(-1)
-# define WAIT_ERROR		(-1)
-# define UNLINK_ERROR	(-1)
-# define CLOSEDIR_ERROR	(-1)
-# define UNREACHABLE	(-1)
-# define SIGACT_ERROR	(-1) //todo:sort
+# define SIGACT_ERROR	(-1)
 # define SIGEMPTY_ERROR	(-1)
 # define STAT_ERROR		(-1)
+# define UNLINK_ERROR	(-1)
+# define UNREACHABLE	(-1)
+# define WAIT_ERROR		(-1)
 
 # define STR_PATH_DELIMITER		":"
 # define CHR_PATH_DELIMITER		':'
@@ -95,7 +95,6 @@ typedef struct s_context
 	bool	is_rl_event_hook_off;
 }	t_context;
 
-// temporarily here ...
 /* debug */
 void		debug_func(const char *func_name, const int line_num);
 void		debug_2d_array(char **array);

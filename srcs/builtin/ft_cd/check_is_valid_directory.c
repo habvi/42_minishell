@@ -6,7 +6,6 @@
 #include "ms_var.h"
 #include "ft_string.h"
 
-// todo: err_arg
 static void	puterr_arg_or_path(const char *arg, const char *path, int tmp_err)
 {
 	const char	*err_arg;
