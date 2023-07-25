@@ -13,7 +13,7 @@ int	main(int argc, char **argv)
 		return (INVALID_OPTION);
 	result = init_context(&context, is_forced_interactive, is_rl_hook_off);
 	if (result == PROCESS_ERROR)
-		return (PROCESS_ERROR);
+		return (EXIT_FAILURE);
 	result = read_eval_print_loop(&context);
 	destroy_context(context);
 	if (result == PROCESS_ERROR)
