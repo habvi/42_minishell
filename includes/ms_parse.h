@@ -53,7 +53,7 @@ struct s_ast
 t_ast		*parse(t_deque **tokens, t_context *context, t_result *result);
 
 /* syntax check */
-bool		is_valid_pre_parse_syntax(t_deque *tokens, \
+bool		is_valid_pre_parse_syntax(const t_deque *tokens, \
 										t_context *context, \
 										t_result *result);
 bool		is_parenthesis_concatenated_all(t_deque_node **node);
@@ -72,7 +72,7 @@ t_ast		*new_ast_node(t_node_kind kind, t_ast *left, t_ast *right);
 t_ast		*new_subshell_node(t_ast *left);
 void		set_parent_of_children_node(t_ast **self_node);
 
-t_node_kind	convert_kind_token_to_node(t_deque_node *token_node);
+t_node_kind	convert_kind_token_to_node(const t_deque_node *token_node);
 void		dup_command_from_tokens(t_deque *command, \
 									t_deque_node **token_node);
 void		dup_redirection_from_tokens(t_deque *command, \
@@ -92,9 +92,8 @@ t_result	read_input_save_to_fd(int fd, \
 									const char *delimiter, \
 									t_context *context);
 /* is */
-bool		is_node_kind_subshell(t_node_kind node_kind);
-bool		is_node_kind_exec_heredoc(t_node_kind node_kind);
-bool		is_node_kind_and_or(t_node_kind node_kind);
+bool		is_node_kind_exec_heredoc(const t_node_kind node_kind);
+bool		is_node_kind_and_or(const t_node_kind node_kind);
 
 /* destroy */
 void		destroy_ast_tree(t_ast **root, t_result result);

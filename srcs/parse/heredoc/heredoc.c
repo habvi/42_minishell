@@ -1,7 +1,8 @@
 #include "ms_parse.h"
 #include "ft_deque.h"
 
-static t_result	execute_heredoc_all(t_deque *redirect_list, t_context *context)
+static t_result	execute_heredoc_all(const t_deque *redirect_list, \
+									t_context *context)
 {
 	t_deque_node	*redirect_node;
 	t_redirect		*redirect;

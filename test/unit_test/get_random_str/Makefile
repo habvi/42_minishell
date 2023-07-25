@@ -7,11 +7,13 @@ SRCS		=	test_get_random_str.c
 
 SRCS		=	test_get_random_str.c \
 				../../../srcs/utils/get_random_str.c \
-				../../../srcs/utils/ft_abort.c
+				../../../srcs/utils/ft_abort.c \
+				../../../srcs/error/error_msg_3.c
 
 OBJS		=	test_get_random_str.o \
 				get_random_str.o \
-				ft_abort.o
+				ft_abort.o \
+				error_msg_3.o
 
 INCLUDE		=	-I../../../includes -I../../../libft/includes
 

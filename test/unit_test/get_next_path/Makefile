@@ -3,19 +3,21 @@ NAME		=	a.out
 CC			=	cc
 CFLAGS		=	-Wall -Wextra -Werror -g -fsanitize=address -fsanitize=undefined
 
-VPATH 		= 	../../../srcs/path ../../../srcs/utils
+VPATH 		= 	../../../srcs/path ../../../srcs/utils ../../../srcs/error
 
 SRCS		=	test_get_next_path.c \
 				../../../srcs/path/get_next_path.c \
 				../../../srcs/utils/x_ft_strdup.c \
 				../../../srcs/utils/x_ft_strjoin.c \
-				../../../srcs/utils/ft_abort.c
+				../../../srcs/utils/ft_abort.c \
+				../../../srcs/error/error_msg_3.c
 
 OBJS		=	test_get_next_path.o \
 				get_next_path.o \
 				x_ft_strdup.o \
 				x_ft_strjoin.o \
-				ft_abort.o
+				ft_abort.o \
+				error_msg_3.o
 
 LIBFT_DIR	=	../../../libft
 LIBFT		=	$(LIBFT_DIR)/libft.a

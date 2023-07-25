@@ -2,7 +2,7 @@
 #include "ms_parse.h"
 #include "ft_deque.h"
 
-static char	*get_syntax_error_arg(t_deque_node *node)
+static char	*get_syntax_error_arg(const t_deque_node *node)
 {
 	t_token	*token;
 
@@ -36,7 +36,7 @@ static bool	is_valid_pre_parse_syntax_inter(t_deque_node *node)
 	return (true);
 }
 
-bool	is_valid_pre_parse_syntax(t_deque *tokens, \
+bool	is_valid_pre_parse_syntax(const t_deque *tokens, \
 									t_context *context, \
 									t_result *result)
 {

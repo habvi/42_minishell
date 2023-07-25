@@ -13,11 +13,17 @@ int	main(int argc, char **argv)
 		return (INVALID_OPTION);
 	result = init_context(&context, is_forced_interactive, is_rl_hook_off);
 	if (result == PROCESS_ERROR)
-		return (PROCESS_ERROR);
+	{
+		puterr_msg(ERROR_MSG_PROCESS_ERROR);
+		return (EXIT_FAILURE);
+	}
 	result = read_eval_print_loop(&context);
 	destroy_context(context);
 	if (result == PROCESS_ERROR)
+	{
+		puterr_msg(ERROR_MSG_PROCESS_ERROR);
 		return (EXIT_FAILURE);
+	}
 	if (context.is_interactive)
 		ft_dprintf(STDERR_FILENO, SHELL_EXIT);
 	return (context.status);

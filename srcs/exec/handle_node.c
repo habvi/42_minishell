@@ -3,7 +3,7 @@
 #include "ms_exec.h"
 #include "ms_parse.h"
 
-static bool	is_matching_condition_of_traverse_left_node(t_ast *self_node)
+static bool	is_matching_condition_of_traverse_left_node(const t_ast *self_node)
 {
 	return (self_node->kind != NODE_KIND_SUBSHELL && self_node->left);
 }
@@ -20,7 +20,8 @@ t_result	exec_handle_left_node(t_ast *self_node, t_context *context)
 }
 
 // &&, ||
-static bool	is_executable_right_node(t_ast *self_node, t_context *context)
+static bool	is_executable_right_node(const t_ast *self_node, \
+										const t_context *context)
 {
 	if (context->is_return)
 		return (false);
@@ -33,8 +34,8 @@ static bool	is_executable_right_node(t_ast *self_node, t_context *context)
 	return (false);
 }
 
-static bool	is_matching_condition_of_traverse_right_node(t_ast *self_node, \
-															t_context *context)
+static bool	is_matching_condition_of_traverse_right_node(\
+							const t_ast *self_node, const t_context *context)
 {
 	if (!is_executable_right_node(self_node, context))
 		return (false);
