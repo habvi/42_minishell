@@ -42,7 +42,7 @@ void	word_split_and_add(char *token_str, \
 	{
 		split_str = get_split_str(token_str, &end);
 		if (!split_str)
-			break ;
+			return ;
 		node = create_token_node(split_str, *end);
 		deque_add_back(expanded, node);
 		token_str = end;
