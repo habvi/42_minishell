@@ -234,7 +234,17 @@ def main():
         f"{REGISTER_PATH} {RM_CWD_AND_CD_PRE} __SHELL__ \n export OLDPWD=$HOME \n cd - {STATUS_PWD_DISPLAY} cd ../../nosuch {STATUS_PWD_DISPLAY}",
         f"{REGISTER_PATH} {RM_CWD_AND_CD_PRE} __SHELL__ \n export OLDPWD=$HOME \n cd - {STATUS_PWD_DISPLAY} cd ../../nosuch/./../ {STATUS_PWD_DISPLAY}",
     ]
-    
+
+    symlink_test = [
+        f"rm -rf dir1 link \n mkdir dir1 dir1/dir2 dir1/dir2/dir3 \n"
+        f"ln -s dir1/dir2 link {STATUS_PWD_DISPLAY}"
+        f"cd link {STATUS_PWD_DISPLAY}"
+        f"cd dir3 {STATUS_PWD_DISPLAY}"
+        f"cd .. {STATUS_PWD_DISPLAY}"
+        f"cd ../dir1/dir2/dir3 {STATUS_PWD_DISPLAY}"
+        # f"cd .. {STATUS_PWD_DISPLAY}"
+        # f"cd ../../ \n rm -rf link dir1"
+    ]
 
     commands_list += additional_test
     # for c in commands_list:
@@ -252,6 +262,7 @@ def main():
     test_res = test("ft_cd", commands_list, False, False)
     test_res |= test("ft_cd rm_cwd", rm_cwd_test, False, False)
     test_res |= test("ft_cd shell_in_rm_cwd", shell_in_rm_cwd_test, False, True)
+    test_res |= test("ft_cd symlink", symlink_test, False, False)
 
     return test_res
 

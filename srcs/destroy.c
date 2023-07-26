@@ -4,7 +4,7 @@
 #include "ms_var.h"
 #include "ft_mem.h"
 
-void	destroy_context(t_context context) // todo
+void	destroy_context(t_context context)
 {
 	context.var->clear(context.var);
 	ft_free((void **)&context.var);
