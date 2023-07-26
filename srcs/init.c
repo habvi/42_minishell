@@ -71,5 +71,7 @@ t_result	init_context(t_context *context, \
 
 	set_context_initial_value(context);
 	result = set_context_default_value(context, is_forced_interactive, is_test);
+	if (result == PROCESS_ERROR)
+		puterr_msg(ERROR_MSG_PROCESS_ERROR);
 	return (result);
 }

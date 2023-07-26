@@ -45,6 +45,7 @@ static void	init_repl_var(t_context *context, t_result *result)
 
 static void	init_each_loop(t_context *context, t_result *result)
 {
+	set_signal_for_prompt();
 	init_repl_var(context, result);
 	init_rl_var(context->is_rl_event_hook_off);
 }
@@ -58,7 +59,6 @@ t_result	read_eval_print_loop(t_context *context)
 
 	while (true)
 	{
-		set_signal_for_prompt();
 		init_each_loop(context, &result);
 		line = input_line();
 		if (!line)
@@ -70,9 +70,11 @@ t_result	read_eval_print_loop(t_context *context)
 		if (result == BREAK || result == FAILURE)
 			continue ;
 		result = execute_command(&ast, context, result);
-//		debug_print_ast_tree(ast, "repl");
 		if (result == PROCESS_ERROR)
+		{
+			puterr_msg(ERROR_MSG_PROCESS_ERROR);
 			break ;
+		}
 	}
 	return (result);
 }
