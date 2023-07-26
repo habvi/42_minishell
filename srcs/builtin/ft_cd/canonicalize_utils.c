@@ -30,7 +30,6 @@ bool	is_internal_pwd_relative(const char *internal_pwd)
 	return (!is_absolute_path(internal_pwd));
 }
 
-// todo: use ft_strncmp?
 bool	is_head_double_slash(const char *path)
 {
 	return (path[0] == PATH_DELIMITER_CHR \

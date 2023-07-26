@@ -20,7 +20,7 @@ static uint8_t	execute_subshell(t_ast *self_node, t_context *context)
 	t_result	result;
 
 	root_node = self_node->left;
-	root_node->parent = NULL; //todo: NULL?
+	root_node->parent = NULL;
 	result = execute_command_recursive(root_node, context);
 	if (result == PROCESS_ERROR)
 		return (EXIT_FAILURE);
@@ -43,7 +43,7 @@ static uint8_t	execute_command_in_child(t_ast *self_node, t_context *context)
 	return (status);
 }
 
-//todo:can't return proc error
+// can't return proc error
 // if execve erorr, no need for auto perror.
 void	child_process(t_ast *self_node, t_context *context)
 {
