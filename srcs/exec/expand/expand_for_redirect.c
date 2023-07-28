@@ -10,6 +10,9 @@ static bool	is_ambiguous_redirect(t_redirect *redirect)
 	return (redirect->tokens->size != 1);
 }
 
+// OK [redirect_symbol]-[file]
+// NG [redirect_symbol]-[redirect_symbol]: dropped $var
+//    [redirect_symbol]-[file]-[file]    : splitted $var
 t_result	expand_for_filename_each(t_redirect *redirect, t_context *context)
 {
 	char		*original_token;
@@ -29,7 +32,3 @@ t_result	expand_for_filename_each(t_redirect *redirect, t_context *context)
 	ft_free((void **)&original_token);
 	return (result);
 }
-
-// OK [redirect_symbol]-[file]
-// NG [redirect_symbol]-[redirect_symbol]: dropped $var
-//    [redirect_symbol]-[file]-[file]    : splitted $var
