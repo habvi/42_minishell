@@ -61,7 +61,6 @@ static t_result	expand_filename_and_open_files(t_ast *self_node, \
 			return (result);
 		node = node->next;
 	}
-
 	return (SUCCESS);
 }
 
