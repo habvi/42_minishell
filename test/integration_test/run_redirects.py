@@ -6,6 +6,8 @@ RMDIR = "cd .. \n rm -rf test_dir"
 TOUCH_NG = "echo 'this is ng file' > ng \n chmod 000 ng"
 RM_NG = "chmod 777 ng \n rm -f ng"
 
+TOUCH_TEST_FILES = "echo aa >test_infile1 \n echo bbb > test_infile2"
+
 def main():
     test_res = 0
 
@@ -47,56 +49,51 @@ def main():
                     "echo hello </dev/stdin | cat >/dev/stdout | cat -e"
                     ] # todo more test
 
-    RMFILES = "rm -f test_infile1 && rm -f test_infile2"
     redirects_in_test =[
-                    f"{RMFILES} \n echo aa >test_infile1 && echo bb > test_infile2 && {RMFILES}",
-                    f"cat test_infile1 && cat test_infille2 && cat <test_infile1 && {RMFILES}",
-                    f"cat test_infile1 && cat test_infille2 && cat < test_infile1 && {RMFILES}",
-                    f"cat test_infile1 && cat test_infille2 && cat <     test_infile1 && {RMFILES}",
-                    f"cat test_infile1 && cat test_infille2 && cat <test_infile1 && cat<test_infile1 && {RMFILES}",
-                    f"cat test_infile1 && cat test_infille2 && cat <test_infile1 && cat<test_infile2 && {RMFILES}",
-                    f"cat test_infile1 && cat test_infille2 && cat <test_infile1 || cat<test_infile1 && {RMFILES}",
-                    f"cat test_infile1 && cat test_infille2 && cat <test_infile1 || cat<test_infile2 && {RMFILES}",
-                    f"cat test_infile1 && cat test_infille2 && cat <test_infile1 | cat<test_infile2 && {RMFILES}",
-                    f"cat test_infile1 && cat test_infille2 && cat<test_infile1 | cat <test_infile2 && {RMFILES}",
-                    f"cat test_infile1 && cat test_infille2 && cat <test_infile1 | cat <test_infile2 | cat && {RMFILES}",
-                    f"cat test_infile1 && cat test_infille2 && cat <test_infile1 | cat <test_infile2 | cat | cat && {RMFILES}",
-                    f"cat test_infile1 && cat test_infille2 && cat <test_infile1 <test_infile2 | cat && {RMFILES}",
-                    f"cat test_infile1 && cat test_infille2 && cat <test_infile1 <test_infile1 | cat && {RMFILES}",
-                    f"cat test_infile1 && cat test_infille2 && cat <test_infile2 | cat <test_infile2 <test_infile1 | cat | cat && {RMFILES}",
-                    f"cat test_infile1 && cat test_infille2 && cat <    test_infile1<test_infile2 | cat && {RMFILES}",
-                    f"cat test_infile1 && cat test_infille2 && <test_infile1 | cat && {RMFILES}",
-                    f"cat test_infile1 && cat test_infille2 && <test_infile1 | cat | grep nothing && {RMFILES}",
-                    # "cat test_infile1 && cat test_infille2 && <test_infile1 | cat | grep a", # for actions
-                    f"cat test_infile1 && cat test_infille2 && <test_infile1 <test_infile2 | cat  && {RMFILES}",
-                    # "rm -f test_infile1 && rm -f test_infile1 && rm -f test_infile2"
-                    ]
+        f"{MKDIR} && {TOUCH_TEST_FILES} && cat test_infile1 && cat test_infille2 && cat <test_infile1 && {RMDIR}",
+        f"{MKDIR} && {TOUCH_TEST_FILES} && cat test_infile1 && cat test_infille2 && cat < test_infile1 && {RMDIR}",
+        f"{MKDIR} && {TOUCH_TEST_FILES} && cat test_infile1 && cat test_infille2 && cat <     test_infile1 && {RMDIR}",
+        f"{MKDIR} && {TOUCH_TEST_FILES} && cat test_infile1 && cat test_infille2 && cat <test_infile1 && cat<test_infile1 && {RMDIR}",
+        f"{MKDIR} && {TOUCH_TEST_FILES} && cat test_infile1 && cat test_infille2 && cat <test_infile1 && cat<test_infile2 && {RMDIR}",
+        f"{MKDIR} && {TOUCH_TEST_FILES} && cat test_infile1 && cat test_infille2 && cat <test_infile1 || cat<test_infile1 && {RMDIR}",
+        f"{MKDIR} && {TOUCH_TEST_FILES} && cat test_infile1 && cat test_infille2 && cat <test_infile1 || cat<test_infile2 && {RMDIR}",
+        f"{MKDIR} && {TOUCH_TEST_FILES} && cat test_infile1 && cat test_infille2 && cat <test_infile1 | cat<test_infile2 && {RMDIR}",
+        f"{MKDIR} && {TOUCH_TEST_FILES} && cat test_infile1 && cat test_infille2 && cat<test_infile1 | cat <test_infile2 && {RMDIR}",
+        f"{MKDIR} && {TOUCH_TEST_FILES} && cat test_infile1 && cat test_infille2 && cat <test_infile1 | cat <test_infile2 | cat && {RMDIR}",
+        f"{MKDIR} && {TOUCH_TEST_FILES} && cat test_infile1 && cat test_infille2 && cat <test_infile1 | cat <test_infile2 | cat | cat && {RMDIR}",
+        f"{MKDIR} && {TOUCH_TEST_FILES} && cat test_infile1 && cat test_infille2 && cat <test_infile1 <test_infile2 | cat && {RMDIR}",
+        f"{MKDIR} && {TOUCH_TEST_FILES} && cat test_infile1 && cat test_infille2 && cat <test_infile1 <test_infile1 | cat && {RMDIR}",
+        f"{MKDIR} && {TOUCH_TEST_FILES} && cat test_infile1 && cat test_infille2 && cat <test_infile2 | cat <test_infile2 <test_infile1 | cat | cat && {RMDIR}",
+        f"{MKDIR} && {TOUCH_TEST_FILES} && cat test_infile1 && cat test_infille2 && cat <    test_infile1<test_infile2 | cat && {RMDIR}",
+        f"{MKDIR} && {TOUCH_TEST_FILES} && cat test_infile1 && cat test_infille2 && <test_infile1 | cat && {RMDIR}",
+        f"{MKDIR} && {TOUCH_TEST_FILES} && cat test_infile1 && cat test_infille2 && <test_infile1 | cat | grep nothing && {RMDIR}",
+        # "{MKDIR} && {TOUCH_TEST_FILES} && cat test_infile1 && cat test_infille2 && <test_infile1 | cat | grep a && {RMDIR}", # for actions
+        f"{MKDIR} && {TOUCH_TEST_FILES} && cat test_infile1 && cat test_infille2 && <test_infile1 <test_infile2 | cat  && {RMDIR}",
+        ]
 
     redirects_out_test = [
-                    f"{RMFILES} \n echo aa >test_outfile1 && cat test_outfile1 && {RMFILES}",
-                    f"echo bb > test_outfile1 && cat test_outfile1 && {RMFILES}",
-                    f"echo cc >            test_outfile1 && cat test_outfile1 && {RMFILES}",
-                    f"echo dd >test_outfile1 && cat test_outfile1 && cat test_outfile1 && {RMFILES}",
-                    f"echo ee >test_outfile1 || cat test_outfile1 && cat test_outfile1 && {RMFILES}",
-                    # "echo ff >test_outfile1 | cat test_outfile1 && cat test_outfile1", # for actions
-                    f"echo gg >test_outfile1 | echo hh >test_outfile2 && cat test_outfile1 && cat test_outfile2 && {RMFILES}",
-                    f"echo ii >test_outfile1 | echo jj >test_outfile2 | cat && cat test_outfile1 && cat test_outfile2 && {RMFILES}",
-                    f"echo kk >test_outfile1 | echo ll >test_outfile2 | cat | cat && cat test_outfile1 && cat test_outfile2 && {RMFILES}",
-                    f"echo mm >test_outfile1 < test_outfile2 | cat && cat test_outfile1 && cat test_outfile2 && {RMFILES}",
-                    f"echo nn >    test_outfile1 <test_outfile2 | cat && cat test_outfile1 && cat test_outfile2 && {RMFILES}",
-                    f">test_outfile1 echo oo | cat && cat test_outfile1 && {RMFILES}",
-                    f">test_outfile1 >test_outfile2     echo pp | cat && cat test_outfile1 && cat test_outfile2 && {RMFILES}",
-                    ]
+        f"{MKDIR} && echo cc >    test_outfile1 && cat test_outfile1 && {RMDIR}",
+        f"{MKDIR} && echo dd >test_outfile1 && cat test_outfile1 && cat test_outfile1 && {RMDIR}",
+        f"{MKDIR} && echo ee >test_outfile1 || cat test_outfile1 && cat test_outfile1 && {RMDIR}",
+        # f"{MKDIR} && echo ff >test_outfile1 | cat test_outfile1 && cat test_outfile1 && {RMDIR}", # for actions
+        f"{MKDIR} && echo gg >test_outfile1 | echo hh >test_outfile2 && cat test_outfile1 && cat test_outfile2 && {RMDIR}",
+        f"{MKDIR} && echo ii >test_outfile1 | echo jj >test_outfile2 | cat && cat test_outfile1 && cat test_outfile2 && {RMDIR}",
+        f"{MKDIR} && echo kk >test_outfile1 | echo ll >test_outfile2 | cat | cat && cat test_outfile1 && cat test_outfile2 && {RMDIR}",
+        f"{MKDIR} && echo mm >test_outfile1 < test_outfile2 | cat && cat test_outfile1 && cat test_outfile2 && {RMDIR}",
+        f"{MKDIR} && echo nn >    test_outfile1 <test_outfile2 | cat && cat test_outfile1 && cat test_outfile2 && {RMDIR}",
+        f"{MKDIR} && >test_outfile1 echo oo | cat && cat test_outfile1 && {RMDIR}",
+        f"{MKDIR} && >test_outfile1 >test_outfile2     echo pp | cat && cat test_outfile1 && cat test_outfile2 && {RMDIR}",
+        ]
 
     redirects_append_test = [
-        "rm -f out \n echo a >> out \n cat out \n echo b >> out \n cat out \n rm -f out",
-        "rm -f out \n echo a >> 'ou't \n cat out \n echo b >> out \n cat out \n rm -f out",
-        "rm -f out \n export file=out\necho a >> $file \n cat out \n echo b >> out \n cat out \n rm -f out",
-        "rm -f in out \n echo in>in \n echo a >> out \n cat <in >>out \n cat out \n rm -f in out",
-        "rm -f in out1 out2 out3 nothing\n echo abc >out1>out2 <nothing >out3",
-        "rm -f in out1 out2 out3 nothing\n echo abc >out1>out2 <nothing >out3 \n ls -l \n rm -f in out1 out2 out3",
-        "rm -f in out1 out2 ng\n touch ng && chmod 000 ng\necho abc >out1>ng>out2 \n ls -l \n chmod 777 ng && rm -f in out1 out2 out3",
-                    ] # todo more test
+        f"{MKDIR} \n echo a >> out \n cat out \n echo b >> out \n cat out \n {RMDIR}",
+        f"{MKDIR} \n echo a >> 'ou't \n cat out \n echo b >> out \n cat out \n {RMDIR}",
+        f"{MKDIR} \n export file=out\necho a >> $file \n cat out \n echo b >> out \n cat out \n {RMDIR}",
+        f"{MKDIR} \n echo in>in \n echo a >> out \n cat <in >>out \n cat out \n {RMDIR}",
+        f"{MKDIR} \n echo abc >out1>out2 <nothing >out3 \n {RMDIR}",
+        f"{MKDIR} \n echo abc >out1>out2 <nothing >out3 \n ls -l \n {RMDIR}",
+        f"{MKDIR} \n touch ng && chmod 000 ng\necho abc >out1>ng>out2 \n ls -l \n chmod 777 ng \n {RMDIR}",
+        ] # todo more test
 
     BIG = "a" * 20
 
