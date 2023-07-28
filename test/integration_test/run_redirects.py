@@ -1,6 +1,11 @@
 from test_function.test_functions import test
 from test_function.print_ng_case import print_ng_cases
 
+MKDIR = "rm -rf test_dir \n mkdir test_dir \n cd test_dir"
+RMDIR = "cd .. \n rm -rf test_dir"
+TOUCH_NG = "echo 'this is ng file' > ng \n chmod 000 ng"
+RM_NG = "chmod 777 ng \n rm -f ng"
+
 def main():
     test_res = 0
 
@@ -111,12 +116,75 @@ def main():
         f"cat << eof | wc \n{BIG}\neof\n",
         "<no |<no <<eof <no cat -e && <<eof2 cat -e\ntest1\n$HOME\neof\ntest2\n$HOME\neof2\n",
         ]  # todo more test
+
+    redirects_test_add = [
+        f"{MKDIR} \n ls \n export f='a   b' \n echo aaa >$f     \n ls \n {RMDIR}",
+        f"{MKDIR} \n ls \n export f='a   b' \n echo aaa >'$f'   \n ls \n {RMDIR}",
+        f"{MKDIR} \n ls \n export f='a   b' \n echo aaa >\"$f\" \n ls \n {RMDIR}",
+        f"{MKDIR} \n ls \n export f='a   b' \n echo aaa >out1>$f>out2     \n ls \n {RMDIR}",
+        f"{MKDIR} \n ls \n export f='a   b' \n echo aaa >out1>'$f'>out2   \n ls \n {RMDIR}",
+        f"{MKDIR} \n ls \n export f='a   b' \n echo aaa >out1>\"$f\">out2 \n ls \n {RMDIR}",
+
+        f"{MKDIR} \n ls \n export f='   a' \n echo aaa >$f     \n ls \n {RMDIR}",
+        f"{MKDIR} \n ls \n export f='   a' \n echo aaa >'$f'   \n ls \n {RMDIR}",
+        f"{MKDIR} \n ls \n export f='   a' \n echo aaa >\"$f\" \n ls \n {RMDIR}",
+        f"{MKDIR} \n ls \n export f='   a' \n echo aaa >out1>$f>out2     \n ls \n {RMDIR}",
+        f"{MKDIR} \n ls \n export f='   a' \n echo aaa >out1>'$f'>out2   \n ls \n {RMDIR}",
+        f"{MKDIR} \n ls \n export f='   a' \n echo aaa >out1>\"$f\">out2 \n ls \n {RMDIR}",
+
+        f"{MKDIR} \n ls \n export f='a    ' \n echo aaa >$f     \n ls \n {RMDIR}",
+        f"{MKDIR} \n ls \n export f='a    ' \n echo aaa >'$f'   \n ls \n {RMDIR}",
+        f"{MKDIR} \n ls \n export f='a    ' \n echo aaa >\"$f\" \n ls \n {RMDIR}",
+        f"{MKDIR} \n ls \n export f='a    ' \n echo aaa >out1>$f>out2     \n ls \n {RMDIR}",
+        f"{MKDIR} \n ls \n export f='a    ' \n echo aaa >out1>'$f'>out2   \n ls \n {RMDIR}",
+        f"{MKDIR} \n ls \n export f='a    ' \n echo aaa >out1>\"$f\">out2 \n ls \n {RMDIR}",
+
+        f"{MKDIR} \n ls \n export f='     ' \n echo aaa >$f     \n ls \n {RMDIR}",
+        f"{MKDIR} \n ls \n export f='     ' \n echo aaa >'$f'   \n ls \n {RMDIR}",
+        f"{MKDIR} \n ls \n export f='     ' \n echo aaa >\"$f\" \n ls \n {RMDIR}",
+        f"{MKDIR} \n ls \n export f='     ' \n echo aaa >out1>$f>out2     \n ls \n {RMDIR}",
+        f"{MKDIR} \n ls \n export f='     ' \n echo aaa >out1>'$f'>out2   \n ls \n {RMDIR}",
+        f"{MKDIR} \n ls \n export f='     ' \n echo aaa >out1>\"$f\">out2 \n ls \n {RMDIR}",
+
+
+        f"{MKDIR} \n ls \n {TOUCH_NG} \n export f='a   b' \n echo aaa >ng >$f     \n ls \n {RM_NG} \n {RMDIR}",
+        f"{MKDIR} \n ls \n {TOUCH_NG} \n export f='a   b' \n echo aaa >ng >'$f'   \n ls \n {RM_NG} \n {RMDIR}",
+        f"{MKDIR} \n ls \n {TOUCH_NG} \n export f='a   b' \n echo aaa >ng >\"$f\" \n ls \n {RM_NG} \n {RMDIR}",
+        f"{MKDIR} \n ls \n {TOUCH_NG} \n export f='a   b' \n echo aaa >ng >out1>$f>out2     \n ls \n {RM_NG} \n {RMDIR}",
+        f"{MKDIR} \n ls \n {TOUCH_NG} \n export f='a   b' \n echo aaa >ng >out1>'$f'>out2   \n ls \n {RM_NG} \n {RMDIR}",
+        f"{MKDIR} \n ls \n {TOUCH_NG} \n export f='a   b' \n echo aaa >ng >out1>\"$f\">out2 \n ls \n {RM_NG} \n {RMDIR}",
+
+        f"{MKDIR} \n ls \n {TOUCH_NG} \n export f='a   b' \n echo aaa >$f >ng    \n ls \n {RM_NG} \n {RMDIR}",
+        f"{MKDIR} \n ls \n {TOUCH_NG} \n export f='a   b' \n echo aaa >'$f'>ng   \n ls \n {RM_NG} \n {RMDIR}",
+        f"{MKDIR} \n ls \n {TOUCH_NG} \n export f='a   b' \n echo aaa >\"$f\" >ng\n ls \n {RM_NG} \n {RMDIR}",
+        f"{MKDIR} \n ls \n {TOUCH_NG} \n export f='a   b' \n echo aaa >out1>$f>ng>out2     \n ls \n {RM_NG} \n {RMDIR}",
+        f"{MKDIR} \n ls \n {TOUCH_NG} \n export f='a   b' \n echo aaa >out1>'$f'>ng>out2   \n ls \n {RM_NG} \n {RMDIR}",
+        f"{MKDIR} \n ls \n {TOUCH_NG} \n export f='a   b' \n echo aaa >out1>\"$f\">ng>out2 \n ls \n {RM_NG} \n {RMDIR}",
+
+
+        f"{MKDIR} \n ls \n {TOUCH_NG} \n export f='a   b' \n cat <ng >$f     \n ls \n {RM_NG} \n {RMDIR}",
+        f"{MKDIR} \n ls \n {TOUCH_NG} \n export f='a   b' \n cat <ng >'$f'   \n ls \n {RM_NG} \n {RMDIR}",
+        f"{MKDIR} \n ls \n {TOUCH_NG} \n export f='a   b' \n cat <ng >\"$f\" \n ls \n {RM_NG} \n {RMDIR}",
+        f"{MKDIR} \n ls \n {TOUCH_NG} \n export f='a   b' \n cat <ng >out1>$f>out2     \n ls \n {RM_NG} \n {RMDIR}",
+        f"{MKDIR} \n ls \n {TOUCH_NG} \n export f='a   b' \n cat <ng >out1>'$f'>out2   \n ls \n {RM_NG} \n {RMDIR}",
+        f"{MKDIR} \n ls \n {TOUCH_NG} \n export f='a   b' \n cat <ng >out1>\"$f\">out2 \n ls \n {RM_NG} \n {RMDIR}",
+
+        f"{MKDIR} \n ls \n {TOUCH_NG} \n export f='a   b' \n cat >$f <ng    \n ls \n {RM_NG} \n {RMDIR}",
+        f"{MKDIR} \n ls \n {TOUCH_NG} \n export f='a   b' \n cat >'$f'<ng   \n ls \n {RM_NG} \n {RMDIR}",
+        f"{MKDIR} \n ls \n {TOUCH_NG} \n export f='a   b' \n cat >\"$f\" <ng\n ls \n {RM_NG} \n {RMDIR}",
+        f"{MKDIR} \n ls \n {TOUCH_NG} \n export f='a   b' \n cat >out1>$f<ng>out2     \n ls \n {RM_NG} \n {RMDIR}",
+        f"{MKDIR} \n ls \n {TOUCH_NG} \n export f='a   b' \n cat >out1>'$f'<ng>out2   \n ls \n {RM_NG} \n {RMDIR}",
+        f"{MKDIR} \n ls \n {TOUCH_NG} \n export f='a   b' \n cat >out1>\"$f\"<ng>out2 \n ls \n {RM_NG} \n {RMDIR}",
+
+        ]
+
     test_res |= test("redirect_in_error", redirects_in_error_test, False, False)
     test_res |= test("redirect_out_error", redirects_out_error_test, False, False)
     test_res |= test("redirect_in", redirects_in_test, False, False)
     test_res |= test("redirect_out", redirects_out_test, False, False)
     test_res |= test("redirect_append", redirects_append_test, False, False)
     test_res |= test("redirect_heredoc", redirects_heredoc_test, False, False)
+    test_res |= test("redirect_additional_test", redirects_test_add, False, False)
 
     print_ng_cases(test_res)
 
