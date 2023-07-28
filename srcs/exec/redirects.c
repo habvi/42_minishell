@@ -6,7 +6,6 @@
 #include "ms_parse.h"
 #include "ft_deque.h"
 #include "ft_string.h"
-#include "ft_sys.h"
 
 static t_result	open_redirect_files_each(t_redirect *redirect, \
 											int proc_fd[2], \
@@ -26,18 +25,12 @@ static t_result	open_redirect_files_each(t_redirect *redirect, \
 	return (result);
 }
 
-static t_result	close_prod_fd_for_exit_command(t_ast *self_node)
+static t_result	close_prod_fds(int proc_fd[2])
 {
-	if (self_node->proc_fd[IN] != IN_FD_INIT)
-	{
-		if (x_close(self_node->proc_fd[IN]) == PROCESS_ERROR)
-			return (PROCESS_ERROR);
-	}
-	if (self_node->proc_fd[OUT] != OUT_FD_INIT)
-	{
-		if (x_close(self_node->proc_fd[OUT]) == PROCESS_ERROR)
-			return (PROCESS_ERROR);
-	}
+	if (close_proc_in_fd(&proc_fd[IN]) == PROCESS_ERROR)
+		return (PROCESS_ERROR);
+	if (close_proc_out_fd(&proc_fd[OUT]) == PROCESS_ERROR)
+		return (PROCESS_ERROR);
 	return (SUCCESS);
 }
 
@@ -56,7 +49,10 @@ static t_result	expand_filename_and_open_files(t_ast *self_node, \
 		{
 			result = expand_for_filename_each(redirect, context);
 			if (result == FAILURE || result == PROCESS_ERROR)
+			{
+				close_prod_fds(self_node->proc_fd);
 				return (result);
+			}
 		}
 		result = open_redirect_files_each(redirect, \
 											self_node->proc_fd, \
@@ -81,7 +77,7 @@ t_result	redirect_fd(t_ast *self_node, t_context *context)
 		return (result);
 	if (ft_streq(command, CMD_EXIT))
 	{
-		if (close_prod_fd_for_exit_command(self_node) == PROCESS_ERROR)
+		if (close_prod_fds(self_node->proc_fd) == PROCESS_ERROR)
 			return (PROCESS_ERROR);
 		return (SUCCESS);
 	}
