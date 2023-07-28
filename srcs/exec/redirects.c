@@ -26,26 +26,6 @@ static t_result	open_redirect_files_each(t_redirect *redirect, \
 	return (result);
 }
 
-static t_result	open_redirect_files(t_ast *self_node, t_context *context)
-{
-	t_deque_node	*node;
-	t_result		result;
-	t_redirect		*redirect;
-
-	node = self_node->redirect_list->node;
-	while (node)
-	{
-		redirect = (t_redirect *)node->content;
-		result = open_redirect_files_each(redirect, \
-											self_node->proc_fd, \
-											context);
-		if (result == FAILURE || result == PROCESS_ERROR)
-			return (result);
-		node = node->next;
-	}
-	return (SUCCESS);
-}
-
 static t_result	close_prod_fd_for_exit_command(t_ast *self_node)
 {
 	if (self_node->proc_fd[IN] != IN_FD_INIT)
@@ -61,6 +41,34 @@ static t_result	close_prod_fd_for_exit_command(t_ast *self_node)
 	return (SUCCESS);
 }
 
+static t_result	expand_filename_and_open_files(t_ast *self_node, \
+												t_context *context)
+{
+	t_deque_node	*node;
+	t_redirect		*redirect;
+	t_result		result;
+
+	node = self_node->redirect_list->node;
+	while (node)
+	{
+		redirect = (t_redirect *)node->content;
+		if (redirect->kind != TOKEN_KIND_REDIRECT_HEREDOC)
+		{
+			result = expand_for_filename_each(redirect, context);
+			if (result == FAILURE || result == PROCESS_ERROR)
+				return (result);
+		}
+		result = open_redirect_files_each(redirect, \
+											self_node->proc_fd, \
+											context);
+		if (result == FAILURE || result == PROCESS_ERROR)
+			return (result);
+		node = node->next;
+	}
+
+	return (SUCCESS);
+}
+
 t_result	redirect_fd(t_ast *self_node, t_context *context)
 {
 	const char	*command = get_head_token_str(self_node->command);
@@ -68,10 +76,7 @@ t_result	redirect_fd(t_ast *self_node, t_context *context)
 
 	if (!self_node->redirect_list)
 		return (SUCCESS);
-	result = expand_for_filename(self_node, context);
-	if (result == FAILURE || result == PROCESS_ERROR)
-		return (result);
-	result = open_redirect_files(self_node, context);
+	result = expand_filename_and_open_files(self_node, context);
 	if (result == FAILURE || result == PROCESS_ERROR)
 		return (result);
 	if (ft_streq(command, CMD_EXIT))

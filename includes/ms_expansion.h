@@ -47,7 +47,7 @@ void		sort_filenames(t_deque *tokens);
 t_result	expand_for_heredoc(t_ast *self_node, t_context *context);
 t_result	expand_variables_in_heredoc(t_redirect *redirect, \
 										t_context *context);
-t_result	expand_for_filename(t_ast *self_node, t_context *context);
+t_result	expand_for_filename_each(t_redirect *redirect, t_context *context);
 void		assign_failure_fd_to_proc_fds(int proc_fd[2]);
 
 #endif //MS_EXPANSION_H
