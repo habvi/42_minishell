@@ -1,4 +1,4 @@
-name: Minishell
+name: Execution
 on:
   push:
     branches: [ "dev" ]

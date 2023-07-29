@@ -1,4 +1,4 @@
-name: Minishell
+name: Builtin
 on:
   push:
     branches: [ "dev" ]

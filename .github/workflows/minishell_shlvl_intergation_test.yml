@@ -1,4 +1,4 @@
-name: Minishell
+name: SHLVL
 on:
   push:
     branches: [ "dev" ]
