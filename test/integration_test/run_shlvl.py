@@ -1,4 +1,6 @@
 from test_function.test_functions import test
+from test_function.print_ng_case import print_ng_cases
+
 
 PATH_ADD = "export PATH+=:$PWD"
 
@@ -29,6 +31,8 @@ def main():
         shlvl_test.append(f"{PATH_ADD}\necho init:$SHLVL\nexport SHLVL={str(lvl)}\necho before:$SHLVL\n__SHELL__\necho after:$SHLVL")
 
     test_res |= test("shlvl", shlvl_test, False, True)
+
+    print_ng_cases(test_res)
 
     return test_res
 

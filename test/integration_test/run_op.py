@@ -14,7 +14,6 @@ def main():
     test_res |= run_paren.main()
     test_res |= run_redirects.main()
     test_res |= run_expansion.main()
-    test_res |= run_path.main()
 
     print_ng_cases(test_res)
 

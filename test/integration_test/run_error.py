@@ -1,5 +1,5 @@
 from test_function.test_functions import test
-
+from test_function.print_ng_case import print_ng_cases
 
 def main():
     test_res = 0
@@ -47,6 +47,8 @@ def main():
     error_test = syntax_err + exec_err
 
     test_res |= test("error", error_test, False, False)
+
+    print_ng_cases(test_res)
 
     return test_res
 

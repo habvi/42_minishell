@@ -1,3 +1,4 @@
+from test_function.print_ng_case import print_ng_cases
 import run_echo
 import run_env
 import run_exit
@@ -13,12 +14,12 @@ def main():
     test_res |= run_declare.main()
     test_res |= run_echo.main()
     test_res |= run_env.main()
-
-    # test_res |= run_env.main()
     test_res |= run_exit.main()
     test_res |= run_export.main()
     test_res |= run_pwd.main()
     # test_res |= run_unset.main()
+
+    print_ng_cases(test_res)
 
     return test_res
 

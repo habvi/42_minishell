@@ -4,6 +4,7 @@ import run_pipe
 import run_op
 import run_error
 import run_original
+import run_path
 import run_shlvl
 
 BLUE = "\x1b[34m"
@@ -33,8 +34,11 @@ def main():
     print_test_title("ERROR")
     test_res |= run_error.main()
 
-    # print_test_title("ORIGINAL")
-    # test_res |= run_original.main()
+    print_test_title("ORIGINAL")
+    test_res |= run_original.main()
+
+    print_test_title("PATH")
+    test_res |= run_path.main()
 
     print_test_title("OTHER")
     test_res |= run_shlvl.main()
