@@ -5,7 +5,7 @@ from test_function.print_ng_case import print_ng_cases
 PATH_ADD = "export PATH+=:$PWD"
 
 
-def main():
+def run():
     test_res = 0
 
     lvl_list = ["0", "1", "255",
@@ -32,9 +32,15 @@ def main():
 
     test_res |= test("shlvl", shlvl_test, False, True)
 
+    return test_res
+
+
+def main():
+    test_res = run()
+
     print_ng_cases(test_res)
 
-    return test_res
+    exit(test_res)
 
 
 if __name__ == '__main__':

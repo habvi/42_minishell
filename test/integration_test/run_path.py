@@ -2,7 +2,7 @@ from test_function.test_functions import test
 from test_function.print_ng_case import print_ng_cases
 
 
-def main():
+def run():
 
     # CMD = "echo hello>f\ncat -e f\n/bin/cat f\n/bin/rm -rf f\n"
     CMD = "echo hello>f\n/bin/cat f\n/bin/rm -rf f\n"
@@ -237,9 +237,15 @@ def main():
 
     test_res |= test("path", path_test, False, False)
 
+    return test_res
+
+
+def main():
+    test_res = run()
+
     print_ng_cases(test_res)
 
-    return test_res
+    exit(test_res)
 
 
 if __name__ == '__main__':
