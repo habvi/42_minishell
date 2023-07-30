@@ -242,8 +242,8 @@ def main():
         f"cd dir3 {STATUS_PWD_DISPLAY}"
         f"cd .. {STATUS_PWD_DISPLAY}"
         f"cd ../dir1/dir2/dir3 {STATUS_PWD_DISPLAY}"
-        # f"cd .. {STATUS_PWD_DISPLAY}"
-        # f"cd ../../ \n rm -rf link dir1"
+        f"cd .. {STATUS_PWD_DISPLAY}"
+        f"cd ../../ \n rm -rf link dir1"
     ]
 
     commands_list += additional_test
