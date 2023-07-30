@@ -5,7 +5,7 @@ def main():
     test_res = 0
 
     echo_normal_test = [
-        "echo",
+        "echo $$",
          "echo a",
          "echo a b c",
          "echo a        b        c",
