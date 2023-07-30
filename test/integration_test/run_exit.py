@@ -1,5 +1,7 @@
 from test_function.test_functions import test
 
+MKDIR = "rm -rf test_dir \n mkdir test_dir \n cd test_dir"
+RMDIR = "cd .. \n rm -rf test_dir"
 
 def main():
 
@@ -67,8 +69,8 @@ def main():
                  "exit \r42",
                  "exit \r\r42",
                  "exit 1 1 1 && exit 2 2 2 || exit 3",
-                 "echo a >in && <in exit 1 1 1 <in >out && rm in out  && exit 2 2 2",
-                 " exit 1 | exit 2 | exit 3 && echo a || echo b && exit 1 1 1 || echo 42 && echo hello >out"
+                 f"{MKDIR} \n echo a >in && <in exit 1 1 1 <in >out && rm in out && exit 2 2 2 \n {RMDIR}",
+                 "exit 1 | exit 2 | exit 3 && echo a || echo b && exit 1 1 1 || echo 42 && echo hello >out"
                  ]  # add more test after update tokenizer
 
     test_res |= test("ft_exit", exit_test, False, False)

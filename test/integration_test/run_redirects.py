@@ -1,5 +1,4 @@
 from test_function.test_functions import test
-from test_function.print_ng_case import print_ng_cases
 
 MKDIR = "rm -rf test_dir \n mkdir test_dir \n cd test_dir"
 RMDIR = "cd .. \n rm -rf test_dir"
@@ -182,8 +181,6 @@ def main():
     test_res |= test("redirect_append", redirects_append_test, False, False)
     test_res |= test("redirect_heredoc", redirects_heredoc_test, False, False)
     test_res |= test("redirect_additional_test", redirects_test_add, False, False)
-
-    print_ng_cases(test_res)
 
     return test_res
 

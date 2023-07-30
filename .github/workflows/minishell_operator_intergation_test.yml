@@ -1,4 +1,4 @@
-name: Minishell
+name: Operator
 on:
   push:
     branches: [ "dev" ]
@@ -23,4 +23,4 @@ jobs:
         run: make
 
       - name: Run all test of MINISHELL.
-        run: python3 test/integration_test/run_all.py
+        run: python3 test/integration_test/run_op.py
