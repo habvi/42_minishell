@@ -42,7 +42,7 @@ bool	is_valid_pre_parse_syntax(const t_deque *tokens, \
 {
 	if (!is_valid_pre_parse_syntax_inter(tokens->node))
 	{
-		set_error_status(context, result);
+		set_error_status_and_result(context, result);
 		return (false);
 	}
 	return (true);

@@ -91,10 +91,7 @@ static t_ast	*create_subshell_node(t_deque_node **token_node, \
 	if (is_token_kind_paren_right_as_ast_node(*token_node))
 	{
 		if (!ast_node)
-		{
-			*status = SYNTAX_ERROR;
-			return (NULL);
-		}
+			return (set_error_status(status));
 		*token_node = (*token_node)->next;
 		if (ast_node->kind == NODE_KIND_SUBSHELL)
 			return (ast_node);
@@ -117,10 +114,7 @@ t_ast	*create_command_or_subshell_node(t_deque_node **token_node, \
 	t_ast	*ast_node;
 
 	if (!*token_node)
-	{
-		*status = SYNTAX_ERROR;
-		return (NULL);
-	}
+		return (set_error_status(status));
 	ast_node = NULL;
 	if (is_token_kind_word_from_node(*token_node))
 		ast_node = create_command_leaf(token_node);
