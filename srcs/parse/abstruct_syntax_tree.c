@@ -84,8 +84,6 @@ static t_ast	*create_subshell_node(t_deque_node **token_node, \
 	if (is_token_kind_paren_left_as_ast_node(*token_node))
 	{
 		*token_node = (*token_node)->next;
-		if (is_token_kind_paren_right_as_ast_node(*token_node))
-			return (NULL);
 		ast_node = create_operator_list_node(token_node, status);
 		if (*status == SYNTAX_ERROR)
 			return (ast_node);
