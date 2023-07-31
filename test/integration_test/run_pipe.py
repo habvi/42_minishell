@@ -1,7 +1,7 @@
 from test_function.test_functions import test
+from test_function.print_ng_case import print_ng_cases
 
-
-def main():
+def run():
     test_res = 0
     pipe_test = ["ls -l",
                  "echo abcde",
@@ -28,6 +28,14 @@ def main():
     test_res |= test("multi_pipe", pipe_error_test, False, False)
 
     return test_res
+
+
+def main():
+    test_res = run()
+
+    print_ng_cases(test_res)
+
+    exit(test_res)
 
 
 if __name__ == '__main__':
