@@ -37,6 +37,8 @@ def main():
                     "( echo a | echo b ) && ( ls | ) | ( echo c )",
                     "( echo a | echo b ) | ( ls | ) && ( echo c )",
                     "( echo a | echo b ) && ( ls | ) && ( echo c )",
+                    "echo a | ( echo a && ( ls | ) || ( | echo b ) )",
+                    "echo a | ( echo a || ( ls | ) && ( | echo b ) )"
                     # bash error in pase..? minishell error in token
                     # "( ls | ) (",
                     # "( ls && ) (",
