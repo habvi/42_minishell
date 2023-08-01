@@ -80,24 +80,27 @@ static t_ast	*create_subshell_node(t_deque_node **token_node, \
 {
 	t_ast	*ast_node;
 
+	ast_node = NULL;
 	if (is_token_kind_paren_left_as_ast_node(*token_node))
 	{
 		*token_node = (*token_node)->next;
-		if (is_token_kind_paren_right_as_ast_node(*token_node))
-			return (NULL);
 		ast_node = create_operator_list_node(token_node, status);
+		if (*status == SYNTAX_ERROR)
+			return (ast_node);
 	}
 	if (is_token_kind_paren_right_as_ast_node(*token_node))
 	{
+		if (!ast_node)
+			return (set_error_status(status));
 		*token_node = (*token_node)->next;
-		if (ast_node && ast_node->kind == NODE_KIND_SUBSHELL)
+		if (ast_node->kind == NODE_KIND_SUBSHELL)
 			return (ast_node);
 		ast_node = new_subshell_node(ast_node);
 		set_parent_of_children_node(&ast_node);
 		dup_redirection_from_tokens(ast_node->command, token_node);
 		return (ast_node);
 	}
-	return (NULL);
+	return (ast_node);
 }
 
 // [echo] [a] [b] [|] [cat] [Makefile]
@@ -111,12 +114,9 @@ t_ast	*create_command_or_subshell_node(t_deque_node **token_node, \
 	t_ast	*ast_node;
 
 	if (!*token_node)
-	{
-		*status = SYNTAX_ERROR;
-		return (NULL);
-	}
+		return (set_error_status(status));
 	ast_node = NULL;
-	if (is_token_kind_command_as_ast_node(*token_node))
+	if (is_token_kind_word_from_node(*token_node))
 		ast_node = create_command_leaf(token_node);
 	else if (is_token_kind_subshell_as_ast_node(*token_node))
 		ast_node = create_subshell_node(token_node, status);

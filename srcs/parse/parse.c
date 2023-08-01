@@ -15,7 +15,7 @@ static t_ast	*create_ast(const t_deque *tokens, \
 	ast = create_operator_list_node(&head_node, &ast_status);
 	if (head_node || ast_status == SYNTAX_ERROR)
 	{
-		set_error_status(context, result);
+		set_error_status_and_result(context, result);
 		ast_print_error(head_node);
 		destroy_ast_tree(&ast, *result);
 		return (NULL);

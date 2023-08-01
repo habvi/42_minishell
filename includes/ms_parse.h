@@ -100,7 +100,8 @@ void		destroy_ast_tree(t_ast **root, t_result result);
 
 /* error */
 void		*ast_print_error(t_deque_node *token_node);
-void		set_error_status(t_context *context, t_result *result);
+void		*set_error_status(uint8_t *status);
+void		set_error_status_and_result(t_context *context, t_result *result);
 
 /* debug */
 char		*get_ast_node_kind_str(t_node_kind node_kind);//tmp enum

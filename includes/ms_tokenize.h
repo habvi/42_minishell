@@ -77,12 +77,10 @@ bool			is_token_kind_redirection(const t_token_kind token_kind);
 
 bool			is_token_kind_and_or_from_node(const t_deque_node *token_node);
 bool			is_token_kind_pipe_from_node(const t_deque_node *token_node);
-bool			is_token_kind_word_form_node(const t_deque_node *token_node);
+bool			is_token_kind_word_from_node(const t_deque_node *token_node);
 bool			is_token_kind_redirection_from_node(\
 												const t_deque_node *token_node);
 
-bool			is_token_kind_command_as_ast_node(\
-												const t_deque_node *token_node);
 bool			is_token_kind_paren_left_as_ast_node(\
 												const t_deque_node *token_node);
 bool			is_token_kind_paren_right_as_ast_node(\
