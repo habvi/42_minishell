@@ -24,7 +24,7 @@ make
 ## Implement
 - Display a prompt.
 - Have a working history.
-- Search and launch the right executable (baced on the PATH variable or using a relative or an absolute path).
+- Search and launch the right executable (based on the PATH variable or using a relative or an absolute path).
 - Handle `''` (single quote).
 - Handle `""` (double quote).
 - Redirections.
