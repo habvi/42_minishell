@@ -37,7 +37,7 @@ make
   - Grouping Commands : `()`
 
 - Shell Parameters
-  - Special Parameters :  `$?`
+  - Special Parameters : `$?`
 
 - Shell Expansions
   - Shell Parameter Expansion
