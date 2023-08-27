@@ -56,7 +56,7 @@ make
   - Command Search and Execution
   - Environment
   - Exit Status
-  - Signals
+  - Signals : SIGINT(`^C`), SIGQUIT(`^\`)
 
 - Shell Builtin Commands
   - cd
@@ -74,6 +74,8 @@ make
   - PATH
   - PWD
   - SHLVL
+
+- Command Line Editing : EOF(`^D`)
 
 - History
 
