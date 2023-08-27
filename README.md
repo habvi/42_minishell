@@ -34,7 +34,7 @@ make
   - Simple Commands
   - Pipelines : `|`
   - Lists of Commands : `&&`, `||`
-  - Grouping Commands : `()`
+  - Grouping Commands : `(`, `)`
 
 - Shell Parameters
   - Special Parameters : `$?`
