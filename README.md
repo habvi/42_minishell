@@ -69,7 +69,9 @@ make
 
 - Shell Variables
   - CDPATH
+  - HOME
   - OLDPWD
+  - PATH
   - PWD
   - SHLVL
 
