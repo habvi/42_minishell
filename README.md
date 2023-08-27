@@ -75,6 +75,8 @@ make
   - PWD
   - SHLVL
 
+- History
+
 More detail : [minishell's specification](https://github.com/habvi/42_minishell/wiki/minishell's-specification)
 
 <br>
