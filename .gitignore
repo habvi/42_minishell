@@ -11,6 +11,8 @@ cmake-build-debug/
 !*.c
 !*.h
 !.github/**
+!README.md
+!images/**
 
 !srcs/tokenize/minishell.bnf
 

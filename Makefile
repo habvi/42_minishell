@@ -259,8 +259,9 @@ ifeq ($(UNAME), Linux)
 	sudo apt-get install libreadline-dev
 else
 ifeq ($(UNAME), Darwin)
-	curl -fsSL https://rawgit.com/kube/42homebrew/master/install.sh | zsh
-	brew update && brew upgrade && brew install readline
+#	curl -fsSL https://rawgit.com/kube/42homebrew/master/install.sh | zsh
+#	brew update && brew upgrade && brew install readline
+	brew install readline
 endif
 endif
 
